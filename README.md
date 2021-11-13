@@ -1,2 +1,2 @@
 # FitSushi-Ordering-System
-A website that sells local sushi from Fitsushi as our client
+A website that sells local sushi for Fitsushi company as our client.
