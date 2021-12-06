@@ -10,3 +10,162 @@
 html {
   scroll-behavior: smooth;
 }
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Poller One", "cursive", "NATS", sans-serif;
+}
+
+/*global*/
+.container {
+  margin: auto;
+  width: 90%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+/*header*/
+.border {
+  border: solid 3px var(--red);
+}
+
+.white {
+  border: solid 3px var(--white);
+}
+
+header {
+  font-size: 30px;
+  font-family: "NATS", sans-serif;
+  background-color: var(--yellow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header ul {
+  display: flex;
+}
+
+header a {
+  display: block;
+}
+
+header a:hover {
+  border-bottom: var(--red) 3px solid;
+}
+
+header li {
+  margin: 0px 20px;
+  display: inline;
+}
+
+header .main-logo {
+  float: left;
+}
+
+header .sign-in-btn {
+  text-transform: uppercase;
+  padding: 5px 20px;
+  font-size: 25px;
+  background-color: var(--yellow);
+  border-radius: 20px;
+  border: 3px solid var(--red);
+  color: var(--red);
+  cursor: pointer;
+}
+
+header .sign-in-btn:hover {
+  color: var(--white);
+  background-color: var(--red);
+}
+
+header .home-tab {
+  text-transform: uppercase;
+  color: var(--black);
+}
+
+.landing-content {
+  height: 100%;
+  min-height: 100%;
+  background-color: var(--blue);
+  display: flex;
+}
+
+.landing-content-left {
+  align-items: center;
+  padding: 1% 0% 1% 1%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-content-right {
+  padding: 5% 0%;
+  width: 50%;
+}
+
+.title-1 {
+  text-align: center;
+  width: 70%;
+  color: var(--white);
+  font-family: "Poller One";
+  font-size: 69px;
+}
+
+.title-2 {
+  color: var(--white);
+  font-family: "NATS";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+}
+
+.order-btn {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 3px;
+  color: var(--white);
+  font-weight: 700;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  padding: 20px 60px;
+  font-size: 36px;
+  background-color: var(--yellow);
+  border-radius: 35px;
+  border: none;
+  cursor: pointer;
+}
+
+.sushi-logo {
+  width: 100%;
+  height: auto;
+}
+
+.footer {
+  font-size: 10px;
+  color: var(--white);
+  background-color: var(--black);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.footer h1 {
+}
