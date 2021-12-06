@@ -9,6 +9,10 @@
 <body>
     <p> nadai temu utai </p>
     <p> udah temu utai </p>
+<<<<<<< HEAD
     <p>udah nemu</p>
+=======
+    <p> hello world! </p>
+>>>>>>> d2ef74c5b436c5fcab3f94568f09f0bb0e1053a2
 </body>
 </html>
