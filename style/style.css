@@ -1,0 +1,12 @@
+:root {
+  --yellow: #eaa027;
+  --red: #c1273a;
+  --blue: #455b7c;
+  --darkblue: #1a212c;
+  --white: #fff;
+  --black: #000;
+}
+
+html {
+  scroll-behavior: smooth;
+}
