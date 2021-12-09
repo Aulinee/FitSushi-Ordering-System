@@ -12,8 +12,11 @@ html {
 }
 
 body {
+  height: 100vh;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
   font-family: "Poller One", "cursive", "NATS", sans-serif;
 }
 
@@ -102,28 +105,25 @@ header .home-tab {
 }
 
 .landing-content {
-  height: 100%;
-  min-height: 100%;
+  padding: 5% 0% 5% 5%;
   background-color: var(--blue);
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .landing-content-left {
   align-items: center;
-  padding: 1% 0% 1% 1%;
   width: 50%;
   display: flex;
   flex-direction: column;
 }
 
 .landing-content-right {
-  padding: 5% 0%;
   width: 50%;
 }
 
 .title-1 {
-  text-align: center;
-  width: 70%;
   color: var(--white);
   font-family: "Poller One";
   font-size: 69px;
@@ -153,20 +153,19 @@ header .home-tab {
 }
 
 .sushi-logo {
+  height: 100%;
+  justify-content: center;
   width: 100%;
-  height: auto;
 }
 
 .footer {
-  font-size: 10px;
-  color: var(--white);
   background-color: var(--black);
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  min-height: 50px;
+  margin-top: auto;
   text-align: center;
 }
 
 .footer h1 {
-  height: 50px;
+  color: var(--white);
+  font-size: 15px;
 }
