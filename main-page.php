@@ -27,12 +27,12 @@
                 </ul>
             </div>
         </header>
-        <div class="flexbox-container" id="top-section">
+        <div class="flexbox-container" id="mainpage-section">
             <div class="flex" id="flexbox">
-                <a href="#top-section">Main Page</a>
-                <a href="#drink-section">About Us</a>
-                <a href="#cakepastry-section">Menu</a>
-                <a href="#waffle-section">Contact Us</a>
+                <a href="#mainpage-section">Main Page</a>
+                <a href="#about-section">About Us</a>
+                <a href="#menu-section">Menu</a>
+                <a href="#contact-section">Contact Us</a>
             </div>
             <div class="welcome">
                 <div class="welcome-1">
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="about-us">
+    <div class="about-us" id="about-section">
         <h1 class="yellow-txt">About Us</h1>
         <div class="abt-us-detail">
             <div class="width-20"></div>
@@ -84,7 +84,7 @@
             <div class="width-20"></div>
         </div>
     </div>
-    <div class="abt-menu red-bg">
+    <div class="abt-menu red-bg" id="menu-section">
         <h1 class="yellow-txt">Menu</h1>
         <h2 class="white-txt margin-minus">Keep browsing and it will get your mouth watering, just a few clicks and we will deliver it to you!</h2>
         <div class="menu-display white-border">
@@ -129,7 +129,7 @@
             <button class="order-btn yellow-bg">See More</button>
         </div>
     </div>
-    <div class="abt-contact blue-bg white-txt ">
+    <div class="abt-contact blue-bg white-txt" id="contact-section">
         <h1 class="yellow-txt">Contact Us</h1>
         <div class="abt-contact-detail">
             <div class="contact-1 vertical-border">
