@@ -163,5 +163,19 @@
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
+    <script>
+        window.onscroll = function() {myFunction()};
+
+        var navbar = document.getElementById("flexbox");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+        }
+    </script>
 </body>
 </html>
