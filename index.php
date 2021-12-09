@@ -13,11 +13,11 @@
     <title>Landing Page</title>
 </head>
 <body>
-    <header id="navbar" class="">
+    <header id="navbar" class="yellow-bg">
         <div class="container">
             <img class="main-logo left" src="img/logo.png" alt="logo" width="80px">
             <ul class="right">
-                <li><a class="home-tab" href="#">Home</a></li>
+                <li><a class="home-tab" href="main-page.php">Home</a></li>
                 <li><button class="sign-in-btn">Sign In</button></li>
             </ul>
         </div>
@@ -31,7 +31,7 @@
                 <h1>Don’t worry. We deliver fresh sushi wherever you are.</h1>
             </div>
             <div class="">
-                <button class="order-btn">Order Now</button>
+                <button class="order-btn yellow-bg">Order Now</button>
             </div>
         </div>
         <div class="landing-content-right">

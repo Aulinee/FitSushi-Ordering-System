@@ -44,19 +44,47 @@ a {
   float: left;
 }
 
-/*header*/
-.border {
+.red-border {
   border: solid 3px var(--red);
 }
 
-.white {
+.white-border {
   border: solid 3px var(--white);
 }
+
+.yellow-bg {
+  background-color: var(--yellow);
+}
+
+.red-bg {
+  background-color: var(--red);
+}
+
+.blue-bg {
+  background-color: var(--blue);
+}
+
+.yellow-txt {
+  color: var(--yellow);
+}
+
+.red-txt {
+  color: var(--red);
+}
+
+.white-txt {
+  color: var(--white);
+}
+
+.uppercase-txt {
+  text-transform: uppercase;
+}
+
+/*header*/
 
 header {
   font-size: 30px;
   font-family: "NATS", sans-serif;
-  background-color: var(--yellow);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -144,12 +172,15 @@ header .home-tab {
   font-weight: 700;
   font-family: "Roboto";
   text-transform: uppercase;
-  padding: 20px 60px;
-  font-size: 36px;
-  background-color: var(--yellow);
+  padding: 1vw 3vw;
+  font-size: 1.5vw;
   border-radius: 35px;
   border: none;
   cursor: pointer;
+}
+
+.order-btn:hover {
+  opacity: 0.7;
 }
 
 .sushi-logo {
@@ -158,6 +189,260 @@ header .home-tab {
   width: 100%;
 }
 
+/*-----------------Main Page----------------*/
+.word-logo {
+  object-fit: contain;
+  height: 50px;
+}
+
+.mainpage-bg {
+  background-image: url(../img/bg.png);
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.flexbox-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.flex {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap; /* assumes you only want one row */
+  background-color: var(--yellow);
+}
+
+.flex a {
+  text-transform: uppercase;
+  color: #000;
+  font-family: "NATS";
+  font-weight: 500;
+  font-size: 25px;
+  transition: 0.5s;
+}
+
+.flex a:hover {
+  color: var(--red);
+}
+
+/*-----------------Main Page - landing page----------------*/
+.welcome {
+  margin: auto;
+  width: 90%;
+  font-family: "NATS";
+  display: flex;
+  flex-direction: column;
+}
+.welcome-1 {
+  text-align: center;
+}
+.welcome-2 {
+  font-size: 7vw;
+  width: 50%;
+  margin-top: -2%;
+  margin-bottom: -15%;
+}
+
+.sushi-ready-txt {
+  position: relative;
+  top: -3.5ex;
+}
+.welcome-3 {
+  width: 10%;
+}
+
+.welcome-3 hr {
+  border: 5px solid var(--yellow);
+  color: var(--yellow);
+}
+.welcome-4 {
+  color: var(--blue);
+  font-size: 0.8vw;
+}
+
+.welcome-5 {
+  padding-bottom: 5%;
+}
+
+/*-----------------Main Page - about us----------------*/
+.about-us {
+  margin: auto;
+  width: 100%;
+  font-family: "NATS";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.abt-us-detail {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.abt-us-txt {
+  color: var(--yellow);
+}
+.abt-us-icon {
+  width: 40%;
+}
+
+.width-10 {
+  width: 10%;
+}
+
+.width-20 {
+  width: 20%;
+}
+
+/*-----------------Main Page - about menu----------------*/
+.abt-menu {
+  width: 100%;
+  font-family: "NATS";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.margin-minus {
+  margin-top: -2%;
+}
+
+.menu-display {
+  width: 95.5%;
+  background: #edeff1;
+  display: flex;
+  flex-direction: row;
+  padding: 2%;
+}
+
+.menu-display-detail {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 1px solid var(--blue);
+  width: 20%;
+}
+
+.menu-display-detail h1 {
+  font-size: 30px;
+}
+
+.menu-icon {
+  margin: auto;
+  width: 80%;
+}
+
+.width-4 {
+  width: 4%;
+}
+
+.width-1 {
+  width: 1%;
+}
+
+.padding-tb {
+  padding: 30px 0 30px 0;
+}
+
+/*-----------------Main Page - Contact Us----------------*/
+.abt-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.abt-contact-detail {
+  width: 100%;
+  font-family: "Neucha";
+  font-weight: lighter;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+}
+
+.title-underline {
+  text-decoration: underline;
+}
+
+.contact-1 {
+  width: 35%;
+}
+
+.socmed-detail {
+  display: flex;
+  flex-direction: row;
+}
+
+.socmed-quote {
+  width: 40%;
+}
+.socmed-info {
+  width: 60%;
+  text-align: left;
+}
+
+.socmed-info a {
+  color: var(--white);
+  font-size: 25px;
+  font-family: "Montserrat";
+}
+
+.socmed-info a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.contact-2 {
+  width: 25%;
+}
+
+.contact-3 {
+  width: 35%;
+}
+
+.operating-detail {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-border {
+  border-left: 10px solid var(--red);
+  border-right: 10px solid var(--red);
+}
+
+@media (max-width: 1100px) {
+  .abt-us-detail {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menu-display {
+    align-items: center;
+    flex-direction: column;
+  }
+  .menu-display-detail {
+    margin: 1%;
+    width: 70%;
+  }
+
+  .width-20 {
+    width: 80%;
+  }
+}
+
+/*-----------------footer----------------*/
 .footer {
   background-color: var(--black);
   min-height: 50px;
