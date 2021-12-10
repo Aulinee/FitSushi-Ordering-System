@@ -20,7 +20,7 @@
                 <img class="word-logo left" src="img/title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
-                    <li><a class="home-tab" href="main-page.php">Menu</a></li>
+                    <li><a class="home-tab" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="main-page.php">Sushi</a></li>
                     <li><a class="home-tab" href="main-page.php">Redscarf</a></li>
                     <li><a class="home-tab" href="main-page.php">Sign Out</a></li>
