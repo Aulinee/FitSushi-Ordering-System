@@ -102,6 +102,11 @@ header a:hover {
   border-bottom: var(--red) 3px solid;
 }
 
+header .current {
+  border-bottom: var(--red) 3px solid;
+  position: relative;
+}
+
 header li {
   margin: 0px 20px;
   display: inline;
@@ -586,6 +591,186 @@ header .home-tab {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-color: var(--white);
   outline: none;
+}
+
+/*-----------------Sushi Box Page----------------*/
+.menupage-bg-1 {
+  background-image: url(../img/bg\ grey.png);
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+}
+
+.sushibox-detail {
+  font-family: "Poppins";
+  text-align: center;
+  width: 80%;
+  margin: auto;
+}
+
+.sushibox-detail h1 {
+  font-weight: bolder;
+  text-transform: uppercase;
+}
+
+.sushibox-detail table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tbl-header {
+  background-color: var(--red);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.tbl-header th {
+  padding: 1% 0;
+  color: white;
+  font-weight: normal;
+  font-size: 24px;
+}
+
+.tbl-content,
+.tbl-content-checkout {
+  background-color: var(--white);
+  height: 100%;
+  overflow-x: auto;
+  margin-top: 0px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.tbl-content th {
+  padding: 1% 0;
+  color: var(--red);
+  font-weight: normal;
+  font-size: 20px;
+}
+
+.tbl-content th input {
+}
+
+/* The container */
+.container {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: var(--white);
+  border: 1px solid var(--red);
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: var(--white);
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: var(--red);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.display-inline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.tbl-content-checkout th {
+  padding: 1% 0;
+  color: var(--black);
+  font-weight: normal;
+  font-size: 20px;
+}
+
+th .info-amount {
+  font-size: 30px;
+  color: var(--red);
+  font-weight: bolder;
+}
+
+th .info-checkout {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 3px;
+  color: var(--white);
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 1vw 3vw;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+th .info-checkout:hover {
+  opacity: 0.7;
+}
+
+.info-20 {
+  width: 20%;
+}
+
+.info-10 {
+  width: 10%;
+}
+.info-5 {
+  width: 5%;
+}
+.info-3 {
+  width: 3%;
+}
+.info-30 {
+  width: 30%;
+}
+
+.margin-empty-sushi {
+  padding: 5% 10%;
 }
 
 /*-----------------footer----------------*/
