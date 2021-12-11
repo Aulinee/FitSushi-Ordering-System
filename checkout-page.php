@@ -43,10 +43,7 @@
                             <label for="PaymentID"><b>Payment ID</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" value="
-                            Hello
-                                " type="text" readonly>
-                            </input>
+                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -55,10 +52,7 @@
                             <label for="PaymentID"><b>Full Name</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" value="
-                            Hello
-                                " type="text" readonly>
-                            </input>
+                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -67,10 +61,7 @@
                             <label for="PaymentID"><b>Address</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" value="
-                            Hello
-                                " type="text" readonly>
-                            </input>
+                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -79,10 +70,7 @@
                             <label for="PaymentID"><b>Mobile Number</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" value="
-                            Hello
-                                " type="text" readonly>
-                            </input>
+                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -91,10 +79,7 @@
                             <label for="PaymentID"><b>Total Amount (RM)</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" value="
-                            Hello
-                                " type="text" readonly>
-                            </input>
+                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -142,6 +127,12 @@
         <br>
         <br>
         <br>
+        <br><br>
+        <div class="sushibox-detail red-bg white-txt margin-empty-sushi payment-70">
+            <h1>YOUR ORDER IS DONE!</h1>
+            <h3>Sit back and relax while you wait for your order. Meeanwhile, discover our delicious sushi and its set in our MENU. </h3>
+        </div>
+        <br><br>
     </div>
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>

@@ -744,7 +744,7 @@ th .info-checkout {
   color: var(--white);
   font-weight: 700;
   text-transform: uppercase;
-  padding: 1vw 3vw;
+  padding: 0.7vw 3vw;
   font-size: 20px;
   border: none;
   cursor: pointer;
@@ -845,7 +845,7 @@ th .info-checkout:hover {
 }
 
 .payment-70 {
-  width: 70%;
+  width: 65%;
 }
 
 .payment-details input[type="text"],
@@ -873,6 +873,13 @@ th .info-checkout:hover {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.box-1,
+.box-2,
+.box-3 {
+  width: 95%;
+  margin: auto;
 }
 
 .box-2 img,
@@ -951,6 +958,8 @@ th .info-checkout:hover {
 [value="boost"]:checked ~ .box-6 [for="boost-method"] {
   border: solid 1px black;
 }
+
+/*-----------------User Profile Page----------------*/
 
 /*-----------------footer----------------*/
 .footer {

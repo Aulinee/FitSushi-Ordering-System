@@ -113,7 +113,7 @@
                                 <th class="info-30"></th>
                                 <th class="info-10">Total: </th>
                                 <th class="info-10"><span class="info-amount">RM53.00</span></th>
-                                <th class="info-10"><button class="info-checkout red-bg"><a class="white-txt" href="checkout-page.php">CHECKOUT</a></button></th>
+                                <th class="info-10"><a class="info-checkout red-bg white-txt" href="checkout-page.php">CHECKOUT</a></th>
                             </tr>
                         </tbody>
                     </table>
@@ -142,7 +142,7 @@
                                 <th class="info-30"></th>
                                 <th class="info-10">Total: </th>
                                 <th class="info-10"><span class="info-amount">RM53.00</span></th>
-                                <th class="info-10"><button class="info-checkout red-bg"><a class="white-txt" href="checkout-page.php">CHECKOUT</a></button></th>
+                                <th class="info-10"><a class="info-checkout red-bg white-txt" href="checkout-page.php">CHECKOUT</a></th>
                             </tr>
                         </tbody>
                     </table>
