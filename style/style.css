@@ -651,8 +651,8 @@ header .home-tab {
 .tbl-content th input {
 }
 
-/* The container */
-.container {
+/* The sushi-container   */
+.sushi-container {
   display: inline-block;
   position: relative;
   cursor: pointer;
@@ -664,7 +664,7 @@ header .home-tab {
 }
 
 /* Hide the browser's default checkbox */
-.container input {
+.sushi-container input {
   opacity: 0;
   cursor: pointer;
   height: 0;
@@ -674,8 +674,6 @@ header .home-tab {
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 0;
-  left: 0;
   height: 25px;
   width: 25px;
   background-color: var(--white);
@@ -683,12 +681,12 @@ header .home-tab {
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.sushi-container :hover input ~ .checkmark {
   background-color: var(--white);
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.sushi-container input:checked ~ .checkmark {
   background-color: var(--red);
 }
 
@@ -700,12 +698,12 @@ header .home-tab {
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.sushi-container input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+.sushi-container .checkmark:after {
   left: 9px;
   top: 5px;
   width: 5px;
@@ -715,6 +713,10 @@ header .home-tab {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.sushi-container label {
+  padding-left: 50px;
 }
 
 .display-inline {
@@ -771,6 +773,183 @@ th .info-checkout:hover {
 
 .margin-empty-sushi {
   padding: 5% 10%;
+}
+
+/*-----------------Check Out Detail----------------*/
+.checkout-detail {
+  font-family: "Poppins";
+  text-align: center;
+  width: 90%;
+  margin: auto;
+}
+
+.checkout-detail-title {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkout-detail-title .navigation-txt {
+  display: flex;
+  align-items: center;
+}
+
+.checkout-detail-title .title-page {
+  width: 80%;
+}
+
+.checkout-detail a {
+  color: var(--black);
+}
+
+.checkout-detail a:hover {
+  color: var(--red);
+  border-bottom: 3px solid var(--red);
+}
+
+.payment-details {
+  -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  background-color: #f1f1f1;
+  width: 60%;
+  margin: auto;
+  border-radius: 5px;
+  border-color: black;
+}
+
+.payment-details h4 {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.row-payment {
+  display: flex;
+  flex-direction: row;
+}
+
+.row-payment label {
+  text-align: left;
+}
+.row-payment input {
+  width: 10%;
+}
+
+.row-payment-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-30 {
+  width: 30%;
+}
+
+.payment-70 {
+  width: 70%;
+}
+
+.payment-details input[type="text"],
+.payment-details input[type="tel"] {
+  text-align: left;
+  width: 100%;
+  padding: 15px 0;
+  border: solid 1px #e4e4e4;
+  border-radius: 4px;
+  background: #fcfcfc;
+  font-size: 15px;
+  color: gray;
+}
+
+.cashbtn,
+.creditbtn,
+.onlinebtn,
+.grabpaybtn,
+.touchngobtn,
+.boostbtn {
+  padding: 10px;
+  margin: 1%;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.box-2 img,
+.box-3 img,
+.box-4 img,
+.box-5 img,
+.box-6 img {
+  width: 100px;
+}
+
+.box-1 label,
+.box-2 label,
+.box-3 label,
+.box-4 label,
+.box-5 label,
+.box-6 label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.gotopaymentbtn {
+  text-transform: uppercase;
+  background-color: var(--red);
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.filter-container {
+  margin: 0% 0% 0 0;
+}
+
+.filter-container img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.filter-container ol {
+  list-style: none;
+}
+
+.filter-container a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.filter-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.filter-container h1 a {
+  transition: all 0.1s;
+}
+
+.filter-container h1 a:hover {
+  background: var(--green);
+  color: var(--white);
+}
+
+.filter-container input[type="radio"] {
+  position: absolute;
+  left: -9999px;
+}
+
+[value="cash"]:checked ~ .box-1 [for="cash-method"],
+[value="card"]:checked ~ .box-2 [for="card-method"],
+[value="online"]:checked ~ .box-3 [for="online-banking-method"],
+[value="grabpay"]:checked ~ .box-4 [for="grabpay-method"],
+[value="touchngo"]:checked ~ .box-5 [for="touchngo-method"],
+[value="boost"]:checked ~ .box-6 [for="boost-method"] {
+  border: solid 1px black;
 }
 
 /*-----------------footer----------------*/

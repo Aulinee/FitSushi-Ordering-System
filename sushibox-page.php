@@ -50,9 +50,10 @@
                         <tr>
                             <th class="info-5"></th>
                             <th class="info-10">
-                                <label class="container">One
+                                <label class="sushi-container">
                                     <input type="checkbox" checked="checked">
                                     <span class="checkmark"></span>
+                                    <label class="">One</label>
                                 </label>
                             </th>
                             <th class="info-5"></th>
@@ -74,9 +75,10 @@
                         <tr>
                             <th class="info-5"></th>
                             <th class="info-10">
-                                <label class="container">One
+                                <label class="sushi-container">
                                     <input type="checkbox" checked="checked">
                                     <span class="checkmark"></span>
+                                    <label class="">One</label>
                                 </label>
                             </th>
                             <th class="info-5"></th>
@@ -101,17 +103,17 @@
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tbody>
                             <tr>
-                                <th class="info-3"></th>
                                 <th class="info-20">
-                                    <label class="container">SELECT ALL
+                                    <label class="sushi-container">
                                         <input type="checkbox" checked="checked">
                                         <span class="checkmark"></span>
+                                        <label class="">SELECT ALL</label>
                                     </label>
                                 </th>
                                 <th class="info-30"></th>
                                 <th class="info-10">Total: </th>
                                 <th class="info-10"><span class="info-amount">RM53.00</span></th>
-                                <th class="info-10"><button class="info-checkout red-bg">CHECKOUT</button></th>
+                                <th class="info-10"><button class="info-checkout red-bg"><a class="white-txt" href="checkout-page.php">CHECKOUT</a></button></th>
                             </tr>
                         </tbody>
                     </table>
@@ -130,17 +132,17 @@
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tbody>
                             <tr>
-                                <th class="info-3"></th>
                                 <th class="info-20">
-                                    <label class="container">SELECT ALL
+                                    <label class="sushi-container">
                                         <input type="checkbox" checked="checked">
                                         <span class="checkmark"></span>
+                                        <label class="">SELECT ALL</label>
                                     </label>
                                 </th>
                                 <th class="info-30"></th>
                                 <th class="info-10">Total: </th>
                                 <th class="info-10"><span class="info-amount">RM53.00</span></th>
-                                <th class="info-10"><button class="info-checkout red-bg">CHECKOUT</button></th>
+                                <th class="info-10"><button class="info-checkout red-bg"><a class="white-txt" href="checkout-page.php">CHECKOUT</a></button></th>
                             </tr>
                         </tbody>
                     </table>

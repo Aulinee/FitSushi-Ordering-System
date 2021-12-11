@@ -31,7 +31,7 @@
                 <h1>Don’t worry. We deliver fresh sushi wherever you are.</h1>
             </div>
             <div class="">
-                <button class="order-btn yellow-bg">Order Now</button>
+                <button class="order-btn yellow-bg" ><a class="white-txt" href="main-page.php">Order Now</a></button>
             </div>
         </div>
         <div class="landing-content-right">
