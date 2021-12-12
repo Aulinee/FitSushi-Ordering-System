@@ -17,7 +17,7 @@
     <title>Checkout Page</title>
 </head>
 <body>
-    <div class="menupage-bg-1">
+    <div>
         <header id="navbar" class="">
             <div class="container">
                 <img class="word-logo left" src="img/title.png" alt="logo">
@@ -25,8 +25,8 @@
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="sushibox-page.php">Sushi</a></li>
-                    <li><a class="home-tab" href="main-page.php">Redscarf</a></li>
-                    <li><a class="home-tab" href="main-page.php">Sign Out</a></li>
+                    <li><a class="home-tab" href="profile-page.php">Redscarf</a></li>
+                    <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
                 </ul>
             </div>
         </header>

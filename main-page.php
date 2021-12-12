@@ -21,9 +21,9 @@
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
-                    <li><a class="home-tab" href="main-page.php">Sushi</a></li>
-                    <li><a class="home-tab" href="main-page.php">Redscarf</a></li>
-                    <li><a class="home-tab" href="main-page.php">Sign Out</a></li>
+                    <li><a class="home-tab" href="sushibox-page.php">Sushi</a></li>
+                    <li><a class="home-tab" href="profile-page.php">Redscarf</a></li>
+                    <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
                 </ul>
             </div>
         </header>
@@ -164,17 +164,22 @@
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
     <script>
+        // When the user scrolls the page, execute myFunction
         window.onscroll = function() {myFunction()};
 
+        // Get the navbar
         var navbar = document.getElementById("flexbox");
+
+        // Get the offset position of the navbar
         var sticky = navbar.offsetTop;
 
+        // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
         function myFunction() {
-        if (window.pageYOffset >= sticky) {
-            navbar.classList.add("sticky")
-        } else {
-            navbar.classList.remove("sticky");
-        }
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky");
+            } else {
+                navbar.classList.remove("sticky");
+            }
         }
     </script>
 </body>

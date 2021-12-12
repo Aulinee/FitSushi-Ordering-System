@@ -8,7 +8,28 @@
 }
 
 html {
+  min-height: 100%;
+  background-image: url(../img/bg\ grey.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   scroll-behavior: smooth;
+  background-attachment: fixed;
+}
+
+/*custom scrollbar*/
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(transparent, var(--red));
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(transparent, var(--white));
 }
 
 body {
@@ -78,6 +99,20 @@ a {
 
 .uppercase-txt {
   text-transform: uppercase;
+}
+/* For sticky header */
+.content {
+  width: 100%;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
 }
 
 /*header*/
@@ -281,6 +316,7 @@ header .home-tab {
 
 /*-----------------Main Page - about us----------------*/
 .about-us {
+  background-color: var(--white);
   margin: auto;
   width: 100%;
   font-family: "NATS";
@@ -450,11 +486,6 @@ header .home-tab {
 }
 
 /*-----------------Menu Page----------------*/
-.menupage-bg {
-  background-image: url(../img/bg\ grey.png);
-  background-repeat: repeat-y;
-  background-size: cover;
-}
 
 .menu-detail {
   font-family: "Poppins";
@@ -594,14 +625,6 @@ header .home-tab {
 }
 
 /*-----------------Sushi Box Page----------------*/
-.menupage-bg-1 {
-  background-image: url(../img/bg\ grey.png);
-
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: repeat;
-  background-size: cover;
-}
 
 .sushibox-detail {
   font-family: "Poppins";
@@ -960,20 +983,68 @@ th .info-checkout:hover {
 }
 
 /*-----------------User Profile Page----------------*/
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .profile-detail {
   font-family: "Poppins";
   text-align: center;
   width: 90%;
+  height: 100%;
   margin: auto;
 }
 
 .profile-tbl {
   display: flex;
+  margin: auto;
+  width: 90%;
 }
 
 .sidebar-profile {
+  padding-top: 5%;
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.sidebar-profile i {
+  margin: 0 auto;
+  width: 70%;
+  border-radius: 50%;
+  border: 2px solid var(--red);
+  font-size: 130px;
+}
+
+.sidebar-profile-btn {
+  outline: none;
+  border: none;
+  background: #fdfdfd;
+  margin: 1% 0;
+  padding: 15px;
+  font-size: 18px;
+  font-family: "Poppins";
+}
+
+.sidebar-btn-active,
+.sidebar-profile-btn:hover {
+  margin: 1% 0;
+  padding: 15px;
+  font-size: 18px;
+  font-family: "Poppins";
+  border-left: 10px solid var(--red);
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+  color: var(--red);
+  outline: none;
+  background: #fdfdfd;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .main-profile {
@@ -983,23 +1054,147 @@ th .info-checkout:hover {
 
 .main-profile-detail {
   display: flex;
+  text-align: left;
 }
 
 .main-profile-detail-left {
-}
-
-.username-detail {
+  margin-top: 4%;
+  margin-bottom: 4%;
+  width: 40%;
 }
 
 .main-profile-detail-right {
+  margin-top: 4%;
+  margin-bottom: 4%;
+  width: 40%;
 }
 
-.profile-width-20 {
+.order-status-filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 90%;
+  margin: 0 auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
+}
+
+.order-status-filter h3 {
+  padding: 1% 0;
+  margin: 0;
   width: 20%;
 }
 
+.status-active {
+  border-bottom: 2px solid var(--red);
+  color: var(--red);
+}
+
+.order-status-filter a {
+  color: #000;
+}
+
+.order-status-filter a:hover {
+  color: var(--red);
+}
+
+.order-content-all {
+  width: 90%;
+  margin: 0 auto;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
+}
+
+.user-detail div {
+  width: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+}
+
+.gender-detail {
+  flex: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.gender-detail label {
+  font-size: 17px;
+  padding: 0px 30px;
+}
+
+.gender-detail input {
+}
+
+.user-detail {
+  margin-bottom: 5%;
+}
+
+.user-detail-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-detail-btn {
+  margin: 0;
+  width: 60%;
+  float: right;
+}
+
+.save-edit-btn {
+  width: 100%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+  padding: 0.7vw 1.5vw;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.save-edit-btn:hover {
+  opacity: 0.7;
+}
+
+.user-detail-col input {
+  padding: 6% 5%;
+}
+
+.user-detail h3 {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.input-detail {
+  width: 94%;
+  padding: 3%;
+  font-size: 20px;
+  color: var(--black);
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  outline: none;
+  border: none;
+}
+
+.profile-margin-3 {
+  margin-right: 3%;
+}
+
+.profile-width-20 {
+  width: 15%;
+}
+.profile-width-50 {
+  width: 50%;
+}
+
+.profile-width-5 {
+  width: 5%;
+}
+
 .profile-width-80 {
-  width: 80%;
+  width: 95%;
 }
 
 /*-----------------footer----------------*/
