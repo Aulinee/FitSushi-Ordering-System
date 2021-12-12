@@ -12,6 +12,9 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Poppins:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
     <title>User Profile</title>
 </head>
@@ -101,7 +104,7 @@
                             </div>
                             <br>
                             <div class="user-detail-btn">
-                                <button id="save-edit" onclick="disableInfoInput()" type="submit" class="save-edit-btn red-bg">Save Changes</button>
+                                <button disabled id="save-edit" onclick="disableInfoInput()" type="submit" class="save-edit-btn red-bg">Save Changes</button>
                             </div>
                         </div>
                         <div class="profile-width-5"></div>
@@ -207,11 +210,97 @@
                         <h3><a href="">Cancel</a></h3>
                     </div>
                     <br>
-                    <div class="seriesinput-icons align-center">
+                    <!-- <div class="seriesinput-icons align-center">
                         <i class="fa fa-search seriesicon"></i>
                         <input class="seriesinput-field" type="text" id="seriesInput" onkeyup="filterSeries()" placeholder="Search by cast name.." title="Type in a name">
+                    </div> -->
+                    <div class="order-content-all flex-col">
+                        <div class="set-layout">
+                            <div class="set-layout-header-1 red-bg">
+                                <div class="status-div">
+                                    <h3 class="white-txt">Completed</h3>
+                                </div>
+                                <div class="flex-row set-layout-header">
+                                    <h3 class="set-name white-txt uppercase margin-0">Rindok Set</h3>
+                                    <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                </div>
+                            </div>
+                            <div class="flex-row set-layout-content">
+                                <div class="sushi-order-img">
+                                    <img class="" src="img/sushi.png" alt="logo">
+                                </div>
+                                <div class="sushi-order-detail">
+                                    <div class="">
+                                        <div class="sushi-order-detail-1 flex-row ">
+                                            <h3>Basic Sushi x4</h3>
+                                            <h3>RM 5.00</h3>
+                                        </div>
+                                        <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                    </div>
+                                    <hr class="hr-line">
+                                    <div class="">
+                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-row set-layout-content">
+                                <div class="sushi-order-img">
+                                    <img class="" src="img/sushi.png" alt="logo">
+                                </div>
+                                <div class="sushi-order-detail">
+                                    <div class="">
+                                        <div class="sushi-order-detail-1 flex-row ">
+                                            <h3>Basic Sushi x4</h3>
+                                            <h3>RM 5.00</h3>
+                                        </div>
+                                        <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                    </div>
+                                    <hr class="hr-line">
+                                    <div class="">
+                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sushi-order-total flex-row">
+                            <h2>Order Total: RM 40.00</h2>
+                            <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                        </div>
                     </div>
-                    <div class="order-content-all">
+                    <div class="order-content-all flex-col">
+                        <div class="set-layout">
+                            <div class="set-layout-header-1 red-bg">
+                                <div class="status-div">
+                                    <h3 class="white-txt">Completed</h3>
+                                </div>
+                                <div class="flex-row set-layout-header">
+                                    <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                    <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                </div>
+                            </div>
+                            <div class="flex-row set-layout-content">
+                                <div class="sushi-order-img">
+                                    <img class="" src="img/sushi.png" alt="logo">
+                                </div>
+                                <div class="sushi-order-detail">
+                                    <div class="">
+                                        <div class="sushi-order-detail-1 flex-row ">
+                                            <h3>Basic Sushi x4</h3>
+                                            <h3>RM 5.00</h3>
+                                        </div>
+                                        <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                    </div>
+                                    <hr class="hr-line">
+                                    <div class="">
+                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sushi-order-total flex-row">
+                            <h2>Order Total: RM 20.00</h2>
+                            <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                        </div>
                     </div>
                 </div>
             </div>

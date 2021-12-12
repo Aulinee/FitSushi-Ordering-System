@@ -1070,39 +1070,162 @@ th .info-checkout:hover {
 }
 
 .order-status-filter {
+  text-transform: uppercase;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   width: 90%;
   margin: 0 auto;
-  background: #ffffff;
+  background: var(--red);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
 }
 
 .order-status-filter h3 {
+  font-size: 15px;
   padding: 1% 0;
   margin: 0;
   width: 20%;
 }
 
 .status-active {
-  border-bottom: 2px solid var(--red);
-  color: var(--red);
+  border-bottom: 5px solid var(--yellow);
 }
 
 .order-status-filter a {
-  color: #000;
+  color: var(--white);
 }
 
 .order-status-filter a:hover {
-  color: var(--red);
+  color: var(--black);
 }
 
 .order-content-all {
+  font-family: "Poppins", sans-serif;
   width: 90%;
-  margin: 0 auto;
-  background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.12);
+  margin: 2% auto;
+  background: var(--red);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.alacarte-layout {
+}
+
+.set-layout {
+  background-color: #fff;
+}
+
+.set-layout-header-1 {
+  padding: 1%;
+}
+
+.hr-line {
+  border-right: 1px solid gray;
+}
+
+.status-div {
+  text-align: right;
+  padding: 0 1%;
+}
+
+.status-div h3 {
+  margin: 0;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.set-name {
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.order-date-txt {
+  color: #e2929c;
+  font-size: 15px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.set-layout-content {
+  border-bottom: 1px solid var(--red);
+  padding: 1%;
+}
+
+.sushi-order-img {
+  width: 15%;
+  border-right: 1px solid gray;
+}
+
+.sushi-order-img img {
+  width: 100%;
+}
+
+.sushi-order-detail {
+  width: 85%;
+  padding: 1%;
+}
+
+.sushi-order-dsc {
+  font-size: 15px;
+  margin: 0;
+  font-style: italic;
+  text-align: left;
+}
+
+.sushi-order-detail-1 {
+  justify-content: space-between;
+  color: var(--blue);
+}
+
+.sushi-order-subtotal {
+  font-size: 20px;
+  color: var(--yellow);
+  text-align: end;
+}
+.sushi-order-total {
+  justify-content: flex-end;
+  padding-top: 1%;
+}
+
+.sushi-order-total h2 {
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--white);
+}
+
+.buy-again-btn {
+  background-color: var(--yellow);
+  margin: 0 1%;
+  height: fit-content;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 2px;
+  color: var(--white);
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 1% 2%;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled,
+button[disabled] {
+  opacity: 0.7;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.margin-0 {
+  margin: 0;
+}
+
+.set-layout-header {
+  padding: 0 1%;
+  justify-content: space-between;
 }
 
 .user-detail div {
