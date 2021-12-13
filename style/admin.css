@@ -1,0 +1,95 @@
+:root {
+    --yellow: #eaa027;
+    --red: #c1273a;
+    --blue: #455b7c;
+    --darkblue: #1a212c;
+    --white: #fff;
+    --black: #000;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: "Poller One", "cursive", "NATS", sans-serif;
+  }
+  
+  /*global*/
+  .container {
+    margin: auto;
+    width: 90%;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    list-style: none;
+    text-decoration: none;
+  }
+  
+  .right {
+    float: right;
+  }
+  
+  .left {
+    float: left;
+  }
+  
+  .red-border {
+    border: solid 3px var(--red);
+  }
+  
+  .white-border {
+    border: solid 3px var(--white);
+  }
+  
+  .yellow-bg {
+    background-color: var(--yellow);
+  }
+  
+  .red-bg {
+    background-color: var(--red);
+  }
+  
+  .blue-bg {
+    background-color: var(--blue);
+  }
+  
+  .yellow-txt {
+    color: var(--yellow);
+  }
+  
+  .red-txt {
+    color: var(--red);
+  }
+  
+  .white-txt {
+    color: var(--white);
+  }
+  
+  .uppercase-txt {
+    text-transform: uppercase;
+  }
+
+  /*-----------------Home Page----------------*/
+  .admin-page{
+
+  }
+
+  .admin-page-sidebar{
+
+  }
+  
+  .admin-page-dashboard{
+
+  }
+  
