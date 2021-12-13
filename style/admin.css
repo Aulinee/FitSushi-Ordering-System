@@ -1,0 +1,153 @@
+:root {
+  --yellow: #eaa027;
+  --red: #c1273a;
+  --blue: #455b7c;
+  --darkblue: #1a212c;
+  --white: #fff;
+  --black: #000;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poller One", "cursive", "NATS", sans-serif;
+}
+
+/*global*/
+.container {
+  margin: auto;
+  width: 90%;
+  }
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+.right {
+  float: right;
+}
+  
+.left {
+  float: left;
+}
+
+.red-border {
+  border: solid 3px var(--red);
+}
+
+.white-border {
+  border: solid 3px var(--white);
+}
+
+.yellow-bg {
+  background-color: var(--yellow);
+}
+
+.red-bg {
+  background-color: var(--red);
+}
+
+.blue-bg {
+  background-color: var(--blue);
+}
+
+.yellow-txt {
+  color: var(--yellow);
+}
+
+.red-txt {
+  color: var(--red);
+}
+
+.white-txt {
+  color: var(--white);
+}
+
+.uppercase-txt {
+  text-transform: uppercase;
+}
+
+/*-----------------Home Page----------------*/
+.admin-page{
+  font-family: 'Roboto';
+  font-size: 5px;
+}
+
+.admin-pic{
+  border: 4px solid var(--white);
+  width: 100px;
+  height: 100px;
+}
+
+.admin-page-sidebar{
+  color: var(--white);
+  background-color: var(--blue);
+  width: 200px;
+  height: 100%; 
+  position: fixed; 
+  z-index: 1; 
+  top: 0; 
+  left: 0;
+  overflow-x: hidden; 
+}
+
+h1{
+  font-family: 'Roboto';
+  font-size: 20px;
+  padding: 10px;
+}
+
+h2{
+  font-family: 'Roboto';
+  font-size: 12px;
+  padding: 10px;
+  color: var(--red);
+}
+
+ul{
+  list-style-type: none;
+  font-family: 'NATS';
+  font-size: 20px;
+}
+
+li{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+li:hover{
+  background-color: var(--white);
+  color: var(--black);
+}
+.admin-page-dashboard{
+  width: 100%;
+  height: 100%;
+
+}
+
+.footer{
+  font-family: 'Neucha';
+  font-size: 3px;
+  text-align: center;
+  background-color: var(--black);
+  color: var(--white);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding-bottom: 20px;
+  height: 40px;
+  width: 100%;
+}
