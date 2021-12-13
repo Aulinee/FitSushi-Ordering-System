@@ -262,6 +262,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="set-layout">
+                            <div class="set-layout-header-1 red-bg">
+                                <div class="flex-row set-layout-header">
+                                    <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                </div>
+                            </div>
+                            <div class="flex-row set-layout-content">
+                                <div class="sushi-order-img">
+                                    <img class="" src="img/sushi.png" alt="logo">
+                                </div>
+                                <div class="sushi-order-detail">
+                                    <div class="">
+                                        <div class="sushi-order-detail-1 flex-row ">
+                                            <h3>Basic Sushi x4</h3>
+                                            <h3>RM 5.00</h3>
+                                        </div>
+                                        <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                    </div>
+                                    <hr class="hr-line">
+                                    <div class="">
+                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="sushi-order-total flex-row">
                             <h2>Order Total: RM 40.00</h2>
                             <a class="buy-again-btn white-txt" href="">Buy Again</a>
