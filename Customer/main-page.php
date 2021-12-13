@@ -10,7 +10,7 @@
     <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Neucha" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="../style/style.css">
     <title>Home Page</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
-                    <li><a class="home-tab" href="sushibox-page.php">Sushi</a></li>
+                    <li><a class="home-tab" href="sushibox-page.php">SushiBox</a></li>
                     <li><a class="home-tab" href="profile-page.php">Redscarf</a></li>
                     <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
                 </ul>
@@ -126,7 +126,7 @@
             <div class="width-4"></div>
         </div>
         <div class="padding-tb">
-            <button class="order-btn yellow-bg">See More</button>
+            <button class="order-btn yellow-bg"><a class="white-txt" href="sushibox-page.php">SEE MORE</a></button>
         </div>
     </div>
     <div class="abt-contact blue-bg white-txt" id="contact-section">

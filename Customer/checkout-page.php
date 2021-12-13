@@ -13,7 +13,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="../style/style.css">
     <title>Checkout Page</title>
 </head>
 <body>
@@ -24,7 +24,7 @@
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
-                    <li><a class="home-tab" href="sushibox-page.php">Sushi</a></li>
+                    <li><a class="home-tab" href="sushibox-page.php">SushiBox</a></li>
                     <li><a class="home-tab" href="profile-page.php">Redscarf</a></li>
                     <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
                 </ul>
