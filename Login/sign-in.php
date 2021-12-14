@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
     <title>Login Main</title>
     <style>
@@ -26,7 +27,7 @@
         }
 
         .main-container{
-            margin: 5% auto;
+            margin: auto;
             width: 50%;
         }
         
@@ -212,6 +213,26 @@
             background: linear-gradient(transparent, #ffa408);
         }
 
+        .backbtn{
+            margin: 0 0 0 1%;
+        }
+
+        .backbtn #backtxt{
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 20px;
+            transition: ease-in-out 0.5s;
+        }
+
+        .backbtn #backtxt a{
+            text-decoration: none;
+            color: black;
+        }
+
+        .backbtn #backtxt a:hover{
+            color: #794f08;
+            border-bottom: 2px solid #794f08;
+        }
 
         @media (max-width: 1300px) {
             .container{
@@ -234,6 +255,9 @@
 </head>
 <body>
     <div class="main-container">
+        <div class="backbtn">
+            <h3 id="backtxt"><a href="../index.php" ><i class="fa fa-arrow-left" style="font-size:24px"></i>  Back To Main</a></h3>
+        </div>
         <div class="container">
             <div class="left">
                 <div class="word">
@@ -243,7 +267,7 @@
                     <h1 id="welcome">Welcome!</h1>
                     <h1 id="sign">Sign in here</h1>
                     <h1 id="newhere">new user here?<b> Sign up now!</b></h1>
-                    <h3 id="create"><a href="register.php" >Create An Account</a></h3>
+                    <h3 id="create"><a href="register-user.php" >Create An Account</a></h3>
                 </div>
             </div>
             <div class="right">
@@ -259,11 +283,11 @@
                         </div>
                         <div class="row-log">
                             <div class="col-log">
-                                <button class="butang-log"><a href="loginAdmin.php">ADMIN</a>
+                                <button class="butang-log"><a href="sign-in-admin.php">ADMIN</a>
                                 </button>
                             </div>
                             <div class="col-log">
-                                <button class="butang-log margin"><a href="login.php">CUSTOMER</a>
+                                <button class="butang-log margin"><a href="sign-in-user.php">CUSTOMER</a>
                                 </button>
                             </div>
                         </div>

@@ -140,14 +140,12 @@
 
         .word-2 #signpage a{
             cursor: pointer;
-            color: black;
+            color: #5e451c;
             text-decoration: none;
             font-size: 20px;
-            transition: ease-in-out 0.5s;
         }
 
         .word-2 #signpage a:hover{
-            color: #794f08;
             border-bottom: 2px solid #794f08;
         }
 
@@ -317,6 +315,27 @@
             margin: auto;
         }
 
+        .backbtn{
+            margin: 0 0 0 1%;
+        }
+
+        .backbtn #backtxt{
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 20px;
+            transition: ease-in-out 0.5s;
+        }
+
+        .backbtn #backtxt a{
+            text-decoration: none;
+            color: black;
+        }
+
+        .backbtn #backtxt a:hover{
+            color: #794f08;
+            border-bottom: 2px solid #794f08;
+        }
+
 
         @media (max-width: 1300px) {
             .container{
@@ -338,6 +357,9 @@
 </head>
 <body>
     <div class="main-container">
+        <div class="backbtn">
+            <h3 id="backtxt"><a href="../index.php" ><i class="fa fa-arrow-left" style="font-size:24px"></i>  Back To Main</a></h3>
+        </div>
         <div class="container">
             <div class="left">
                 <div class="margin-auto">
