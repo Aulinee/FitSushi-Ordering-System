@@ -54,7 +54,7 @@
                     <h1>Don't worry. We deliver fresh wherever you are.</h1>
                 </div>
                 <div class="welcome-5">
-                    <button class="order-btn red-bg">Order Now</button>
+                    <button class="order-btn red-bg"><a class="white-txt" href="Login/sign-in.php">Order Now</a></button>
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
             <div class="width-4"></div>
         </div>
         <div class="padding-tb">
-        <button class="order-btn yellow-bg"><a class="white-txt" href="Customer/sushibox-page.php">SEE MORE</a></button>
+        <button class="order-btn yellow-bg"><a class="white-txt" href="Customer/menu-page-public.php">SEE MORE</a></button>
         </div>
     </div>
     <div class="abt-contact blue-bg white-txt" id="contact-section">

@@ -1,7 +1,12 @@
+<?php
+date_default_timezone_set("Asia/Kuala_Lumpur");
+include '../Login/sessionCustomer.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,20 +14,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Neucha" />
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Home Page</title>
 </head>
 <body>
     <div class="mainpage-bg">
         <header id="navbar" class="">
             <div class="container">
-                <img class="word-logo left" src="img/title.png" alt="logo">
+                <img class="word-logo left" src="../img/title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="sushibox-page.php">SushiBox</a></li>
-                    <li><a class="home-tab" href="profile-page.php">Redscarf</a></li>
+                    <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
                     <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
                 </ul>
             </div>
@@ -65,19 +73,19 @@
         <div class="abt-us-detail">
             <div class="width-20"></div>
             <div class="width-20">
-                <img class="abt-us-icon" src="img/fresh2.png" alt="logo">
+                <img class="abt-us-icon" src="../img/fresh2.png" alt="logo">
                 <br>
                 <h3 class="abt-us-txt">Guaranteed with fresh ingredient</h3>
             </div>
             <div class="width-10"></div>
             <div class="width-20">
-                <img class="abt-us-icon" src="img/fast-delivery2.png" alt="logo">
+                <img class="abt-us-icon" src="../img/fast-delivery2.png" alt="logo">
                 <br>
                 <h3 class="abt-us-txt">Fast Delivery</h3>
             </div>
             <div class="width-10"></div>
             <div class="width-20">
-                <img class="abt-us-icon" src="img/payment-method2.png" alt="logo">
+                <img class="abt-us-icon" src="../img/payment-method2.png" alt="logo">
                 <br>
                 <h3 class="abt-us-txt">Online payment method available.</h3>
             </div>
@@ -90,35 +98,35 @@
         <div class="menu-display white-border">
             <div class="width-4"></div>
             <div class="menu-display-detail">
-                <img class="menu-icon" src="img/sushi.png" alt="logo">
+                <img class="menu-icon" src="../img/sushi.png" alt="logo">
                 <div class="blue-bg">
                     <h1 class="white-txt">Fried Sushi</h1>
                 </div>
             </div>
             <div class="width-1"></div>
             <div class="menu-display-detail">
-                <img class="menu-icon" src="img/sushi.png" alt="logo">
+                <img class="menu-icon" src="../img/sushi.png" alt="logo">
                 <div class="blue-bg">
                     <h1 class="white-txt">Fried Sushi</h1>
                 </div>
             </div>
             <div class="width-1"></div>
             <div class="menu-display-detail">
-                <img class="menu-icon" src="img/sushi.png" alt="logo">
+                <img class="menu-icon" src="../img/sushi.png" alt="logo">
                 <div class="blue-bg">
                     <h1 class="white-txt">Fried Sushi</h1>
                 </div>
             </div>
             <div class="width-1"></div>
             <div class="menu-display-detail">
-                <img class="menu-icon" src="img/sushi.png" alt="logo">
+                <img class="menu-icon" src="../img/sushi.png" alt="logo">
                 <div class="blue-bg">
                     <h1 class="white-txt">Fried Sushi</h1>
                 </div>
             </div>
             <div class="width-1"></div>
             <div class="menu-display-detail">
-                <img class="menu-icon" src="img/sushi.png" alt="logo">
+                <img class="menu-icon" src="../img/sushi.png" alt="logo">
                 <div class="blue-bg">
                     <h1 class="white-txt">Fried Sushi</h1>
                 </div>

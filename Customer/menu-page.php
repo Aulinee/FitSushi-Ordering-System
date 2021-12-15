@@ -1,3 +1,8 @@
+<?php
+date_default_timezone_set("Asia/Kuala_Lumpur");
+include '../Login/sessionCustomer.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,19 +17,19 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../style/style.css">
+    <link href="../style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Menu</title>
 </head>
 <body>
     <div>
         <header id="navbar" class="">
             <div class="container">
-                <img class="word-logo left" src="../img/logo-title.png" alt="logo">
+                <img class="word-logo left" src="../img/title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="sushibox-page.php">Sushi</a></li>
-                    <li><a class="home-tab" href="profile-page.php">Redscarf</a></li>
+                    <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
                     <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
                 </ul>
             </div>

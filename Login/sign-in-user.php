@@ -1,40 +1,35 @@
-<!-- <?php 
-include 'dashboard/dbConnection.php';
+<?php 
+include '../database/dbConnection.php'; 
+include '../class/UserClass.php';
 
 $error ="";
+$userObj = new User($conn);
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     // username and password sent from form 
-    
     $myusername = $_POST['usern'];
     $mypassword = $_POST['passw']; 
-    
-    $sql = "SELECT ID FROM customer WHERE Username = '$myusername' and Password = '$mypassword'";
-    
-    
-    $result = mysqli_query($conn, $sql) or die("Error: ".mysqli_error($conn));
-    $row = mysqli_fetch_array($result);
-    
-    $count = mysqli_num_rows($result);
-    
-    // If result matched $myusername and $mypassword, table row must be 1 row
-      
-    if($count == 1) {
+
+    $authentication = $userObj->loginAuthentication($myusername,$mypassword);
+
+    if(!$authentication){
+        $error = "Your Login Name or Password is invalid";
+    }else{
         // Set sessions
         if(!isset($_SESSION)) {
-           session_start();
+            session_start();
         }
-       $_SESSION['login_user'] = $myusername;
+        $_SESSION['login_user'] = $myusername;
+        $_SESSION['login_pass'] = $mypassword;
+
         // Login time is stored in a session variable 
         $_SESSION["login_time_stamp"] = time(); 
-          
-       header("location: main.php");
-    }else {
-       $error = "Your Login Name or Password is invalid";
+        
+        header('location:../Customer/main-page.php');
     }
-    
+
 }
-?> -->
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -373,7 +368,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container">
             <div class="left">
                 <div class="word">
-                    <img src="../img/logo.png" alt="small-logo">
+                    <img src="../img/logo-title.png" alt="small-logo">
                 </div>
                 <div class="word-2">
                     <h1 id="welcome">Welcome!</h1>
@@ -430,21 +425,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             alert('Please enter your username');
             return false;
         }
-        else if(!usrname.test(uname))
-        {
-            alert('Name field required only alphabet characters');
-            return false;
-        }
         else if(pwd=='')
         {
              alert('Please enter Password');
             return false;
         }
-        else if(!pwd_expression.test(pwd))
-        {
-            alert ('At least ONE Uppercase, ONE Lowercase, ONE Special character, ONE Numeric letter and 6 DIGITS LENGTH are required in Password filed');
-            return false;
-        }
+
     }
 
         function clearFunc()
