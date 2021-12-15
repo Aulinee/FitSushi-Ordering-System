@@ -22,9 +22,8 @@
                 <img class="word-logo left" src="../img/logo-title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="../index.php">Home</a></li>
-                    <li><a class="home-tab" href="Customer/menu-page-public.php">Menu</a></li>
+                    <li><a class="home-tab current" href="Customer/menu-page-public.php">Menu</a></li>
                     <li><a class="home-tab" href="../Login/sign-in.php">Sign In</a></li>
-                    <!-- <li><a class="home-tab" href="signin-page.php">Sign In</a></li> -->
                 </ul>
             </div>
         </header>

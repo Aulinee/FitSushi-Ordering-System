@@ -27,10 +27,10 @@ include '../Login/sessionCustomer.php';
                 <img class="word-logo left" src="../img/title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
-                    <li><a class="home-tab" href="menu-page.php">Menu</a></li>
+                    <li><a class="home-tab current" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="sushibox-page.php">Sushi</a></li>
                     <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
-                    <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
+                    <li><a class="home-tab" href="logout.php">Sign Out</a></li>
                 </ul>
             </div>
         </header>

@@ -14,6 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(!$authentication){
         $error = "Your Login Name or Password is invalid";
+        
     }else{
         // Set sessions
         if(!isset($_SESSION)) {
@@ -368,7 +369,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="container">
             <div class="left">
                 <div class="word">
-                    <img src="../img/logo-title.png" alt="small-logo">
+                    <img src="../img/logo.png" alt="small-logo">
                 </div>
                 <div class="word-2">
                     <h1 id="welcome">Welcome!</h1>

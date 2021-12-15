@@ -27,11 +27,11 @@ include '../Login/sessionCustomer.php';
             <div class="container">
                 <img class="word-logo left" src="../img/title.png" alt="logo">
                 <ul class="right">
-                    <li><a class="home-tab" href="main-page.php">Home</a></li>
+                    <li><a class="home-tab current" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="sushibox-page.php">SushiBox</a></li>
                     <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
-                    <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
+                    <li><a class="home-tab" href="logout.php">Sign Out</a></li>
                 </ul>
             </div>
         </header>
@@ -63,7 +63,7 @@ include '../Login/sessionCustomer.php';
                     <h1>Don't worry. We deliver fresh wherever you are.</h1>
                 </div>
                 <div class="welcome-5">
-                    <button class="order-btn red-bg">Order Now</button>
+                    <button class="order-btn red-bg"><a class="white-txt" href="menu-page.php">Order Now</a></button>
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@ include '../Login/sessionCustomer.php';
             <div class="width-4"></div>
         </div>
         <div class="padding-tb">
-            <button class="order-btn yellow-bg"><a class="white-txt" href="sushibox-page.php">SEE MORE</a></button>
+            <button class="order-btn yellow-bg"><a class="white-txt" href="menu-page.php">SEE MORE</a></button>
         </div>
     </div>
     <div class="abt-contact blue-bg white-txt" id="contact-section">

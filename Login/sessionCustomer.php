@@ -11,7 +11,7 @@
 
     if(isset($_SESSION['login_user']))  
     { 
-        if(time()-$_SESSION["login_time_stamp"] > 1800)   
+        if(time()-$_SESSION["login_time_stamp"] > 180000)   
         { 
             session_unset(); 
             session_destroy(); 

@@ -22,6 +22,6 @@ $userObj->checkExistUsername("kiannyp");
 // echo $hello[9];
 // echo $hello[10];
 
-
+// $userObj->updateProfile(1, 'sebi37', 'Sebidium', 'sebisebi@gmail.com', 'Ass1234', 112345678, 'male', 'Lorong 4, No 10, Taman Desa Wira', 93250, 'Kuching', 'Sarawak');
 
 ?>

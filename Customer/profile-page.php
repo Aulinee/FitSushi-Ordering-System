@@ -2,6 +2,127 @@
 date_default_timezone_set("Asia/Kuala_Lumpur");
 include '../Login/sessionCustomer.php';
 
+$fnameErr = $usernameErr = $emailErr = $mobileNumErr = $genderErr = $addressErr = $postcodeErr = $cityErr = $stateErr = $passwordErr = $confirmPassErr = "";
+$fname_edit = $username_edit = $email_edit = $mobileNum_edit = $gender_edit = $address_edit = $postcode_edit = $city_edit = $state_edit = $password_edit = "";
+$boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = false;
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //header('location:sign-in-user.php');
+    //full name validation
+    $fname_edit = $_POST["fname_edit"];
+    if (empty($fname_edit)) {
+        $fnameErr = "Full name is required";
+    } else {
+        $boolFname = true;
+    }
+    
+    //username validation
+    $username_edit = $_POST["usern_edit"];
+    if (empty($username_edit)) {
+        $usernameErr = "Username is required";
+    }else if($userObj->checkExistUsername($username_edit)){
+        $usernameErr = "This username already exist!";
+    }else {
+        $boolUsername = true;
+    }
+
+    //email validation
+    if (empty($_POST["email_edit"])) {
+        $emailErr = "Email is required";
+    } else {
+        $email_edit = test_input($_POST["email_edit"]);
+        // check if e-mail address is well-formed
+        if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+        } else {
+            $boolEmail = true;
+        }
+    }
+
+    //mobile number validation
+    if (empty($_POST["phone_edit"])) {
+        $mobileNumErr = "Mobile number is required";
+    } else {
+        $mobileNum_edit = test_input($_POST["phone_edit"]);
+        // check if phone number is valid
+        if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
+            $mobileNumErr = "Invalid mobile number format";
+        } else {
+            $boolMobileNum = true;
+        }
+    }
+
+    //empty button validation
+    //gender
+    if (!isset($_POST["gender"])) {
+        $genderErr = "Gender is required";
+    } else {
+        $gender_edit = $_POST["gender"];
+        $boolGender = true;
+    }
+
+    //address
+    $address_edit = $_POST["add-1_edit"];
+    if (empty($address_edit)) {
+      $addressErr = "Address Line is required!";
+    } else {
+      $boolAddress= true;
+    }
+
+    //postcode
+    $postcode_edit = $_POST["post_edit"];
+    if (empty($postcode_edit)) {
+      $postcodeErr = "Postcode is required";
+    } else {
+      $boolPostcode = true;
+    }
+
+    //city
+    $city_edit = $_POST["city_edit"];
+    if (empty($city_edit)) {
+        $cityErr = "City name is required";
+    } else {
+        $boolCity = true;
+    }
+
+    //state
+    $state_edit = $_POST['state_edit'];
+    if ($state_edit === "select") {
+        $stateErr = "Please select your state.";
+    } else {
+        $boolState = true;
+    }
+
+    //password validation
+    if (empty($_POST["passw_edit"])) {
+        $passwordErr = "Password is required";
+    } else {
+        $password_edit = test_input($_POST["passw_edit"]);
+        $boolPassword = true;
+    }
+
+    //confirmation feedback
+    if (isset($_POST["update_edit"]) && ($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = true) ) {
+        $updateStatus = $userObj->updateProfile($userid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
+        if ($updateStatus){
+            echo "<script>
+            window.location.href='profile-page.php';
+            </script>";
+        } else {
+            echo "<script>
+            window.location.href='profile-page.php';
+            </script>";
+        }
+    }
+}
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,8 +153,8 @@ include '../Login/sessionCustomer.php';
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="sushibox-page.php">SushiBox</a></li>
-                    <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
-                    <li><a class="home-tab" href="signout-page.php">Sign Out</a></li>
+                    <li><a class="home-tab current" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
+                    <li><a class="home-tab" href="logout.php">Sign Out</a></li>
                 </ul>
             </div>
         </header>
@@ -48,23 +169,23 @@ include '../Login/sessionCustomer.php';
                     <button id="myorder" class="sidebar-profile-btn" onclick="myOrder()">Order History</button>       
                 </div>
                 <div class="main-profile profile-width-80">
-                    <div id="view-profile-div" class="">
+                    <div id="view-profile-div">
                         <div class="main-profile-detail">
                             <div class="profile-width-5"></div>
                             <div class="main-profile-detail-left ">
                                 <div class="user-detail">
                                     <h3>Username</h3>
-                                    <input class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                                    <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
                                 </div>
                                 <div class="user-detail">
                                     <h3>Full Name</h3>
                                     <div>
-                                        <input id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                        <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
                                     </div>
                                 </div>
                                 <div class="user-detail">
                                     <h3>Email</h3>
-                                    <input id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                                    <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
                                 </div>
                                 <div class="user-detail">
                                     <h3>Gender</h3>
@@ -81,23 +202,23 @@ include '../Login/sessionCustomer.php';
                                 </div>
                                 <div class="user-detail">
                                     <h3>Phone Number</h3>
-                                    <input id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                                    <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
                                 </div>
                             </div>
                             <div class="profile-width-20"></div>
                             <div class="main-profile-detail-right">
                                 <div class="user-detail">
                                     <h3>Address Line</h3>
-                                    <input id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
+                                    <input name="add-1" id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
                                 </div>
                                 <div class="user-detail flex-row">
                                     <div class="user-detail-col profile-margin-3">
                                         <h3>City</h3>
-                                        <input id="city" class="input-detail" type="text" value="<?php echo $area?>">
+                                        <input name="city" id="city" class="input-detail" type="text" value="<?php echo $area?>">
                                     </div>
                                     <div class="user-detail-col">
                                         <h3>Postcode</h3>
-                                        <input id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
+                                        <input name="post" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
                                     </div>
                                 </div>
                                 <div class="user-detail">
@@ -124,36 +245,35 @@ include '../Login/sessionCustomer.php';
                                 </div>
                                 <div class="user-detail">
                                     <h3>Password</h3>
-                                    <input id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                                    <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
                                 </div>
                                 <br>
                                 <div class="user-detail-btn">
-                                    <button disabled id="save-edit" onclick="disableInfoInput()" type="submit" class="save-edit-btn red-bg">Save Changes</button>
+                                    <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
                                 </div>
                             </div>
                             <div class="profile-width-5"></div>
                         </div>
-
                     </div>
 
                     <div id="edit-profile-div" class="none">
-                        <div class="main-profile-detail" >
-                            <div class="profile-width-5"></div>
-                            <div class="main-profile-detail-left ">
-                                <form action="">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <div class="main-profile-detail" >
+                                <div class="profile-width-5"></div>
+                                <div class="main-profile-detail-left ">
                                     <div class="user-detail">
                                         <h3>Username</h3>
-                                        <input class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                                        <input name="usern_edit" class="input-detail" type="text" id="username" value="<?php echo $username?>">
                                     </div>
                                     <div class="user-detail">
                                         <h3>Full Name</h3>
                                         <div>
-                                            <input id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                            <input name="fname_edit" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
                                         </div>
                                     </div>
                                     <div class="user-detail">
                                         <h3>Email</h3>
-                                        <input id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                                        <input name="email_edit" id="email" class="input-detail" type="text" value="<?php echo $email?>">
                                     </div>
                                     <div class="user-detail">
                                         <h3>Gender</h3>
@@ -170,29 +290,29 @@ include '../Login/sessionCustomer.php';
                                     </div>
                                     <div class="user-detail">
                                         <h3>Phone Number</h3>
-                                        <input id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                                        <input name="phone_edit" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
                                     </div>
                                 </div>
                                 <div class="profile-width-20"></div>
                                 <div class="main-profile-detail-right">
                                     <div class="user-detail">
                                         <h3>Address Line</h3>
-                                        <input id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
+                                        <input name="add-1_edit" id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
                                     </div>
                                     <div class="user-detail flex-row">
                                         <div class="user-detail-col profile-margin-3">
                                             <h3>City</h3>
-                                            <input id="city" class="input-detail" type="text" value="<?php echo $area?>">
+                                            <input name="city_edit" id="city" class="input-detail" type="text" value="<?php echo $area?>">
                                         </div>
                                         <div class="user-detail-col">
                                             <h3>Postcode</h3>
-                                            <input id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
+                                            <input name="post_edit" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
                                         </div>
                                     </div>
                                     <div class="user-detail">
                                         <h3>State</h3>
-                                        <select class="input-detail-2" name="state" id="state">
-                                            <option <?php if($state=="") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
+                                        <select class="input-detail-2" name="state_edit" id="state">
+                                            <option <?php if($state=="select") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
                                             <option <?php if($state=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
                                             <option <?php if($state=="Terengganu") echo 'selected="selected"'; ?> value="Terengganu">Terengganu</option>
                                             <option <?php if($state=="Selangor") echo 'selected="selected"'; ?> value="Selangor">Selangor</option>
@@ -213,143 +333,296 @@ include '../Login/sessionCustomer.php';
                                     </div>
                                     <div class="user-detail">
                                         <h3>Password</h3>
-                                        <input id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                                        <input name="passw_edit" id="password" class="input-detail" type="password" value="<?php echo $password?>">
                                     </div>
                                     <br>
                                     <div class="user-detail-btn">
-                                        <button id="save-edit" onclick="disableInfoInput()" type="submit" class="save-edit-btn red-bg">Save Changes</button>
+                                        <button name="update_edit" type="submit" class="save-edit-btn red-bg">Save Changes</button>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="profile-width-5"></div>
                             </div>
-                            <div class="profile-width-5"></div>
-                        </div>
+                        </form>
                     </div>
                     
-
-
                     <div id="user-purchase-div" class="none">
                         <br>
                         <div class="order-status-filter">
-                            <h3 class="status-active"><a href="">All</a></h3>
-                            <h3><a href="">Pending</a></h3>
-                            <h3><a href="">On Delivery/Self-Pickup</a></h3>
-                            <h3><a href="">Completed</a></h3>
-                            <h3><a href="">Cancel</a></h3>
+                            <h3 id="allbtn" class="status-active" onclick="allOrder()"><a href="javascript:;">All</a></h3>
+                            <h3 id="pendingbtn" onclick="pendingOrder()"><a href="javascript:;">Pending</a></h3>
+                            <h3 id="deliverybtn" onclick="deliveryOrder()"><a href="javascript:;">On Delivery/Self-Pickup</a></h3>
+                            <h3 id="completebtn" onclick="completeOrder()"><a href="javascript:;">Completed</a></h3>
+                            <h3 id="cancelbtn" onclick="cancelOrder()"><a href="javascript:;">Cancel</a></h3>
                         </div>
                         <br>
-                        <div class="order-content-all flex-col">
-                            <div class="set-layout">
-                                <div class="set-layout-header-1 red-bg">
-                                    <div class="status-div">
-                                        <h3 class="white-txt">Completed</h3>
+                        <!-- all order section -->
+                        <div id="all-order">
+                            <div class="order-content-all flex-col">
+                                <div class="set-layout">
+                                    <div class="set-layout-header-1 red-bg">
+                                        <div class="status-div">
+                                            <h3 class="white-txt">Completed</h3>
+                                        </div>
+                                        <div class="flex-row set-layout-header">
+                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                        </div>
                                     </div>
-                                    <div class="flex-row set-layout-header">
-                                        <h3 class="set-name white-txt uppercase margin-0">Rindok Set</h3>
-                                        <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                            </div>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="flex-row set-layout-content">
-                                    <div class="sushi-order-img">
-                                        <img class="" src="img/sushi.png" alt="logo">
-                                    </div>
-                                    <div class="sushi-order-detail">
-                                        <div class="">
-                                            <div class="sushi-order-detail-1 flex-row ">
-                                                <h3>Basic Sushi x4</h3>
-                                                <h3>RM 5.00</h3>
-                                            </div>
-                                            <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
-                                        </div>
-                                        <hr class="hr-line">
-                                        <div class="">
-                                            <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-row set-layout-content">
-                                    <div class="sushi-order-img">
-                                        <img class="" src="img/sushi.png" alt="logo">
-                                    </div>
-                                    <div class="sushi-order-detail">
-                                        <div class="">
-                                            <div class="sushi-order-detail-1 flex-row ">
-                                                <h3>Basic Sushi x4</h3>
-                                                <h3>RM 5.00</h3>
-                                            </div>
-                                            <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
-                                        </div>
-                                        <hr class="hr-line">
-                                        <div class="">
-                                            <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
-                                        </div>
-                                    </div>
+                                <div class="sushi-order-total flex-row">
+                                    <h2>Order Total: RM 20.00</h2>
+                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
                                 </div>
                             </div>
-                            <div class="set-layout">
-                                <div class="set-layout-header-1 red-bg">
-                                    <div class="flex-row set-layout-header">
-                                        <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                            <div class="order-content-all flex-col">
+                                <div class="set-layout">
+                                    <div class="set-layout-header-1 red-bg">
+                                        <div class="status-div">
+                                            <h3 class="white-txt">Pending</h3>
+                                        </div>
+                                        <div class="flex-row set-layout-header">
+                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="flex-row set-layout-content">
-                                    <div class="sushi-order-img">
-                                        <img class="" src="img/sushi.png" alt="logo">
-                                    </div>
-                                    <div class="sushi-order-detail">
-                                        <div class="">
-                                            <div class="sushi-order-detail-1 flex-row ">
-                                                <h3>Basic Sushi x4</h3>
-                                                <h3>RM 5.00</h3>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
                                             </div>
-                                            <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
-                                        </div>
-                                        <hr class="hr-line">
-                                        <div class="">
-                                            <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="sushi-order-total flex-row">
-                                <h2>Order Total: RM 40.00</h2>
-                                <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                                <div class="sushi-order-total flex-row">
+                                    <h2>Order Total: RM 20.00</h2>
+                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="order-content-all flex-col">
-                            <div class="set-layout">
-                                <div class="set-layout-header-1 red-bg">
-                                    <div class="status-div">
-                                        <h3 class="white-txt">Completed</h3>
+                        <!-- pending order section -->
+                        <div id="pending-order" class="none">
+                            <div class="order-content-all flex-col">
+                                <div class="set-layout">
+                                    <div class="set-layout-header-1 red-bg">
+                                        <div class="status-div">
+                                            <h3 class="white-txt">Pending</h3>
+                                        </div>
+                                        <div class="flex-row set-layout-header">
+                                            <h3 class="set-name white-txt uppercase margin-0">Rindok Set</h3>
+                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                        </div>
                                     </div>
-                                    <div class="flex-row set-layout-header">
-                                        <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
-                                        <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
-                                    </div>
-                                </div>
-                                <div class="flex-row set-layout-content">
-                                    <div class="sushi-order-img">
-                                        <img class="" src="img/sushi.png" alt="logo">
-                                    </div>
-                                    <div class="sushi-order-detail">
-                                        <div class="">
-                                            <div class="sushi-order-detail-1 flex-row ">
-                                                <h3>Basic Sushi x4</h3>
-                                                <h3>RM 5.00</h3>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
                                             </div>
-                                            <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
                                         </div>
-                                        <hr class="hr-line">
-                                        <div class="">
-                                            <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                    </div>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                            </div>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="set-layout">
+                                    <div class="set-layout-header-1 red-bg">
+                                        <div class="flex-row set-layout-header">
+                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                            </div>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sushi-order-total flex-row">
+                                    <h2>Order Total: RM 40.00</h2>
+                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                                </div>
                             </div>
-                            <div class="sushi-order-total flex-row">
-                                <h2>Order Total: RM 20.00</h2>
-                                <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                        </div>
+                        <!-- delivery order section -->
+                        <div id="delivery-order" class="none">
+                            <div class="order-content-all flex-col">
+                                <div class="set-layout">
+                                    <div class="set-layout-header-1 red-bg">
+                                        <div class="status-div">
+                                            <h3 class="white-txt">On Delivery</h3>
+                                        </div>
+                                        <div class="flex-row set-layout-header">
+                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                            </div>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sushi-order-total flex-row">
+                                    <h2>Order Total: RM 20.00</h2>
+                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                                </div>
                             </div>
-                        </div>`
+                        </div>
+                        <!-- complete order section -->
+                        <div id="complete-order" class="none">
+                            <div class="order-content-all flex-col">
+                                <div class="set-layout">
+                                    <div class="set-layout-header-1 red-bg">
+                                        <div class="status-div">
+                                            <h3 class="white-txt">Completed</h3>
+                                        </div>
+                                        <div class="flex-row set-layout-header">
+                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                            </div>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sushi-order-total flex-row">
+                                    <h2>Order Total: RM 20.00</h2>
+                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- cancel order section -->
+                        <div id="cancel-order" class="none">
+                            <div class="order-content-all flex-col">
+                                <div class="set-layout">
+                                    <div class="set-layout-header-1 red-bg">
+                                        <div class="status-div">
+                                            <h3 class="white-txt">Cancel</h3>
+                                        </div>
+                                        <div class="flex-row set-layout-header">
+                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row set-layout-content">
+                                        <div class="sushi-order-img">
+                                            <img class="" src="img/sushi.png" alt="logo">
+                                        </div>
+                                        <div class="sushi-order-detail">
+                                            <div class="">
+                                                <div class="sushi-order-detail-1 flex-row ">
+                                                    <h3>Basic Sushi x4</h3>
+                                                    <h3>RM 5.00</h3>
+                                                </div>
+                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                            </div>
+                                            <hr class="hr-line">
+                                            <div class="">
+                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sushi-order-total flex-row">
+                                    <h2>Order Total: RM 20.00</h2>
+                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 </div>
@@ -360,6 +633,7 @@ include '../Login/sessionCustomer.php';
         </footer>
     </div>
     <script>
+        //Disable edit input field
         document.getElementById("username").disabled = true;
         document.getElementById("fullname").disabled = true;
         document.getElementById("email").disabled = true;
@@ -371,7 +645,7 @@ include '../Login/sessionCustomer.php';
         document.getElementById("state").disabled = true;
         document.getElementById("password").disabled = true;
 
-
+        //change field colour to differenciate disable input
         document.getElementById("username").style.backgroundColor = "#f9f9f9";
         document.getElementById("fullname").style.backgroundColor = "#f9f9f9";
         document.getElementById("email").style.backgroundColor = "#f9f9f9";
@@ -466,6 +740,89 @@ include '../Login/sessionCustomer.php';
             viewbtn.classList.remove('sidebar-btn-active');
             editbtn.classList.remove('sidebar-btn-active');
             orderbtn.classList.add('sidebar-btn-active');
+        }
+
+        //My order section
+        var allorder = document.getElementById('all-order');
+        var pendingorder = document.getElementById('pending-order');
+        var deliveryorder = document.getElementById('delivery-order');
+        var completeorder = document.getElementById('complete-order');
+        var cancelorder = document.getElementById('cancel-order');
+
+        var allbtn = document.getElementById("allbtn");
+        var pendingbtn = document.getElementById("pendingbtn");
+        var deliverybtn = document.getElementById("deliverybtn");
+        var completebtn = document.getElementById("completebtn");
+        var cancelbtn = document.getElementById("cancelbtn");
+
+        function allOrder(){
+            allbtn.classList.add('status-active');
+            pendingbtn.classList.remove('status-active');
+            deliverybtn.classList.remove('status-active');
+            completebtn.classList.remove('status-active');
+            cancelbtn.classList.remove('status-active');
+
+            allorder.style.display = "block";
+            pendingorder.style.display = "none";
+            deliveryorder.style.display = "none";
+            completeorder.style.display = "none";
+            cancelorder.style.display = "none";
+        }
+
+        function pendingOrder(){
+            allbtn.classList.remove('status-active');
+            pendingbtn.classList.add('status-active');
+            deliverybtn.classList.remove('status-active');
+            completebtn.classList.remove('status-active');
+            cancelbtn.classList.remove('status-active');
+
+            allorder.style.display = "none";
+            pendingorder.style.display = "block";
+            deliveryorder.style.display = "none";
+            completeorder.style.display = "none";
+            cancelorder.style.display = "none";
+        }
+
+        function deliveryOrder(){
+            allbtn.classList.remove('status-active');
+            pendingbtn.classList.remove('status-active');
+            deliverybtn.classList.add('status-active');
+            completebtn.classList.remove('status-active');
+            cancelbtn.classList.remove('status-active');
+
+            allorder.style.display = "none";
+            pendingorder.style.display = "none";
+            deliveryorder.style.display = "block";
+            completeorder.style.display = "none";
+            cancelorder.style.display = "none";
+        }
+
+        function completeOrder(){
+            allbtn.classList.remove('status-active');
+            pendingbtn.classList.remove('status-active');
+            deliverybtn.classList.remove('status-active');
+            completebtn.classList.add('status-active');
+            cancelbtn.classList.remove('status-active');
+
+            allorder.style.display = "none";
+            pendingorder.style.display = "none";
+            deliveryorder.style.display = "none";
+            completeorder.style.display = "block";
+            cancelorder.style.display = "none";
+        }
+
+        function cancelOrder(){
+            allbtn.classList.remove('status-active');
+            pendingbtn.classList.remove('status-active');
+            deliverybtn.classList.remove('status-active');
+            completebtn.classList.remove('status-active');
+            cancelbtn.classList.add('status-active');
+
+            allorder.style.display = "none";
+            pendingorder.style.display = "none";
+            deliveryorder.style.display = "none";
+            completeorder.style.display = "none";
+            cancelorder.style.display = "block";
         }
 
     </script>

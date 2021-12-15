@@ -1,3 +1,153 @@
+<?php 
+include '../database/dbConnection.php'; 
+include '../class/UserClass.php';
+
+$userObj = new User($conn);
+
+$fnameErr = $usernameErr = $emailErr = $mobileNumErr = $genderErr = $addressErr = $postcodeErr = $cityErr = $stateErr = $passwordErr = $confirmPassErr = $conditionErr = "";
+$fname = $username = $email = $mobileNum = $gender = $address = $postcode = $city = $state = $password = $confirmPass = $condition = "";
+$boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = $boolConfirmPass = $boolCondition = false;
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //header('location:sign-in-user.php');
+    //full name validation
+    $fname = $_POST["fname"];
+    if (empty($fname)) {
+        $fnameErr = "Full name is required";
+    } else {
+        $boolFname = true;
+    }
+    
+    //username validation
+    $username = $_POST["usern"];
+    if (empty($username)) {
+        $usernameErr = "Username is required";
+    }else if($userObj->checkExistUsername($username)){
+        $usernameErr = "This username already exist!";
+    }else {
+        $boolUsername = true;
+    }
+
+    //email validation
+    if (empty($_POST["email"])) {
+        $emailErr = "Email is required";
+    } else {
+        $email = test_input($_POST["email"]);
+        // check if e-mail address is well-formed
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+        } else {
+            $boolEmail = true;
+        }
+    }
+
+    //mobile number validation
+    if (empty($_POST["phone"])) {
+        $mobileNumErr = "Mobile number is required";
+    } else {
+        $mobileNum = test_input($_POST["phone"]);
+        // check if phone number is valid
+        if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum)) {
+            $mobileNumErr = "Invalid mobile number format";
+        } else {
+            $boolMobileNum = true;
+        }
+    }
+
+    //empty button validation
+    //gender
+    if (!isset($_POST["gender"])) {
+        $genderErr = "Gender is required";
+    } else {
+        $gender = $_POST["gender"];
+        $boolGender = true;
+    }
+
+    //address
+    $address = $_POST["add-1"];
+    if (empty($address)) {
+      $addressErr = "Address Line is required!";
+    } else {
+      $boolAddress= true;
+    }
+
+    //postcode
+    $postcode = $_POST["post"];
+    if (empty($postcode)) {
+      $postcodeErr = "Postcode is required";
+    } else {
+      $boolPostcode = true;
+    }
+
+    //city
+    $city = $_POST["city"];
+    if (empty($city)) {
+        $cityErr = "City name is required";
+    } else {
+        $boolCity = true;
+    }
+
+    //state
+    $state = $_POST['state'];
+    if ($state === "select") {
+        $stateErr = "Please select your state.";
+    } else {
+        $boolState = true;
+    }
+
+    //password validation
+    if (empty($_POST["passw"])) {
+        $passwordErr = "Password is required";
+    } else {
+        $password = test_input($_POST["passw"]);
+        $boolPassword = true;
+    }
+
+    //confirm password validation
+    if (empty($_POST["cpassw"])) {
+        $confirmPassErr = "Confirm password is required";
+    } else {
+        // check if confirm password match with password
+        $confirmPass = test_input($_POST["cpassw"]);
+        if ($confirmPass != $password) {
+            $confirmPassErr = "Your password does not match!";
+        } else {
+            $boolConfirmPass = true;
+        }
+    }
+
+    //terms and condition
+    if (empty($_POST['terms'])) {
+        $conditionErr = "Please tick Terms and Condition to proceed.";
+    } else {
+        $boolCondition = true;
+    }
+
+    //confirmation feedback
+    if (isset($_POST["register"]) && $boolFname == true && $boolUsername == true && $boolEmail == true && $boolMobileNum == true && $boolGender == true && $boolAddress == true && $boolPostcode == true && $boolCity == true && $boolState == true && $boolPassword == true && $boolConfirmPass == true && $boolCondition == true) {
+        $signUpStatus = $userObj->signUp($username, $fname, $email, $password, $mobileNum, $gender, $address, $postcode, $city, $state);
+
+        if ($signUpStatus){
+            echo "<script>
+            alert('Successfully sign up! Redirecting to sign in page');
+            window.location.href='sign-in-user.php';
+            </script>";
+        } else {
+            echo "<script>
+            alert('Unsucessuful sign up! Please try again!');
+            window.location.href='sign-up-user.php';
+            </script>";
+        }
+    }
+}
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -336,6 +486,9 @@
             border-bottom: 2px solid #794f08;
         }
 
+        .error {
+            color: red;
+        }
 
         @media (max-width: 1300px) {
             .container{
@@ -380,85 +533,103 @@
                 <div class="form-box">
                     <h1>Create Account</h1>
                     <hr>
-                    <form name="register" method="POST" action="registration.php">
+                    <form name="register" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="input-box">
                             <p>USERNAME</p>
-                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="usern" id="usern" placeholder="Enter username">
+                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="usern" id="usern" placeholder="Enter username" value="<?php echo $username; ?>" >
+                            <br>
+                            <span class="error"><?php echo $usernameErr; ?></span>
                         </div>
                         <div class="input-box">
-                            <p>FIRST NAME</p>
-                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="fname" id="fnm" placeholder="Enter first name">
-                        </div>
-                        <div class="input-box">
-                            <p>LAST NAME</p>
-                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="lname" id="lnm" placeholder="Enter last name">
+                            <p>FULL NAME</p>
+                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="fname" id="fnm" placeholder="Enter full name" value="<?php echo $fname; ?>">
+                            <br>
+                            <span class="error"><?php echo $fnameErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>EMAIL ADDRESS</p>
-                            <i class='fas fa-envelope-open' style='color:#ffa200'></i>  <input class="input-element" type="email" name="email" id="emailadd" placeholder="Enter email address">
+                            <i class='fas fa-envelope-open' style='color:#ffa200'></i>  <input class="input-element" type="email" name="email" id="emailadd" placeholder="Enter email address" value="<?php echo $email; ?>">
+                            <br>
+                            <span class="error"><?php echo $emailErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>PHONE NO.</p>
-                            <i class='fas fa-address-book' style='color:#ffa200'></i>  <input class="input-element" name="phone" id="hpno" placeholder="Enter phone no. exp: +60101234567">
+                            <i class='fas fa-address-book' style='color:#ffa200'></i>  <input class="input-element" name="phone" id="hpno" placeholder="Enter phone no. exp: +60101234567" value="<?php echo $mobileNum; ?>">
+                            <br>
+                            <span class="error"><?php echo $mobileNumErr; ?></span>
                         </div>
                         <div class="input-box">
-                            <p>ADDRESS LINE 1</p>
-                            <i class='fas fa-home' style='color:#ffa200'></i>  <input class="input-element" type="text" name="add-1" id="ad1" placeholder="Enter address line 1">
+                            <p>ADDRESS LINE</p>
+                            <i class='fas fa-home' style='color:#ffa200'></i>  <input class="input-element" type="text" name="add-1" id="ad1" placeholder="Enter address line" value="<?php echo $address; ?>">
+                            <br>
+                            <span class="error"><?php echo $addressErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>POSTCODE</p>
-                            <i class='fas fa-map' style='color:#ffa200'></i>  <input class="input-element" type="number" name="post" id="pst" placeholder="Enter postcode">
+                            <i class='fas fa-map' style='color:#ffa200'></i>  <input class="input-element" type="number" name="post" id="pst" placeholder="Enter postcode" value="<?php echo $postcode; ?>">
+                            <br>
+                            <span class="error"><?php echo $postcodeErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>CITY</p>
-                            <i class='fas fa-building' style='color:#ffa200'></i>  <input class="input-element" type="text" name="city" id="cty" placeholder="Enter city">
+                            <i class='fas fa-building' style='color:#ffa200'></i>  <input class="input-element" type="text" name="city" id="cty" placeholder="Enter city" value="<?php echo $city; ?>">
+                            <br>
+                            <span class="error"><?php echo $cityErr; ?></span>
                         </div>
                         <div class="selecting input-box">
                             <i class='fas fa-map-marker-alt' style='color:#ffa200'></i><label for="state">STATE</label>
                             <select name="state" id="state">
-                                <option value="">--SELECT A STATE--</option>
-                                <option value="Melaka">Melaka</option>
-                                <option value="Terengganu">Terengganu</option>
-                                <option value="Selangor">Selangor</option>
-                                <option value="Sarawak">Sarawak</option>
-                                <option value="Sabah">Sabah</option>
-                                <option value="Perlis">Perlis</option>
-                                <option value="Perak">Perak</option>
-                                <option value="Pahang">Pahang</option>
-                                <option value="Negeri Sembilan">Negeri Sembilan</option>
-                                <option value="Kelantan">Kelantan</option>
-                                <option value="Kuala Lumpur">Kuala Lumpur</option>
-                                <option value="Pulau Pinang">Pulau Pinang</option>
-                                <option value="Kedah">Kedah</option>
-                                <option value="Johor">Johor</option>
-                                <option value="Labuan">Labuan</option>
-                                <option value="Putrajaya">Putrajaya</option>
+                                <option <?php if($state=="") echo 'selected="selected"'; ?> value="select">SELECT A STATE</option>
+                                <option <?php if($state=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
+                                <option <?php if($state=="Terengganu") echo 'selected="selected"'; ?> value="Terengganu">Terengganu</option>
+                                <option <?php if($state=="Selangor") echo 'selected="selected"'; ?> value="Selangor">Selangor</option>
+                                <option <?php if($state=="Sarawak") echo 'selected="selected"'; ?> value="Sarawak">Sarawak</option>
+                                <option <?php if($state=="Sabah") echo 'selected="selected"'; ?> value="Sabah">Sabah</option>
+                                <option <?php if($state=="Perlis") echo 'selected="selected"'; ?> value="Perlis">Perlis</option>
+                                <option <?php if($state=="Perak") echo 'selected="selected"'; ?> value="Perak">Perak</option>
+                                <option <?php if($state=="Pahang") echo 'selected="selected"'; ?> value="Pahang">Pahang</option>
+                                <option <?php if($state=="Negeri Sembilan") echo 'selected="selected"'; ?> value="Negeri Sembilan">Negeri Sembilan</option>
+                                <option <?php if($state=="Kelantan") echo 'selected="selected"'; ?> value="Kelantan">Kelantan</option>
+                                <option <?php if($state=="Kuala Lumpur") echo 'selected="selected"'; ?> value="Kuala Lumpur">Kuala Lumpur</option>
+                                <option <?php if($state=="Pulau Pinang") echo 'selected="selected"'; ?> value="Pulau Pinang">Pulau Pinang</option>
+                                <option <?php if($state=="Kedah") echo 'selected="selected"'; ?> value="Kedah">Kedah</option>
+                                <option <?php if($state=="Johor") echo 'selected="selected"'; ?> value="Johor">Johor</option>
+                                <option <?php if($state=="Labuan") echo 'selected="selected"'; ?> value="Labuan">Labuan</option>
+                                <option <?php if($state=="Putrajaya") echo 'selected="selected"'; ?> value="Putrajaya">Putrajaya</option>
                             </select>
-                            <div class="error" id="stateErr"></div>
+                            <br>
+                            <span class="error"><?php echo $stateErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>GENDER</p>
-                            <input type="radio" id="male" name="gender" value="male">
+                            <input type="radio" id="male" name="gender" value="male" <?php if($gender == 'male') echo 'checked=checked';?>/>
                             <label style="color: rgb(252, 162, 0); font-size: 20px;" for="male">Male</label>
-                            <input type="radio" id="female" name="gender" value="female">
-                            <label style="color: rgb(252, 162, 0); font-size: 20px;" for="female">Female</label><br>  
+                            <input type="radio" id="female" name="gender" value="female" <?php if($gender == 'female') echo 'checked=checked';?>/>
+                            <label style="color: rgb(252, 162, 0); font-size: 20px;" for="female">Female</label><br>
+                            <span class="error"><?php echo $genderErr; ?></span>  
                         </div>
                         <div class="input-box">
                             <p>PASSWORD</p>
-                            <i class='fas fa-unlock-alt' style="color: #ffa200;"></i>  <input class="input-element" type="password" name="passw" id="psw" placeholder="Enter password">
+                            <i class='fas fa-unlock-alt' style="color: #ffa200;"></i>  <input class="input-element" type="password" name="passw" id="psw" placeholder="Enter password" value="<?php echo $password; ?>">
+                            <br>
+                            <span class="error"><?php echo $passwordErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>RETYPE PASSWORD</p>
-                            <i class='fas fa-unlock-alt' style="color: #ffa200;"></i>  <input class="input-element" type="password" name="cpassw" id="cpsw" placeholder="Re-enter password">
+                            <i class='fas fa-unlock-alt' style="color: #ffa200;"></i>  <input class="input-element" type="password" name="cpassw" id="cpsw" placeholder="Re-enter password" value="<?php echo $confirmPass; ?>">
+                            <br>
+                            <span class="error"><?php echo $confirmPassErr; ?></span>
                         </div>
                         <div class="keep input-box">
                             <input type="checkbox" name="terms" id="terms" value="terms">
                             <label for="terms">I agree to the Terms of Use and understand that my information will be used as described on this page and the ExpressEat Café Privacy Policy</label>
+                            <br>
+                            <span class="error"><?php echo $conditionErr; ?></span>
                         </div>
                         <br>
                         <br>
                         <div class="input-box" id="butang">
-                            <button type="submit" onclick="return registration()">Register</button>
+                            <button type="submit" name="register">Register</button>
                             &nbsp;
                             <input  id="butang" type="reset" value="Clear Form" onclick="clearFunc()"/>
                         </div>
@@ -468,156 +639,10 @@
         </div>
     </div>
     <script>
-        function registration()
-        {  
-            var uname= document.getElementById("usern").value;
-            var fname= document.getElementById("fnm").value;
-            var lname= document.getElementById("lnm").value;
-            var email= document.getElementById("emailadd").value;
-            var phone= document.getElementById("hpno").value;
-            var address1= document.getElementById("ad1").value;
-            var postc= document.getElementById("pst").value;
-            var city= document.getElementById("cty").value;
-            var state1= document.getElementById("state").value; 
-            var gender= document.forms["register"]["gender"].value;
-            var pwd= document.getElementById("psw").value;			
-            var cpwd= document.getElementById("cpsw").value;
-            var termcon= document.getElementById("terms").checked;
-
-            //regex expression code
-            var pwd_expression = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~]{6,6}$/;
-            var usrname = /^[A-Za-z]+$/;
-            var names = /^([A-Z]){1}([a-z]){1,}$/;
-            var mobile = /^[\+][6][0][1]\d{8,9}$/;
-            var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-            if(uname=='')
-            {
-                alert('Please enter your username');
-                return false;
-            }
-            else if(!usrname.test(uname))
-            {
-                alert('Name field required only alphabet characters');
-                return false;
-            }
-            else if(fname=='')
-            {
-                alert('Please enter your first name');
-                return false;
-            }
-            else if(!names.test(fname))
-            {
-                alert('Name field required only alphabet characters and uppercase first letter');
-                return false;
-            }
-            else if(lname=='')
-            {
-                alert('Please enter your last name');
-                return false;
-            }
-            else if(!names.test(lname))
-            {
-                alert('Name field required only alphabet characters');
-                return false;
-            }
-            else if(email=='')
-            {
-                alert('Please enter your user email');
-                return false;
-            }
-            else if (!filter.test(email))
-            {
-                alert('Invalid email');
-                return false;
-            }
-            else if(phone=='')
-            {
-                alert('Please enter phone number.');
-                return false;
-            }
-            else if(!mobile.test(phone))
-            {
-                alert('Phone no. field requires +60 and only numbers');
-                return false;
-            }
-            else if(address1=='')
-            {
-                alert('Please enter your address line 1');
-                return false;
-            }
-            else if(postc=='')
-            {
-                alert('Please enter your postcode');
-                return false;
-            }
-            else if(document.getElementById("pst").value.length < 5)
-            {
-                alert ('Postcode digit length is 5');
-                return false;
-            }
-            else if(city=='')
-            {
-                alert('Please enter your city');
-                return false;
-            }
-            else if(state1=='')
-            {
-                alert("Please select your state");
-                return false;
-            }
-            else if(document.forms["register"]["male"].checked==false && document.forms["register"]["female"].checked==false)
-            {
-                alert("You must select male or female");
-                return false;
-            }
-            else if(pwd=='')
-            {
-                alert('Please enter Password');
-                return false;
-            }
-            else if(cpwd=='')
-            {
-                alert('Enter Confirm Password');
-                return false;
-            }
-            else if(!pwd_expression.test(pwd))
-            {
-                alert ('At least ONE Uppercase, ONE Lowercase, ONE Special character, ONE Numeric letter and 6 DIGITS LENGTH are required in Password filed');
-                return false;
-            }
-            else if(pwd != cpwd)
-            {
-                alert ('Password not Matched');
-                return false;
-            }
-            else if(document.getElementById("terms").checked==false)
-            {
-                alert('Please agree on the terms and conditions!');
-                return false;
-            }
-            else if(gender.checked==false)
-            {
-                alert('Please agree on the terms and conditions!');
-                return false;
-            }
-            else
-            {
-                alert('Thank You for Registering & Please Login'); 
-                // registerPage.style.display = 'none';
-                // successPage.style.visibility = 'visible';
-                // return false;
-                // location.pathname= "login.html";
-                // return false;
-            }
-
-        }
-
         function clearFunc()
         {
             document.getElementById("usern").value="";
             document.getElementById("fnm").value="";
-            document.getElementById("lnm").value="";
             document.getElementById("emailadd").value="";
             document.getElementById("hpno").value="";
             document.getElementById("ad1").value="";
