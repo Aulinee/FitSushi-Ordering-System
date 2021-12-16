@@ -2,6 +2,9 @@
 date_default_timezone_set("Asia/Kuala_Lumpur");
 include '../Login/sessionCustomer.php';
 
+//retrive store detail
+$store_detail = $adminObj->displayStoreDetail();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,21 +152,20 @@ include '../Login/sessionCustomer.php';
                     </div>
                     <div class="width-10"></div>
                     <div class="socmed-info">
-                        <h1>Instagram: &nbsp<a href="#">@fitsushii</a></h1>
-                        <h1>Facebook: &nbsp<a href="#">Fit Hanif</a></h1>
-                        <h1>Whatsapp: &nbsp<a href="#">+601112514020</a></h1>
+                        <h1>Instagram: &nbsp<a href="#"><?php echo $store_detail[3]; ?></a></h1>
+                        <h1>Facebook: &nbsp<a href="#"><?php echo $store_detail[4]; ?></a></h1>
+                        <h1>Whatsapp: &nbsp<a href="#"><?php echo $store_detail[2]; ?></a></h1>
                     </div>
                 </div>
             </div>
             <div class="contact-2">
                 <h1 class="title-underline">COME FIND US AT:</h1>
-                <h1>No.11 Loem Ipsum, lorem ipsum, 93030 Kuching, Sarawak</h1>  
+                <h1><?php echo $store_detail[1]; ?></h1>  
             </div>
             <div class="contact-3 vertical-border">
                 <h1 class="title-underline">OPERATING HOURS</h1>
                 <div class="operating-detail">
-                    <h1>Open for order from Tuesday to Sunday 10.00am to 4.00pm</h1>
-                    <h1>Order delivered on the next day</h1>
+                    <h1><?php echo $store_detail[0]; ?></h1>
                 </div>
             </div>
         </div>

@@ -1,8 +1,10 @@
 <?php 
     include '../database/dbConnection.php';
     include '../class/UserClass.php';
+    include '../class/AdminClass.php';
 
     $userObj = new User($conn);
+    $adminObj = new Admin($conn);
     
     // Set sessions
     if(!isset($_SESSION)) {
