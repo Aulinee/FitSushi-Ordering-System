@@ -100,6 +100,8 @@ $store_detail = $adminObj->displayStoreDetail();
         <h2 class="white-txt margin-minus">Keep browsing and it will get your mouth watering, just a few clicks and we will deliver it to you!</h2>
         <div class="menu-display white-border">
             <div class="width-4"></div>
+            <?php $menuObj->displayMenu(); ?>
+            <!-- <div class="width-1"></div>
             <div class="menu-display-detail">
                 <img class="menu-icon" src="../img/sushi.png" alt="logo">
                 <div class="blue-bg">
@@ -133,7 +135,7 @@ $store_detail = $adminObj->displayStoreDetail();
                 <div class="blue-bg">
                     <h1 class="white-txt">Fried Sushi</h1>
                 </div>
-            </div>
+            </div> -->
             <div class="width-4"></div>
         </div>
         <div class="padding-tb">

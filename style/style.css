@@ -252,27 +252,31 @@ header .home-tab {
 }
 
 .flex {
+  margin-bottom: 3%;
   list-style-type: none;
-  padding: 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap; /* assumes you only want one row */
-  background-color: var(--yellow);
 }
 
 .flex a {
+  text-align: center;
   text-transform: uppercase;
-  color: #000;
+  color: #6c6969;
   font-family: "NATS";
   font-weight: 500;
-  font-size: 25px;
-  transition: 0.5s;
+  font-size: 20px;
+  background: #e0e0e0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 34px;
+  width: 150px;
+  margin: 0;
 }
 
 .flex a:hover {
   color: var(--red);
-  text-decoration: underline;
+  border: 2px solid var(--red);
 }
 
 /*-----------------Main Page - landing page----------------*/
@@ -487,141 +491,200 @@ header .home-tab {
 
 /*-----------------Menu Page----------------*/
 
+.menu-header {
+  font-family: "Poppins";
+  text-align: center;
+}
+
 .menu-detail {
   font-family: "Poppins";
   text-align: center;
-  width: 65%;
-  margin: auto;
+  width: 100%;
 }
 
 .menu-table {
-  padding: 10px;
+  padding: 0 5%;
 }
 
 .menu-table-detail {
-  margin: 2%;
+  width: 100%;
+  display: flex;
+
+  flex-wrap: wrap;
 }
 
 .menu-row {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.menu-col {
-  display: flex;
-  flex-direction: column;
 }
 
 .black-border {
   border: 1px solid var(--black);
 }
 
+.menu-card {
+  align-items: center;
+  justify-content: center;
+  width: 19%;
+  margin: 0.5%;
+}
+
 .menu-display-table {
-  background-color: var(--blue);
+  background: #f6f6f6;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  width: 33%;
+  padding: 20px;
 }
 
-.menu-display-table .menu-icon {
-  width: 60%;
+.menu-img {
+  width: 100%;
 }
 
-.menu-display-table .details {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  font-size: 20px;
+.details {
+  color: #2c2727;
+  text-align: left;
 }
 
-.black-border-top {
-  border-top: 2px solid black;
+.detail-title {
+  text-transform: uppercase;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
 }
 
-.menu-col {
-  flex-flow: row wrap;
-  justify-content: center;
+.details-title-desc {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  color: #2c2727;
+  margin-bottom: 2%;
+}
+
+.details-title-price {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  color: #1a212c;
 }
 
 .margin-1 {
   margin: 0 4%;
 }
 
-.menu-col input {
+.menu-col {
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.input-menu {
+  height: 33px;
+  margin-top: 2%;
+  overflow: hidden;
+  display: flex;
+  justify-content: right;
+}
+
+.input-btn {
+  color: #000;
+}
+
+.input-btn input {
+  width: 30px;
+  font-size: 15px;
+  outline: none;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.input-btn .minus-btn {
+  color: var(--yellow);
   font-size: 20px;
-  border: solid 1px var(--yellow);
-  text-align: center;
-  border-radius: 40px;
-  width: 100px;
-  height: 40px;
-  font-size: 25px;
-}
-
-.menu-col h1 {
   margin: 0;
-  padding: 0;
-  background-color: var(--yellow);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  letter-spacing: 3px;
-  color: var(--white);
-  font-weight: 700;
-  font-family: "Roboto";
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  width: 50px;
-  font-size: 30px;
-  height: 40px;
-  border-radius: 50px;
+  width: 30px;
+  border: 1px solid #cfcfcf;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
 
-.menu-col .cart {
+.input-btn .plus-btn {
+  color: var(--yellow);
+  font-size: 20px;
+  margin: 0;
+  width: 30px;
+  border: 1px solid #cfcfcf;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.cart {
+  margin-left: 10px;
+  padding: 0 20px;
   background-color: var(--yellow);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  letter-spacing: 3px;
   color: var(--white);
   font-weight: 700;
   font-family: "Roboto";
   text-transform: uppercase;
-  width: 100px;
-  height: 40px;
   font-size: 25px;
-  border-radius: 30px;
+  border-radius: 25px;
   border: none;
   cursor: pointer;
 }
 
-.menu-col button:hover {
-  background-color: #fcf5ea;
-  border: solid 1px var(--yellow);
-  color: #000;
+.custom-set {
+  background: #f6f6f6;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 2%;
 }
 
-.menu-col h1:hover {
-  cursor: pointer;
-  background-color: #fcf5ea;
-  border: solid 1px var(--yellow);
-  color: #000;
+.choose-set-div {
 }
 
-/*the container must be positioned relative:*/
+.choose-set-title {
+  color: #1a212c;
+  margin: auto 0;
+  font-size: 18px;
+}
+
+.choose-sushi-title {
+  color: #1a212c;
+  margin: auto 0;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.set-detail-div {
+}
+
+/* the container must be positioned relative: */
 .custom-select {
-  margin: auto;
   width: 20%;
+  margin: auto 0;
 }
 
 .custom-select select {
-  text-align: center;
-  width: 100%;
-  font-size: 25px;
+  text-align: left;
+  width: 80%;
+  font-size: 18px;
   font-family: "NATS";
   text-transform: uppercase;
   color: var(--red);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: var(--white);
+  background: #fdfdfd;
+  border: 1px solid #c1273a;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
   outline: none;
+  padding: 0 1%;
 }
 
 /*-----------------Sushi Box Page----------------*/

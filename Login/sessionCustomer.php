@@ -2,9 +2,11 @@
     include '../database/dbConnection.php';
     include '../class/UserClass.php';
     include '../class/AdminClass.php';
+    include '../class/MenuClass.php';
 
     $userObj = new User($conn);
     $adminObj = new Admin($conn);
+    $menuObj = new Menu($conn);
     
     // Set sessions
     if(!isset($_SESSION)) {
