@@ -25,7 +25,7 @@ include '../Login/sessionCustomer.php';
     <div>
         <header id="navbar" class="">
             <div class="container">
-                <img class="word-logo left" src="../img/title.png" alt="logo">
+                <img class="word-logo left" src="../img/logo-title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
@@ -37,13 +37,15 @@ include '../Login/sessionCustomer.php';
         </header>
         <div class="checkout-detail">
             <div class="checkout-detail-title">
-                <h2 class="navigation-txt"><a href=""><i class="fa fa-angle-left"></i>  Back to Sushi Box</a></h2>
-                <h1 class="title-page">CHECKOUT PAYMENT</h1>
+                <h2 class="navigation-txt"><a href="sushibox-page.php"><i class="fa fa-angle-left"></i>  Back to Sushi Box</a></h2>
+            </div>
+            <div class="checkout-detail-title">
+                <h1 class="title-page text-center">CHECKOUT PAYMENT</h1>
             </div>
             <div class="payment-details">
                 <form name="payment" action="payment-confirm.php" method="post">
                     <h4>Order for</h4>
-                    <div class="row-payment">
+                    <div class="row-payment menu-row">
                         <div class="payment-30">
                             <label for="PaymentID"><b>Payment ID</b></label>
                         </div>
@@ -93,8 +95,8 @@ include '../Login/sessionCustomer.php';
                             <label for="PaymentID"><b>Delivery Option</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" value="" type="radio" readonly>Delivery</input>
-                            <input name="id" value="" type="radio" readonly>Self Pick-Up</input>
+                            <input name="id" value="delivery" type="radio" readonly>Delivery</input>
+                            <input name="id" value="self-pickup" type="radio" readonly>Self Pick-Up</input>
                         </div>
                     </div>
                     <div class="row-payment-col">
@@ -108,15 +110,15 @@ include '../Login/sessionCustomer.php';
                                     <label for="cash-method" class="cashbtn"><h3>Cash</h3></label>
                                 </div>
                                 <div class="box-2">
-                                    <label for="card-method" class="creditbtn"><h3>Credit Card/Debit Card</h3><img src="img/payment/creditdebit.jpg" alt="creditdebit" width="50px" height="20px"></label>
+                                    <label for="card-method" class="creditbtn"><h3>Credit Card/Debit Card</h3></label>
                                 </div>
                                 <div class="box-3">
-                                    <label for="online-banking-method" class="onlinebtn"><h3>Online Banking</h3><img src="img/payment/onlinebanking.jpg" alt="onlinebanking" width="50px" height="20px"></label>
+                                    <label for="online-banking-method" class="onlinebtn"><h3>Online Banking</h3></label>
                                 </div>
                             </div>             
                         </div>
                     </div>
-                    <div class="row-payment">
+                    <div class="row-payment margin-top-2">
                         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px" required>
                         <label>
                             I agree to the Terms and Condition
@@ -124,7 +126,9 @@ include '../Login/sessionCustomer.php';
                             pay with credit or debit card, my card information will be automatically stored and secured for future payments.
                         </label>
                     </div>
-                    <button id="payment" type="submit" class="gotopaymentbtn">Confirm Payment</button>
+                    <br>
+                    <br>
+                    <button id="payment" type="submit" class="gotopaymentbtn margin-top-2">Confirm Payment</button>
                 </form>
             </div>
         </div>
@@ -133,7 +137,7 @@ include '../Login/sessionCustomer.php';
         <br>
         <br>
         <br><br>
-        <div class="sushibox-detail red-bg white-txt margin-empty-sushi payment-70">
+        <div class="sushibox-detail red-bg white-txt margin-empty-sushi">
             <h1>YOUR ORDER IS DONE!</h1>
             <h3>Sit back and relax while you wait for your order. Meeanwhile, discover our delicious sushi and its set in our MENU. </h3>
         </div>

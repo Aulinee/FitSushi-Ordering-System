@@ -28,7 +28,7 @@ include '../Login/sessionCustomer.php';
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab current" href="menu-page.php">Menu</a></li>
-                    <li><a class="home-tab" href="sushibox-page.php">Sushi</a></li>
+                    <li><a class="home-tab" href="sushibox-page.php">Sushibox</a></li>
                     <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
                     <li><a class="home-tab" href="logout.php">Sign Out</a></li>
                 </ul>
@@ -195,17 +195,110 @@ include '../Login/sessionCustomer.php';
                             </select>
                         </div>
                     </div>
-                    <div class="set-detail-div">
+                    <div class="set-detail-div menu-col">
                         <div class="add-sushi">
-                            <div>
+                            <div class="space-between menu-row">
                                 <h2 class="choose-sushi-title">Choose your sushi: </h2>
+                                <div class="search-div menu-row">
+                                    <input type="text" placeholder="Search sushi name.." name="search">
+                                    <i class="fa fa-search"></i>
+                                </div>
                             </div>
-                            <div>
-
+                            <div class="sushi-list-div">
+                                <div class="sushi-list-detail">
+                                    <div class="sushi-list-img">
+                                        <img class="" src="../img/sushi.png" alt="logo">
+                                    </div>
+                                    <div class="sushi-detail">
+                                        <div class="margin 0">
+                                            <h3 class="sushi-list-name margin-0 black-txt">Basic Sushi</h3>
+                                        </div>
+                                        <div class="">
+                                            <h3 class="sushi-list-dsc black-txt"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                        </div>
+                                    </div>
+                                    <form class="sushi-list-input menu-row" name="menu" action="orderMenu.php" method="post">
+                                        <div class="input-btn menu-row">
+                                            <h5 class="minus-btn" onclick="decrement1()">-</h5>
+                                            <input id="expresso" name="expresso" type=number min=0 max=110>
+                                            <h5 class="plus-btn" onclick="increment1()">+</h5>
+                                        </div>
+                                        <button id="addCart" class="add-sushibox-btn" type="submit">ADD</button>
+                                    </form>
+                                </div>
+                                <div class="sushi-list-detail">
+                                    <div class="sushi-list-img">
+                                        <img class="" src="../img/sushi.png" alt="logo">
+                                    </div>
+                                    <div class="sushi-detail">
+                                        <div class="margin 0">
+                                            <h3 class="sushi-list-name margin-0 black-txt">Basic Cheese</h3>
+                                        </div>
+                                        <div class="">
+                                            <h3 class="sushi-list-dsc black-txt"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                        </div>
+                                    </div>
+                                    <form class="sushi-list-input menu-row" name="menu" action="orderMenu.php" method="post">
+                                        <div class="input-btn menu-row">
+                                            <h5 class="minus-btn" onclick="decrement1()">-</h5>
+                                            <input id="expresso" name="expresso" type=number min=0 max=110>
+                                            <h5 class="plus-btn" onclick="increment1()">+</h5>
+                                        </div>
+                                        <button id="addCart" class="add-sushibox-btn" type="submit">ADD</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="add-sushibox">
-
+                            <h2 class="choose-sushi-title">Your sushi box set:</h2>
+                            <div class="sushibox-table">
+                                <h3 class="sushibox-set-name">Majoh Set</h3>
+                                <div class="sushibox-set-fixed-piece sushibox-set-bg padding-2">
+                                    <h2 class="sushibox-set-title">Fixed Pieces</h2>
+                                    <hr class="sushibox-line">
+                                    <div class="sushibox-set-detail menu-col">
+                                        <h2 class="fixed-piece-name">&#10003;  Basic Sushi</h2>
+                                        <h2 class="fixed-piece-qty">x 10</h2>
+                                    </div>
+                                    <div class="sushibox-set-detail menu-col">
+                                        <h2 class="fixed-piece-name">&#10003;  Basic Sushi</h2>
+                                        <h2 class="fixed-piece-qty">x 10</h2>
+                                    </div>
+                                    <div class="sushibox-set-detail menu-col">
+                                        <h2 class="fixed-piece-name">&#10003;  Basic Sushi</h2>
+                                        <h2 class="fixed-piece-qty">x 10</h2>
+                                    </div>
+                                    <div class="sushibox-set-detail menu-col">
+                                        <h2 class="fixed-piece-name">&#10003;  Basic Sushi</h2>
+                                        <h2 class="fixed-piece-qty">x 10</h2>
+                                    </div>
+                                    <div class="sushibox-set-detail menu-col">
+                                        <h2 class="fixed-piece-name">&#10003;  Basic Sushi</h2>
+                                        <h2 class="fixed-piece-qty">x 10</h2>
+                                    </div>
+                                    <div class="sushibox-set-detail menu-col">
+                                        <h2 class="fixed-piece-name">&#10003;  Basic Sushi</h2>
+                                        <h2 class="fixed-piece-qty">x 10</h2>
+                                    </div>
+                                </div>
+                                <div class="sushibox-set-choose-option sushibox-set-bg padding-2">
+                                    <h2 class="sushibox-set-title">Choose Option</h2>
+                                    <hr class="sushibox-line">
+                                    <div class="sushibox-set-detail menu-row">
+                                        <h2 class="sushi-option-name">Basic Cheese</h2>
+                                        <h2 class="sushi-option-status">not added</h2>
+                                    </div>
+                                    <div class="sushibox-set-detail menu-row">
+                                        <h2 class="sushi-option-name">Basic Sushi</h2>
+                                        <h2 class="sushi-option-status">not added</h2>
+                                    </div>
+                                </div>
+                                <div class="sushibox-set-notes sushibox-set-bg padding-2">
+                                    <h2 class="sushibox-set-title">Extra Notes</h2>
+                                    <hr class="sushibox-line">
+                                    <textarea class="sushibox-notes" placeholder="Write your notes here........" name="extra-notes" rows="6" cols="50"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

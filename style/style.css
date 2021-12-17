@@ -279,6 +279,28 @@ header .home-tab {
   border: 2px solid var(--red);
 }
 
+.flex-1 {
+  background-color: var(--yellow);
+  justify-content: space-evenly;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* assumes you only want one row */
+}
+
+.flex-1 a {
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--black);
+  font-family: "NATS";
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.flex-1 a:hover {
+  border-bottom: 5px solid var(--red);
+}
+
 /*-----------------Main Page - landing page----------------*/
 .welcome {
   margin: auto;
@@ -503,7 +525,7 @@ header .home-tab {
 }
 
 .menu-table {
-  padding: 0 5%;
+  padding: 0.5% 5%;
 }
 
 .menu-table-detail {
@@ -623,6 +645,12 @@ header .home-tab {
   border-bottom-right-radius: 25px;
 }
 
+.input-btn .minus-btn:hover,
+.input-btn .plus-btn:hover {
+  color: var(--white);
+  background-color: var(--red);
+}
+
 .cart {
   margin-left: 10px;
   padding: 0 20px;
@@ -641,28 +669,262 @@ header .home-tab {
   background: #f6f6f6;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  padding: 2%;
+  padding: 1% 1% 0 1%;
 }
 
 .choose-set-div {
+  width: 99%;
+  margin: 2% auto;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.set-detail-div {
+}
+
+.add-sushi {
+  width: 57%;
+  padding-right: 2%;
+}
+
+.black-txt {
+  color: #000;
+}
+
+.sushi-list-div {
+  height: 652px;
+  background: #ffffff;
+  border: 3px solid #e2929c;
+  box-sizing: border-box;
+  margin: 1% 0;
+  overflow-x: auto;
+}
+
+.sushi-list-detail {
+  display: flex;
+  flex-direction: row;
+  background: #fdfdfd;
+  border: 1px solid #e2929c;
+  box-sizing: border-box;
+}
+
+.sushi-list-img {
+  width: 20%;
+  border-right: 1px solid #c4c4c4;
+}
+
+.sushi-list-img img {
+  width: 100%;
+}
+
+.sushi-detail {
+  width: 50%;
+  padding: 1%;
+  border-right: 1px solid #c4c4c4;
+}
+
+.sushi-list-input {
+  width: 30%;
+  height: 33px;
+  display: flex;
+  margin: auto;
+  padding: 0 2%;
+}
+
+.fit-width {
+  width: fit-content;
+}
+
+.sushi-list-name {
+  text-align: start;
+  color: #2c2727;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.sushi-list-dsc {
+  border-top: 1px solid #c4c4c4;
+  font-size: 13px;
+  margin: 0;
+  font-style: italic;
+  text-align: left;
+}
+
+.add-sushibox-btn {
+  margin-left: 10px;
+  padding: 7px 40px;
+  background: #c1273a;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  color: var(--white);
+  font-weight: 700;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
 }
 
 .choose-set-title {
   color: #1a212c;
   margin: auto 0;
-  font-size: 18px;
+  font-size: 20px;
+  padding-left: 0.5%;
+}
+
+.search-div {
+  background: #ffffff;
+  width: 60%;
+}
+
+.search-div input[type="text"] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  background: #f1f1f1;
+  border: 1px solid var(--red);
+  border-right: none;
+}
+
+.search-div input[type="text"]::placeholder {
+  color: #ea8794;
+  font-style: italic;
+}
+
+.search-div i {
+  width: 10%;
+  padding: 10px;
+  color: var(--red);
+  font-size: 17px;
+  border: 1px solid var(--red);
+}
+
+.search-div::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.add-sushibox {
+  width: 39%;
+  display: flex;
+  flex-direction: column;
 }
 
 .choose-sushi-title {
+  width: 100%;
   color: #1a212c;
-  margin: auto 0;
   font-size: 15px;
   font-style: normal;
   font-weight: bold;
-  font-size: 24px;
+  text-align: start;
 }
 
-.set-detail-div {
+.sushibox-table {
+  padding: 0% 5%;
+  width: 90%;
+  background: #f4f0f0;
+  border: 3px solid #e2929c;
+  text-align: left;
+  height: 650px;
+  margin-bottom: 2%;
+}
+
+.sushibox-set-name {
+  color: #2c2727;
+  text-transform: uppercase;
+  text-align: left;
+  margin: 0;
+}
+.sushibox-set-bg {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  color: #000;
+}
+
+.sushibox-set-fixed-piece {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5%;
+  overflow-x: auto;
+  height: 200px;
+}
+
+.sushibox-set-choose-option {
+  margin-bottom: 5%;
+  height: 200px;
+}
+
+.sushibox-set-notes {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sushibox-set-title {
+  text-transform: uppercase;
+  border-left: 25px solid var(--red);
+  padding-left: 5px;
+  font-size: 20px;
+  margin: 0;
+}
+
+.sushibox-line {
+  margin: 3% 0;
+  background-color: #fcecee;
+  border: 1px solid #fcecee;
+}
+
+.sushibox-set-detail {
+  margin: 2% 0;
+  justify-content: space-between;
+  font-size: 10px;
+}
+
+.fixed-piece-name {
+  margin: 0;
+}
+
+.fixed-piece-qty {
+  margin: 0;
+  padding: 3px 10px;
+  color: #575454;
+  background: #f6f6f6;
+  border: 1px solid #7c7373;
+  border-radius: 2px;
+}
+
+.sushi-option-name {
+  border-left: 10px solid var(--red);
+  padding-left: 5px;
+}
+
+.sushi-option-status {
+  color: #a9a2a2;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.sushibox-notes {
+  width: 100%;
+  outline: none;
+  border: none;
+  resize: none;
+}
+
+.sushibox-notes::placeholder {
+  color: #c4c4c4;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.padding-2 {
+  padding: 2%;
 }
 
 /* the container must be positioned relative: */
@@ -681,7 +943,6 @@ header .home-tab {
   background: #fdfdfd;
   border: 1px solid #c1273a;
   box-sizing: border-box;
-  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   outline: none;
   padding: 0 1%;
@@ -879,6 +1140,10 @@ th .info-checkout:hover {
   align-items: center;
 }
 
+.text-center {
+  margin: auto;
+}
+
 .checkout-detail-title .title-page {
   width: 80%;
 }
@@ -912,6 +1177,8 @@ th .info-checkout:hover {
 .row-payment {
   display: flex;
   flex-direction: row;
+  width: 95%;
+  margin: auto;
 }
 
 .row-payment label {
@@ -927,11 +1194,17 @@ th .info-checkout:hover {
 }
 
 .payment-30 {
-  width: 30%;
+  margin: auto;
+  width: 20%;
 }
 
 .payment-70 {
-  width: 65%;
+  text-align: left;
+  width: 80%;
+}
+
+.margin-top-2 {
+  margin-top: 2%;
 }
 
 .payment-details input[type="text"],
@@ -995,7 +1268,8 @@ th .info-checkout:hover {
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 95%;
+  margin: auto;
 }
 
 .filter-container {

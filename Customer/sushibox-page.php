@@ -63,10 +63,12 @@ include '../Login/sessionCustomer.php';
                             </th>
                             <th class="info-5"></th>
                             <th class="info-20">
-                                <div class="menu-col display-inline">
-                                    <h1 class="toggle" onclick="increment1()"><b>+</b></h1>
-                                    <input id="expresso" name="expresso" type=number min=0 max=110>
-                                    <h1 class="toggle" onclick="decrement1()"><b>-</b></h1>
+                                <div class="sushi-list-input menu-row fit-width">
+                                    <div class="input-btn menu-row">
+                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
+                                        <input id="expresso" name="expresso" type=number min=0 max=110>
+                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
+                                    </div>
                                 </div>
                             </th>
                             <th class="info-20">Unit Price</th>
@@ -88,10 +90,12 @@ include '../Login/sessionCustomer.php';
                             </th>
                             <th class="info-5"></th>
                             <th class="info-20">
-                                <div class="menu-col display-inline">
-                                    <h1 class="toggle" onclick="increment1()"><b>+</b></h1>
-                                    <input id="expresso" name="expresso" type=number min=0 max=110>
-                                    <h1 class="toggle" onclick="decrement1()"><b>-</b></h1>
+                                <div class="sushi-list-input menu-row fit-width">
+                                    <div class="input-btn menu-row">
+                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
+                                        <input id="expresso" name="expresso" type=number min=0 max=110>
+                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
+                                    </div>
                                 </div>
                             </th>
                             <th class="info-20">Unit Price</th>

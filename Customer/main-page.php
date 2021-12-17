@@ -39,7 +39,7 @@ $store_detail = $adminObj->displayStoreDetail();
             </div>
         </header>
         <div class="flexbox-container" id="mainpage-section">
-            <div class="flex" id="flexbox">
+            <div class="flex-1" id="flexbox">
                 <a href="#mainpage-section">Main Page</a>
                 <a href="#about-section">About Us</a>
                 <a href="#menu-section">Menu</a>
@@ -60,7 +60,7 @@ $store_detail = $adminObj->displayStoreDetail();
                     </span>
                 </div>
                 <div class="welcome-3">
-                    <hr>
+                    <hr class="hr-line">
                 </div>
                 <div class="welcome-4">
                     <h1>Don't worry. We deliver fresh wherever you are.</h1>

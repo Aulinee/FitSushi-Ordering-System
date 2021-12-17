@@ -34,7 +34,7 @@
             </div>
         </header>
         <div class="flexbox-container" id="mainpage-section">
-            <div class="flex" id="flexbox">
+            <div class="flex-1" id="flexbox">
                 <a href="#mainpage-section">Main Page</a>
                 <a href="#about-section">About Us</a>
                 <a href="#menu-section">Menu</a>
