@@ -24,7 +24,7 @@ include '../Login/sessionCustomer.php';
     <div>
         <header id="navbar" class="">
             <div class="container">
-                <img class="word-logo left" src="../img/title.png" alt="logo">
+                <img class="word-logo left" src="../img/logo-title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab current" href="menu-page.php">Menu</a></li>
@@ -48,7 +48,8 @@ include '../Login/sessionCustomer.php';
                 <h1>ALA CARTE</h1>
                 <h3>Lorem ipsum basically instruction on how to order for ala carte</h3>
                 <div class="menu-table-detail">
-                    <div class="menu-col menu-card">
+                    <?php $menuObj->displayAlacarteMenu(); ?>
+                    <!-- <div class="menu-col menu-card">
                         <div class="menu-row">
                             <div class="menu-display-table">
                                 <img class="menu-img" src="../img/sushi.png" alt="logo">
@@ -67,107 +68,7 @@ include '../Login/sessionCustomer.php';
                                 </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="menu-col menu-card">
-                        <div class="menu-row">
-                            <div class="menu-display-table">
-                                <img class="menu-img" src="../img/sushi.png" alt="logo">
-                                <div class="details">
-                                    <h2 class="detail-title margin-0">Fried Sushi</h2>
-                                    <h5 class="details-title-desc margin-0">Sushi roll with cucumber, hotdog, carrot and egg</h5>
-                                    <h1 class="details-title-price margin-0">RM 5.00</h1>
-                                </div>
-                                <form class="input-menu menu-row" name="menu" action="orderMenu.php" method="post">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
-                                        <input id="expresso" name="expresso" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
-                                    </div>
-                                    <button id="addCart" class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-col menu-card">
-                        <div class="menu-row">
-                            <div class="menu-display-table">
-                                <img class="menu-img" src="../img/sushi.png" alt="logo">
-                                <div class="details">
-                                    <h2 class="detail-title margin-0">Fried Sushi</h2>
-                                    <h5 class="details-title-desc margin-0">Sushi roll with cucumber, hotdog, carrot and egg</h5>
-                                    <h1 class="details-title-price margin-0">RM 5.00</h1>
-                                </div>
-                                <form class="input-menu menu-row" name="menu" action="orderMenu.php" method="post">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
-                                        <input id="expresso" name="expresso" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
-                                    </div>
-                                    <button id="addCart" class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-col menu-card">
-                        <div class="menu-row">
-                            <div class="menu-display-table">
-                                <img class="menu-img" src="../img/sushi.png" alt="logo">
-                                <div class="details">
-                                    <h2 class="detail-title margin-0">Fried Sushi</h2>
-                                    <h5 class="details-title-desc margin-0">Sushi roll with cucumber, hotdog, carrot and egg</h5>
-                                    <h1 class="details-title-price margin-0">RM 5.00</h1>
-                                </div>
-                                <form class="input-menu menu-row" name="menu" action="orderMenu.php" method="post">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
-                                        <input id="expresso" name="expresso" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
-                                    </div>
-                                    <button id="addCart" class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-col menu-card">
-                        <div class="menu-row">
-                            <div class="menu-display-table">
-                                <img class="menu-img" src="../img/sushi.png" alt="logo">
-                                <div class="details">
-                                    <h2 class="detail-title margin-0">Fried Sushi</h2>
-                                    <h5 class="details-title-desc margin-0">Sushi roll with cucumber, hotdog, carrot and egg</h5>
-                                    <h1 class="details-title-price margin-0">RM 5.00</h1>
-                                </div>
-                                <form class="input-menu menu-row" name="menu" action="orderMenu.php" method="post">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
-                                        <input id="expresso" name="expresso" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
-                                    </div>
-                                    <button id="addCart" class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-col menu-card">
-                        <div class="menu-row">
-                            <div class="menu-display-table">
-                                <img class="menu-img" src="../img/sushi.png" alt="logo">
-                                <div class="details">
-                                    <h2 class="detail-title margin-0">Fried Sushi</h2>
-                                    <h5 class="details-title-desc margin-0">Sushi roll with cucumber, hotdog, carrot and egg</h5>
-                                    <h1 class="details-title-price margin-0">RM 5.00</h1>
-                                </div>
-                                <form class="input-menu menu-row" name="menu" action="orderMenu.php" method="post">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
-                                        <input id="expresso" name="expresso" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
-                                    </div>
-                                    <button id="addCart" class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    </div> -->
                 </div>
                 <br>
                 <h1>Our Way, Our Home</h1>
@@ -314,7 +215,7 @@ include '../Login/sessionCustomer.php';
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
-    <script>
+    <script type="text/javascript">
         window.onscroll = function() {myFunction()};
 
         var navbar = document.getElementById("flexbox");
@@ -326,6 +227,14 @@ include '../Login/sessionCustomer.php';
             } else {
                 navbar.classList.remove("sticky");
             }
+        }
+
+        function increment(name) {
+            document.getElementById(name).stepUp();
+        }
+
+        function decrement(name) {
+            document.getElementById(name).stepDown();
         }
     </script>
 </body>

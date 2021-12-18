@@ -24,7 +24,7 @@ include '../Login/sessionCustomer.php';
     <div>
         <header id="navbar" class="">
             <div class="container">
-                <img class="word-logo left" src="../img/title.png" alt="logo">
+                <img class="word-logo left" src="../img/logo-title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
@@ -56,7 +56,7 @@ include '../Login/sessionCustomer.php';
                             <th class="info-5"></th>
                             <th class="info-10">
                                 <label class="sushi-container">
-                                    <input type="checkbox" checked="checked">
+                                    <input type="checkbox" name="sushibox" checked="checked">
                                     <span class="checkmark"></span>
                                     <label class="">One</label>
                                 </label>
@@ -65,9 +65,9 @@ include '../Login/sessionCustomer.php';
                             <th class="info-20">
                                 <div class="sushi-list-input menu-row fit-width">
                                     <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
-                                        <input id="expresso" name="expresso" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
+                                        <h5 class="minus-btn" onclick="document.getElementById('expresso').stepDown();">-</h5>
+                                        <input id="expresso" name="expresso" type=number min="0">
+                                        <h5 class="plus-btn" onclick="document.getElementById('expresso').stepUp();">+</h5>
                                     </div>
                                 </div>
                             </th>
@@ -83,7 +83,7 @@ include '../Login/sessionCustomer.php';
                             <th class="info-5"></th>
                             <th class="info-10">
                                 <label class="sushi-container">
-                                    <input type="checkbox" checked="checked">
+                                    <input type="checkbox" name="sushibox" checked="checked">
                                     <span class="checkmark"></span>
                                     <label class="">One</label>
                                 </label>
@@ -92,9 +92,9 @@ include '../Login/sessionCustomer.php';
                             <th class="info-20">
                                 <div class="sushi-list-input menu-row fit-width">
                                     <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement1()">-</h5>
-                                        <input id="expresso" name="expresso" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment1()">+</h5>
+                                        <h5 class="minus-btn" onclick="document.getElementById('basicsushi').stepDown();">-</h5>
+                                            <input id="basicsushi" name="basicsushi" type=number min=0 max=110>
+                                        <h5 class="plus-btn" onclick="document.getElementById('basicsushi').stepUp();">+</h5>
                                     </div>
                                 </div>
                             </th>
@@ -114,7 +114,7 @@ include '../Login/sessionCustomer.php';
                             <tr>
                                 <th class="info-20">
                                     <label class="sushi-container">
-                                        <input type="checkbox" checked="checked">
+                                        <input name="chk" type="checkbox" onClick="toggle(this)"  checked="checked">
                                         <span class="checkmark"></span>
                                         <label class="">SELECT ALL</label>
                                     </label>
@@ -136,32 +136,19 @@ include '../Login/sessionCustomer.php';
                 <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
             </div>
             <br><br>
-            <form action="">
-                <div class="tbl-content-checkout">
-                    <table cellpadding="0" cellspacing="0" border="0">
-                        <tbody>
-                            <tr>
-                                <th class="info-20">
-                                    <label class="sushi-container">
-                                        <input type="checkbox" checked="checked">
-                                        <span class="checkmark"></span>
-                                        <label class="">SELECT ALL</label>
-                                    </label>
-                                </th>
-                                <th class="info-30"></th>
-                                <th class="info-10">Total: </th>
-                                <th class="info-10"><span class="info-amount">RM53.00</span></th>
-                                <th class="info-10"><a class="info-checkout red-bg white-txt" href="checkout-page.php">CHECKOUT</a></th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </form>
             <br><br>
         </div>  
     </div>
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
+    <script>
+        function toggle(source) {
+            checkboxes = document.getElementsByName('sushibox');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }    
+    </script>
 </body>
 </html>

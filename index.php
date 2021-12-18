@@ -106,7 +106,7 @@
             <div class="width-4"></div>
         </div>
         <div class="padding-tb">
-        <button class="order-btn yellow-bg"><a class="white-txt" href="Customer/menu-page-public.php">SEE MORE</a></button>
+            <button class="order-btn yellow-bg"><a class="white-txt" href="Customer/menu-page-public.php">SEE MORE</a></button>
         </div>
     </div>
     <div class="abt-contact blue-bg white-txt" id="contact-section">
