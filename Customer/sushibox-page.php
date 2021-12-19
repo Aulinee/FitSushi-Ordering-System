@@ -50,7 +50,8 @@ include '../Login/sessionCustomer.php';
                 </table>
             </div>
             <div class="tbl-content">
-                <table cellpadding="0" cellspacing="0" border="0">
+                <?php $menuObj->displayAlacarteSushibox(); ?>
+                <!-- <table cellpadding="0" cellspacing="0" border="0">
                     <tbody>
                         <tr>
                             <th class="info-5"></th>
@@ -76,34 +77,7 @@ include '../Login/sessionCustomer.php';
                             <th class="info-20">Action</th>
                         </tr>
                     </tbody>
-                </table>
-                <table cellpadding="0" cellspacing="0" border="0">
-                    <tbody>
-                        <tr>
-                            <th class="info-5"></th>
-                            <th class="info-10">
-                                <label class="sushi-container">
-                                    <input type="checkbox" name="sushibox" checked="checked">
-                                    <span class="checkmark"></span>
-                                    <label class="">One</label>
-                                </label>
-                            </th>
-                            <th class="info-5"></th>
-                            <th class="info-20">
-                                <div class="sushi-list-input menu-row fit-width">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="document.getElementById('basicsushi').stepDown();">-</h5>
-                                            <input id="basicsushi" name="basicsushi" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="document.getElementById('basicsushi').stepUp();">+</h5>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="info-20">Unit Price</th>
-                            <th class="info-20">Total Price</th>
-                            <th class="info-20">Action</th>
-                        </tr>
-                    </tbody>
-                </table>
+                </table>-->
             </div>
             <br>
             <br>
@@ -114,14 +88,14 @@ include '../Login/sessionCustomer.php';
                             <tr>
                                 <th class="info-20">
                                     <label class="sushi-container">
-                                        <input name="chk" type="checkbox" onClick="toggle(this)"  checked="checked">
+                                        <input name="chk"  type="checkbox" onclick="toggle(this)" >
                                         <span class="checkmark"></span>
                                         <label class="">SELECT ALL</label>
                                     </label>
                                 </th>
                                 <th class="info-30"></th>
                                 <th class="info-10">Total: </th>
-                                <th class="info-10"><span class="info-amount">RM53.00</span></th>
+                                <th class="info-10"><span class="info-amount" id="total">RM0.00</span></th>
                                 <th class="info-10"><a class="info-checkout red-bg white-txt" href="checkout-page.php">CHECKOUT</a></th>
                             </tr>
                         </tbody>
@@ -148,7 +122,46 @@ include '../Login/sessionCustomer.php';
             for(var i=0, n=checkboxes.length;i<n;i++) {
                 checkboxes[i].checked = source.checked;
             }
-        }    
+
+            totalIt();
+        }
+
+        function updateTotal(name) {
+            // var totalField = document.getElementById('total-price').value;
+            // var unitField = document.getElementById('unit-price').value;
+
+            var sushiQty = document.getElementById(name);
+            console.log(sushiQty.value);
+
+            if(sushiQty){
+                console.log(sushiQty.value);
+            }
+            
+        } 
+
+        function increment(name) {
+            document.getElementById(name).stepUp();
+        }
+
+        function decrement(name) {
+            document.getElementById(name).stepDown();
+        }
+
+        function totalIt()
+        {
+            var input = document.getElementsByName("sushibox");
+            var total = 0;
+            for (var i = 0; i < input.length; i++)
+            {
+                if (input[i].checked)
+                {
+                    total += parseFloat(input[i].value);
+                }
+            }
+            document.getElementById("total").innerHTML = "RM" + total.toFixed(2);
+        }
+
+        updateTotal(this);
     </script>
 </body>
 </html>

@@ -2,8 +2,10 @@
 include '../database/dbConnection.php'; 
 include 'UserClass.php';
 include 'AdminClass.php';
+include 'MenuClass.php';
 $userObj = new User($conn);
 $adminObj = new Admin($conn);
+$menuObj = new Menu($conn);
 
 // $userObj->checkExistUsername("kiannyp");
 
@@ -33,4 +35,6 @@ $adminObj = new Admin($conn);
 // echo $hello[3];
 // echo $hello[4];
 // echo $hello[5];
+
+// $menuObj->addAlacarte(1,2,3);
 ?>

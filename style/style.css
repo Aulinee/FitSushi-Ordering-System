@@ -557,11 +557,11 @@ header .home-tab {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  height: max-content;
 }
 
 .menu-img {
   width: 100%;
-  height: 150px;
   color: #000;
 }
 

@@ -78,7 +78,7 @@ include '../Login/sessionCustomer.php';
         </div>
         <br>
         <br>
-        <div class="menu-detail" id="set-menu">
+        <!-- <div class="menu-detail" id="set-menu">
             <div class="menu-table red-bg white-txt">
                 <h1>SET</h1>
                 <h3>Lorem ipsum basically instruction on how to order for set</h3>
@@ -208,7 +208,7 @@ include '../Login/sessionCustomer.php';
                 <h3>Small menu, endless flavours</h3>
                 <br>
             </div>
-        </div>
+        </div> -->
         <br>
         <br>
     </div>
