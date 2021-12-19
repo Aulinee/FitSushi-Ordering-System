@@ -21,18 +21,11 @@
             <div class="padding">
                 <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
             </div>
-            <div>
-                <table>
-                    <tr>
-                        <td class="padding">
-                            <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic">
-                        </td>
-                        <td>
-                            <h1>Susan</h1><h2>Admin</h2>
-                        </td>
-                    </tr>
-                </table>
+            <div class="padding">
+                <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
+                <h1>Susan</h1><h2>Admin</h2>
             </div>
+            <br><br>
             <div>
                 <ul>
                     <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"> HOME</li>
@@ -46,12 +39,12 @@
             </div>
         </div>
         <div class="admin-page-dashboard">
-            <u><h1 class="h1-dashboard">Sales Report</h1></u>
-            <div>
+            <h1 class="h1-dashboard">Sales Report</h1>
+            <div class="calendar">
                 <form action="/action_page.php"></form>
-                <label for="month"><img src="img/admin-img/calendar.jpg" alt="calendar" width="39" height="52">:</label>
-                <select id="month" name="month">
-                    <option value=" "><i>-- select a month --</i></option>
+                <label for="month"><img src="img/admin-img/calendar.jpg" alt="calendar" width="39" height="52"><b>:</b></label>
+                <select id="month" name="month" class="cal">
+                    <option value=" "><em>-- select a month --</em></option>
                     <option value="January">January</option>
                     <option value="February">February</option>
                     <option value="March">March</option>
@@ -65,6 +58,68 @@
                     <option value="November">November</option>
                     <option value="December">December</option>
                 </select>
+            </div>
+            <div class="flex-container1">
+                <div>
+                    <h2 class="h2-dashboard">Overview</h2>
+
+                </div>
+                <div>
+                    <h2 class="h2-dashboard">Top Buyer</h2>
+                    <ul class="ul1">
+                        <li class="li2">lorem ipsum</li>
+                        <li class="li2">lorem ipsum</li>
+                        <li class="li2">lorem ipsum</li>
+                        <li class="li2">lorem ipsum</li>
+                        <li class="li2">lorem ipsum</li>
+                    </ul>
+
+                </div>
+                <div>
+                    <h2 class="h2-dashboard">Top product</h2>
+
+                </div>            
+            </div>
+            <div class="flex-container2">
+                <div>
+                    <h2 class="h2-dashboard">Sales Revenue</h2>
+                    <label for="year" class="year"><b>Year:</b></label>
+                    <select id="year" name="year" class="select-year">
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
+                </div>
+                <div>
+                    <h2 class="h2-dashboard">New User Data</h2>
+                    <label for="month" class="month"><b>Month:</b></label>
+                    <select id="month" name="month" class="select-month">
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                    <label for="year" class="year"><b>Year:</b></label>
+                    <select id="year" name="year" class="select-year">
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                    </select>
+                </div>
             </div>
         </div>
     </section>
