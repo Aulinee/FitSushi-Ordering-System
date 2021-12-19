@@ -42,6 +42,8 @@
     $state= $session_data[10];
     $country= $session_data[11];
 
+    $fulladdress = $addressline.', '.$postalcode.' '.$area.', '.$state.', '.$country;
+
     if(!isset($_SESSION['login_user'])){
         header("Location:../Login/sign-in-user.php");  
         die();

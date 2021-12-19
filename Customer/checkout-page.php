@@ -2,6 +2,17 @@
 date_default_timezone_set("Asia/Kuala_Lumpur");
 include '../Login/sessionCustomer.php';
 
+$totalorder = htmlentities($_GET["total"]);
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+    $fullname = $_POST["fullname"];
+    $address = $_POST["fulladdress"];
+    $phonenum = $_POST["phonenum"];
+    $totalOrder = $_POST["totalorder"];
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,23 +54,14 @@ include '../Login/sessionCustomer.php';
                 <h1 class="title-page text-center">CHECKOUT PAYMENT</h1>
             </div>
             <div class="payment-details">
-                <form name="payment" action="payment-confirm.php" method="post">
+                <form name="payment" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <h4>Order for</h4>
-                    <div class="row-payment menu-row">
-                        <div class="payment-30">
-                            <label for="PaymentID"><b>Payment ID</b></label>
-                        </div>
-                        <div class="payment-70">
-                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
-                        </div>
-                    </div>
-                    <br>
                     <div class="row-payment">
                         <div class="payment-30">
                             <label for="PaymentID"><b>Full Name</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
+                            <input name="fullname" value="<?php echo $fullname; ?>" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -68,7 +70,7 @@ include '../Login/sessionCustomer.php';
                             <label for="PaymentID"><b>Address</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
+                            <input name="fulladdress" value="<?php echo $fulladdress; ?>" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -77,7 +79,7 @@ include '../Login/sessionCustomer.php';
                             <label for="PaymentID"><b>Mobile Number</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
+                            <input name="phonenum" value="<?php echo $phonenum; ?>" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -86,7 +88,7 @@ include '../Login/sessionCustomer.php';
                             <label for="PaymentID"><b>Total Amount (RM)</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" placeholder="       Audrey Duyan anak Gima" type="text" readonly>
+                            <input name="totalamount" value="<?php echo $totalorder; ?>" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -95,8 +97,11 @@ include '../Login/sessionCustomer.php';
                             <label for="PaymentID"><b>Delivery Option</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="id" value="delivery" type="radio" readonly>Delivery</input>
-                            <input name="id" value="self-pickup" type="radio" readonly>Self Pick-Up</input>
+                            <?php  
+                                
+                            ?>
+                            <input name="deliveryopt" value="delivery" type="radio" readonly>Delivery</input>
+                            <input name="deliveryopt" value="self-pickup" type="radio" readonly>Self Pick-Up</input>
                         </div>
                     </div>
                     <div class="row-payment-col">
@@ -134,9 +139,6 @@ include '../Login/sessionCustomer.php';
         </div>
         <br>
         <br>
-        <br>
-        <br>
-        <br><br>
         <div class="sushibox-detail red-bg white-txt margin-empty-sushi">
             <h1>YOUR ORDER IS DONE!</h1>
             <h3>Sit back and relax while you wait for your order. Meeanwhile, discover our delicious sushi and its set in our MENU. </h3>

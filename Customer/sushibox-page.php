@@ -2,6 +2,41 @@
 date_default_timezone_set("Asia/Kuala_Lumpur");
 include '../Login/sessionCustomer.php';
 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    $totalOrder = $_POST["totalorder"];
+    $sushiId = $_POST["sushibox"];
+    $sushiQty = $_POST["sushiqty"];
+
+    if($totalOrder == 0){
+        echo "<script>
+            alert('Your total order is zero');
+            window.location.href='sushibox-page.php';
+            </script>";
+
+    }else{
+        // header("Location: checkout-page.php?total=".$totalOrder."");
+
+        if (isset($sushiId)) {
+            echo "You chose the following color(s): <br>";
+        
+            foreach ($sushiId as $color){
+                echo $color."<br />";
+            }
+
+            foreach ($sushiQty as $qty){
+                echo $qty."<br />";
+            }
+        } else {
+            echo "You did not choose a color.";
+        }
+        
+    }
+
+
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,18 +77,18 @@ include '../Login/sessionCustomer.php';
                         <tr>
                             <th class="info-20">Item Name</th>
                             <th class="info-20">Quantity</th>
-                            <th class="info-20">Unit Price</th>
-                            <th class="info-20">Total Price</th>
+                            <th class="info-20">Unit Price (RM)</th>
+                            <th class="info-20">Total Price (RM)</th>
                             <th class="info-20">Action</th>
                         </tr>
                     </thead>
                 </table>
             </div>
-            <div class="tbl-content">
-                <?php $menuObj->displayAlacarteSushibox(); ?>
-                <!-- <table cellpadding="0" cellspacing="0" border="0">
-                    <tbody>
-                        <tr>
+            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <div class="tbl-content">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <?php $menuObj->displayAlacarteSushibox(); ?>
+                        <!-- <tr>
                             <th class="info-5"></th>
                             <th class="info-10">
                                 <label class="sushi-container">
@@ -75,28 +110,25 @@ include '../Login/sessionCustomer.php';
                             <th class="info-20">Unit Price</th>
                             <th class="info-20">Total Price</th>
                             <th class="info-20">Action</th>
-                        </tr>
-                    </tbody>
-                </table>-->
-            </div>
-            <br>
-            <br>
-            <form action="">
+                        </tr> -->
+                    </table>
+                </div>
+                <br>
+                <br>
                 <div class="tbl-content-checkout">
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tbody>
                             <tr>
-                                <th class="info-20">
+                                <th style="text-align:left;" class="info-20">
                                     <label class="sushi-container">
                                         <input name="chk"  type="checkbox" onclick="toggle(this)" >
                                         <span class="checkmark"></span>
                                         <label class="">SELECT ALL</label>
                                     </label>
                                 </th>
-                                <th class="info-30"></th>
-                                <th class="info-10">Total: </th>
-                                <th class="info-10"><span class="info-amount" id="total">RM0.00</span></th>
-                                <th class="info-10"><a class="info-checkout red-bg white-txt" href="checkout-page.php">CHECKOUT</a></th>
+                                <th class="info-10">Total(RM): </th>
+                                <th class="info-30"><input name="totalorder" id="total" class="info-amount none-outline" value="0.00"></th>
+                                <th class="info-30"><button type="submit" class="info-checkout red-bg white-txt">CHECKOUT</button></th>
                             </tr>
                         </tbody>
                     </table>
@@ -118,7 +150,7 @@ include '../Login/sessionCustomer.php';
     </footer>
     <script>
         function toggle(source) {
-            checkboxes = document.getElementsByName('sushibox');
+            checkboxes = document.getElementsByName('sushibox[]');
             for(var i=0, n=checkboxes.length;i<n;i++) {
                 checkboxes[i].checked = source.checked;
             }
@@ -127,41 +159,71 @@ include '../Login/sessionCustomer.php';
         }
 
         function updateTotal(name) {
-            // var totalField = document.getElementById('total-price').value;
-            // var unitField = document.getElementById('unit-price').value;
+            var sushiQty = document.getElementById(name).value;
+            var unitField = document.getElementById('unit-price').value;
 
-            var sushiQty = document.getElementById(name);
-            console.log(sushiQty.value);
-
-            if(sushiQty){
-                console.log(sushiQty.value);
+            var total = sushiQty * unitField;
+            
+            if (!isNaN(total)){
+                document.getElementById("total-price").innerHTML = "RM" + total.toFixed(2);
             }
             
         } 
 
         function increment(name) {
             document.getElementById(name).stepUp();
+
+            var unitIdString = 'unit-price-' + name;
+            var totalIdString = "total-price-"+ name;
+
+            var sushiQty = document.getElementById(name).value;
+            var unitField = document.getElementById(unitIdString).value;
+
+            var total = sushiQty * unitField;
+            
+            if (!isNaN(total)){
+                document.getElementById(totalIdString ).value = total.toFixed(2);
+            }
+
+            totalIt();
+                
         }
 
         function decrement(name) {
             document.getElementById(name).stepDown();
+
+            var unitIdString = 'unit-price-' + name;
+            var totalIdString = "total-price-"+ name;
+
+            var sushiQty = document.getElementById(name).value;
+            var unitField = document.getElementById(unitIdString).value;
+
+            var total = sushiQty * unitField;
+            
+            if (!isNaN(total)){
+                document.getElementById(totalIdString).value = total.toFixed(2);
+            }
+
+            totalIt();
         }
 
-        function totalIt()
+        function totalIt(name)
         {
-            var input = document.getElementsByName("sushibox");
+            var input = document.getElementsByName("sushibox[]");
+            var totalField = document.getElementsByName("sushitotal");
+
             var total = 0;
             for (var i = 0; i < input.length; i++)
             {
                 if (input[i].checked)
                 {
-                    total += parseFloat(input[i].value);
+                    total += parseFloat(totalField[i].value);
                 }
             }
-            document.getElementById("total").innerHTML = "RM" + total.toFixed(2);
+
+            document.getElementById("total").value = total.toFixed(2);
         }
 
-        updateTotal(this);
     </script>
 </body>
 </html>

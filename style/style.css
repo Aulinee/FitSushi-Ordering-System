@@ -998,7 +998,17 @@ header .home-tab {
   font-size: 20px;
 }
 
+.none-outline {
+  border: none;
+  outline: none;
+}
+
 .tbl-content th input {
+  text-align: center;
+  padding: 1% 0;
+  color: var(--red);
+  font-weight: normal;
+  font-size: 20px;
 }
 
 /* The sushi-container   */
@@ -1214,7 +1224,7 @@ th .info-checkout:hover {
 .payment-details input[type="tel"] {
   text-align: left;
   width: 100%;
-  padding: 15px 0;
+  padding: 15px 10px;
   border: solid 1px #e4e4e4;
   border-radius: 4px;
   background: #fcfcfc;
