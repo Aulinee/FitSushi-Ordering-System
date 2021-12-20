@@ -50,6 +50,14 @@ class Admin{
         } 
 
     }
+
+
+
+    public function createCustomer(){
+        echo "Customer cretaed";
+    }
+
+
 }
 
 ?>

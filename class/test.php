@@ -9,6 +9,8 @@ $adminObj = new Admin($conn);
 $menuObj = new Menu($conn);
 $orderObj = new Menu($conn);
 
+$adminObj->createCustomer();
+
 // $userObj->checkExistUsername("kiannyp");
 
 // $userObj->signUp('Aulinee', 'Audrey Duyan', 'audrey@gmail.com', 'Ass123-', '01114095674', 'female', 'Lot 6647, Kampung Rembus', 93200, "Kuching", "Sarawak");
