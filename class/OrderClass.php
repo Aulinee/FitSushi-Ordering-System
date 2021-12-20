@@ -46,8 +46,38 @@ class Order{
         
     }
 
-    public function getOrderData($customerid , $orderstatus){
-        $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderStatusID = $orderstatus AND o.customerID = $customerid";
+    public function getPendingOrderData($customerid){
+        $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderStatusID = 4 AND o.customerID = $customerid";
+        $displayQuery = mysqli_query($this->conn, $stringQuery);
+
+        $customerid = $orderid = 0;
+        $orderData = array();
+
+        while($roworder = mysqli_fetch_array($displayQuery)){
+            $orderid = $roworder['orderID'];
+            $customerid = $roworder['customerID'];
+            $statusname = $roworder['statusName'];
+            $datecreate = $roworder['dateCreated'];
+            $deliveryopt = $roworder['deliveryOption'];
+            $paymentmethod = $roworder['paymentMethod'];
+            $ordertotal = $roworder['orderTotal'];
+
+            $orderData[] = array(
+                "orderid" => $orderid, 
+                "cusid" => $customerid, 
+                "status" => $statusname, 
+                "datecreate" => $datecreate, 
+                "deliveryopt" => $deliveryopt,
+                "paymentmethod" => $paymentmethod,
+                "ordertotal" => $ordertotal
+            );
+        }
+
+        return $orderData;
+    }
+
+    public function getDeliveryOrderData($customerid){
+        $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderStatusID = 1 AND o.customerID = $customerid";
         $displayQuery = mysqli_query($this->conn, $stringQuery);
 
         $customerid = $orderid = 0;
@@ -63,7 +93,80 @@ class Order{
             $paymentmethod = $roworder['paymentMethod'];
             $ordertotal = $roworder['orderTotal'];
 
-            $orderData = array($orderid, $customerid, $statusname, $datecreate, $deliveryopt, $deliverydatetime, $paymentmethod, $ordertotal);
+            $orderData[] = array(
+                "orderid" => $orderid, 
+                "cusid" => $customerid, 
+                "status" => $statusname, 
+                "datecreate" => $datecreate, 
+                "deliveryopt" => $deliveryopt,
+                "deliverydate" => $deliverydatetime,
+                "paymentmethod" => $paymentmethod,
+                "ordertotal" => $ordertotal
+            );
+        }
+
+        return $orderData;
+    }
+
+    public function getCompleteOrderData($customerid){
+        $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderStatusID = 2 AND o.customerID = $customerid";
+        $displayQuery = mysqli_query($this->conn, $stringQuery);
+
+        $customerid = $orderid = 0;
+        $orderData = array();
+
+        while($roworder = mysqli_fetch_array($displayQuery)){
+            $orderid = $roworder['orderID'];
+            $customerid = $roworder['customerID'];
+            $statusname = $roworder['statusName'];
+            $datecreate = $roworder['dateCreated'];
+            $deliveryopt = $roworder['deliveryOption'];
+            $deliverydatetime = $roworder['deliverydateTime'];
+            $paymentmethod = $roworder['paymentMethod'];
+            $ordertotal = $roworder['orderTotal'];
+
+            $orderData[] = array(
+                "orderid" => $orderid, 
+                "cusid" => $customerid, 
+                "status" => $statusname, 
+                "datecreate" => $datecreate, 
+                "deliveryopt" => $deliveryopt,
+                "deliverydate" => $deliverydatetime,
+                "paymentmethod" => $paymentmethod,
+                "ordertotal" => $ordertotal
+            );
+        }
+
+        return $orderData;
+    }
+
+    public function getCancelOrderData($customerid){
+        $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderStatusID = 3 AND o.customerID = $customerid";
+        $displayQuery = mysqli_query($this->conn, $stringQuery);
+
+        $customerid = $orderid = 0;
+        $orderData = array();
+
+        while($roworder = mysqli_fetch_array($displayQuery)){
+            $orderid = $roworder['orderID'];
+            $customerid = $roworder['customerID'];
+            $statusname = $roworder['statusName'];
+            $datecreate = $roworder['dateCreated'];
+            $deliveryopt = $roworder['deliveryOption'];
+            $deliverydatetime = $roworder['deliverydateTime'];
+            $paymentmethod = $roworder['paymentMethod'];
+            $ordertotal = $roworder['orderTotal'];
+
+            $orderData[] = array(
+                "orderid" => $orderid, 
+                "cusid" => $customerid, 
+                "status" => $statusname, 
+                "datecreate" => $datecreate, 
+                "deliveryopt" => $deliveryopt,
+                "deliverydate" => $deliverydatetime,
+                "paymentmethod" => $paymentmethod,
+                "ordertotal" => $ordertotal
+            );
         }
 
         return $orderData;

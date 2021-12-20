@@ -181,6 +181,7 @@ function test_input($data) {
                         <br>
                         <!-- all order section -->
                         <div id="all-order">
+                            <?php  ?>
                             <div class="order-content-all flex-col">
                                 <div class="set-layout">
                                     <div class="set-layout-header-1 red-bg">
@@ -189,6 +190,8 @@ function test_input($data) {
                                         </div>
                                         <div class="flex-row set-layout-header">
                                             <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                            <h3 class="order-date-txt margin-0">Delivery Option: Self Pickup</h3>
+                                            <h3 class="order-date-txt margin-0">Payment Option: Debit Card</h3>
                                             <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
                                         </div>
                                     </div>
