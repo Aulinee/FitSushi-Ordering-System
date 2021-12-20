@@ -51,49 +51,30 @@ class Menu{
         }
     }
 
-    public function displayAlacarteMenu(){
+    public function getAlacarteMenuList(){
         // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
         $menuQuery = "SELECT * from sushi s WHERE s.sushiImg != 'NULL'";
-        $result = $this->conn->query($menuQuery);
+        $displayQuery = mysqli_query($this->conn, $menuQuery);
 
-        if($result){
-            if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $id = $row["sushiID"];
-                    $name = $row["sushiName"];
-                    $desc = $row["sushiDesc"];
-                    $image = $row["sushiImg"];
-                    $price = $row["price"];
+        $orderData = array();
 
-                    echo'
-                    <div class="menu-col menu-card">
-                        <div class="menu-row">
-                            <div class="menu-display-table">
-                                <img class="menu-img" src="data:image/jpeg;base64,'.base64_encode( $image ).'" alt="'.$name.'"/>
-                                <div class="details">
-                                    <h2 class="detail-title margin-0">'.$name.'</h2>
-                                    <h5 class="details-title-desc margin-0">'.$desc.'</h5>
-                                    <h1 class="details-title-price margin-0">RM '.$price.'</h1>
-                                </div>
-                                <form class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$id.'" method="post">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement(\''.$id.'\')">-</h5>
-                                        <input id="'.$id.'" name="'.$id.'" type=number min=0 max=110>
-                                        <h5 class="plus-btn" onclick="increment(\''.$id.'\')">+</h5>
-                                    </div>
-                                    <button class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    ';
-                }
-            }else{
-                echo "Record not found";
-            }
-        }else{
-            echo "Error in ".$menuQuery." ".$this->conn->error;
+        while($row = mysqli_fetch_array($displayQuery)){
+            $id = $row["sushiID"];
+            $name = $row["sushiName"];
+            $desc = $row["sushiDesc"];
+            $image = $row["sushiImg"];
+            $price = $row["price"];
+
+            $orderData[] = array(
+                "id" => $id,
+                "name" => $name,
+                "desc" => $desc,
+                "img" => $image,
+                "price" => $price
+            );
         }
+
+        return $orderData;
     }
 
     public function checkExistMenu($customerid, $sushiid){

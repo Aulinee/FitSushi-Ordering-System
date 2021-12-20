@@ -110,7 +110,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <label for="PaymentID"><b>Delivery Option</b></label>
                         </div>
                         <div class="payment-70">
-                            
                             <?php  
                                 $deliveryOptArray = $orderObj->getDeliveryOptionList();
 
