@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $myusername = $_POST['usern'];
     $mypassword = $_POST['passw']; 
     
-    $sql = "SELECT * FROM administrator WHERE Username = '$myusername' and Password = '$mypassword'";
+    $sql = "SELECT * FROM administrator WHERE username = '$myusername' and password = '$mypassword'";
     
     $result = mysqli_query($conn, $sql) or die("Error: ".mysqli_error($conn));
     $row = mysqli_fetch_array($result);
@@ -26,14 +26,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // If result matched $myusername and $mypassword, table row must be 1 row
       
     if($count == 1) {
-         // Set sessions
-         if(!isset($_SESSION)) {
+
+        // Set sessions
+        if(!isset($_SESSION)) {
             session_start();
-         }
+        }
+
         $_SESSION['login_user'] = $myusername;
-         // Login time is stored in a session variable 
-         $_SESSION["login_time_stamp"] = time(); 
+        $_SESSION['login_pass'] = $mypassword;
+
+        // Login time is stored in a session variable 
+        $_SESSION["login_time_stamp"] = time(); 
+
         header('location:../Admin-Folder/dashboard.php');
+
     }else {
        $error = "Your Login Name or Password is invalid";
     }

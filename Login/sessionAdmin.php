@@ -33,7 +33,7 @@
 
     $adminid = $session_data[0];
     $username = $session_data[1];
-    $password = $session_data[2]
+    $password = $session_data[2];
     $fullname = $session_data[3];
     $phonenum = $session_data[4];
     $email = $session_data[5];

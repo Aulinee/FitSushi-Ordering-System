@@ -9,7 +9,7 @@ class Admin{
 	}
 
     public function loginAuthentication(string $username, string $password){
-        $query = "SELECT * FROM admin WHERE Username = '$username' AND Password = '$password'";
+        $query = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
         $result = mysqli_query($this->conn, $query) or die("Error: ".mysqli_error($this->conn));
         $count = mysqli_num_rows($result);
     

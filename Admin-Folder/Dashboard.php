@@ -1,3 +1,14 @@
+<?php
+    date_default_timezone_set("Asia/Kuala_Lumpur");
+    include '../Login/sessionAdmin.php';
+
+    $username = $_SESSION['login_user'];
+    $password = $_SESSION['login_pass'];
+
+    echo '<script>alert("'.$username.'")</script>';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +34,7 @@
             </div>
             <div class="padding">
                 <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
-                <h1>Susan</h1><h2>Admin</h2>
+                <h1><?php echo $username; ?></h1><h2>Admin</h2>
             </div>
             <br><br>
             <div>
