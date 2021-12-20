@@ -2,30 +2,28 @@
 date_default_timezone_set("Asia/Kuala_Lumpur");
 include '../Login/sessionCustomer.php';
 
-$sushiId = $_SESSION['sushiid'];
-$sushiQty = $_SESSION['sushiqty'];
-$totalorder = $_SESSION['totalorder'];
+$prev_orderid = $_SESSION['prev-orderid'];
+$total_order = $_SESSION['total-order'];
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     $deliveryopt = $_POST["delivery-option"];
     $paymentmethod = $_POST["payment-method"];
 
-    $orderStatus = $orderObj->makeOrder($sushiId, $sushiQty, $userid, $deliveryopt, $paymentmethod, $totalorder);
+    $buy_again_status = $orderObj->buyAgainOrder($prev_orderid, $userid, $deliveryopt,  $paymentmethod , $total_order);
 
-    if($orderStatus == true){
-        unset($_SESSION['sushiid']);
-        unset($_SESSION['sushiqty']);
-        unset($_SESSION['totalorder']);
-        
+    if($buy_again_status == true){
+        unset($_SESSION['prev-orderid']);
+        unset($_SESSION['total-order']);
+
         echo "<script>
-            alert('Your order is successful created!');
-            window.location.href='profile-page.php#user-purchase-div';
-        </script>";
+                alert('Your order is successful!');
+                window.location.href='profile-page.php';
+            </script>";
     }else{
         echo "<script>
-            alert('Your order is unsuccessful! Please try again');
-        </script>";
+                alert('Your order is unsuccessful! Please try again!');
+            </script>";
     }
 }
 
@@ -105,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <label for="PaymentID"><b>Total Amount (RM)</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="totalamount" value="<?php echo $totalorder; ?>" type="text" readonly>
+                            <input name="totalamount" value="<?php echo $total_order; ?>" type="text" readonly>
                         </div>
                     </div>
                     <br>

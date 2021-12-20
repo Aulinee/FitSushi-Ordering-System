@@ -7,112 +7,122 @@ $fname_edit = $username_edit = $email_edit = $mobileNum_edit = $gender_edit = $a
 $boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = false;
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    //header('location:sign-in-user.php');
-    //full name validation
-    $fname_edit = $_POST["fname_edit"];
-    if (empty($fname_edit)) {
-        $fnameErr = "Full name is required";
-    } else {
-        $boolFname = true;
-    }
-    
-    //username validation
-    $username_edit = $_POST["usern_edit"];
-    if (empty($username_edit)) {
-        $usernameErr = "Username is required";
-    }else if($userObj->checkExistUsername($username_edit)){
-        $usernameErr = "This username already exist!";
-    }else {
-        $boolUsername = true;
-    }
-
-    //email validation
-    if (empty($_POST["email_edit"])) {
-        $emailErr = "Email is required";
-    } else {
-        $email_edit = test_input($_POST["email_edit"]);
-        // check if e-mail address is well-formed
-        if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Invalid email format";
+    if (isset($_POST["update_edit"]) ) {
+        //header('location:sign-in-user.php');
+        //full name validation
+        $fname_edit = $_POST["fname_edit"];
+        if (empty($fname_edit)) {
+            $fnameErr = "Full name is required";
         } else {
-            $boolEmail = true;
+            $boolFname = true;
         }
-    }
-
-    //mobile number validation
-    if (empty($_POST["phone_edit"])) {
-        $mobileNumErr = "Mobile number is required";
-    } else {
-        $mobileNum_edit = test_input($_POST["phone_edit"]);
-        // check if phone number is valid
-        if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
-            $mobileNumErr = "Invalid mobile number format";
+        
+        //username validation
+        $username_edit = $_POST["usern_edit"];
+        if (empty($username_edit)) {
+            $usernameErr = "Username is required";
+        } elseif ($userObj->checkExistUsername($username_edit)) {
+            $usernameErr = "This username already exist!";
         } else {
-            $boolMobileNum = true;
+            $boolUsername = true;
         }
-    }
 
-    //empty button validation
-    //gender
-    if (!isset($_POST["gender"])) {
-        $genderErr = "Gender is required";
-    } else {
-        $gender_edit = $_POST["gender"];
-        $boolGender = true;
-    }
-
-    //address
-    $address_edit = $_POST["add-1_edit"];
-    if (empty($address_edit)) {
-      $addressErr = "Address Line is required!";
-    } else {
-      $boolAddress= true;
-    }
-
-    //postcode
-    $postcode_edit = $_POST["post_edit"];
-    if (empty($postcode_edit)) {
-      $postcodeErr = "Postcode is required";
-    } else {
-      $boolPostcode = true;
-    }
-
-    //city
-    $city_edit = $_POST["city_edit"];
-    if (empty($city_edit)) {
-        $cityErr = "City name is required";
-    } else {
-        $boolCity = true;
-    }
-
-    //state
-    $state_edit = $_POST['state_edit'];
-    if ($state_edit === "select") {
-        $stateErr = "Please select your state.";
-    } else {
-        $boolState = true;
-    }
-
-    //password validation
-    if (empty($_POST["passw_edit"])) {
-        $passwordErr = "Password is required";
-    } else {
-        $password_edit = test_input($_POST["passw_edit"]);
-        $boolPassword = true;
-    }
-
-    //confirmation feedback
-    if (isset($_POST["update_edit"]) && ($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = true) ) {
-        $updateStatus = $userObj->updateProfile($userid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
-        if ($updateStatus){
-            echo "<script>
-            window.location.href='profile-page.php';
-            </script>";
+        //email validation
+        if (empty($_POST["email_edit"])) {
+            $emailErr = "Email is required";
         } else {
-            echo "<script>
-            window.location.href='profile-page.php';
-            </script>";
+            $email_edit = test_input($_POST["email_edit"]);
+            // check if e-mail address is well-formed
+            if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
+                $emailErr = "Invalid email format";
+            } else {
+                $boolEmail = true;
+            }
         }
+
+        //mobile number validation
+        if (empty($_POST["phone_edit"])) {
+            $mobileNumErr = "Mobile number is required";
+        } else {
+            $mobileNum_edit = test_input($_POST["phone_edit"]);
+            // check if phone number is valid
+            if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
+                $mobileNumErr = "Invalid mobile number format";
+            } else {
+                $boolMobileNum = true;
+            }
+        }
+
+        //empty button validation
+        //gender
+        if (!isset($_POST["gender"])) {
+            $genderErr = "Gender is required";
+        } else {
+            $gender_edit = $_POST["gender"];
+            $boolGender = true;
+        }
+
+        //address
+        $address_edit = $_POST["add-1_edit"];
+        if (empty($address_edit)) {
+            $addressErr = "Address Line is required!";
+        } else {
+            $boolAddress= true;
+        }
+
+        //postcode
+        $postcode_edit = $_POST["post_edit"];
+        if (empty($postcode_edit)) {
+            $postcodeErr = "Postcode is required";
+        } else {
+            $boolPostcode = true;
+        }
+
+        //city
+        $city_edit = $_POST["city_edit"];
+        if (empty($city_edit)) {
+            $cityErr = "City name is required";
+        } else {
+            $boolCity = true;
+        }
+
+        //state
+        $state_edit = $_POST['state_edit'];
+        if ($state_edit === "select") {
+            $stateErr = "Please select your state.";
+        } else {
+            $boolState = true;
+        }
+
+        //password validation
+        if (empty($_POST["passw_edit"])) {
+            $passwordErr = "Password is required";
+        } else {
+            $password_edit = test_input($_POST["passw_edit"]);
+            $boolPassword = true;
+        }
+
+        //confirmation feedback
+        if (($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = true)) {
+            $updateStatus = $userObj->updateProfile($userid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
+            if ($updateStatus) {
+                echo "<script>
+                window.location.href='profile-page.php';
+                </script>";
+            } else {
+                echo "<script>
+                window.location.href='profile-page.php';
+                </script>";
+            }
+        }
+    }else if(isset($_POST['buy-again-btn'])){
+        $prev_orderid = $_POST['order-id'];
+        $total_order = $_POST['order-total'];
+
+        $_SESSION['prev-orderid'] = $prev_orderid;
+        $_SESSION['total-order'] = $total_order;
+
+        header("Location: buy-again-checkout-page.php");
     }
 }
 
@@ -148,7 +158,7 @@ function test_input($data) {
     <div>
         <header id="navbar" class="">
             <div class="container">
-                <img class="word-logo left" src="../img/title.png" alt="logo">
+                <img class="word-logo left" src="../img/logo-title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
@@ -181,274 +191,497 @@ function test_input($data) {
                         <br>
                         <!-- all order section -->
                         <div id="all-order">
-                            <?php  ?>
-                            <div class="order-content-all flex-col">
-                                <div class="set-layout">
-                                    <div class="set-layout-header-1 red-bg">
-                                        <div class="status-div">
-                                            <h3 class="white-txt">Completed</h3>
+                            <?php  
+                                $pendinglist = $orderObj->getPendingOrderData($userid);
+                                $deliverylist = $orderObj->getDeliveryOrderData($userid);
+                                $completelist = $orderObj->getCompleteOrderData($userid);
+                                $cancellist = $orderObj->getCancelOrderData($userid);
+                                //Check for empty array means no arder done by the customer
+                                if(empty($pendinglist) && empty($deliverylist) && empty($completelist) && empty($cancellist)){
+                                    echo'
+                                    <div class="order-content-all flex-col">
+                                            <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
+                                                <h1>YOUR ALL ORDER LIST IS EMPTY!</h1>
+                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                            </div>
+                                    </div>';
+                                }else{
+                                    foreach($pendinglist as $array) {
+                                        echo'
+                                        <div class="order-content-all flex-col">
+                                            <div class="set-layout">
+                                                <div class="set-layout-header-1 red-bg">
+                                                    <div class="status-div">
+                                                        <h3 class="white-txt">'.$array['status'].'</h3>
+                                                    </div>
+                                                    <div class="flex-row set-layout-header">
+                                                        <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                        <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                    </div>
+                                                </div>';
+                                                $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                $subtotal = 0;
+                                                foreach($sushi_detail_list as $sushi_arr){
+                                                    $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                    echo'
+                                                        <div class="flex-row set-layout-content">
+                                                            <div class="sushi-order-img">
+                                                                <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                            </div>
+                                                            <div class="sushi-order-detail">
+                                                                <div class="">
+                                                                    <div class="sushi-order-detail-1 flex-row ">
+                                                                        <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                        <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                    </div>
+                                                                    <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                </div>
+                                                                <hr class="hr-line">
+                                                                <div class="">
+                                                                    <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ';
+                                                }
+                                            echo '
+                                            </div>
+                                            <div class="sushi-order-total flex-row">
+                                                <h2>Order Total: RM '.$array['ordertotal'].'</h2>
+                                                <a class="buy-again-btn white-txt" href="cancel-order.php?orderid='.$array['orderid'].'">Cancel Order</a>
+                                            </div>
                                         </div>
-                                        <div class="flex-row set-layout-header">
-                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
-                                            <h3 class="order-date-txt margin-0">Delivery Option: Self Pickup</h3>
-                                            <h3 class="order-date-txt margin-0">Payment Option: Debit Card</h3>
-                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
+                                        ';
+                                    }
+                                    foreach($deliverylist as $array) {
+                                        echo'
+                                        <div class="order-content-all flex-col">
+                                            <div class="set-layout">
+                                                <div class="set-layout-header-1 red-bg">
+                                                    <div class="status-div">
+                                                        <h3 class="white-txt">'.$array['status'].'</h3>
+                                                    </div>
+                                                    <div class="flex-row set-layout-header">
+                                                        <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                        <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                    </div>
+                                                </div>';
+                                                $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                $subtotal = 0;
+                                                foreach($sushi_detail_list as $sushi_arr){
+                                                    $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                    echo'
+                                                        <div class="flex-row set-layout-content">
+                                                            <div class="sushi-order-img">
+                                                                <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                            </div>
+                                                            <div class="sushi-order-detail">
+                                                                <div class="">
+                                                                    <div class="sushi-order-detail-1 flex-row ">
+                                                                        <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                        <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                    </div>
+                                                                    <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                </div>
+                                                                <hr class="hr-line">
+                                                                <div class="">
+                                                                    <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ';
+                                                }
+                                            echo '
+                                            </div>
+                                                <div class="sushi-order-total flex-row padding-right-20px">
+                                                    <h2>Order Total: RM '.$array['ordertotal'].'</h2>
                                                 </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
                                             </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sushi-order-total flex-row">
-                                    <h2>Order Total: RM 20.00</h2>
-                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
-                                </div>
-                            </div>
-                            <div class="order-content-all flex-col">
-                                <div class="set-layout">
-                                    <div class="set-layout-header-1 red-bg">
-                                        <div class="status-div">
-                                            <h3 class="white-txt">Pending</h3>
-                                        </div>
-                                        <div class="flex-row set-layout-header">
-                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
-                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
+                                        ';
+                                    }
+                                    foreach($completelist as $array) {
+                                        echo'
+                                        <form method="POST" action="';echo $_SERVER['PHP_SELF'];echo'">
+                                            <div class="order-content-all flex-col">
+                                                <div class="set-layout">
+                                                    <div class="set-layout-header-1 red-bg">
+                                                        <div class="status-div">
+                                                            <h3 class="white-txt">'.$array['status'].'</h3>
+                                                        </div>
+                                                        <div class="flex-row set-layout-header uppercase-txt white-txt">
+                                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                            <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                        </div>
+                                                    </div>';
+                                                    $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                    $subtotal = 0;
+                                                    foreach($sushi_detail_list as $sushi_arr){
+                                                        $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                        echo'
+                                                            <div class="flex-row set-layout-content">
+                                                                <div class="sushi-order-img">
+                                                                    <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                                </div>
+                                                                <div class="sushi-order-detail">
+                                                                    <div class="">
+                                                                        <div class="sushi-order-detail-1 flex-row ">
+                                                                            <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                            <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                        </div>
+                                                                        <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                    </div>
+                                                                    <hr class="hr-line">
+                                                                    <div class="">
+                                                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ';
+                                                    }
+                                                echo '
                                                 </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                                <div class="sushi-order-total flex-row">
+                                                    <input name="order-id" type="hidden" value="'.$array['orderid'].'">
+                                                    <input name="order-total" type="hidden" value="'.$array['ordertotal'].'">
+                                                    <h2>Order Total: RM '.$array['ordertotal'].'</h2>
+                                                    <button name ="buy-again-btn" type="submit" class="buy-again-btn white-txt">Buy Again</button>
+                                                </div>
                                             </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                        </form>
+                                        ';
+                                    }
+                                    foreach($cancellist as $array) {
+                                        echo'
+                                        <form method="POST" action="';echo $_SERVER['PHP_SELF'];echo'">
+                                            <div class="order-content-all flex-col">
+                                                <div class="set-layout">
+                                                    <div class="set-layout-header-1 red-bg">
+                                                        <div class="status-div">
+                                                            <h3 class="white-txt">'.$array['status'].'</h3>
+                                                        </div>
+                                                        <div class="flex-row set-layout-header uppercase-txt white-txt">
+                                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                            <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                        </div>
+                                                    </div>';
+                                                    $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                    $subtotal = 0;
+                                                    foreach($sushi_detail_list as $sushi_arr){
+                                                        $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                        echo'
+                                                            <div class="flex-row set-layout-content">
+                                                                <div class="sushi-order-img">
+                                                                    <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                                </div>
+                                                                <div class="sushi-order-detail">
+                                                                    <div class="">
+                                                                        <div class="sushi-order-detail-1 flex-row ">
+                                                                            <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                            <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                        </div>
+                                                                        <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                    </div>
+                                                                    <hr class="hr-line">
+                                                                    <div class="">
+                                                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ';
+                                                    }
+                                                echo '
+                                                </div>
+                                                <div class="sushi-order-total flex-row">
+                                                    <input name="order-id" type="hidden" value="'.$array['orderid'].'">
+                                                    <input name="order-total" type="hidden" value="'.$array['ordertotal'].'">
+                                                    <h2>Order Total: RM '.$array['ordertotal'].'</h2>
+                                                    <button name ="buy-again-btn" type="submit" class="buy-again-btn white-txt">Buy Again</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sushi-order-total flex-row">
-                                    <h2>Order Total: RM 20.00</h2>
-                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
-                                </div>
-                            </div>
+                                        </form>
+                                        ';
+                                    }
+                                }
+                            ?>
                         </div>
                         <!-- pending order section -->
                         <div id="pending-order" class="none">
-                            <div class="order-content-all flex-col">
-                                <div class="set-layout">
-                                    <div class="set-layout-header-1 red-bg">
-                                        <div class="status-div">
-                                            <h3 class="white-txt">Pending</h3>
-                                        </div>
-                                        <div class="flex-row set-layout-header">
-                                            <h3 class="set-name white-txt uppercase margin-0">Rindok Set</h3>
-                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
-                                                </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                        <?php  
+                                $orderlist = $orderObj->getPendingOrderData($userid);
+                                //Check for empty array means no arder done by the customer
+                                if(empty($orderlist)){
+                                    echo'
+                                    <div class="order-content-all flex-col">
+                                            <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
+                                                <h1>YOUR PENDING ORDER LIST IS EMPTY!</h1>
+                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
                                             </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                    </div>';
+                                }else{
+                                    foreach($orderlist as $array) {
+                                        echo'
+                                        <div class="order-content-all flex-col">
+                                            <div class="set-layout">
+                                                <div class="set-layout-header-1 red-bg">
+                                                    <div class="status-div">
+                                                        <h3 class="white-txt">'.$array['status'].'</h3>
+                                                    </div>
+                                                    <div class="flex-row set-layout-header">
+                                                        <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                        <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                    </div>
+                                                </div>';
+                                                $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                $subtotal = 0;
+                                                foreach($sushi_detail_list as $sushi_arr){
+                                                    $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                    echo'
+                                                        <div class="flex-row set-layout-content">
+                                                            <div class="sushi-order-img">
+                                                                <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                            </div>
+                                                            <div class="sushi-order-detail">
+                                                                <div class="">
+                                                                    <div class="sushi-order-detail-1 flex-row ">
+                                                                        <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                        <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                    </div>
+                                                                    <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                </div>
+                                                                <hr class="hr-line">
+                                                                <div class="">
+                                                                    <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ';
+                                                }
+                                            echo '
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
-                                                </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
-                                            </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="set-layout">
-                                    <div class="set-layout-header-1 red-bg">
-                                        <div class="flex-row set-layout-header">
-                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
-                                                </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
-                                            </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
+                                            <div class="sushi-order-total flex-row">
+                                                <h2>Order Total: RM '.$array['ordertotal'].'</h2>
+                                                <a class="buy-again-btn white-txt" href="cancel-order.php?orderid='.$array['orderid'].'">Cancel Order</a>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="sushi-order-total flex-row">
-                                    <h2>Order Total: RM 40.00</h2>
-                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
-                                </div>
-                            </div>
+                                        ';
+                                    }
+                                }
+                            ?>
                         </div>
                         <!-- delivery order section -->
                         <div id="delivery-order" class="none">
-                            <div class="order-content-all flex-col">
-                                <div class="set-layout">
-                                    <div class="set-layout-header-1 red-bg">
-                                        <div class="status-div">
-                                            <h3 class="white-txt">On Delivery</h3>
-                                        </div>
-                                        <div class="flex-row set-layout-header">
-                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
-                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
+                            <?php  
+                                $orderlist = $orderObj->getDeliveryOrderData($userid);
+                                //Check for empty array means no arder done by the customer
+                                if(empty($orderlist)){
+                                    echo'
+                                    <div class="order-content-all flex-col">
+                                            <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
+                                                <h1>YOUR ON DELIVERY ORDER LIST IS EMPTY!</h1>
+                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                            </div>
+                                    </div>';
+                                }else{
+                                    foreach($orderlist as $array) {
+                                        echo'
+                                        <div class="order-content-all flex-col">
+                                            <div class="set-layout">
+                                                <div class="set-layout-header-1 red-bg">
+                                                    <div class="status-div">
+                                                        <h3 class="white-txt">'.$array['status'].'</h3>
+                                                    </div>
+                                                    <div class="flex-row set-layout-header">
+                                                        <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                        <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                        <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                    </div>
+                                                </div>';
+                                                $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                $subtotal = 0;
+                                                foreach($sushi_detail_list as $sushi_arr){
+                                                    $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                    echo'
+                                                        <div class="flex-row set-layout-content">
+                                                            <div class="sushi-order-img">
+                                                                <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                            </div>
+                                                            <div class="sushi-order-detail">
+                                                                <div class="">
+                                                                    <div class="sushi-order-detail-1 flex-row ">
+                                                                        <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                        <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                    </div>
+                                                                    <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                </div>
+                                                                <hr class="hr-line">
+                                                                <div class="">
+                                                                    <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ';
+                                                }
+                                            echo '
+                                            </div>
+                                                <div class="sushi-order-total flex-row padding-right-20px">
+                                                    <h2>Order Total: RM '.$array['ordertotal'].'</h2>
                                                 </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
                                             </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sushi-order-total flex-row">
-                                    <h2>Order Total: RM 20.00</h2>
-                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
-                                </div>
-                            </div>
+                                        ';
+                                    }
+                                }
+                            ?>
                         </div>
                         <!-- complete order section -->
                         <div id="complete-order" class="none">
-                            <div class="order-content-all flex-col">
-                                <div class="set-layout">
-                                    <div class="set-layout-header-1 red-bg">
-                                        <div class="status-div">
-                                            <h3 class="white-txt">Completed</h3>
-                                        </div>
-                                        <div class="flex-row set-layout-header">
-                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
-                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
+                            <?php  
+                                $orderlist = $orderObj->getCompleteOrderData($userid);
+                                //Check for empty array means no arder done by the customer
+                                if(empty($orderlist)){
+                                    echo'
+                                    <div class="order-content-all flex-col">
+                                            <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
+                                                <h1>YOUR COMPLETE ORDER LIST IS EMPTY!</h1>
+                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                            </div>
+                                    </div>';
+                                }else{
+                                    foreach($orderlist as $array) {
+                                        echo'
+                                        <form method="POST" action="';echo $_SERVER['PHP_SELF'];echo'">
+                                            <div class="order-content-all flex-col">
+                                                <div class="set-layout">
+                                                    <div class="set-layout-header-1 red-bg">
+                                                        <div class="status-div">
+                                                            <h3 class="white-txt">'.$array['status'].'</h3>
+                                                        </div>
+                                                        <div class="flex-row set-layout-header uppercase-txt white-txt">
+                                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                            <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                        </div>
+                                                    </div>';
+                                                    $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                    $subtotal = 0;
+                                                    foreach($sushi_detail_list as $sushi_arr){
+                                                        $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                        echo'
+                                                            <div class="flex-row set-layout-content">
+                                                                <div class="sushi-order-img">
+                                                                    <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                                </div>
+                                                                <div class="sushi-order-detail">
+                                                                    <div class="">
+                                                                        <div class="sushi-order-detail-1 flex-row ">
+                                                                            <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                            <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                        </div>
+                                                                        <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                    </div>
+                                                                    <hr class="hr-line">
+                                                                    <div class="">
+                                                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ';
+                                                    }
+                                                echo '
                                                 </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                                <div class="sushi-order-total flex-row">
+                                                    <input name="order-id" type="hidden" value="'.$array['orderid'].'">
+                                                    <input name="order-total" type="hidden" value="'.$array['ordertotal'].'">
+                                                    <h2>Order Total: RM '.$array['ordertotal'].'</h2>
+                                                    <button name ="buy-again-btn" type="submit" class="buy-again-btn white-txt">Buy Again</button>
+                                                </div>
                                             </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sushi-order-total flex-row">
-                                    <h2>Order Total: RM 20.00</h2>
-                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
-                                </div>
-                            </div>
+                                        </form>
+                                        ';
+                                    }
+                                }
+                            ?>
                         </div>
                         <!-- cancel order section -->
                         <div id="cancel-order" class="none">
-                            <div class="order-content-all flex-col">
-                                <div class="set-layout">
-                                    <div class="set-layout-header-1 red-bg">
-                                        <div class="status-div">
-                                            <h3 class="white-txt">Cancel</h3>
-                                        </div>
-                                        <div class="flex-row set-layout-header">
-                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
-                                            <h3 class="order-date-txt margin-0">Order Date: 29-Oct-2021</h3>
-                                        </div>
-                                    </div>
-                                    <div class="flex-row set-layout-content">
-                                        <div class="sushi-order-img">
-                                            <img class="" src="img/sushi.png" alt="logo">
-                                        </div>
-                                        <div class="sushi-order-detail">
-                                            <div class="">
-                                                <div class="sushi-order-detail-1 flex-row ">
-                                                    <h3>Basic Sushi x4</h3>
-                                                    <h3>RM 5.00</h3>
+                            <?php  
+                                $orderlist = $orderObj->getCancelOrderData($userid);
+                                //Check for empty array means no arder done by the customer
+                                if(empty($orderlist)){
+                                    echo'
+                                    <div class="order-content-all flex-col">
+                                            <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
+                                                <h1>YOUR CANCEL ORDER LIST IS EMPTY!</h1>
+                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                            </div>
+                                    </div>';
+                                }else{
+                                    foreach($orderlist as $array) {
+                                        echo'
+                                        <form method="POST" action="';echo $_SERVER['PHP_SELF'];echo'">
+                                            <div class="order-content-all flex-col">
+                                                <div class="set-layout">
+                                                    <div class="set-layout-header-1 red-bg">
+                                                        <div class="status-div">
+                                                            <h3 class="white-txt">'.$array['status'].'</h3>
+                                                        </div>
+                                                        <div class="flex-row set-layout-header uppercase-txt white-txt">
+                                                            <h3 class="set-name white-txt uppercase margin-0">Ala Carte</h3>
+                                                            <h3 class="order-date-txt margin-0">Delivery Option: '.$array['deliveryopt'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Payment Option: '.$array['paymentmethod'].'</h3>
+                                                            <h3 class="order-date-txt margin-0">Order Date: '.$array['datecreate'].'</h3>
+                                                        </div>
+                                                    </div>';
+                                                    $sushi_detail_list = $orderObj->getAlacarteOrder($userid, $array['orderid']);
+                                                    $subtotal = 0;
+                                                    foreach($sushi_detail_list as $sushi_arr){
+                                                        $subtotal = $sushi_arr['qty'] * $sushi_arr['price'];
+                                                        echo'
+                                                            <div class="flex-row set-layout-content">
+                                                                <div class="sushi-order-img">
+                                                                    <img class="" src="data:image/jpeg;base64,'.base64_encode( $sushi_arr['img'] ).'" alt="'.$sushi_arr['name'].'">
+                                                                </div>
+                                                                <div class="sushi-order-detail">
+                                                                    <div class="">
+                                                                        <div class="sushi-order-detail-1 flex-row ">
+                                                                            <h3>'.$sushi_arr['name'].' x'.$sushi_arr['qty'].'</h3>
+                                                                            <h3>RM '.$sushi_arr['price'].'</h3>
+                                                                        </div>
+                                                                        <h3 class="sushi-order-dsc"> '.$sushi_arr['desc'].'</h3>
+                                                                    </div>
+                                                                    <hr class="hr-line">
+                                                                    <div class="">
+                                                                        <h2 class="sushi-order-subtotal margin-0">Subtotal: RM '.$subtotal.'.00</h2>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ';
+                                                    }
+                                                echo '
                                                 </div>
-                                                <h3 class="sushi-order-dsc"> Sushi roll with cucumber, hotdog, carrot and egg</h3>
+                                                <div class="sushi-order-total flex-row">
+                                                    <input name="order-id" type="hidden" value="'.$array['orderid'].'">
+                                                    <input name="order-total" type="hidden" value="'.$array['ordertotal'].'">
+                                                    <h2>Order Total: RM '.$array['ordertotal'].'</h2>
+                                                    <button name ="buy-again-btn" type="submit" class="buy-again-btn white-txt">Buy Again</button>
+                                                </div>
                                             </div>
-                                            <hr class="hr-line">
-                                            <div class="">
-                                                <h2 class="sushi-order-subtotal margin-0">Subtotal: RM 20.00</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sushi-order-total flex-row">
-                                    <h2>Order Total: RM 20.00</h2>
-                                    <a class="buy-again-btn white-txt" href="">Buy Again</a>
-                                </div>
-                            </div>
+                                        </form>
+                                        ';
+                                    }
+                                }
+                            ?>
                         </div>
                     </div>
                     <div id="view-profile-div" class="none">

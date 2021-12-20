@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         }else{
             $_SESSION['sushiid'] = $sushiId;
-            $_SESSION['$sushiqty'] = $sushiQty;
+            $_SESSION['sushiqty'] = $sushiQty;
             $_SESSION['totalorder'] = $totalOrder;
             header("Location: checkout-page.php");
         }

@@ -65,6 +65,10 @@ a {
   float: left;
 }
 
+.none-bg {
+  background: transparent;
+}
+
 .red-border {
   border: solid 3px var(--red);
 }
@@ -103,6 +107,10 @@ a {
 
 .uppercase-txt {
   text-transform: uppercase;
+}
+
+.padding-right-20px {
+  padding-right: 20px;
 }
 /* For sticky header */
 .content {
@@ -1453,6 +1461,7 @@ th .info-checkout:hover {
 .sushi-order-total {
   justify-content: flex-end;
   padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .sushi-order-total h2 {
@@ -1463,7 +1472,7 @@ th .info-checkout:hover {
 
 .buy-again-btn {
   background-color: var(--yellow);
-  margin: 0 1%;
+  margin: auto 1%;
   height: fit-content;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   letter-spacing: 2px;

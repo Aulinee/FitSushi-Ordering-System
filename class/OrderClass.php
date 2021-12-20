@@ -46,6 +46,36 @@ class Order{
         
     }
 
+    public function getAllOrderData($customerid){
+        $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.customerID = $customerid";
+        $displayQuery = mysqli_query($this->conn, $stringQuery);
+
+        $customerid = $orderid = 0;
+        $orderData = array();
+
+        while($roworder = mysqli_fetch_array($displayQuery)){
+            $orderid = $roworder['orderID'];
+            $customerid = $roworder['customerID'];
+            $statusname = $roworder['statusName'];
+            $datecreate = $roworder['dateCreated'];
+            $deliveryopt = $roworder['deliveryOption'];
+            $paymentmethod = $roworder['paymentMethod'];
+            $ordertotal = $roworder['orderTotal'];
+
+            $orderData[] = array(
+                "orderid" => $orderid, 
+                "cusid" => $customerid, 
+                "status" => $statusname, 
+                "datecreate" => $datecreate, 
+                "deliveryopt" => $deliveryopt,
+                "paymentmethod" => $paymentmethod,
+                "ordertotal" => $ordertotal
+            );
+        }
+
+        return $orderData;
+    }
+
     public function getPendingOrderData($customerid){
         $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderStatusID = 4 AND o.customerID = $customerid";
         $displayQuery = mysqli_query($this->conn, $stringQuery);
@@ -172,12 +202,45 @@ class Order{
         return $orderData;
     }
 
+    public function buyAgainOrder($prev_orderid, $customerid, $deliveryid, $paymentid, $ordertotal){
+        $orderid = 0; //initialize value 
+        //Insert order created date 
+        date_default_timezone_set("Asia/Kuala_Lumpur"); //set time region
+        $current_time = date('Y-m-d', time());
+
+        //Set order status to 4 for pending order status
+        $orderstatus = 4;
+
+        // add into order table
+        $stringQuery = "INSERT INTO orders(customerID, orderStatusID, dateCreated, deliveryID, deliverydateTime, paymentID, orderTotal) 
+                        VALUES ($customerid, $orderstatus, '$current_time', $deliveryid, 'NULL', $paymentid, $ordertotal)";
+
+        $sqlQuery = $this->conn->query($stringQuery);
+        if ($sqlQuery == true) {
+            //This will return auto_increment order id 
+            $last_id = $this->conn->insert_id;
+            $orderid = $last_id;
+
+            $prev_order_array = $this->getAlacarteOrder($customerid, $prev_orderid);
+
+            foreach($prev_order_array as $array){
+                $this->addAlacarteOrder($orderid, $array["sushiid"], $array['qty']);
+            }
+
+            return true;
+        }else{
+            // echo "Error in ". $sqlQuery." ".$this->conn->error;
+            return false;
+        }
+    }
+
     public function getAlacarteOrder($customerid, $orderid){
-        $stringQuery = "SELECT s.sushiName, s.sushiDesc, s.sushiImg, s.price, a.qty FROM orders o, alacarteorder a, sushi s WHERE $orderid = a.orderID AND a.sushiID = s.sushiID AND o.customerID = $customerid";
+        $stringQuery = "SELECT a.sushiID, s.sushiName, s.sushiDesc, s.sushiImg, s.price, a.qty FROM orders o, alacarteorder a, sushi s WHERE $orderid = o.orderID AND o.orderID = a.orderID AND a.sushiID = s.sushiID AND o.customerID = $customerid";
         $displayQuery = mysqli_query($this->conn, $stringQuery);
 
         $orderData = array();
         while($roworder = mysqli_fetch_array($displayQuery)){
+            $sushiid = $roworder['sushiID'];
             $sushiname = $roworder['sushiName'];
             $sushidesc = $roworder['sushiDesc'];
             $sushiimg = $roworder['sushiImg'];
@@ -185,6 +248,7 @@ class Order{
             $sushiqty = $roworder['qty'];
 
             $orderData[] = array(
+                "sushiid" => $sushiid, 
                 "name" => $sushiname, 
                 "desc" => $sushidesc, 
                 "img" => $sushiimg, 
@@ -210,6 +274,18 @@ class Order{
             // echo "Error in ". $sqlQuery." ".$this->conn->error;
             //echo "Unsuccessful update query. try again!";
         }
+    }
+
+    public function deleteAlacarteOrder($customerid, $sushiid){
+        $deleteAlacarteQuery = "DELETE FROM alacarteorder WHERE sushiID = $sushiid AND customerID = $customerid";
+
+        $sql_alacartemenu = $this->conn->query($deleteAlacarteQuery);
+
+		if ($sql_alacartemenu == true) {
+            return true;
+        }
+
+        return false;
     }
 
     public function makeOrder($sushiid, $sushiqty, $customerid, $deliveryid, $paymentid, $ordertotal){
@@ -245,6 +321,22 @@ class Order{
             return false;
         }
     }
+
+
+    // literally delete order func yuhh
+    // public function cancelOrder($customerid, $orderid){
+    //     $deleteAlacarteQuery = "DELETE FROM orders WHERE orderID = $orderid AND customerID = $customerid";
+
+    //     $sql_alacartemenu = $this->conn->query($deleteAlacarteQuery);
+
+	// 	if ($sql_alacartemenu == true) {
+    //         $this->deleteAlacarteOrder($customerid, $orderid);
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
+
 
     public function clearSushibox($customerid, $sushiid){
         $deleteAlacarteQuery = "DELETE FROM alacartesushibox WHERE sushiID = $sushiid AND customerID = $customerid";
