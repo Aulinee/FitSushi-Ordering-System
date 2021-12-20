@@ -50,6 +50,8 @@
             </div>
         </div>
         <div class="admin-page-dashboard">
+
+            <!-- Home Tab -->
             <div id="Home-div">
                 <h1 class="h1-dashboard">Sales Report</h1>
                 <div class="calendar">
@@ -134,21 +136,113 @@
                     </div>
                 </div>
             </div>
-            <div id="Profile-div">
-                <h2>Profile</h2>
+
+            <!-- Admin's Profile Tab-->
+            <div id="Profile-div"> 
+                <h1>Profile   <a  onclick="editAdmin()"> (Edit Profile)</a></h1>
+                <div id="view-profile-div">
+                    <div class="main-profile-detail">
+                        <div class="profile-width-5"></div>
+                        <div class="main-profile-detail-left ">
+                            <div class="user-detail">
+                                <h2>Username</h2>
+                                <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                            </div>
+                            <div class="user-detail">
+                                <h2>Full Name</h2>
+                                <div>
+                                    <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                </div>
+                            </div>
+                            <div class="user-detail">
+                                <h2>Email</h2>
+                                <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                            </div>
+                            <div class="user-detail">
+                                <h2>Phone Number</h2>
+                                <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                            </div>
+                        </div>
+                        <div class="profile-width-20"></div>
+                        <div class="main-profile-detail-right">
+                            <div class="user-detail">
+                                <h2>Password</h2>
+                                <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                            </div>
+                            <br>
+                            <div class="user-detail-btn">
+                                <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
+                            </div>
+                        </div>
+                        <div class="profile-width-5"></div>
+                    </div>
+                </div>                
             </div>
+
+            <!-- This div only visible when Edit Profile button is triggered-->
+            <!-- Admin's Edit Profile Tab-->
+            <div id="Edit-Profile-div"> 
+                <h1>Profile   <a  onclick="viewProfile()"> (View Profile)</a></h1>
+                <div id="view-profile-div">
+                    <div class="main-profile-detail">
+                        <div class="profile-width-5"></div>
+                        <div class="main-profile-detail-left ">
+                            <div class="user-detail">
+                                <h2>Username</h2>
+                                <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                            </div>
+                            <div class="user-detail">
+                                <h2>Full Name</h2>
+                                <div>
+                                    <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                </div>
+                            </div>
+                            <div class="user-detail">
+                                <h2>Email</h2>
+                                <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                            </div>
+                            <div class="user-detail">
+                                <h2>Phone Number</h2>
+                                <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                            </div>
+                        </div>
+                        <div class="profile-width-20"></div>
+                        <div class="main-profile-detail-right">
+                            <div class="user-detail">
+                                <h2>Password</h2>
+                                <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                            </div>
+                            <br>
+                            <div class="user-detail-btn">
+                                <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
+                            </div>
+                        </div>
+                        <div class="profile-width-5"></div>
+                    </div>
+                </div>                
+            </div>   
+
+            <!-- Store Tab -->
             <div id="Store-div">
                 <h2>Store</h2>
             </div>
+
+            <!-- Customer Tab -->
             <div id="Customer-div">
                 <h2>Customer</h2>
             </div>
+
+            <!-- Product Tab -->
             <div id="Product-div">
                 <h2>Product</h2>
             </div>
+
+            <!-- Order Tab -->
             <div id="Order-div">
                 <h2>Order</h2>
             </div>
+
+            <!-- Signout Tab -->
             <div id="Signout-div">
                 <h2>Signout</h2>
             </div>
@@ -161,9 +255,17 @@
 
     <script>
 
+        //Disable the input field
+        document.getElementById("username").disabled = true;
+        document.getElementById("fullname").disabled = true;
+        document.getElementById("email").disabled = true;
+        document.getElementById("phonenumber").disabled = true;
+        document.getElementById("password").disabled = true;
+
         //Variable declaration synced to ID
         var homediv = document.getElementById('Home-div');
         var profilediv = document.getElementById('Profile-div');
+        var editprofilediv = document.getElementById('Edit-Profile-div');
         var storediv = document.getElementById('Store-div');
         var customerdiv = document.getElementById('Customer-div');
         var productdiv = document.getElementById('Product-div');
@@ -175,6 +277,7 @@
             //Set div visibility
             homediv.style.display = "block";
             profilediv.style.display = "none";
+            editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
             productdiv.style.display = "none";
@@ -187,9 +290,16 @@
         }
         function viewProfile(){
 
+            document.getElementById("username").disabled = true;
+            document.getElementById("fullname").disabled = true;
+            document.getElementById("email").disabled = true;
+            document.getElementById("phonenumber").disabled = true;
+            document.getElementById("password").disabled = true;
+
             //Set div visibility
             homediv.style.display = "none";
             profilediv.style.display = "block";
+            editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
             productdiv.style.display = "none";
@@ -199,11 +309,33 @@
 
             
         }
+
+        function editAdmin(){
+
+            document.getElementById("username").disabled = false;
+            document.getElementById("fullname").disabled = false;
+            document.getElementById("email").disabled = false;
+            document.getElementById("phonenumber").disabled = false;
+            document.getElementById("password").disabled = false;
+
+            //Set div visibility
+            homediv.style.display = "none";
+            profilediv.style.display = "none";
+            editprofilediv.style.display = "block";
+            storediv.style.display = "none";
+            customerdiv.style.display = "none";
+            productdiv.style.display = "none";
+            orderdiv.style.display = "none";
+            signoutdiv.style.display = "none";
+
+        }
+
         function viewStore(){
 
             //Set div visibility
             homediv.style.display = "none";
             profilediv.style.display = "none";
+            editprofilediv.style.display = "none";
             storediv.style.display = "block";
             customerdiv.style.display = "none";
             productdiv.style.display = "none";
@@ -218,6 +350,7 @@
             //Set div visibility
             homediv.style.display = "none";
             profilediv.style.display = "none";
+            editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "block";
             productdiv.style.display = "none";
@@ -232,6 +365,7 @@
             //Set div visibility
             homediv.style.display = "none";
             profilediv.style.display = "none";
+            editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
             productdiv.style.display = "block";
@@ -246,6 +380,7 @@
             //Set div visibility
             homediv.style.display = "none";
             profilediv.style.display = "none";
+            editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
             productdiv.style.display = "none";
@@ -260,6 +395,7 @@
             //Set div visibility
             homediv.style.display = "none";
             profilediv.style.display = "none";
+            editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
             productdiv.style.display = "none";
