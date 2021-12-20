@@ -54,15 +54,26 @@ class Order{
         
     }
 
-    public function addAlacarteOrder(){
+    public function addAlacarteOrder($orderid, $sushiid, $qty){
         // add into alacarteorder table
-    }
+        $stringQuery = "INSERT INTO alacarteorder(orderID, sushiID, qty) VALUES ($orderid, $sushiid, $qty)";
 
-    public function deleteAlacarteOrder(){
-        
+        $sqlQuery = $this->conn->query($stringQuery);
+        if ($sqlQuery == true) {
+            //echo "Successful update query";
+            return true;
+        }else{
+            return false;
+            // echo "Error in ". $sqlQuery." ".$this->conn->error;
+            //echo "Unsuccessful update query. try again!";
+        }
     }
 
     public function makeOrder(){
+        
+    }
+
+    public function editOrderStatus(){
         
     }
 

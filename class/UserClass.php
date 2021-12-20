@@ -41,8 +41,6 @@ class User{
             // echo "Error in ". $sqlQuery." ".$this->conn->error;
             //echo "Unsuccessful update query. try again!";
         }
-
-        return false;
     }
 
     public function signUp($username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state){
@@ -141,11 +139,6 @@ class User{
         $updateUserQuery = "UPDATE customer SET username='$username', password='$fullname', phoneNo='$mobileNum', custName='$fullname', email='$email', gender='$gender', deliveryAddress='$addressline', 
                             PostalCode=$postcode, password='$password' WHERE customerID=$id ";
         $resultUser = mysqli_query($this->conn,  $updateUserQuery) or die("Error: ".mysqli_error($this->conn));
-
-        // //Insert user detail in user table
-        // $insertUserQuery = "INSERT INTO customer(username, password, custName, email, gender, phoneNo, deliveryAddress, PostalCode)
-        // VALUES ('$username', '$password', '$fullname', '$email', '$gender', $mobileNum, '$addressline', $postcode)";
-        // $resultUser = mysqli_query($this->conn,  $insertUserQuery) or die("Error: ".mysqli_error($this->conn));
        
         if ($resultUser == true) {
             return true;
