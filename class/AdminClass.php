@@ -23,6 +23,31 @@ class Admin{
         return false;
     }
 
+    public function setSessionData(string $username, string $password){
+        $query = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
+        $result = $this->conn->query($query);
+        $arrayData = array();
+		if($result){
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $adminid = $row['adminID'];
+                $username = $row['username'];
+                $fullname = $row['adminName'];
+                $email = $row['email'];
+                $phonenum = "0".$row['phoneNo'];
+
+                $arrayData = array($adminid, $username, $password, $fullname, $phonenum, $email);
+
+                return $arrayData;
+
+            }else{
+                echo "Record not found";
+            }
+        }else{
+            echo "Error in ".$query." ".$this->conn->error;
+        } 
+    }    
+
     public function displayStoreDetail()
     {
         $query = "SELECT * FROM storedetails";

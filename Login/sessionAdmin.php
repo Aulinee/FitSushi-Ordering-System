@@ -29,13 +29,14 @@
     $password = $_SESSION['login_pass'];
 
     //Set session data
-    // $session_data = $userObj->setSessionData($username, $password);
+    $session_data = $adminObj->setSessionData($username, $password);
 
     $adminid = $session_data[0];
     $username = $session_data[1];
-    $fullname = $session_data[2];
-    $email = $session_data[3];
+    $password = $session_data[2]
+    $fullname = $session_data[3];
     $phonenum = $session_data[4];
+    $email = $session_data[5];
 
     if(!isset($_SESSION['login_user'])){
         header("Location:../Login/sign-in-admin.php");  
