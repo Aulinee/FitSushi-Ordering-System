@@ -3,23 +3,22 @@ date_default_timezone_set("Asia/Kuala_Lumpur");
 include '../Login/sessionCustomer.php';
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(isset($_POST['sushibox-form'])){
+        $totalOrder = $_POST["totalorder"];
+        $sushiId = $_POST["sushilist"];
+        $sushiQty = $_POST["sushiqty"];
 
-    $totalOrder = $_POST["totalorder"];
-    $sushiId = $_POST["sushibox"];
-    $sushiQty = $_POST["sushiqty"];
+        if($totalOrder == 0){
+            echo "<script>
+                alert('Your total order is zero');
+                window.location.href='sushibox-page.php';
+                </script>";
 
-    if($totalOrder == 0){
-        echo "<script>
-            alert('Your total order is zero');
-            window.location.href='sushibox-page.php';
-            </script>";
+        }else{
+            $_SESSION['sushiid'] = $sushiId;
+            $_SESSION['$sushiqty'] = $sushiQty;
+            header("Location: checkout-page.php?total=".$totalOrder."");
 
-    }else{
-        // header("Location: checkout-page.php?total=".$totalOrder."");
-
-        if (isset($sushiId)) {
-            echo "You chose the following color(s): <br>";
-        
             foreach ($sushiId as $color){
                 echo $color."<br />";
             }
@@ -27,13 +26,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             foreach ($sushiQty as $qty){
                 echo $qty."<br />";
             }
-        } else {
-            echo "You did not choose a color.";
         }
-        
     }
 
-
+    
 }
 
 
@@ -76,7 +72,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <thead>
                         <tr>
                             <th class="info-20">Item Name</th>
-                            <th class="info-20">Quantity</th>
+                            <th class="info-20">SetQuantity</th>
                             <th class="info-20">Unit Price (RM)</th>
                             <th class="info-20">Total Price (RM)</th>
                             <th class="info-20">Action</th>
@@ -84,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </thead>
                 </table>
             </div>
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
                 <div class="tbl-content">
                     <table cellpadding="0" cellspacing="0" border="0">
                         <?php $menuObj->displayAlacarteSushibox(); ?>
@@ -128,13 +124,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 </th>
                                 <th class="info-10">Total(RM): </th>
                                 <th class="info-30"><input name="totalorder" id="total" class="info-amount none-outline" value="0.00"></th>
-                                <th class="info-30"><button type="submit" class="info-checkout red-bg white-txt">CHECKOUT</button></th>
+                                <th class="info-30"><button name ="sushibox-form" type="submit" class="info-checkout red-bg white-txt">CHECKOUT</button></th>
+                                
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </form>
-
             <!-- If theres no order in sushi box -->
             <br><br>
             <div class="sushibox-detail red-bg white-txt margin-empty-sushi">

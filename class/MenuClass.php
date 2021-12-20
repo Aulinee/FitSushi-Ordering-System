@@ -124,6 +124,19 @@ class Menu{
         }
     }
 
+    public function updateAlacarteQty($customerid, $sushiid, $qty){
+        $updateMenuQuery = "UPDATE alacartesushibox SET qty = $qty WHERE customerID = $customerid AND sushiID = $sushiid";
+
+        $resultUser = mysqli_query($this->conn,  $updateMenuQuery) or die("Error: ".mysqli_error($this->conn));
+
+        if ($resultUser == true) {
+            return true;
+        }else{
+            // echo "Error in ".$resultUser." ".$this->conn->error;
+            return false;
+        }
+    }
+
     public function deleteAlacarte($customerid, $sushiid){
         $deleteAlacarteQuery = "DELETE FROM alacartesushibox WHERE sushiID = $sushiid AND customerID = $customerid";
 
@@ -154,8 +167,9 @@ class Menu{
                         <tr>
                             <th class="info-20" style="text-align: left;">
                                 <label class="sushi-container">
-                                    <input type="checkbox" value="'.$id.'" name="sushibox[]" onclick="totalIt(\''.$name.'\')" >
-                                    <span class="checkmark"></span>
+                                    <input type="checkbox" value="'.$id.'" name="sushibox[]" onclick="totalIt(\''.$name.'\')" disabled>
+                                    <input type="hidden" name="sushilist[]" value="'.$id.'" /> 
+                                    <span style="opacity: 0.7; border:none;" class="checkmark"></span>
                                     <label class="">'.$name.'</label>
                                 </label>
                             </th>
@@ -182,6 +196,8 @@ class Menu{
         }
 
     }
+        
+    
 }
 
 ?>

@@ -4,12 +4,19 @@ include '../Login/sessionCustomer.php';
 
 $totalorder = htmlentities($_GET["total"]);
 
+$sushiId = $_SESSION['sushiid'];
+$sushiQty = $_SESSION['$sushiqty'];
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     $fullname = $_POST["fullname"];
     $address = $_POST["fulladdress"];
     $phonenum = $_POST["phonenum"];
     $totalOrder = $_POST["totalorder"];
+
+    foreach (array_combine($sushiId, $sushiQty) as $sushiId => $sushiQty) {
+        echo 'ID: ' . $sushiId . ' QTY: ' . $sushiQty . ' ';
+    }
 
 }
 

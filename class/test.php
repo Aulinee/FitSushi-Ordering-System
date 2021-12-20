@@ -3,9 +3,11 @@ include '../database/dbConnection.php';
 include 'UserClass.php';
 include 'AdminClass.php';
 include 'MenuClass.php';
+include 'OrderClass.php';
 $userObj = new User($conn);
 $adminObj = new Admin($conn);
 $menuObj = new Menu($conn);
+$orderObj = new Menu($conn);
 
 // $userObj->checkExistUsername("kiannyp");
 
@@ -37,4 +39,6 @@ $menuObj = new Menu($conn);
 // echo $hello[5];
 
 // $menuObj->addAlacarte(1,2,3);
+
+// $menuObj->updateSushiQty(1,1,3);
 ?>

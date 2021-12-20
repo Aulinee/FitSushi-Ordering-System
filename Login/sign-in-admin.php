@@ -420,29 +420,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 	{
         var uname= document.getElementById("usern").value;
         var pwd= document.getElementById("psw").value;
-		
-        //regex code
-		var pwd_expression = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-.:;<=>?@[\]^_`{|}~]{6,6}$/;
-        var usrname = /^[A-Za-z]+$/;
 
 		if(uname=='')
         {
             alert('Please enter your username');
             return false;
         }
-        else if(!usrname.test(uname))
-        {
-            alert('Name field required only alphabet characters');
-            return false;
-        }
         else if(pwd=='')
         {
              alert('Please enter Password');
-            return false;
-        }
-        else if(!pwd_expression.test(pwd))
-        {
-            alert ('At least ONE Uppercase, ONE Lowercase, ONE Special character, ONE Numeric letter and 6 DIGITS LENGTH are required in Password filed');
             return false;
         }
     }

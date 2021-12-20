@@ -9,15 +9,53 @@ class Order{
 	}
 
     public function getDeliveryOptionList(){
+         $deliveryQuery = "SELECT * from delivery";
+         $result = $this->conn->query($deliveryQuery);
+ 
+         if($result){
+             if ($result->num_rows > 0) {
+                 while($row = mysqli_fetch_array($result)){
+                     $id = $row["deliveryID"];
+                     $name = $row["deliveryOption"];
+ 
+                     echo'
+                     
+                     ';
+                 }
+             }else{
+                 echo "Record not found";
+             }
+         }else{
+             echo "Error in ".$deliveryQuery." ".$this->conn->error;
+         }
 
     }
 
     public function getPaymentOptionList(){
+        $paymentQuery = "SELECT * from payment";
+        $result = $this->conn->query($paymentQuery);
+
+        if($result){
+            if ($result->num_rows > 0) {
+                while($row = mysqli_fetch_array($result)){
+                    $id = $row["paymentID"];
+                    $name = $row["paymentMethod"];
+
+                    echo'
+                    
+                    ';
+                }
+            }else{
+                echo "Record not found";
+            }
+        }else{
+            echo "Error in ".$paymentQuery." ".$this->conn->error;
+        }
         
     }
 
     public function addAlacarteOrder(){
-        
+        // add into alacarteorder table
     }
 
     public function deleteAlacarteOrder(){
