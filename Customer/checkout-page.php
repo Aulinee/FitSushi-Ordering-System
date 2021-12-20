@@ -2,22 +2,27 @@
 date_default_timezone_set("Asia/Kuala_Lumpur");
 include '../Login/sessionCustomer.php';
 
-$totalorder = htmlentities($_GET["total"]);
-
 $sushiId = $_SESSION['sushiid'];
 $sushiQty = $_SESSION['$sushiqty'];
+$totalorder = $_SESSION['totalorder'];
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
-    $fullname = $_POST["fullname"];
-    $address = $_POST["fulladdress"];
-    $phonenum = $_POST["phonenum"];
-    $totalOrder = $_POST["totalorder"];
+    $deliveryopt = $_POST["delivery-option"];
+    $paymentmethod = $_POST["payment-method"];
 
-    foreach (array_combine($sushiId, $sushiQty) as $sushiId => $sushiQty) {
-        echo 'ID: ' . $sushiId . ' QTY: ' . $sushiQty . ' ';
+    $orderStatus = $orderObj->makeOrder($sushiId, $sushiQty, $userid, $deliveryopt, $paymentmethod, $totalorder);
+
+    if($orderStatus == true){
+        echo "<script>
+            alert('Your order is successful created!');
+            window.location.href='profile-page.php#user-purchase-div';
+        </script>";
+    }else{
+        echo "<script>
+            alert('Your order is unsuccessful! Please try again');
+        </script>";
     }
-
 }
 
 ?>
@@ -60,6 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="checkout-detail-title">
                 <h1 class="title-page text-center">CHECKOUT PAYMENT</h1>
             </div>
+            <br>
             <div class="payment-details">
                 <form name="payment" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <h4>Order for</h4>
@@ -104,32 +110,36 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <label for="PaymentID"><b>Delivery Option</b></label>
                         </div>
                         <div class="payment-70">
+                            
                             <?php  
-                                
+                                $deliveryOptArray = $orderObj->getDeliveryOptionList();
+
+                                foreach($deliveryOptArray as $array) {
+                                    echo '<input name="delivery-option" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
+                                }
                             ?>
-                            <input name="deliveryopt" value="delivery" type="radio" readonly>Delivery</input>
-                            <input name="deliveryopt" value="self-pickup" type="radio" readonly>Self Pick-Up</input>
+                            <!-- <input name="deliveryopt" value="delivery" type="radio" readonly>Delivery</input>-->
                         </div>
                     </div>
-                    <div class="row-payment-col">
-                        <div>
-                            <h4>How would you like to pay</h4>
-                            <div class="filter-container">
-                                <input type="radio" id="cash-method" name="payment-method" checked value="cash">
-                                <input type="radio" id="card-method" name="payment-method" value="card">
-                                <input type="radio" id="online-banking-method" name="payment-method" value="online">
-                                <div class="box-1">
-                                    <label for="cash-method" class="cashbtn"><h3>Cash</h3></label>
-                                </div>
-                                <div class="box-2">
-                                    <label for="card-method" class="creditbtn"><h3>Credit Card/Debit Card</h3></label>
-                                </div>
-                                <div class="box-3">
-                                    <label for="online-banking-method" class="onlinebtn"><h3>Online Banking</h3></label>
-                                </div>
-                            </div>             
+                    <br>
+                    <div class="row-payment">
+                        <div class="payment-30">
+                            <label for="PaymentID"><b>Payment Method</b></label>
+                        </div>
+                        <div class="payment-70">
+                            <?php 
+                                $paymentmethod = $orderObj->getPaymentOptionList();
+
+                                foreach($paymentmethod as $array) {
+                                    
+
+                                    echo '<input name="payment-method" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
+                                }
+                            ?>
+                            <!-- <input name="payment-method" value="delivery" type="radio" readonly>Delivery</input>-->
                         </div>
                     </div>
+                    <br>
                     <div class="row-payment margin-top-2">
                         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px" required>
                         <label>

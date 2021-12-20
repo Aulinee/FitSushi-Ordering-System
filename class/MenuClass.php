@@ -24,7 +24,7 @@ class Menu{
     public function displayMenu()
     {
         // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
-        $menuQuery = "SELECT s.sushiName AS name, s.sushiImg AS image from sushi s, sushicategory sc WHERE sc.categoryID = 1 AND s.sushiID=sc.sushiID AND s.sushiImg != 'NULL' LIMIT 5";
+        $menuQuery = "SELECT s.sushiName AS name, s.sushiImg AS image from sushi s WHERE s.sushiImg != 'NULL' LIMIT 5";
         $result = $this->conn->query($menuQuery);
 
         if($result){
@@ -52,9 +52,8 @@ class Menu{
     }
 
     public function displayAlacarteMenu(){
-
         // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
-        $menuQuery = "SELECT * from sushi s, sushicategory sc WHERE sc.categoryID = 1 AND s.sushiID=sc.sushiID AND s.sushiImg != 'NULL'";
+        $menuQuery = "SELECT * from sushi s WHERE s.sushiImg != 'NULL'";
         $result = $this->conn->query($menuQuery);
 
         if($result){
@@ -154,42 +153,71 @@ class Menu{
         $menuQuery = "SELECT s.sushiID AS sushiid ,s.sushiName AS sushiname, s.price AS sushiprice, a.qty AS sushiqty FROM alacartesushibox a, sushi s WHERE a.sushiID = s.sushiID";
 
         $result = $this->conn->query($menuQuery);
-
         if($result){
             if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $id = $row["sushiid"];
-                    $name = $row["sushiname"];
-                    $unitprice = $row["sushiprice"];
-                    $qty = $row["sushiqty"];
-                    $totalprice = $qty * $unitprice;
-                    echo'
-                        <tr>
-                            <th class="info-20" style="text-align: left;">
-                                <label class="sushi-container">
-                                    <input type="checkbox" value="'.$id.'" name="sushibox[]" onclick="totalIt(\''.$name.'\')" disabled>
-                                    <input type="hidden" name="sushilist[]" value="'.$id.'" /> 
-                                    <span style="opacity: 0.7; border:none;" class="checkmark"></span>
-                                    <label class="">'.$name.'</label>
-                                </label>
-                            </th>
-                            <th class="info-20">
-                                <div class="sushi-list-input menu-row fit-width">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="decrement(\''.$name.'\')">-</h5>
-                                        <input id="'.$name.'" name="sushiqty[]" type=number min=1 value="'.$qty.'" readonly="readonly">
-                                        <h5 class="plus-btn" onclick="increment(\''.$name.'\')">+</h5>
+                echo'
+                <div class="tbl-content">
+                    <table cellpadding="0" cellspacing="0" border="0">';
+                       while($row = mysqli_fetch_array($result)){
+                        $id = $row["sushiid"];
+                        $name = $row["sushiname"];
+                        $unitprice = $row["sushiprice"];
+                        $qty = $row["sushiqty"];
+                        $totalprice = $qty * $unitprice;
+                        echo'
+                            <tr>
+                                <th class="info-20" style="text-align: left;">
+                                    <label class="sushi-container">
+                                        <input type="checkbox" value="'.$id.'" name="sushibox[]" onclick="totalIt(\''.$name.'\')" disabled>
+                                        <input type="hidden" name="sushilist[]" value="'.$id.'" /> 
+                                        <span style="opacity: 0.7; border:none;" class="checkmark"></span>
+                                        <label class="">'.$name.'</label>
+                                    </label>
+                                </th>
+                                <th class="info-20">
+                                    <div class="sushi-list-input menu-row fit-width">
+                                        <div class="input-btn menu-row">
+                                            <h5 class="minus-btn" onclick="decrement(\''.$name.'\')">-</h5>
+                                            <input id="'.$name.'" name="sushiqty[]" type=number min=1 value="'.$qty.'" readonly="readonly">
+                                            <h5 class="plus-btn" onclick="increment(\''.$name.'\')">+</h5>
+                                        </div>
                                     </div>
-                                </div>
-                            </th>
-                            <th class="info-20"><input class="none-outline" type="text" name="'.$name.'" id="unit-price-'.$name.'" value="'.$unitprice.'" readonly="readonly"></th>
-                            <th class="info-20"> <input class="none-outline" name="sushitotal" id="total-price-'.$name.'" type="number" value="'.$totalprice.'" onclick="totalIt(\''.$name.'\')" readonly="readonly"></th>
-                            <th class="info-20"><a href="deleteAlacarte-page.php?id='.$id.'" style="color: #c1273a;">DELETE</a></th>
-                        </tr>
-                    ';
-                }
+                                </th>
+                                <th class="info-20"><input class="none-outline" type="text" name="'.$name.'" id="unit-price-'.$name.'" value="'.$unitprice.'" readonly="readonly"></th>
+                                <th class="info-20"> <input class="none-outline" name="sushitotal" id="total-price-'.$name.'" type="number" value="'.$totalprice.'" onclick="totalIt(\''.$name.'\')" readonly="readonly"></th>
+                                <th class="info-20"><a href="deleteAlacarte-page.php?id='.$id.'" style="color: #c1273a;">DELETE</a></th>
+                            </tr>';
+                    }
+                echo'</table>
+                </div>
+                <br>
+                <br>
+                <div class="tbl-content-checkout">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tbody>
+                            <tr>
+                                <th style="text-align:left;" class="info-20">
+                                    <label class="sushi-container">
+                                        <input name="chk"  type="checkbox" onclick="toggle(this)" >
+                                        <span class="checkmark"></span>
+                                        <label class="">SELECT ALL</label>
+                                    </label>
+                                </th>
+                                <th class="info-10">Total(RM): </th>
+                                <th class="info-30"><input name="totalorder" id="total" class="info-amount none-outline" value="0.00"></th>
+                                <th class="info-30"><button name ="sushibox-form" type="submit" class="info-checkout red-bg white-txt">CHECKOUT</button></th>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>';
             }else{
-                echo "Record not found";
+                echo '
+                <div class="sushibox-detail black-txt white-bg margin-empty-sushi">
+                    <h1>YOUR SUSHI BOX IS EMPTY!</h1>
+                    <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                </div>
+                ';
             }
         }else{
             echo "Error in ".$menuQuery." ".$this->conn->error;

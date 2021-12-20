@@ -85,6 +85,10 @@ a {
   background-color: var(--blue);
 }
 
+.white-bg {
+  background-color: var(--white);
+}
+
 .yellow-txt {
   color: var(--yellow);
 }
@@ -1232,47 +1236,6 @@ th .info-checkout:hover {
   color: gray;
 }
 
-.cashbtn,
-.creditbtn,
-.onlinebtn,
-.grabpaybtn,
-.touchngobtn,
-.boostbtn {
-  padding: 10px;
-  margin: 1%;
-  background-color: white;
-  color: black;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.box-1,
-.box-2,
-.box-3 {
-  width: 95%;
-  margin: auto;
-}
-
-.box-2 img,
-.box-3 img,
-.box-4 img,
-.box-5 img,
-.box-6 img {
-  width: 100px;
-}
-
-.box-1 label,
-.box-2 label,
-.box-3 label,
-.box-4 label,
-.box-5 label,
-.box-6 label {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .gotopaymentbtn {
   text-transform: uppercase;
   background-color: var(--red);
@@ -1283,53 +1246,6 @@ th .info-checkout:hover {
   cursor: pointer;
   width: 95%;
   margin: auto;
-}
-
-.filter-container {
-  margin: 0% 0% 0 0;
-}
-
-.filter-container img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-.filter-container ol {
-  list-style: none;
-}
-
-.filter-container a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.filter-container h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.filter-container h1 a {
-  transition: all 0.1s;
-}
-
-.filter-container h1 a:hover {
-  background: var(--green);
-  color: var(--white);
-}
-
-.filter-container input[type="radio"] {
-  position: absolute;
-  left: -9999px;
-}
-
-[value="cash"]:checked ~ .box-1 [for="cash-method"],
-[value="card"]:checked ~ .box-2 [for="card-method"],
-[value="online"]:checked ~ .box-3 [for="online-banking-method"],
-[value="grabpay"]:checked ~ .box-4 [for="grabpay-method"],
-[value="touchngo"]:checked ~ .box-5 [for="touchngo-method"],
-[value="boost"]:checked ~ .box-6 [for="boost-method"] {
-  border: solid 1px black;
 }
 
 /*-----------------User Profile Page----------------*/

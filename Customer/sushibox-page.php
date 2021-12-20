@@ -17,15 +17,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }else{
             $_SESSION['sushiid'] = $sushiId;
             $_SESSION['$sushiqty'] = $sushiQty;
-            header("Location: checkout-page.php?total=".$totalOrder."");
-
-            foreach ($sushiId as $color){
-                echo $color."<br />";
-            }
-
-            foreach ($sushiQty as $qty){
-                echo $qty."<br />";
-            }
+            $_SESSION['totalorder'] = $totalOrder;
+            header("Location: checkout-page.php");
         }
     }
 
@@ -81,64 +74,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </table>
             </div>
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                <div class="tbl-content">
-                    <table cellpadding="0" cellspacing="0" border="0">
-                        <?php $menuObj->displayAlacarteSushibox(); ?>
-                        <!-- <tr>
-                            <th class="info-5"></th>
-                            <th class="info-10">
-                                <label class="sushi-container">
-                                    <input type="checkbox" name="sushibox" checked="checked">
-                                    <span class="checkmark"></span>
-                                    <label class="">One</label>
-                                </label>
-                            </th>
-                            <th class="info-5"></th>
-                            <th class="info-20">
-                                <div class="sushi-list-input menu-row fit-width">
-                                    <div class="input-btn menu-row">
-                                        <h5 class="minus-btn" onclick="document.getElementById('expresso').stepDown();">-</h5>
-                                        <input id="expresso" name="expresso" type=number min="0">
-                                        <h5 class="plus-btn" onclick="document.getElementById('expresso').stepUp();">+</h5>
-                                    </div>
-                                </div>
-                            </th>
-                            <th class="info-20">Unit Price</th>
-                            <th class="info-20">Total Price</th>
-                            <th class="info-20">Action</th>
-                        </tr> -->
-                    </table>
-                </div>
-                <br>
-                <br>
-                <div class="tbl-content-checkout">
-                    <table cellpadding="0" cellspacing="0" border="0">
-                        <tbody>
-                            <tr>
-                                <th style="text-align:left;" class="info-20">
-                                    <label class="sushi-container">
-                                        <input name="chk"  type="checkbox" onclick="toggle(this)" >
-                                        <span class="checkmark"></span>
-                                        <label class="">SELECT ALL</label>
-                                    </label>
-                                </th>
-                                <th class="info-10">Total(RM): </th>
-                                <th class="info-30"><input name="totalorder" id="total" class="info-amount none-outline" value="0.00"></th>
-                                <th class="info-30"><button name ="sushibox-form" type="submit" class="info-checkout red-bg white-txt">CHECKOUT</button></th>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <?php $menuObj->displayAlacarteSushibox(); ?>
             </form>
-            <!-- If theres no order in sushi box -->
-            <br><br>
-            <div class="sushibox-detail red-bg white-txt margin-empty-sushi">
-                <h1>YOUR SUSHI BOX IS EMPTY!</h1>
-                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
-            </div>
-            <br><br>
-            <br><br>
         </div>  
     </div>
     <footer class="footer">
