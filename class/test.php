@@ -7,9 +7,23 @@ include 'OrderClass.php';
 $userObj = new User($conn);
 $adminObj = new Admin($conn);
 $menuObj = new Menu($conn);
-$orderObj = new Menu($conn);
+$orderObj = new Order($conn);
 
-$adminObj->createCustomer();
+$myarray = $orderObj->getAlacarteOrder(2, 22);
+// $myarray = $orderObj->getOrderData(2,4);
+
+// var_dump($myarray);
+
+$subtotal = 0;
+foreach($myarray as $array) {
+    echo $array["name"]. " ".$array["desc"]." ".$array["qty"]." ".$array["price"]."\n"; 
+    $subtotal += ($array["qty"] * $array["price"]);
+}
+
+echo "<br>".$subtotal;
+
+// $id= $orderObj->makeOrder(array(1,2),array(2,2),2, 1, 1, 69.90);
+// echo $id;
 
 // $userObj->checkExistUsername("kiannyp");
 
@@ -43,4 +57,13 @@ $adminObj->createCustomer();
 // $menuObj->addAlacarte(1,2,3);
 
 // $menuObj->updateSushiQty(1,1,3);
+
+// $orderObj->editDeliveryTime(2,22, '2021-12-21 17:00:00');
+
+// $orderObj->editOrderStatus(2, 22, 4);
+
 ?>
+<!-- <form action="">
+    <label for="party">Enter a date and time for your party booking:</label>
+    <input id="party" type="datetime-local" name="partydate" value="2017-06-01T08:30">
+</form> -->
