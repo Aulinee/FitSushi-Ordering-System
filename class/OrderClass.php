@@ -9,49 +9,89 @@ class Order{
 	}
 
     public function getDeliveryOptionList(){
-         $deliveryQuery = "SELECT * from delivery";
-         $result = $this->conn->query($deliveryQuery);
- 
-         if($result){
-             if ($result->num_rows > 0) {
-                 while($row = mysqli_fetch_array($result)){
-                     $id = $row["deliveryID"];
-                     $name = $row["deliveryOption"];
- 
-                     echo'
-                     
-                     ';
-                 }
-             }else{
-                 echo "Record not found";
-             }
-         }else{
-             echo "Error in ".$deliveryQuery." ".$this->conn->error;
-         }
+        $deliveryQuery = "SELECT * from delivery";
+        $result = mysqli_query($this->conn, $deliveryQuery);
+
+        $orderData = array();
+        while($rowoption = mysqli_fetch_array($result)){
+            $id = $rowoption["deliveryID"];
+            $name = $rowoption["deliveryOption"];
+
+            $orderData = array(
+                "id" => $id,
+                "name" => $name
+            );
+        }
+
+        return $orderData;
 
     }
 
     public function getPaymentOptionList(){
         $paymentQuery = "SELECT * from payment";
-        $result = $this->conn->query($paymentQuery);
+        $result = mysqli_query($this->conn, $paymentQuery);
 
-        if($result){
-            if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $id = $row["paymentID"];
-                    $name = $row["paymentMethod"];
+        $orderData = array();
+        while($rowoption = mysqli_fetch_array($result)){
+            $id = $rowoption["paymentID"];
+            $name = $rowoption["paymentMethod"];
 
-                    echo'
-                    
-                    ';
-                }
-            }else{
-                echo "Record not found";
-            }
-        }else{
-            echo "Error in ".$paymentQuery." ".$this->conn->error;
+            $orderData = array(
+                "id" => $id,
+                "name" => $name
+            );
         }
+
+        return $orderData;
         
+    }
+
+    public function getOrderData($customerid , $orderstatus){
+        $stringQuery = "SELECT  o.orderID, o.customerID, s.statusName, o.dateCreated, d.deliveryOption, o.deliverydateTime, p.paymentMethod, o.orderTotal FROM orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderStatusID = $orderstatus AND o.customerID = $customerid";
+        $displayQuery = mysqli_query($this->conn, $stringQuery);
+
+        $customerid = $orderid = 0;
+        $orderData = array();
+
+        while($roworder = mysqli_fetch_array($displayQuery)){
+            $orderid = $roworder['orderID'];
+            $customerid = $roworder['customerID'];
+            $statusname = $roworder['statusName'];
+            $datecreate = $roworder['dateCreated'];
+            $deliveryopt = $roworder['deliveryOption'];
+            $deliverydatetime = $roworder['deliverydateTime'];
+            $paymentmethod = $roworder['paymentMethod'];
+            $ordertotal = $roworder['orderTotal'];
+
+            $orderData = array($orderid, $customerid, $statusname, $datecreate, $deliveryopt, $deliverydatetime, $paymentmethod, $ordertotal);
+        }
+
+        return $orderData;
+    }
+
+    public function getAlacarteOrder($customerid, $orderid){
+        $stringQuery = "SELECT s.sushiName, s.sushiDesc, s.sushiImg, s.price, a.qty FROM orders o, alacarteorder a, sushi s WHERE $orderid = a.orderID AND a.sushiID = s.sushiID AND o.customerID = $customerid";
+        $displayQuery = mysqli_query($this->conn, $stringQuery);
+
+        $orderData = array();
+        while($roworder = mysqli_fetch_array($displayQuery)){
+            $sushiname = $roworder['sushiName'];
+            $sushidesc = $roworder['sushiDesc'];
+            $sushiimg = $roworder['sushiImg'];
+            $sushiprice = $roworder['price'];
+            $sushiqty = $roworder['qty'];
+
+            $orderData[] = array(
+                "name" => $sushiname, 
+                "desc" => $sushidesc, 
+                "img" => $sushiimg, 
+                "price" => $sushiprice, 
+                "qty" => $sushiqty
+            );
+        }
+
+        return $orderData;
+
     }
 
     public function addAlacarteOrder($orderid, $sushiid, $qty){
@@ -69,31 +109,61 @@ class Order{
         }
     }
 
-    public function makeOrder(){
+    public function makeOrder($sushiid, $sushiqty, $customerid, $deliveryid, $paymentid, $ordertotal){
+        $orderid = 0; //initialize value 
+        //Insert order created date 
+        date_default_timezone_set("Asia/Kuala_Lumpur"); //set time region
+        $current_time = date('Y-m-d', time());
+
+        //Set order status to 4 for pending order status
+        $orderstatus = 4;
+
+        // add into order table
+        $stringQuery = "INSERT INTO orders(customerID, orderStatusID, dateCreated, deliveryID, deliverydateTime, paymentID, orderTotal) 
+                        VALUES ($customerid, $orderstatus, '$current_time', $deliveryid, 'NULL', $paymentid, $ordertotal)";
+
+        $sqlQuery = $this->conn->query($stringQuery);
+        if ($sqlQuery == true) {
+            //This will return auto_increment order id 
+            $last_id = $this->conn->insert_id;
+
+            $orderid = $last_id;
+        }else{
+            echo "Error in ". $sqlQuery." ".$this->conn->error;
+        }
+
+        //inserted multiple sushi piece order
+        foreach (array_combine($sushiid, $sushiqty) as $sushiid => $sushiqty) {
+            $this->addAlacarteOrder($orderid, $sushiid, $sushiqty);
+        }
+    }
+
+    public function editOrderStatus($customerid, $orderid, $orderstatusid){
+        $updateQuery = "UPDATE orders SET orderStatusID = $orderstatusid WHERE customerID = $customerid AND orderID = $orderid";
+        $result = mysqli_query($this->conn,  $updateQuery) or die("Error: ".mysqli_error($this->conn));
+
+        if ($result == true) {
+            return true;
+        }else{
+            // echo "Error in ".$result." ".$this->conn->error;
+            return false;
+        }
+
+    }
+
+    public function editDeliveryTime($customerid, $orderid, $deliverytime){
+        $updateQuery = "UPDATE orders SET deliveryDateTime = '$deliverytime' WHERE customerID = $customerid AND orderID = $orderid";
+        $result = mysqli_query($this->conn,  $updateQuery) or die("Error: ".mysqli_error($this->conn));
+
+        if ($result == true) {
+            return true;
+        }else{
+            // echo "Error in ".$result." ".$this->conn->error;
+            return false;
+        }
         
     }
 
-    public function editOrderStatus(){
-        
-    }
-
-    public function getPendingOrder(){
-        
-    }
-
-    public function getOnDeliveryOrder(){
-        
-    }
-
-    public function getCompleteOrder(){
-        
-    }
-
-    public function getCancelOrder(){
-        
-    }
-
-    
 }
 
 ?>
