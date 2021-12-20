@@ -164,188 +164,12 @@ function test_input($data) {
                 <div class="sidebar-profile profile-width-20 flex-col">
                     <i class="fa fa-user"></i>
                     <h1>redscarf</h1> 
-                    <button id="viewbtn" class="sidebar-profile-btn sidebar-btn-active " onclick="viewProfile()">View Profile</button> 
-                    <button id="editbtn" class="sidebar-profile-btn" onclick="editProfile()">Edit Profile</button>   
-                    <button id="myorder" class="sidebar-profile-btn" onclick="myOrder()">Order History</button>       
+                    <button id="myorder" class="sidebar-profile-btn sidebar-btn-active" onclick="myOrder()">Order History</button>  
+                    <button id="viewbtn" class="sidebar-profile-btn" onclick="viewProfile()">View Profile</button> 
+                    <button id="editbtn" class="sidebar-profile-btn" onclick="editProfile()">Edit Profile</button>        
                 </div>
                 <div class="main-profile profile-width-80">
-                    <div id="view-profile-div">
-                        <div class="main-profile-detail">
-                            <div class="profile-width-5"></div>
-                            <div class="main-profile-detail-left ">
-                                <div class="user-detail">
-                                    <h3>Username</h3>
-                                    <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
-                                </div>
-                                <div class="user-detail">
-                                    <h3>Full Name</h3>
-                                    <div>
-                                        <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
-                                    </div>
-                                </div>
-                                <div class="user-detail">
-                                    <h3>Email</h3>
-                                    <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
-                                </div>
-                                <div class="user-detail">
-                                    <h3>Gender</h3>
-                                    <div>
-                                        <div class="gender-detail">
-                                            <input id="gender-1" name="gender-1" type="radio" value="male" <?php if($gender == 'male') echo 'checked=checked';?>/>
-                                            <label for="gender">Male</label>
-                                        </div>
-                                        <div class="gender-detail">
-                                            <input id="gender-1" name="gender-1" type="radio" value="female" <?php if($gender == 'female') echo 'checked=checked';?>/>
-                                            <label for="gender">Female</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="user-detail">
-                                    <h3>Phone Number</h3>
-                                    <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
-                                </div>
-                            </div>
-                            <div class="profile-width-20"></div>
-                            <div class="main-profile-detail-right">
-                                <div class="user-detail">
-                                    <h3>Address Line</h3>
-                                    <input name="add-1" id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
-                                </div>
-                                <div class="user-detail flex-row">
-                                    <div class="user-detail-col profile-margin-3">
-                                        <h3>City</h3>
-                                        <input name="city" id="city" class="input-detail" type="text" value="<?php echo $area?>">
-                                    </div>
-                                    <div class="user-detail-col">
-                                        <h3>Postcode</h3>
-                                        <input name="post" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
-                                    </div>
-                                </div>
-                                <div class="user-detail">
-                                    <h3>State</h3>
-                                    <select class="input-detail-2" name="state" id="state">
-                                        <option <?php if($state=="") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
-                                        <option <?php if($state=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
-                                        <option <?php if($state=="Terengganu") echo 'selected="selected"'; ?> value="Terengganu">Terengganu</option>
-                                        <option <?php if($state=="Selangor") echo 'selected="selected"'; ?> value="Selangor">Selangor</option>
-                                        <option <?php if($state=="Sarawak") echo 'selected="selected"'; ?> value="Sarawak">Sarawak</option>
-                                        <option <?php if($state=="Sabah") echo 'selected="selected"'; ?> value="Sabah">Sabah</option>
-                                        <option <?php if($state=="Perlis") echo 'selected="selected"'; ?> value="Perlis">Perlis</option>
-                                        <option <?php if($state=="Perak") echo 'selected="selected"'; ?> value="Perak">Perak</option>
-                                        <option <?php if($state=="Pahang") echo 'selected="selected"'; ?> value="Pahang">Pahang</option>
-                                        <option <?php if($state=="Negeri Sembilan") echo 'selected="selected"'; ?> value="Negeri Sembilan">Negeri Sembilan</option>
-                                        <option <?php if($state=="Kelantan") echo 'selected="selected"'; ?> value="Kelantan">Kelantan</option>
-                                        <option <?php if($state=="Kuala Lumpur") echo 'selected="selected"'; ?> value="Kuala Lumpur">Kuala Lumpur</option>
-                                        <option <?php if($state=="Pulau Pinang") echo 'selected="selected"'; ?> value="Pulau Pinang">Pulau Pinang</option>
-                                        <option <?php if($state=="Kedah") echo 'selected="selected"'; ?> value="Kedah">Kedah</option>
-                                        <option <?php if($state=="Johor") echo 'selected="selected"'; ?> value="Johor">Johor</option>
-                                        <option <?php if($state=="Labuan") echo 'selected="selected"'; ?> value="Labuan">Labuan</option>
-                                        <option <?php if($state=="Putrajaya") echo 'selected="selected"'; ?> value="Putrajaya">Putrajaya</option>
-                                    </select>
-                                </div>
-                                <div class="user-detail">
-                                    <h3>Password</h3>
-                                    <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
-                                </div>
-                                <br>
-                                <div class="user-detail-btn">
-                                    <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
-                                </div>
-                            </div>
-                            <div class="profile-width-5"></div>
-                        </div>
-                    </div>
-
-                    <div id="edit-profile-div" class="none">
-                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                            <div class="main-profile-detail" >
-                                <div class="profile-width-5"></div>
-                                <div class="main-profile-detail-left ">
-                                    <div class="user-detail">
-                                        <h3>Username</h3>
-                                        <input name="usern_edit" class="input-detail" type="text" id="username" value="<?php echo $username?>">
-                                    </div>
-                                    <div class="user-detail">
-                                        <h3>Full Name</h3>
-                                        <div>
-                                            <input name="fname_edit" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
-                                        </div>
-                                    </div>
-                                    <div class="user-detail">
-                                        <h3>Email</h3>
-                                        <input name="email_edit" id="email" class="input-detail" type="text" value="<?php echo $email?>">
-                                    </div>
-                                    <div class="user-detail">
-                                        <h3>Gender</h3>
-                                        <div>
-                                            <div class="gender-detail">
-                                                <input id="gender" name="gender" type="radio" value="male" <?php if($gender == 'male') echo 'checked=checked';?>/>
-                                                <label for="gender">Male</label>
-                                            </div>
-                                            <div class="gender-detail">
-                                                <input id="gender" name="gender" type="radio" value="female" <?php if($gender == 'female') echo 'checked=checked';?>/>
-                                                <label for="gender">Female</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="user-detail">
-                                        <h3>Phone Number</h3>
-                                        <input name="phone_edit" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
-                                    </div>
-                                </div>
-                                <div class="profile-width-20"></div>
-                                <div class="main-profile-detail-right">
-                                    <div class="user-detail">
-                                        <h3>Address Line</h3>
-                                        <input name="add-1_edit" id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
-                                    </div>
-                                    <div class="user-detail flex-row">
-                                        <div class="user-detail-col profile-margin-3">
-                                            <h3>City</h3>
-                                            <input name="city_edit" id="city" class="input-detail" type="text" value="<?php echo $area?>">
-                                        </div>
-                                        <div class="user-detail-col">
-                                            <h3>Postcode</h3>
-                                            <input name="post_edit" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
-                                        </div>
-                                    </div>
-                                    <div class="user-detail">
-                                        <h3>State</h3>
-                                        <select class="input-detail-2" name="state_edit" id="state">
-                                            <option <?php if($state=="select") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
-                                            <option <?php if($state=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
-                                            <option <?php if($state=="Terengganu") echo 'selected="selected"'; ?> value="Terengganu">Terengganu</option>
-                                            <option <?php if($state=="Selangor") echo 'selected="selected"'; ?> value="Selangor">Selangor</option>
-                                            <option <?php if($state=="Sarawak") echo 'selected="selected"'; ?> value="Sarawak">Sarawak</option>
-                                            <option <?php if($state=="Sabah") echo 'selected="selected"'; ?> value="Sabah">Sabah</option>
-                                            <option <?php if($state=="Perlis") echo 'selected="selected"'; ?> value="Perlis">Perlis</option>
-                                            <option <?php if($state=="Perak") echo 'selected="selected"'; ?> value="Perak">Perak</option>
-                                            <option <?php if($state=="Pahang") echo 'selected="selected"'; ?> value="Pahang">Pahang</option>
-                                            <option <?php if($state=="Negeri Sembilan") echo 'selected="selected"'; ?> value="Negeri Sembilan">Negeri Sembilan</option>
-                                            <option <?php if($state=="Kelantan") echo 'selected="selected"'; ?> value="Kelantan">Kelantan</option>
-                                            <option <?php if($state=="Kuala Lumpur") echo 'selected="selected"'; ?> value="Kuala Lumpur">Kuala Lumpur</option>
-                                            <option <?php if($state=="Pulau Pinang") echo 'selected="selected"'; ?> value="Pulau Pinang">Pulau Pinang</option>
-                                            <option <?php if($state=="Kedah") echo 'selected="selected"'; ?> value="Kedah">Kedah</option>
-                                            <option <?php if($state=="Johor") echo 'selected="selected"'; ?> value="Johor">Johor</option>
-                                            <option <?php if($state=="Labuan") echo 'selected="selected"'; ?> value="Labuan">Labuan</option>
-                                            <option <?php if($state=="Putrajaya") echo 'selected="selected"'; ?> value="Putrajaya">Putrajaya</option>
-                                        </select>
-                                    </div>
-                                    <div class="user-detail">
-                                        <h3>Password</h3>
-                                        <input name="passw_edit" id="password" class="input-detail" type="password" value="<?php echo $password?>">
-                                    </div>
-                                    <br>
-                                    <div class="user-detail-btn">
-                                        <button name="update_edit" type="submit" class="save-edit-btn red-bg">Save Changes</button>
-                                    </div>
-                                </div>
-                                <div class="profile-width-5"></div>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <div id="user-purchase-div" class="none">
+                    <div id="user-purchase-div">
                         <br>
                         <div class="order-status-filter">
                             <h3 id="allbtn" class="status-active" onclick="allOrder()"><a href="javascript:;">All</a></h3>
@@ -623,6 +447,181 @@ function test_input($data) {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div id="view-profile-div" class="none">
+                        <div class="main-profile-detail">
+                            <div class="profile-width-5"></div>
+                            <div class="main-profile-detail-left ">
+                                <div class="user-detail">
+                                    <h3>Username</h3>
+                                    <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Full Name</h3>
+                                    <div>
+                                        <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Email</h3>
+                                    <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Gender</h3>
+                                    <div>
+                                        <div class="gender-detail">
+                                            <input id="gender-1" name="gender-1" type="radio" value="male" <?php if($gender == 'male') echo 'checked=checked';?>/>
+                                            <label for="gender">Male</label>
+                                        </div>
+                                        <div class="gender-detail">
+                                            <input id="gender-1" name="gender-1" type="radio" value="female" <?php if($gender == 'female') echo 'checked=checked';?>/>
+                                            <label for="gender">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Phone Number</h3>
+                                    <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                                </div>
+                            </div>
+                            <div class="profile-width-20"></div>
+                            <div class="main-profile-detail-right">
+                                <div class="user-detail">
+                                    <h3>Address Line</h3>
+                                    <input name="add-1" id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
+                                </div>
+                                <div class="user-detail flex-row">
+                                    <div class="user-detail-col profile-margin-3">
+                                        <h3>City</h3>
+                                        <input name="city" id="city" class="input-detail" type="text" value="<?php echo $area?>">
+                                    </div>
+                                    <div class="user-detail-col">
+                                        <h3>Postcode</h3>
+                                        <input name="post" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>State</h3>
+                                    <select class="input-detail-2" name="state" id="state">
+                                        <option <?php if($state=="") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
+                                        <option <?php if($state=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
+                                        <option <?php if($state=="Terengganu") echo 'selected="selected"'; ?> value="Terengganu">Terengganu</option>
+                                        <option <?php if($state=="Selangor") echo 'selected="selected"'; ?> value="Selangor">Selangor</option>
+                                        <option <?php if($state=="Sarawak") echo 'selected="selected"'; ?> value="Sarawak">Sarawak</option>
+                                        <option <?php if($state=="Sabah") echo 'selected="selected"'; ?> value="Sabah">Sabah</option>
+                                        <option <?php if($state=="Perlis") echo 'selected="selected"'; ?> value="Perlis">Perlis</option>
+                                        <option <?php if($state=="Perak") echo 'selected="selected"'; ?> value="Perak">Perak</option>
+                                        <option <?php if($state=="Pahang") echo 'selected="selected"'; ?> value="Pahang">Pahang</option>
+                                        <option <?php if($state=="Negeri Sembilan") echo 'selected="selected"'; ?> value="Negeri Sembilan">Negeri Sembilan</option>
+                                        <option <?php if($state=="Kelantan") echo 'selected="selected"'; ?> value="Kelantan">Kelantan</option>
+                                        <option <?php if($state=="Kuala Lumpur") echo 'selected="selected"'; ?> value="Kuala Lumpur">Kuala Lumpur</option>
+                                        <option <?php if($state=="Pulau Pinang") echo 'selected="selected"'; ?> value="Pulau Pinang">Pulau Pinang</option>
+                                        <option <?php if($state=="Kedah") echo 'selected="selected"'; ?> value="Kedah">Kedah</option>
+                                        <option <?php if($state=="Johor") echo 'selected="selected"'; ?> value="Johor">Johor</option>
+                                        <option <?php if($state=="Labuan") echo 'selected="selected"'; ?> value="Labuan">Labuan</option>
+                                        <option <?php if($state=="Putrajaya") echo 'selected="selected"'; ?> value="Putrajaya">Putrajaya</option>
+                                    </select>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Password</h3>
+                                    <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                                </div>
+                                <br>
+                                <div class="user-detail-btn">
+                                    <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
+                                </div>
+                            </div>
+                            <div class="profile-width-5"></div>
+                        </div>
+                    </div>
+
+                    <div id="edit-profile-div" class="none">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <div class="main-profile-detail" >
+                                <div class="profile-width-5"></div>
+                                <div class="main-profile-detail-left ">
+                                    <div class="user-detail">
+                                        <h3>Username</h3>
+                                        <input name="usern_edit" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                                    </div>
+                                    <div class="user-detail">
+                                        <h3>Full Name</h3>
+                                        <div>
+                                            <input name="fname_edit" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                        </div>
+                                    </div>
+                                    <div class="user-detail">
+                                        <h3>Email</h3>
+                                        <input name="email_edit" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                                    </div>
+                                    <div class="user-detail">
+                                        <h3>Gender</h3>
+                                        <div>
+                                            <div class="gender-detail">
+                                                <input id="gender" name="gender" type="radio" value="male" <?php if($gender == 'male') echo 'checked=checked';?>/>
+                                                <label for="gender">Male</label>
+                                            </div>
+                                            <div class="gender-detail">
+                                                <input id="gender" name="gender" type="radio" value="female" <?php if($gender == 'female') echo 'checked=checked';?>/>
+                                                <label for="gender">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="user-detail">
+                                        <h3>Phone Number</h3>
+                                        <input name="phone_edit" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                                    </div>
+                                </div>
+                                <div class="profile-width-20"></div>
+                                <div class="main-profile-detail-right">
+                                    <div class="user-detail">
+                                        <h3>Address Line</h3>
+                                        <input name="add-1_edit" id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
+                                    </div>
+                                    <div class="user-detail flex-row">
+                                        <div class="user-detail-col profile-margin-3">
+                                            <h3>City</h3>
+                                            <input name="city_edit" id="city" class="input-detail" type="text" value="<?php echo $area?>">
+                                        </div>
+                                        <div class="user-detail-col">
+                                            <h3>Postcode</h3>
+                                            <input name="post_edit" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
+                                        </div>
+                                    </div>
+                                    <div class="user-detail">
+                                        <h3>State</h3>
+                                        <select class="input-detail-2" name="state_edit" id="state">
+                                            <option <?php if($state=="select") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
+                                            <option <?php if($state=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
+                                            <option <?php if($state=="Terengganu") echo 'selected="selected"'; ?> value="Terengganu">Terengganu</option>
+                                            <option <?php if($state=="Selangor") echo 'selected="selected"'; ?> value="Selangor">Selangor</option>
+                                            <option <?php if($state=="Sarawak") echo 'selected="selected"'; ?> value="Sarawak">Sarawak</option>
+                                            <option <?php if($state=="Sabah") echo 'selected="selected"'; ?> value="Sabah">Sabah</option>
+                                            <option <?php if($state=="Perlis") echo 'selected="selected"'; ?> value="Perlis">Perlis</option>
+                                            <option <?php if($state=="Perak") echo 'selected="selected"'; ?> value="Perak">Perak</option>
+                                            <option <?php if($state=="Pahang") echo 'selected="selected"'; ?> value="Pahang">Pahang</option>
+                                            <option <?php if($state=="Negeri Sembilan") echo 'selected="selected"'; ?> value="Negeri Sembilan">Negeri Sembilan</option>
+                                            <option <?php if($state=="Kelantan") echo 'selected="selected"'; ?> value="Kelantan">Kelantan</option>
+                                            <option <?php if($state=="Kuala Lumpur") echo 'selected="selected"'; ?> value="Kuala Lumpur">Kuala Lumpur</option>
+                                            <option <?php if($state=="Pulau Pinang") echo 'selected="selected"'; ?> value="Pulau Pinang">Pulau Pinang</option>
+                                            <option <?php if($state=="Kedah") echo 'selected="selected"'; ?> value="Kedah">Kedah</option>
+                                            <option <?php if($state=="Johor") echo 'selected="selected"'; ?> value="Johor">Johor</option>
+                                            <option <?php if($state=="Labuan") echo 'selected="selected"'; ?> value="Labuan">Labuan</option>
+                                            <option <?php if($state=="Putrajaya") echo 'selected="selected"'; ?> value="Putrajaya">Putrajaya</option>
+                                        </select>
+                                    </div>
+                                    <div class="user-detail">
+                                        <h3>Password</h3>
+                                        <input name="passw_edit" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                                    </div>
+                                    <br>
+                                    <div class="user-detail-btn">
+                                        <button name="update_edit" type="submit" class="save-edit-btn red-bg">Save Changes</button>
+                                    </div>
+                                </div>
+                                <div class="profile-width-5"></div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 </div>

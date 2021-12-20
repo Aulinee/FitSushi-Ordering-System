@@ -10,17 +10,22 @@ $menuObj = new Menu($conn);
 $orderObj = new Order($conn);
 
 $myarray = $orderObj->getAlacarteOrder(2, 22);
+$delivery = $orderObj->getDeliveryOptionList();
 // $myarray = $orderObj->getOrderData(2,4);
 
 // var_dump($myarray);
 
-$subtotal = 0;
-foreach($myarray as $array) {
-    echo $array["name"]. " ".$array["desc"]." ".$array["qty"]." ".$array["price"]."\n"; 
-    $subtotal += ($array["qty"] * $array["price"]);
-}
+// $subtotal = 0;
+// foreach($myarray as $array) {
+//     echo $array["name"]. " ".$array["desc"]." ".$array["qty"]." ".$array["price"]."\n"; 
+//     $subtotal += ($array["qty"] * $array["price"]);
+// }
 
-echo "<br>".$subtotal;
+// echo "<br>".$subtotal;
+
+// foreach($delivery as $array) {
+//     echo $array["id"]. " ".$array["name"]; 
+// }
 
 // $id= $orderObj->makeOrder(array(1,2),array(2,2),2, 1, 1, 69.90);
 // echo $id;

@@ -17,9 +17,9 @@ class Order{
             $id = $rowoption["deliveryID"];
             $name = $rowoption["deliveryOption"];
 
-            $orderData = array(
+            $orderData[] = array(
                 "id" => $id,
-                "name" => $name
+                "name" => $name,
             );
         }
 
@@ -36,9 +36,9 @@ class Order{
             $id = $rowoption["paymentID"];
             $name = $rowoption["paymentMethod"];
 
-            $orderData = array(
+            $orderData[] = array(
                 "id" => $id,
-                "name" => $name
+                "name" => $name,
             );
         }
 
@@ -126,16 +126,33 @@ class Order{
         if ($sqlQuery == true) {
             //This will return auto_increment order id 
             $last_id = $this->conn->insert_id;
-
             $orderid = $last_id;
+
+            //inserted multiple sushi piece order
+            foreach (array_combine($sushiid, $sushiqty) as $sushiid => $sushiqty) {
+                $this->addAlacarteOrder($orderid, $sushiid, $sushiqty);
+
+                 //delete sushi list from sushibox
+                 $this->clearSushibox($customerid, $sushiid);
+            }
+
+            return true;
         }else{
-            echo "Error in ". $sqlQuery." ".$this->conn->error;
+            // echo "Error in ". $sqlQuery." ".$this->conn->error;
+            return false;
+        }
+    }
+
+    public function clearSushibox($customerid, $sushiid){
+        $deleteAlacarteQuery = "DELETE FROM alacartesushibox WHERE sushiID = $sushiid AND customerID = $customerid";
+
+        $sql_alacartemenu = $this->conn->query($deleteAlacarteQuery);
+
+		if ($sql_alacartemenu == true) {
+            return true;
         }
 
-        //inserted multiple sushi piece order
-        foreach (array_combine($sushiid, $sushiqty) as $sushiid => $sushiqty) {
-            $this->addAlacarteOrder($orderid, $sushiid, $sushiqty);
-        }
+        return false;
     }
 
     public function editOrderStatus($customerid, $orderid, $orderstatusid){
