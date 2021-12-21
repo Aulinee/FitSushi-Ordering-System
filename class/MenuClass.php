@@ -166,7 +166,7 @@ class Menu{
                                 </th>
                                 <th class="info-20"><input class="none-outline" type="text" name="'.$name.'" id="unit-price-'.$name.'" value="'.$unitprice.'" readonly="readonly"></th>
                                 <th class="info-20"> <input class="none-outline" name="sushitotal" id="total-price-'.$name.'" type="number" value="'.$totalprice.'" onclick="totalIt(\''.$name.'\')" readonly="readonly"></th>
-                                <th class="info-20"><a href="deleteAlacarte-page.php?id='.$id.'" style="color: #c1273a;">DELETE</a></th>
+                                <th class="info-20"><a href="delete-alacarte.php?id='.$id.'" style="color: #c1273a;">DELETE</a></th>
                             </tr>';
                     }
                 echo'</table>
@@ -196,7 +196,7 @@ class Menu{
                 echo '
                 <div class="sushibox-detail black-txt white-bg margin-empty-sushi">
                     <h1>YOUR SUSHI BOX IS EMPTY!</h1>
-                    <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                    <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
                 </div>
                 ';
             }

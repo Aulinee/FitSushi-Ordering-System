@@ -63,7 +63,7 @@ include '../Login/sessionCustomer.php';
                                             <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
                                         </div>
                                         <div class="">
-                                            <form class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
+                                            <form onsubmit="return successAdded(this)" class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
                                                 <div class="input-btn menu-row">
                                                     <h5 class="minus-btn" onclick="decrement(\''.$array['id'].'\')">-</h5>
                                                     <input id="'.$array['id'].'" name="'.$array['id'].'" type=number min=0 max=110>
@@ -110,6 +110,25 @@ include '../Login/sessionCustomer.php';
 
         function decrement(name) {
             document.getElementById(name).stepDown();
+        }
+
+        function successAdded(form) {
+            var qty = document.getElementsByTagName("input")[0];
+
+            if(qty == 0){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'You added zero sushi quantity!',
+                });
+                event.preventDefault();
+            }else{
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully added menu to sushibox!',
+                });
+                event.preventDefault();
+            }
+            
         }
     </script>
 </body>

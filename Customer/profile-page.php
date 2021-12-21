@@ -202,7 +202,7 @@ function test_input($data) {
                                     <div class="order-content-all flex-col">
                                             <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
                                                 <h1>YOUR ALL ORDER LIST IS EMPTY!</h1>
-                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                                <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
                                             </div>
                                     </div>';
                                 }else{
@@ -422,7 +422,7 @@ function test_input($data) {
                                     <div class="order-content-all flex-col">
                                             <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
                                                 <h1>YOUR PENDING ORDER LIST IS EMPTY!</h1>
-                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                                <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
                                             </div>
                                     </div>';
                                 }else{
@@ -488,7 +488,7 @@ function test_input($data) {
                                     <div class="order-content-all flex-col">
                                             <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
                                                 <h1>YOUR ON DELIVERY ORDER LIST IS EMPTY!</h1>
-                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                                <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
                                             </div>
                                     </div>';
                                 }else{
@@ -553,7 +553,7 @@ function test_input($data) {
                                     <div class="order-content-all flex-col">
                                             <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
                                                 <h1>YOUR COMPLETE ORDER LIST IS EMPTY!</h1>
-                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                                <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
                                             </div>
                                     </div>';
                                 }else{
@@ -623,7 +623,7 @@ function test_input($data) {
                                     <div class="order-content-all flex-col">
                                             <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
                                                 <h1>YOUR CANCEL ORDER LIST IS EMPTY!</h1>
-                                                <h3>Discover our delicious sushi ala carte platter available or browse our hottest sushi box set in the MENU. </h3>
+                                                <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
                                             </div>
                                     </div>';
                                 }else{

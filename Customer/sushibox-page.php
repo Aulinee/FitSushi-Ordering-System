@@ -8,16 +8,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $sushiId = $_POST["sushilist"];
         $sushiQty = $_POST["sushiqty"];
 
-        if($totalOrder == 0){
-            echo "<script>
-                alert('Your total order is zero');
-                window.location.href='sushibox-page.php';
-                </script>";
-
-        }else{
+        if($totalOrder != 0){
             $_SESSION['sushiid'] = $sushiId;
             $_SESSION['sushiqty'] = $sushiQty;
             $_SESSION['totalorder'] = $totalOrder;
+            
             header("Location: checkout-page.php");
         }
     }
@@ -38,6 +33,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.min.css">
     <link href="../style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Sushi Box</title>
 </head>
@@ -70,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </thead>
                 </table>
             </div>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+            <form onsubmit="return errorPopout(this);" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
                 <?php $menuObj->displayAlacarteSushibox(); ?>
             </form>
         </div>  
@@ -152,6 +149,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
 
             document.getElementById("total").value = total.toFixed(2);
+        }
+
+        function errorPopout(form) {
+            var totalorder = document.getElementById("total").value;
+            if(totalorder == 0){
+                Swal.fire({
+                icon: 'error',
+                title: 'Please make sure to check select all before check out!',
+            });
+            event.preventDefault();
+            }
         }
 
     </script>
