@@ -39,30 +39,27 @@ $menuObj = new Menu($conn);
             <a href="#ala-carte">Ala Carte</a>
             <a href="#set-menu">Set</a>
         </div> -->
-        <br><br>
         <div class="menu-detail" id="ala-carte">
             <div class="menu-table red-bg white-txt">
-                <br>
-                <h1>Single Menu</h1>
-                <h3>The list of our fitsushi menu</h3>
+                <h1>Ala Carte</h1>
+                <h3>The list of our sushi menu</h3>
                 <div class="menu-table-detail">
                     <?php 
                         $menulist = $menuObj->getAlacarteMenuList();
                         foreach($menulist as $array) {
                             echo'
-                                <div class="menu-col menu-card">
-                                    <div class="menu-row">
-                                        <div class="menu-display-table">
-                                            <img class="menu-img" src="data:image/jpeg;base64,'.base64_encode( $array['img'] ).'" alt="'.$array['name'].'"/>
-                                            <div class="details">
-                                                <h2 class="detail-title margin-0">'.$array['name'].'</h2>
-                                                <h5 class="details-title-desc margin-0">'.$array['desc'].'</h5>
-                                                <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
-                                            </div>
-                                            
-                                        </div>
+                            <div class="col-container ">
+                                <div class="col">
+                                    <div class="">
+                                        <img class="menu-img" src="data:image/jpeg;base64,'.base64_encode( $array['img'] ).'" alt="'.$array['name'].'"/>
+                                    </div>
+                                    <div class="details">
+                                        <h2 class="detail-title margin-0">'.$array['name'].'</h2>
+                                        <h5 class="details-title-desc margin-0">'.$array['desc'].'</h5>
+                                        <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
                                     </div>
                                 </div>
+                            </div>
                             ';        
                         }  
                     ?>
@@ -75,6 +72,7 @@ $menuObj = new Menu($conn);
         </div>
         <br>
         <br>
+    </div>
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>

@@ -53,7 +53,7 @@ class Menu{
 
     public function getAlacarteMenuList(){
         // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
-        $menuQuery = "SELECT * from sushi s WHERE s.sushiImg != 'NULL'";
+        $menuQuery = "SELECT * from sushi s ";
         $displayQuery = mysqli_query($this->conn, $menuQuery);
 
         $orderData = array();

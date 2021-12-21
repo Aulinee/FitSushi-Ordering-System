@@ -21,11 +21,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             header("Location: checkout-page.php");
         }
     }
-
-    
+   
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

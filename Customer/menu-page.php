@@ -52,15 +52,17 @@ include '../Login/sessionCustomer.php';
                         $menulist = $menuObj->getAlacarteMenuList();
                         foreach($menulist as $array) {
                             echo'
-                                <div class="menu-col menu-card">
-                                    <div class="menu-row">
-                                        <div class="menu-display-table">
+                                <div class="col-container ">
+                                    <div class="col">
+                                        <div class="">
                                             <img class="menu-img" src="data:image/jpeg;base64,'.base64_encode( $array['img'] ).'" alt="'.$array['name'].'"/>
-                                            <div class="details">
-                                                <h2 class="detail-title margin-0">'.$array['name'].'</h2>
-                                                <h5 class="details-title-desc margin-0">'.$array['desc'].'</h5>
-                                                <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
-                                            </div>
+                                        </div>
+                                        <div class="details">
+                                            <h2 class="detail-title margin-0">'.$array['name'].'</h2>
+                                            <h5 class="details-title-desc margin-0">'.$array['desc'].'</h5>
+                                            <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
+                                        </div>
+                                        <div class="">
                                             <form class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
                                                 <div class="input-btn menu-row">
                                                     <h5 class="minus-btn" onclick="decrement(\''.$array['id'].'\')">-</h5>
@@ -72,7 +74,7 @@ include '../Login/sessionCustomer.php';
                                         </div>
                                     </div>
                                 </div>
-                            ';        
+                            ';       
                         }  
                     ?>
                 </div>

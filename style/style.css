@@ -543,7 +543,6 @@ header .home-tab {
 .menu-table-detail {
   width: 100%;
   display: flex;
-
   flex-wrap: wrap;
 }
 
@@ -556,30 +555,28 @@ header .home-tab {
   border: 1px solid var(--black);
 }
 
-.menu-card {
-  align-items: center;
-  justify-content: center;
+.col-container {
+  background: #f6f6f6;
+  border-radius: 10px;
+  display: table;
   width: 19%;
   margin: 0.5%;
 }
-
-.menu-display-table {
-  background: #f6f6f6;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  height: max-content;
+.col {
+  display: table-cell;
+  padding: 16px;
 }
 
 .menu-img {
   width: 100%;
+  height: 180px;
   color: #000;
 }
 
 .details {
   color: #2c2727;
   text-align: left;
+  height: 150px;
 }
 
 .detail-title {
