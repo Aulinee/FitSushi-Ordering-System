@@ -15,25 +15,25 @@ require '../vendor/autoload.php';
 $mail = new PHPMailer(true);
 
 try {
-  echo "hello";
     //Server settings
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
     $mail->isSMTP();                                            // Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-    $mail->Username   = 'fitsushinew@gmail.com';                // SMTP username
-    $mail->Password   = 'Fitsushi12-';                               // SMTP password
+    $mail->Username   = 'fitsushiNew@gmail.com';                // SMTP username
+    $mail->Password   = 'nhlfikjzvaztsapj';                               // SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
     $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
     //Recipients
-    $mail->setFrom('fitsushiNew@gmail.com', 'FitSushi');
+    $mail->setFrom('fitsushinew@gmail.com', 'FitSushi');
     $mail->addAddress($email);     // Add a recipient
     $mail->addReplyTo($email); 
 
 
     // Retrieve order id from session
     $orderID = $_SESSION['currentOrderID'];
+
     $orderData = $orderObj->getOrderData($userid, $orderID);
 
     // Content
@@ -55,7 +55,7 @@ try {
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: "Source Sans Pro", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                <h1>EXPRESS EAT CAFE</h1>
+                <h1>FitSushi</h1>
               <p style="margin: 0;">Here is a summary of your recent order. If you have any questions or concerns about your order, please <a href="https://www.instagram.com/_expresseat/">contact us</a>.</p>
             </td>
           </tr>
@@ -108,7 +108,6 @@ try {
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-
 unset($_SESSION['currentOrderID']);
 header("Location: profile-page.php");
 ob_end_flush();

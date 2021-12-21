@@ -322,8 +322,8 @@ class Order{
         $orderstatus = 4;
 
         // add into order table
-        $stringQuery = "INSERT INTO orders(customerID, orderStatusID, dateCreated, deliveryID, deliverydateTime, paymentID, orderTotal) 
-                        VALUES ($customerid, $orderstatus, '$current_time', $deliveryid, 'NULL', $paymentid, $ordertotal)";
+        $stringQuery = "INSERT INTO orders(customerID, orderStatusID, dateCreated, deliveryID, paymentID, orderTotal) 
+                        VALUES ($customerid, $orderstatus, '$current_time', $deliveryid, $paymentid, $ordertotal)";
 
         $sqlQuery = $this->conn->query($stringQuery);
         if ($sqlQuery == true) {
