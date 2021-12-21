@@ -234,6 +234,30 @@ class Order{
         }
     }
 
+    public function getOrderData($customerid, $orderid){
+        $stringQuery = "SELECT  o.orderID,c.custName, c.phoneNo , c.deliveryAddress, a.PostalCode, a.State, a.Area, a.Country, o.dateCreated, d.deliveryOption, p.paymentMethod, o.orderTotal FROM customer c, address a, orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderID = $orderid AND o.customerID = $customerid AND c.customerID = o.customerID AND c.PostalCode = a.PostalCode";
+        $displayQuery = mysqli_query($this->conn, $stringQuery);
+
+        $customerid = $orderid = 0;
+        $orderData = array();
+
+        while($roworder = mysqli_fetch_array($displayQuery)){
+            $orderid = $roworder['orderID'];
+            $customername = $roworder['custName'];
+            $phoneno = $roworder['phoneNo'];
+            $address = $roworder["deliveryAddress"].", ".$roworder['PostalCode'].' '.$roworder['Area'].', '.$roworder['State'].', '.$roworder['Country'];
+            $datecreate = $roworder['dateCreated'];
+            $deliveryopt = $roworder['deliveryOption'];
+            $paymentmethod = $roworder['paymentMethod'];
+            $ordertotal = $roworder['orderTotal'];
+
+            $orderData = array($orderid, $customername, $phoneno, $address, $datecreate, $deliveryopt ,$paymentmethod, $ordertotal);
+        }
+
+        return $orderData;
+
+    }
+
     public function getAlacarteOrder($customerid, $orderid){
         $stringQuery = "SELECT a.sushiID, s.sushiName, s.sushiDesc, s.sushiImg, s.price, a.qty FROM orders o, alacarteorder a, sushi s WHERE $orderid = o.orderID AND o.orderID = a.orderID AND a.sushiID = s.sushiID AND o.customerID = $customerid";
         $displayQuery = mysqli_query($this->conn, $stringQuery);
@@ -315,13 +339,12 @@ class Order{
                  $this->clearSushibox($customerid, $sushiid);
             }
 
-            return true;
+            return $orderid;
         }else{
             // echo "Error in ". $sqlQuery." ".$this->conn->error;
             return false;
         }
     }
-
 
     // literally delete order func yuhh
     // public function cancelOrder($customerid, $orderid){
