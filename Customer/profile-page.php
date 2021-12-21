@@ -173,7 +173,7 @@ function test_input($data) {
             <div class="profile-tbl">
                 <div class="sidebar-profile profile-width-20 flex-col">
                     <i class="fa fa-user"></i>
-                    <h1>redscarf</h1> 
+                    <h1><?php echo $username?></h1> 
                     <button id="myorder" class="sidebar-profile-btn sidebar-btn-active" onclick="myOrder()">Order History</button>  
                     <button id="viewbtn" class="sidebar-profile-btn" onclick="viewProfile()">View Profile</button> 
                     <button id="editbtn" class="sidebar-profile-btn" onclick="editProfile()">Edit Profile</button>        
@@ -863,10 +863,11 @@ function test_input($data) {
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <h1>&copy; Copyright 2021 FitSushi</h1>
-        </footer>
     </div>
+    <br><br>
+    <footer class="footer">
+        <h1>&copy; Copyright 2021 FitSushi</h1>
+    </footer>
     <script>
         //Disable edit input field
         document.getElementById("username").disabled = true;

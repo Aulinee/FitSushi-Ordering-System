@@ -13,7 +13,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $orderStatus = $orderObj->makeOrder($sushiId, $sushiQty, $userid, $deliveryopt, $paymentmethod, $totalorder);
 
-    if($orderStatus != false){
+    if($orderStatus == false){
+        echo "<script>
+            alert('Your order is unsuccessful! Please try again');
+        </script>";
+    }else{
         unset($_SESSION['sushiid']);
         unset($_SESSION['sushiqty']);
         unset($_SESSION['totalorder']);
@@ -21,12 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $_SESSION['currentOrderID'] = $orderStatus;
         echo "<script>
             alert('Your order is successful created!');
-        </script>";
-
-        header("Location: email.php");
-    }else{
-        echo "<script>
-            alert('Your order is unsuccessful! Please try again');
+            window.location.href='email.php';
         </script>";
     }
 }
@@ -161,11 +160,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </div>
         <br>
         <br>
-        <div class="sushibox-detail red-bg white-txt margin-empty-sushi">
+        <!-- <div class="sushibox-detail red-bg white-txt margin-empty-sushi">
             <h1>YOUR ORDER IS DONE!</h1>
             <h3>Sit back and relax while you wait for your order. Meeanwhile, discover our delicious sushi and its set in our MENU. </h3>
         </div>
-        <br><br>
+        <br><br> -->
     </div>
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>

@@ -45,14 +45,8 @@
                     <h1 class="yellow-txt">Welcome!</h1>
                 </div>
                 <div class="welcome-2 uppercase-txt">
-                    <span class="">delicious 
-                        <span class="sushi-ready-txt">
-                            sushi 
-                            <span class="red-txt">
-                                ready
-                            </span>
-                        </span>
-                    </span>
+                    <span class="">delicious sushi  </span>
+                    <span class="red-txt">ready</span>
                 </div>
                 <div class="welcome-3">
                     <hr>
@@ -92,6 +86,7 @@
     </div>
     <div class="abt-menu red-bg" id="menu-section">
         <h1 class="yellow-txt">Menu</h1>
+        <br>
         <h2 class="white-txt margin-minus">Keep browsing and it will get your mouth watering, just a few clicks and we will deliver it to you!</h2>
         <div class="menu-display white-border">
             <div class="width-4"></div>

@@ -38,7 +38,7 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  font-family: "Poller One", "cursive", "NATS", sans-serif;
+  font-family: "Poppins";
 }
 
 /*global*/
@@ -130,8 +130,9 @@ a {
 /*header*/
 
 header {
-  font-size: 30px;
-  font-family: "NATS", sans-serif;
+  font-size: 25px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -155,7 +156,7 @@ header .current {
 }
 
 header li {
-  margin: 0px 20px;
+  margin: auto 20px;
   display: inline;
 }
 
@@ -205,13 +206,13 @@ header .home-tab {
 
 .title-1 {
   color: var(--white);
-  font-family: "Poller One";
+  font-family: "Poppins";
   font-size: 69px;
 }
 
 .title-2 {
   color: var(--white);
-  font-family: "NATS";
+  font-family: "Poppins";
   font-style: normal;
   font-weight: normal;
   font-size: 36px;
@@ -276,7 +277,7 @@ header .home-tab {
   text-align: center;
   text-transform: uppercase;
   color: #6c6969;
-  font-family: "NATS";
+  font-family: "Poppins";
   font-weight: 500;
   font-size: 20px;
   background: #e0e0e0;
@@ -292,6 +293,7 @@ header .home-tab {
 }
 
 .flex-1 {
+  padding: 10px 0;
   background-color: var(--yellow);
   justify-content: space-evenly;
   list-style-type: none;
@@ -304,8 +306,8 @@ header .home-tab {
   text-align: center;
   text-transform: uppercase;
   color: var(--black);
-  font-family: "NATS";
-  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
   font-size: 20px;
 }
 
@@ -317,7 +319,7 @@ header .home-tab {
 .welcome {
   margin: auto;
   width: 90%;
-  font-family: "NATS";
+  font-family: "Poppins", sans-serif;
   display: flex;
   flex-direction: column;
 }
@@ -327,8 +329,6 @@ header .home-tab {
 .welcome-2 {
   font-size: 7vw;
   width: 50%;
-  margin-top: -2%;
-  margin-bottom: -15%;
 }
 
 .sushi-ready-txt {
@@ -341,6 +341,7 @@ header .home-tab {
 
 .welcome-3 hr {
   border: 5px solid var(--yellow);
+  background-color: var(--yellow);
   color: var(--yellow);
 }
 .welcome-4 {
@@ -357,7 +358,7 @@ header .home-tab {
   background-color: var(--white);
   margin: auto;
   width: 100%;
-  font-family: "NATS";
+  font-family: "Poppins";
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -387,7 +388,7 @@ header .home-tab {
 /*-----------------Main Page - about menu----------------*/
 .abt-menu {
   width: 100%;
-  font-family: "NATS";
+  font-family: "Poppins";
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -436,7 +437,7 @@ header .home-tab {
 
 /*-----------------Main Page - Contact Us----------------*/
 .abt-contact {
-  font-family: "NATS";
+  font-family: "Poppins";
   display: flex;
   flex-direction: column;
   align-items: center;
