@@ -175,9 +175,12 @@ class User{
                             <td>'.$address.'</td>
                             <td style="background-color: rgb(75, 70, 70);text-align: center;">
                                 <div class="action-col"">
-                                    <button id='.$id.' onclick="editCustomer()"><i class="fa fa-edit"></button>
+                                    <button id='.$id.' value='.$id.' onclick="editCustomer('.$id.')"><i class="fa fa-edit"></button>
                                     <p class="delete-btn inline"><a href="deleteTVSeries.php?id='.$id.'" style="color: white;"><i class="fa fa-trash-o"></i></a></p>
                                 </div>
+                                <form>
+
+                                </form>
                             </td>
                         </tr>
                     </div>
