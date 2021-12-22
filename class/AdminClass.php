@@ -76,6 +76,19 @@ class Admin{
 
     }
 
+    public function editProfile($edit_id, $newUsn, $newFname, $newEmail, $newPass, $newPhoneNum){
+
+        //Update user detail in user table
+        $updateAdminQuery = "UPDATE administrator SET username='$newUsn', password='$newPass', phoneNo='$newPhoneNum', adminName='$newFname', email='$newEmail' WHERE adminID=$edit_id ";
+        $resultAdmin = mysqli_query($this->conn,  $updateAdminQuery) or die("Error: ".mysqli_error($this->conn));
+       
+        if ($resultAdmin == true) {
+            return true;
+        }else{
+            // echo "Error in ".$resultUser." ".$this->conn->error;
+            return false;
+        }        
+    }
 
 
     public function createCustomer(){

@@ -84,7 +84,7 @@ a {
 /*-----------------Home Page----------------*/
 .admin-page {
   font-family: "Roboto";
-  font-size: 5px;
+  font-size: 10px;
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -270,3 +270,17 @@ ul {
   color: var(--white);
 }
 
+/* Pop-up tab (edit-customer)*/
+.sub-hidden-form {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(255, 255, 255); /* Fallback color */
+  background: rgba(255, 255, 255, 0.4);
+  padding-top: 60px;
+}

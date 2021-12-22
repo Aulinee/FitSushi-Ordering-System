@@ -149,6 +149,49 @@ class User{
         
     }
 
+    //This function is still under development 
+    public function displayAllCustomer(){
+        $displayCustomerQuery = "SELECT * FROM customer";
+        $result = $this->conn->query($displayCustomerQuery);
+
+        if($result){
+            if ($result->num_rows > 0) {
+                while($row = mysqli_fetch_array($result)){
+                    $id = $row["customerID"];
+                    $username = $row["username"];
+                    $custname = $row["custName"];
+                    $phoneNum = $row["phoneNo"];
+                    $email = $row["email"];
+                    $address = $row["deliveryAddress"];
+
+                    echo '
+                    <div>
+                        <tr>
+                            <td>'.$id.'</td>
+                            <td>'.$username.'</td>
+                            <td>'.$custname.'</td>
+                            <td>'.$phoneNum.'</td>
+                            <td>'.$email.'</td>
+                            <td>'.$address.'</td>
+                            <td style="background-color: rgb(75, 70, 70);text-align: center;">
+                                <div class="action-col"">
+                                    <button id='.$id.' onclick="editCustomer()"><i class="fa fa-edit"></button>
+                                    <p class="delete-btn inline"><a href="deleteTVSeries.php?id='.$id.'" style="color: white;"><i class="fa fa-trash-o"></i></a></p>
+                                </div>
+                            </td>
+                        </tr>
+                    </div>
+                    ';
+                }
+            }else{
+                echo "Record not found";
+            }
+        }
+        else{
+            echo "Error in ".$displayCustomerQuery." ".$this->conn->error;
+        }
+    }
+
 }
 
 ?>

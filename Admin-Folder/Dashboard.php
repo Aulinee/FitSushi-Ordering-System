@@ -5,13 +5,112 @@
     $username = $_SESSION['login_user'];
     $password = $_SESSION['login_pass'];
 
-    echo '<script>alert("'.$username.'")</script>';
+    $fnameErr = $usernameErr = $emailErr = $mobileNumErr = $passwordErr = "";
+    $fname_edit = $username_edit = $email_edit = $mobileNum_edit = $gender_edit = $password_edit = "";
+    $boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolPassword = false;
+
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if (isset($_POST["update_Admin"]) ) {
+
+            //full name validation
+            $fname_edit = $_POST["fname"];
+            if (empty($fname_edit)) {
+                $fnameErr = "Full name is required";
+            } else {
+                $boolFname = true;
+            }
+            
+            //username validation
+            $username_edit = $_POST["usern"];
+            if (empty($username_edit)) {
+                $usernameErr = "Username is required";
+            } elseif ($userObj->checkExistUsername($username_edit)) {
+                $usernameErr = "This username already exist!";
+            } else {
+                $boolUsername = true;
+            }
+
+            //email validation
+            if (empty($_POST["email"])) {
+                $emailErr = "Email is required";
+            } else {
+                $email_edit = test_input($_POST["email"]);
+                // check if e-mail address is well-formed
+                if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
+                    $emailErr = "Invalid email format";
+                } else {
+                    $boolEmail = true;
+                }
+            }
+
+            //mobile number validation
+            if (empty($_POST["phone"])) {
+                $mobileNumErr = "Mobile number is required";
+            } else {
+                $mobileNum_edit = test_input($_POST["phone"]);
+                // check if phone number is valid
+                if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
+                    $mobileNumErr = "Invalid mobile number format";
+                } else {
+                    $boolMobileNum = true;
+                }
+            }
+
+            //password validation
+            if (empty($_POST["passw"])) {
+                $passwordErr = "Password is required";
+            } else {
+                $password_edit = test_input($_POST["passw"]);
+                $boolPassword = true;
+            }
+
+            //confirmation feedback
+            if (($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolPassword = true)) {
+                $updateStatus = $adminObj->editProfile($adminid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit);
+                if ($updateStatus) {
+
+                    echo "<script>
+                    alert('Successfully updated! Please relogin.');
+                    window.location.href='../Login/sign-in-admin.php';
+                    </script>";
+                } else {
+                    echo "<script>
+                    window.location.href='dashboard.php';
+                    </script>";
+                }
+            }
+        }/*else if(isset($_POST['buy-again-btn'])){
+            $prev_orderid = $_POST['order-id'];
+            $total_order = $_POST['order-total'];
+
+            $_SESSION['prev-orderid'] = $prev_orderid;
+            $_SESSION['total-order'] = $total_order;
+
+            header("Location: buy-again-checkout-page.php");*/
+    }
+
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        table{
+            overflow-y:scroll;
+            height:300px;
+            display:block;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,6 +136,7 @@
                 <h1><?php echo $username; ?></h1><h2>Admin</h2>
             </div>
             <br><br>
+            <script>Home();</script>
             <div>
                 <ul>
                     <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav" onclick="Home()"> HOME</a></li>
@@ -179,47 +279,50 @@
                 </div>                
             </div>
 
-            <!-- This div only visible when Edit Profile button is triggered-->
+            <!-- This div only visible when Edit Profile button is triggered!!! -->
             <!-- Admin's Edit Profile Tab-->
             <div id="Edit-Profile-div"> 
-                <h1>Profile   <a  onclick="viewProfile()"> (View Profile)</a></h1>
-                <div id="view-profile-div">
-                    <div class="main-profile-detail">
-                        <div class="profile-width-5"></div>
-                        <div class="main-profile-detail-left ">
-                            <div class="user-detail">
-                                <h2>Username</h2>
-                                <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
-                            </div>
-                            <div class="user-detail">
-                                <h2>Full Name</h2>
-                                <div>
-                                    <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <h1>Profile   <a  onclick="viewProfile()"> (View Profile)</a></h1>
+                    <div id="view-profile-div">
+                        <div class="main-profile-detail">
+                            <div class="profile-width-5"></div>
+                            <div class="main-profile-detail-left ">
+                                <div class="user-detail">
+                                    <h2>Username</h2>
+                                    <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h2>Full Name</h2>
+                                    <div>
+                                        <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h2>Email</h2>
+                                    <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h2>Phone Number</h2>
+                                    <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
                                 </div>
                             </div>
-                            <div class="user-detail">
-                                <h2>Email</h2>
-                                <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                            <div class="profile-width-20"></div>
+                            <div class="main-profile-detail-right">
+                                <div class="user-detail">
+                                    <h2>Password</h2>
+                                    <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                                </div>
+                                <br>
+                                <div class="user-detail-btn">
+                                    <button name="update_Admin" id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
+                                </div>
                             </div>
-                            <div class="user-detail">
-                                <h2>Phone Number</h2>
-                                <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
-                            </div>
+                            <div class="profile-width-5"></div>
                         </div>
-                        <div class="profile-width-20"></div>
-                        <div class="main-profile-detail-right">
-                            <div class="user-detail">
-                                <h2>Password</h2>
-                                <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
-                            </div>
-                            <br>
-                            <div class="user-detail-btn">
-                                <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
-                            </div>
-                        </div>
-                        <div class="profile-width-5"></div>
-                    </div>
-                </div>                
+                    </div>                      
+                </form>
+              
             </div>   
 
             <!-- Store Tab -->
@@ -227,10 +330,57 @@
                 <h2>Store</h2>
             </div>
 
-            <!-- Customer Tab -->
+            <!-- Customer Tab --> <!-- UNDER DEVELOPMENT -->
             <div id="Customer-div">
-                <h2>Customer</h2>
+                <h1 align="center">Customer Details</h1>
+                <br>
+                <div class="List-of-user-acc-div">
+                    <div id="Search-and-Title-header" display="inline">
+                        <div class="custinput-icons">
+                            <i class="fa fa-search seriesicon"></i>
+                            <input class="custinput-field" type="text" id="custInput" onkeyup="filterCust()" placeholder="Search username.." title="Type in a name">
+                        </div>
+                        <div id="Title-header" align="center">
+                            <h1>LIST OF USERS ACCOUNT</h1>
+                        </div>
+                    </div>
+                    <div id="list-of-customers" align="center">
+                        <div class="tbl-header">
+                            <table id="custTable" cellpadding="0" cellspacing="0" border="0" align="center">
+                                <thead>
+                                    <tr>
+                                        <th class="info-20">CUSTOMER ID</th>
+                                        <th class="info-20">USERNAME</th>
+                                        <th class="info-20">FULLNAME</th>
+                                        <th class="info-20">EMAIL ADDRESS</th>
+                                        <th class="info-20">MOBILE NUMBER</th>
+                                        <th class="info-20">HOME ADDRESS</th>
+                                        <th class="info-20">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                                        <?php $userObj->displayAllCustomer(); ?>
+                                    </form>                                     
+                                </tbody>
+                            </table>
+                        </div>                       
+                    </div>
+                    
+                </div>
             </div>
+
+            <!-- Hidden div for edit customer -->
+            <div id="editCust-div">
+                <form>
+                    <div class="user-detail">
+                        <h2>Full Name</h2>
+                        <div>
+                            <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                        </div>
+                    </div>                    
+                </form>
+            </div>            
 
             <!-- Product Tab -->
             <div id="Product-div">
@@ -239,7 +389,75 @@
 
             <!-- Order Tab -->
             <div id="Order-div">
-                <h2>Order</h2>
+                <h1 align="center">Order Details</h1>
+                <br>
+                <!-- List of Customer Order -->
+                <div class="List-of-CustOrders-div">
+                    <div id="Search-and-Title-header" display="inline">
+                        <div class="orderinput-icons">
+                            <i class="fa fa-search seriesicon"></i>
+                            <input class="cust-orderinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
+                        </div>
+                        <div id="Title-header" align="center">
+                            <h1>LIST OF CUSTOMER ORDER</h1>
+                        </div>
+                    </div>
+                    <div id="list-of-cust-order" align="center">
+                        <div class="tbl-header">
+                            <table id="custOrderTable" cellpadding="0" cellspacing="0" border="0" align="center">
+                                <thead>
+                                    <tr>
+                                        <th class="info-20">ORDER ID</th>
+                                        <th class="info-20">DATE</th>
+                                        <th class="info-20">CUSTOMER NAME</th>
+                                        <th class="info-20">DELIVERY ADDRESS</th>
+                                        <th class="info-20">DELIVERY DATE</th>
+                                        <th class="info-20">DELIVERY OPTION</th>
+                                        <th class="info-20">PAYMENT METHOD</th>
+                                        <th class="info-20">STATUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                                        <?php $orderObj->displayAllCustOrder(); ?> <!-- Change this -->
+                                    </form>                                     
+                                </tbody>
+                            </table>
+                        </div>                       
+                    </div>                    
+                </div>
+                <br>
+                <!-- List of Order Transaction-->
+                <div class="List-of-OrderFlow-div">
+                    <div id="Search-and-Title-header" display="inline">
+                        <div class="ordertrans-input-icons">
+                            <i class="fa fa-search seriesicon"></i>
+                            <input class="ordertrans-input-field" type="text" id="transInput" onkeyup="filterTransaction()" placeholder="Search ID.." title="Type in an ID">
+                        </div>
+                        <div id="Title-header" align="center">
+                            <h1>ORDER TRANSACTION</h1>
+                        </div>
+                    </div>
+                    <div id="list-of-customers" align="center">
+                        <div class="tbl-header">
+                            <table id="transTable" cellpadding="0" cellspacing="0" border="0" align="center">
+                                <thead>
+                                    <tr>
+                                        <th class="info-20">PAYMENT ID</th>
+                                        <th class="info-20">ORDER ID</th>
+                                        <th class="info-20">PAYMENT DATE</th>
+                                        <th class="info-20">AMOUNT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                                        <?php $orderObj->displayAllTransaction(); ?>
+                                    </form>                                     
+                                </tbody>
+                            </table>
+                        </div>                       
+                    </div>                    
+                </div>                
             </div>
 
             <!-- Signout Tab -->
@@ -268,6 +486,7 @@
         var editprofilediv = document.getElementById('Edit-Profile-div');
         var storediv = document.getElementById('Store-div');
         var customerdiv = document.getElementById('Customer-div');
+        var editcustomerdiv = document.getElementById('editCust-div');
         var productdiv = document.getElementById('Product-div');
         var orderdiv = document.getElementById('Order-div');
         var signoutdiv = document.getElementById('Signout-div');
@@ -280,6 +499,7 @@
             editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
             signoutdiv.style.display = "none";
@@ -288,8 +508,10 @@
 
 
         }
+
         function viewProfile(){
 
+            //Disabling the input field
             document.getElementById("username").disabled = true;
             document.getElementById("fullname").disabled = true;
             document.getElementById("email").disabled = true;
@@ -302,16 +524,16 @@
             editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
             signoutdiv.style.display = "none";
-
-
-            
+           
         }
 
         function editAdmin(){
 
+            //Enabling the input field
             document.getElementById("username").disabled = false;
             document.getElementById("fullname").disabled = false;
             document.getElementById("email").disabled = false;
@@ -324,6 +546,7 @@
             editprofilediv.style.display = "block";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
             signoutdiv.style.display = "none";
@@ -338,6 +561,7 @@
             editprofilediv.style.display = "none";
             storediv.style.display = "block";
             customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
             signoutdiv.style.display = "none";
@@ -345,6 +569,7 @@
 
             
         }
+
         function viewCustomer(){
 
             //Set div visibility
@@ -353,6 +578,7 @@
             editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "block";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
             signoutdiv.style.display = "none";
@@ -360,6 +586,24 @@
 
             
         }
+
+        function editCustomer(){
+
+            //Set div visibility
+            homediv.style.display = "none";
+            profilediv.style.display = "none";
+            editprofilediv.style.display = "none";
+            storediv.style.display = "none";
+            customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "block";
+            productdiv.style.display = "none";
+            orderdiv.style.display = "none";
+            signoutdiv.style.display = "none";
+
+            alert("success");
+
+        }        
+
         function viewProduct(){
 
             //Set div visibility
@@ -368,6 +612,7 @@
             editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "block";
             orderdiv.style.display = "none";
             signoutdiv.style.display = "none";
@@ -375,6 +620,7 @@
 
             
         }
+
         function viewOrder(){
 
             //Set div visibility
@@ -383,6 +629,7 @@
             editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "block";
             signoutdiv.style.display = "none";
@@ -390,6 +637,7 @@
 
             
         }
+
         function SignOut(){
 
             //Set div visibility
@@ -398,6 +646,7 @@
             editprofilediv.style.display = "none";
             storediv.style.display = "none";
             customerdiv.style.display = "none";
+            editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
             signoutdiv.style.display = "block";
@@ -405,6 +654,66 @@
 
             
         }
+
+        function filterCust() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("custInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("custTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+                }       
+            }
+        }
+
+        //From Order Tab
+        function filterCustOrder() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("custorderInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("custOrderTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+                }       
+            }
+        }
+
+        //From Order Tab
+        function filterTransaction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("transInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("transTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+                }       
+            }
+        }
+
     </script>
 </body>
 </html>
