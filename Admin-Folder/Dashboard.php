@@ -330,7 +330,7 @@
                 <h2>Store</h2>
             </div>
 
-            <!-- Customer Tab -->
+            <!-- Customer Tab --> <!-- UNDER DEVELOPMENT -->
             <div id="Customer-div">
                 <h1 align="center">Customer Details</h1>
                 <br>
