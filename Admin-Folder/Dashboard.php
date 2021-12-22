@@ -152,7 +152,7 @@
         <div class="admin-page-dashboard">
 
             <!-- Home Tab -->
-            <div id="Home-div">
+            <div id="Home-div" style="display: block;">
                 <h1 class="h1-dashboard">Sales Report</h1>
                 <div class="calendar">
                     <form action="/action_page.php"></form>
@@ -238,7 +238,7 @@
             </div>
 
             <!-- Admin's Profile Tab-->
-            <div id="Profile-div"> 
+            <div id="Profile-div" style="display: none;"> 
                 <h1>Profile   <a  onclick="editAdmin()"> (Edit Profile)</a></h1>
                 <div id="view-profile-div">
                     <div class="main-profile-detail">
@@ -281,7 +281,7 @@
 
             <!-- This div only visible when Edit Profile button is triggered!!! -->
             <!-- Admin's Edit Profile Tab-->
-            <div id="Edit-Profile-div"> 
+            <div id="Edit-Profile-div" style="display: none;"> 
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <h1>Profile   <a  onclick="viewProfile()"> (View Profile)</a></h1>
                     <div id="view-profile-div">
@@ -326,12 +326,12 @@
             </div>   
 
             <!-- Store Tab -->
-            <div id="Store-div">
+            <div id="Store-div" style="display: none;">
                 <h2>Store</h2>
             </div>
 
             <!-- Customer Tab --> <!-- UNDER DEVELOPMENT -->
-            <div id="Customer-div">
+            <div id="Customer-div" style="display: none;">
                 <h1 align="center">Customer Details</h1>
                 <br>
                 <div class="List-of-user-acc-div">
@@ -371,24 +371,86 @@
             </div>
 
             <!-- Hidden div for edit customer -->
-            <div id="editCust-div">
-                <form>
-                    <div class="user-detail">
-                        <h2>Full Name</h2>
-                        <div>
-                            <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
-                        </div>
-                    </div>                    
-                </form>
+            <div id="editCust-div" align="center" style="display: none;">
+                <br>
+                <div class="edit-cust-btn-list">
+                   <button id="editUsn" type="button" onclick="editCustUsn()">Username</button> 
+                   <button id="editFn" type="button" onclick="editCustFn()">Full name</button> 
+                   <button id="editMob" type="button" onclick="editCustMob()">Mobile no</button> 
+                   <button id="editEmail" type="button" onclick="editCustEmail()">Email address</button> 
+                   <button id="editHome" type="button" onclick="editCustHome()">Home address</button> 
+                </div>
+                
+                <!-- Username -->
+                <div id="editCustUsn-div" style="display: block;">
+                    <form>
+                        <div class="user-detail">
+                            <h2>Username</h2>
+                            <div>
+                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                            </div>
+                        </div>                    
+                    </form>
+                </div>
+
+                <!-- Fullname -->
+                <div id="editCustFn-div" style="display: none;">
+                    <form>
+                        <div class="user-detail">
+                            <h2>Full Name</h2>
+                            <div>
+                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                            </div>
+                        </div>                    
+                    </form>
+                </div>
+
+                <!-- Mobile no -->
+                <div id="editCustMob-div" style="display: none;">
+                    <form>
+                        <div class="user-detail">
+                            <h2>Mobile Number</h2>
+                            <div>
+                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                            </div>
+                        </div>                    
+                    </form>
+                </div>
+
+                <!-- Email Address -->
+                <div id="editCustEmail-div" style="display: none;">
+                    <form>
+                        <div class="user-detail">
+                            <h2>Email Address</h2>
+                            <div>
+                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                            </div>
+                        </div>                    
+                    </form>
+                </div>
+
+                <!-- Home address -->
+                <div id="editCustHome-div" style="display: none;">
+                    <form>
+                        <div class="user-detail">
+                            <h2>Home Address</h2>
+                            <div>
+                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                            </div>
+                        </div>                    
+                    </form>
+                </div>
+
+
             </div>            
 
             <!-- Product Tab -->
-            <div id="Product-div">
+            <div id="Product-div" style="display: none;">
                 <h2>Product</h2>
             </div>
 
             <!-- Order Tab -->
-            <div id="Order-div">
+            <div id="Order-div" style="display: none;">
                 <h1 align="center">Order Details</h1>
                 <br>
                 <!-- List of Customer Order -->
@@ -400,6 +462,10 @@
                         </div>
                         <div id="Title-header" align="center">
                             <h1>LIST OF CUSTOMER ORDER</h1>
+                            <form method='POST'>  <!-- 'action=...' set it to redirect to generatePDF.php -->
+                                <input type='submit' class='button' name='Report_CustOrder' value='Download Report' />      <!-- Button: Report_CustOrder -->   
+                                <input type='submit' class='button' name='Report_Order' value='Download Order' />      <!-- Button: Report_Order -->                               
+                            </form>
                         </div>
                     </div>
                     <div id="list-of-cust-order" align="center">
@@ -419,7 +485,7 @@
                                 </thead>
                                 <tbody>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                        <?php $orderObj->displayAllCustOrder(); ?> <!-- Change this -->
+                                        <?php $orderObj->displayAllCustOrder(); ?>
                                     </form>                                     
                                 </tbody>
                             </table>
@@ -436,6 +502,9 @@
                         </div>
                         <div id="Title-header" align="center">
                             <h1>ORDER TRANSACTION</h1>
+                            <form method='POST'>  <!-- 'action=...' set it to redirect to generatePDF.php -->
+                                <input type='submit' class='button' name='Report_CustOrder' value='Download Report' />      <!-- Button: Report_CustOrder -->                              
+                            </form>                            
                         </div>
                     </div>
                     <div id="list-of-customers" align="center">
@@ -458,11 +527,6 @@
                         </div>                       
                     </div>                    
                 </div>                
-            </div>
-
-            <!-- Signout Tab -->
-            <div id="Signout-div">
-                <h2>Signout</h2>
             </div>
 
         </div>
@@ -491,6 +555,13 @@
         var orderdiv = document.getElementById('Order-div');
         var signoutdiv = document.getElementById('Signout-div');
 
+        //Variable declaration for edit customer tab
+        var usndiv = document.getElementByID('editCustUsn-div');
+        var fndiv = document.getElementByID('editCustFn-div');
+        var mobdiv = document.getElementByID('editCustMob-div');
+        var emaildiv = document.getElementByID('editCustEmail-div');
+        var addressdiv = document.getElementByID('editCustHome-div');
+
         function Home(){
 
             //Set div visibility
@@ -502,7 +573,6 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
-            signoutdiv.style.display = "none";
 
 
 
@@ -527,7 +597,6 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
-            signoutdiv.style.display = "none";
            
         }
 
@@ -549,7 +618,6 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
-            signoutdiv.style.display = "none";
 
         }
 
@@ -564,7 +632,6 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
-            signoutdiv.style.display = "none";
 
 
             
@@ -581,13 +648,12 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
-            signoutdiv.style.display = "none";
 
 
             
         }
 
-        function editCustomer(){
+        function editCustomer(selected_id){
 
             //Set div visibility
             homediv.style.display = "none";
@@ -598,11 +664,61 @@
             editcustomerdiv.style.display = "block";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
-            signoutdiv.style.display = "none";
 
             alert("success");
+            alert(selected_id);
 
         }        
+
+        function editCustUsn(){
+            usndiv.style.display = "block";
+            fndiv.style.display = "none";
+            mobdiv.style.display = "none";
+            emaildiv.style.display = "none";
+            addressdiv.style.display = "none";
+
+            alert("Usn");
+        }
+
+        function editCustFn(){
+            usndiv.style.display = "none";
+            fndiv.style.display = "block";
+            mobdiv.style.display = "none";
+            emaildiv.style.display = "none";
+            addressdiv.style.display = "none";
+            
+            alert("Fn");
+        }
+
+        function editCustMob(){
+            usndiv.style.display = "none";
+            fndiv.style.display = "none";
+            mobdiv.style.display = "block";
+            emaildiv.style.display = "none";
+            addressdiv.style.display = "none";
+            
+            alert("Mob");
+        }
+
+        function editCustEmail(){
+            usndiv.style.display = "none";
+            fndiv.style.display = "none";
+            mobdiv.style.display = "none";
+            emaildiv.style.display = "block";
+            addressdiv.style.display = "none";
+            
+            alert("Email");
+        }
+
+        function editCustHome(){
+            usndiv.style.display = "none";
+            fndiv.style.display = "none";
+            mobdiv.style.display = "none";
+            emaildiv.style.display = "none";
+            addressdiv.style.display = "block";
+            
+            alert("Home");
+        }
 
         function viewProduct(){
 
@@ -615,7 +731,6 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "block";
             orderdiv.style.display = "none";
-            signoutdiv.style.display = "none";
 
 
             
@@ -632,7 +747,6 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "block";
-            signoutdiv.style.display = "none";
 
 
             
@@ -640,18 +754,7 @@
 
         function SignOut(){
 
-            //Set div visibility
-            homediv.style.display = "none";
-            profilediv.style.display = "none";
-            editprofilediv.style.display = "none";
-            storediv.style.display = "none";
-            customerdiv.style.display = "none";
-            editcustomerdiv.style.display = "none";
-            productdiv.style.display = "none";
-            orderdiv.style.display = "none";
-            signoutdiv.style.display = "block";
-
-
+            location.replace("../Customer/logout.php");
             
         }
 
