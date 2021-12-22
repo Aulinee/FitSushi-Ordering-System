@@ -556,11 +556,11 @@
         var signoutdiv = document.getElementById('Signout-div');
 
         //Variable declaration for edit customer tab
-        var usndiv = document.getElementByID('editCustUsn-div');
-        var fndiv = document.getElementByID('editCustFn-div');
-        var mobdiv = document.getElementByID('editCustMob-div');
-        var emaildiv = document.getElementByID('editCustEmail-div');
-        var addressdiv = document.getElementByID('editCustHome-div');
+        var usndiv = document.getElementById('editCustUsn-div');
+        var fndiv = document.getElementById('editCustFn-div');
+        var mobdiv = document.getElementById('editCustMob-div');
+        var emaildiv = document.getElementById('editCustEmail-div');
+        var addressdiv = document.getElementById('editCustHome-div');
 
         function Home(){
 
@@ -681,43 +681,57 @@
         }
 
         function editCustFn(){
+
+            alert("Fn");            
+
             usndiv.style.display = "none";
             fndiv.style.display = "block";
             mobdiv.style.display = "none";
             emaildiv.style.display = "none";
             addressdiv.style.display = "none";
             
-            alert("Fn");
+
         }
 
         function editCustMob(){
+
+            alert("Mob");     
+
             usndiv.style.display = "none";
             fndiv.style.display = "none";
             mobdiv.style.display = "block";
             emaildiv.style.display = "none";
             addressdiv.style.display = "none";
             
-            alert("Mob");
+
         }
 
         function editCustEmail(){
+
+            alert("Email");       
+
             usndiv.style.display = "none";
             fndiv.style.display = "none";
             mobdiv.style.display = "none";
             emaildiv.style.display = "block";
             addressdiv.style.display = "none";
             
-            alert("Email");
+
         }
 
         function editCustHome(){
+
+            alert("Home"); 
+
             usndiv.style.display = "none";
             fndiv.style.display = "none";
             mobdiv.style.display = "none";
             emaildiv.style.display = "none";
             addressdiv.style.display = "block";
             
-            alert("Home");
+            
+
+            event.preventDefault();
         }
 
         function viewProduct(){
