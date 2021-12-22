@@ -671,13 +671,13 @@
         }        
 
         function editCustUsn(){
+            alert("Usn");
             usndiv.style.display = "block";
             fndiv.style.display = "none";
             mobdiv.style.display = "none";
             emaildiv.style.display = "none";
             addressdiv.style.display = "none";
 
-            alert("Usn");
         }
 
         function editCustFn(){
@@ -690,7 +690,6 @@
             emaildiv.style.display = "none";
             addressdiv.style.display = "none";
             
-
         }
 
         function editCustMob(){
