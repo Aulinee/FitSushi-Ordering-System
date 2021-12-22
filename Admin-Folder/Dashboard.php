@@ -671,23 +671,24 @@
         }        
 
         function editCustUsn(){
+            alert("Usn");
             usndiv.style.display = "block";
             fndiv.style.display = "none";
             mobdiv.style.display = "none";
             emaildiv.style.display = "none";
             addressdiv.style.display = "none";
 
-            alert("Usn");
         }
 
         function editCustFn(){
+            alert("Fn");
             usndiv.style.display = "none";
             fndiv.style.display = "block";
             mobdiv.style.display = "none";
             emaildiv.style.display = "none";
             addressdiv.style.display = "none";
             
-            alert("Fn");
+            
         }
 
         function editCustMob(){
