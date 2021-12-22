@@ -27,6 +27,84 @@ class Order{
 
     }
 
+    public function displayAllCustOrder(){
+        $displayCustOrderQuery = "SELECT
+                                o.orderID, o.dateCreated, c.custName, c.deliveryAddress, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName
+                              FROM orders o, customer c, delivery d, payment p, orderstatus s
+                              WHERE
+                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID";
+
+        $result = $this->conn->query($displayCustOrderQuery);
+
+        if($result){
+            if ($result->num_rows > 0) {
+                while($row = mysqli_fetch_array($result)){
+                    $id = $row["orderID"];
+                    $dateCreated = $row["dateCreated"];
+                    $custname = $row["custName"];
+                    $address = $row["deliveryAddress"];
+                    $deliverydate = $row["deliverydateTime"];
+                    $deliveryOption = $row["deliveryOption"];
+                    $paymentMethod = $row["paymentMethod"];
+                    $status = $row["statusName"];
+
+                    echo '
+                    <div>
+                        <tr>
+                            <td>'.$id.'</td>
+                            <td>'.$dateCreated.'</td>
+                            <td>'.$custname.'</td>
+                            <td>'.$address.'</td>
+                            <td>'.$deliverydate.'</td>
+                            <td>'.$deliveryOption.'</td>
+                            <td>'.$paymentMethod.'</td>
+                            <td>'.$status.'</td>
+                        </tr>
+                    </div>
+                    ';
+                }
+            }else{
+                echo "Record not found";
+            }
+        }
+        else{
+            echo "Error in ".$displayCustOrderQuery." ".$this->conn->error;
+        }
+    }  
+    
+    public function displayAllTransaction(){
+        $displayTransactionQuery = "SELECT paymentID, orderID, dateCreated, orderTotal FROM orders";
+
+        $result = $this->conn->query($displayTransactionQuery);
+
+        if($result){
+            if ($result->num_rows > 0) {
+                while($row = mysqli_fetch_array($result)){
+                    $paymentid = $row["paymentID"];
+                    $orderid = $row["orderID"];
+                    $dateCreated = $row["dateCreated"];
+                    $orderTotal = $row["orderTotal"];
+
+                    echo '
+                    <div>
+                        <tr>
+                            <td>'.$paymentid.'</td>
+                            <td>'.$orderid.'</td>
+                            <td>'.$dateCreated.'</td>
+                            <td>'.$orderTotal.'</td>
+                        </tr>
+                    </div>
+                    ';
+                }
+            }else{
+                echo "Record not found";
+            }
+        }
+        else{
+            echo "Error in ".$displayTransactionQuery." ".$this->conn->error;
+        }
+    }      
+
     public function getPaymentOptionList(){
         $paymentQuery = "SELECT * from payment";
         $result = mysqli_query($this->conn, $paymentQuery);
