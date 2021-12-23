@@ -11,12 +11,14 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        
+            
+
+
             if(isset($_POST['Report_CustOrder'])){
 
                 include 'database/dbConnection.php'; 
-                require('fpdf.php');
-                
+                require('fpdf.php');            
+
 //--------------CONTENT FOR PAGE 1---------------------------------------------------------
                 //Header
                 $pdf = new FPDF();
@@ -44,14 +46,14 @@ and open the template in the editor.
                 $result = mysqli_query($conn, $displayTotalSushi);
 
                 $pdf->Ln();
-                $pdf->Ln();
-
 
                 //Table
                 $pdf->SetFont('Arial','B',10);
-                $pdf->Cell(30,8,'Sushi ID',1,1,'C');
-                $pdf->Cell(55,8,'Sushi Name',1,1,'C');
-                $pdf->Cell(30,8,'Total Quantity',1,1,'C');
+                $pdf->Cell(30,8,'Sushi ID',1,0,'C');
+                $pdf->Cell(55,8,'Sushi Name',1,0,'C');
+                $pdf->Cell(30,8,'Total Quantity',1,0,'C');
+                $pdf->SetFont('ZapfDingbats','', 8);
+                $pdf->Cell(10,8,"4",1,0,'C');
                 $pdf->Ln();
 
                 $pdf->SetFont('Arial','',8);
@@ -95,12 +97,15 @@ and open the template in the editor.
                     $qty = $row['qty'];
                     $address = $row['deliveryAddress'].', '.$row['PostalCode'].' '.$row['Area'].', '.$row['State'].', '.$row['Country'];
                     $price = $row['orderTotal'];
-                    $pdf->Cell(30,8,$sushiID,1);
-                    $pdf->Cell(30,8,$sushiName,1);
-                    $pdf->Cell(15,8,$qty,1,0,'C');
-                    $pdf->Cell(75,8,$address,1);
-                    $pdf->Cell(30,8,$price,1,0,'C');
-                    $pdf->Cell(10,8,'',1,0,'C');
+                    $pdf->Cell(30,16,$sushiID,1);
+                    $pdf->Cell(30,16,$sushiName,1);
+                    $pdf->Cell(15,16,$qty,1,0,'C');
+                    $xPos=$pdf->GetX();
+                    $yPos=$pdf->GetY();
+                    $pdf->MultiCell(75,8,$address,1);
+                    $pdf->SetXY($xPos + 75, $yPos);
+                    $pdf->Cell(30,16,$price,1,0,'C');
+                    $pdf->Cell(10,16,'',1,0,'C');
                     $pdf->Ln();                            
                 }
 
@@ -112,8 +117,7 @@ and open the template in the editor.
                 $pdf->Ln();                       
                 ob_start();
                 $pdf->Output();
-            
- 
+
             }
 
         ?>
