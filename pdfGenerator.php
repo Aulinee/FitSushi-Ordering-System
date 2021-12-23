@@ -69,7 +69,7 @@ and open the template in the editor.
 
 //--------------CONTENT FOR PAGE 2---------------------------------------------------------  
 
-                $displayCustomerOrder = "SELECT c.custName, s.sushiName, a.qty, c.deliveryAddress, o.orderTotal FROM customer c, sushi s, alacarteorder a, orders o WHERE c.customerID=o.customerID AND s.sushiID=a.sushiID AND a.orderID-o.orderID AND (o.orderStatusID=4 OR o.orderStatusID=1 OR o.orderStatusID=3) GROUP BY c.custName";
+                $displayCustomerOrder = "SELECT c.custName, s.sushiName, a.qty, c.deliveryAddress, ad.PostalCode, ad.State, ad.Area, ad.Country, o.orderTotal FROM customer c, sushi s, alacarteorder a, orders o, address ad WHERE c.customerID=o.customerID AND s.sushiID=a.sushiID AND a.orderID=o.orderID AND c.PostalCode = ad.PostalCode AND (o.orderStatusID=4 OR o.orderStatusID=1 OR o.orderStatusID=3) GROUP BY c.custName";
                 $result2 = mysqli_query($conn, $displayCustomerOrder);
 
                 $pdf->Ln();
@@ -93,7 +93,7 @@ and open the template in the editor.
                     $sushiID = $row['custName'];
                     $sushiName = $row['sushiName'];
                     $qty = $row['qty'];
-                    $address = $row['deliveryAddress'];
+                    $address = $row['deliveryAddress'].', '.$row['PostalCode'].' '.$row['Area'].', '.$row['State'].', '.$row['Country'];
                     $price = $row['orderTotal'];
                     $pdf->Cell(30,8,$sushiID,1);
                     $pdf->Cell(30,8,$sushiName,1);
