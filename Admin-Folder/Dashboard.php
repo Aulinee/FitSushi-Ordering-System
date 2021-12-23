@@ -462,9 +462,8 @@
                         </div>
                         <div id="Title-header" align="center">
                             <h1>LIST OF CUSTOMER ORDER</h1>
-                            <form method='POST'>  <!-- 'action=...' set it to redirect to generatePDF.php -->
-                                <input type='submit' class='button' name='Report_CustOrder' value='Download Report' />      <!-- Button: Report_CustOrder -->   
-                                <input type='submit' class='button' name='Report_Order' value='Download Order' />      <!-- Button: Report_Order -->                               
+                            <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
+                                <input type='submit' class='button' name='Report_CustOrder' value='Download Report' />      <!-- Button: Report_CustOrder -->                                
                             </form>
                         </div>
                     </div>
@@ -481,6 +480,7 @@
                                         <th class="info-20">DELIVERY OPTION</th>
                                         <th class="info-20">PAYMENT METHOD</th>
                                         <th class="info-20">STATUS</th>
+                                        <th class="info-20">AMOUNT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -492,41 +492,7 @@
                         </div>                       
                     </div>                    
                 </div>
-                <br>
-                <!-- List of Order Transaction-->
-                <div class="List-of-OrderFlow-div">
-                    <div id="Search-and-Title-header" display="inline">
-                        <div class="ordertrans-input-icons">
-                            <i class="fa fa-search seriesicon"></i>
-                            <input class="ordertrans-input-field" type="text" id="transInput" onkeyup="filterTransaction()" placeholder="Search ID.." title="Type in an ID">
-                        </div>
-                        <div id="Title-header" align="center">
-                            <h1>ORDER TRANSACTION</h1>
-                            <form method='POST'>  <!-- 'action=...' set it to redirect to generatePDF.php -->
-                                <input type='submit' class='button' name='Report_CustOrder' value='Download Report' />      <!-- Button: Report_CustOrder -->                              
-                            </form>                            
-                        </div>
-                    </div>
-                    <div id="list-of-customers" align="center">
-                        <div class="tbl-header">
-                            <table id="transTable" cellpadding="0" cellspacing="0" border="0" align="center">
-                                <thead>
-                                    <tr>
-                                        <th class="info-20">PAYMENT ID</th>
-                                        <th class="info-20">ORDER ID</th>
-                                        <th class="info-20">PAYMENT DATE</th>
-                                        <th class="info-20">AMOUNT</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                        <?php $orderObj->displayAllTransaction(); ?>
-                                    </form>                                     
-                                </tbody>
-                            </table>
-                        </div>                       
-                    </div>                    
-                </div>                
+                <br>        
             </div>
 
         </div>

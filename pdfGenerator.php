@@ -14,124 +14,105 @@ and open the template in the editor.
         
             if(isset($_POST['Report_CustOrder'])){
 
-                include ('../database/dbConnection.php');
+                include 'database/dbConnection.php'; 
                 require('fpdf.php');
-
+                
+//--------------CONTENT FOR PAGE 1---------------------------------------------------------
                 //Header
                 $pdf = new FPDF();
                 $pdf->AddPage();
                 $pdf->SetFont('Arial','B',12);
-                $pdf->Cell(100, 10, 'FitSushi Report',1,1,'L');
+                $pdf->Cell(190, 10, 'FitSushi Order List',1,1,'C');
                 $pdf->Ln();
-                $pdf->Cell(100, 6, 'Contact us: 012-3456789',1,1,'L');
+                $pdf->SetFont('Arial','',10);
+                $pdf->Cell(100, 6, 'Contact us: 0111251420',1,1,'L');
                 $pdf->Ln();
                 $pdf->Cell(100, 6, 'Address: Virtual',1,1,'L');
                 $pdf->Ln(); 
                 $pdf->Ln(); 
-                $pdf->Cell(20, 10, 'Report generated on: '. $timestamp = date("Y-m-d H:i:s"), 'C');
+                $pdf->Cell(20, 10, 'List generated on: '. $timestamp = date("Y-m-d H:i:s"), 'C');
                 $pdf->Ln();
 
                 $thismonth = date('m');
                 $thisyear = date('Y');
-                $nextmonth = $thismonth+1;    
+                $nextmonth = $thismonth+1;  
+
                 // Select data from MySQL database
-                $select = "SELECT Subs, Price, Expiry FROM InvoiceData WHERE Username='$Username' AND MONTH(Expiry)='$nextmonth' AND YEAR(Expiry)='$thisyear'";
-                $resultselect = mysqli_query($DBConnect, $select);
-             
-                //Select InvoiceID
-                $sqlgetInvID = "SELECT InvoiceID FROM InvoiceData WHERE Username='$Username' AND MONTH(Expiry)='$nextmonth' AND YEAR(Expiry)='$thisyear'";
-                $resultgetInvID = mysqli_query($DBConnect, $sqlgetInvID);   
-                        
-                $getInvID = mysqli_fetch_assoc($resultgetInvID);    
-                $InvID = $getInvID['InvoiceID'];    
+
+
+                $displayTotalSushi = "SELECT s.sushiID, s.sushiName, SUM(a.qty) totalqty FROM sushi s, orders o, alacarteorder a WHERE s.sushiID = a.sushiID AND a.orderID = o.orderID AND o.orderStatusID = 4 GROUP BY s.sushiID";
+                $result = mysqli_query($conn, $displayTotalSushi);
 
                 $pdf->Ln();
                 $pdf->Ln();
+
 
                 //Table
-                $pdf->Cell(55,10,'Subscription',1);
-                $pdf->Cell(40,10,'Price',1);
-                $pdf->Cell(30,10,'Valid Until',1);
+                $pdf->SetFont('Arial','B',10);
+                $pdf->Cell(30,8,'Sushi ID',1,1,'C');
+                $pdf->Cell(55,8,'Sushi Name',1,1,'C');
+                $pdf->Cell(30,8,'Total Quantity',1,1,'C');
                 $pdf->Ln();
-                while($row = $resultselect->fetch_assoc()){
-                    $Subs = $row['Subs'];
-                    $SubsPrice = $row['Price'];
-                    $Expiry = $row['Expiry'];
-                    $pdf->Cell(55,10,$Subs,1);
-                    $pdf->Cell(40,10,$SubsPrice,1);
-                    $pdf->Cell(30,10,$Expiry,1);
-                    $pdf->Ln();
+
+                $pdf->SetFont('Arial','',8);
+                while($row = $result->fetch_assoc()){
+                    $sushiID = $row['sushiID'];
+                    $sushiName = $row['sushiName'];
+                    $qty = $row['qty'];
+                    $pdf->Cell(40,8,$sushiID,1,1,'C');
+                    $pdf->Cell(55,8,$sushiName,1);
+                    $pdf->Cell(30,8,$qty,1,1,'C');
+                    $pdf->Ln();                            
                 }
             
+                $pdf->addpage();
+
+//--------------CONTENT FOR PAGE 2---------------------------------------------------------  
+
+                $displayCustomerOrder = "SELECT c.custName, s.sushiName, a.qty, c.deliveryAddress, o.orderTotal FROM customer c, sushi s, alacarteorder a, orders o WHERE c.customerID=o.customerID AND s.sushiID=a.sushiID AND a.orderID-o.orderID AND (o.orderStatusID=4 OR o.orderStatusID=1 OR o.orderStatusID=3) GROUP BY c.custName";
+                $result2 = mysqli_query($conn, $displayCustomerOrder);
+
+                $pdf->Ln();
+
+                $pdf->SetFont('Arial','B',12);
+                //Table
+                $pdf->Cell(190,8,'Customer Order',1,1,'C');
+                $pdf->Ln();
+                $pdf->SetFont('Arial','B',8);
+                $pdf->Cell(30,8,'Customer Name',1,0,'C');
+                $pdf->Cell(30,8,'Sushi Name',1,0,'C');
+                $pdf->Cell(15,8,'Quantity',1,0,'C');
+                $pdf->Cell(75,8,'Address',1,0,'C');
+                $pdf->Cell(30,8,'Total (RM)',1,0,'C');
+                $pdf->SetFont('ZapfDingbats','', 8);
+                $pdf->Cell(10,8,"4",1,0,'C');
+                $pdf->Ln();
+
+                $pdf->SetFont('Arial','',8);
+                while($row = $result2->fetch_assoc()){
+                    $sushiID = $row['custName'];
+                    $sushiName = $row['sushiName'];
+                    $qty = $row['qty'];
+                    $address = $row['deliveryAddress'];
+                    $price = $row['orderTotal'];
+                    $pdf->Cell(30,8,$sushiID,1);
+                    $pdf->Cell(30,8,$sushiName,1);
+                    $pdf->Cell(15,8,$qty,1,0,'C');
+                    $pdf->Cell(75,8,$address,1);
+                    $pdf->Cell(30,8,$price,1,0,'C');
+                    $pdf->Cell(10,8,'',1,0,'C');
+                    $pdf->Ln();                            
+                }
+
+
                 //Below table
+                $pdf->Ln();   
+                $pdf->SetFont('Arial','B',12);                    
+                $pdf->Cell(40, 20, 'Notes:');
                 $pdf->Ln();                       
-                $pdf->Cell(40, 20, 'Please keep this receipt as your and our future reference, just in case.');
-                $pdf->Ln();                       
-                $pdf->Cell(40, 5, 'Thank you for your purchase.');                
-                $pdf->Ln();                       
-                $pdf->Cell(40, 20, 'Note: This is a computer generated receipt, hence no signature required.');    
                 ob_start();
                 $pdf->Output();
             
-                $_SESSION['transactionCompleted'] = 'Yes';
-                $DBConnect->close();
- 
-            }
-            elseif(isset($_POST['Report_Order'])){
-                
-                $SingleSum = $_POST['SumSingle'];
-                $MultiSum = $_POST['SumMulti'];
-                $AmountSingle = ($SingleSum/17);  //Exact subscriber for Premium Single
-                $AmountMulti = ($MultiSum/39); //Exact subscriber for Premium Multi
-                
-                echo 'Single: '.$SingleSum.'<br>';
-                echo 'Multi: '.$MultiSum.'<br>';
-                
-                include ('DatabaseConn.php');
-                require('fpdf.php');
-
-                $pdf = new FPDF();
-                $pdf->AddPage();
-                $pdf->SetFont('Arial','B',12);
-                $pdf->Cell(100, 10, 'TMFlix Monthly Income Report',1,1,'L');
-                $pdf->Ln();
-                $pdf->Cell(100, 6, 'Contact us: 012-3456789',1,1,'L');
-                $pdf->Ln();
-                $pdf->Cell(100, 6, 'Address: Virtual',1,1,'L');
-                $pdf->Ln(); 
-                $pdf->Ln(); 
-                $pdf->Cell(20, 10, 'Report generated on: '. $timestamp = date("Y-m-d H:i:s"), 'C');
-                $pdf->Ln();
-                $pdf->Cell(55,10,'Subscription',1);
-                $pdf->Cell(55,10,'Total Subscriber(s)',1);
-                $pdf->Cell(55,10,'Total Income (RM)',1);
-                $pdf->Ln();
-                
-                //Premium Single Row
-                $pdf->Cell(55,10,'Premium Single',1);
-                $pdf->Cell(55,10,$AmountSingle,1);
-                $pdf->Cell(55,10,$SingleSum,1);
-                $pdf->Ln();
-                
-                //Premium Multiple Row
-                $pdf->Cell(55,10,'Premium Multiple',1);
-                $pdf->Cell(55,10,$AmountMulti,1);
-                $pdf->Cell(55,10,$MultiSum,1);
-                $pdf->Ln();
-
-                $pdf->Cell(165,10,'Sum Total = RM '.($SingleSum+$MultiSum),1);                
-                
-
-                $pdf->Ln();                       
-                $pdf->Cell(40, 20, 'Please keep this monthly income report for future use.');
-                $pdf->Ln();                       
-                $pdf->Cell(40, 5, 'Thank you.');                
-                $pdf->Ln();                       
-                $pdf->Cell(40, 20, 'Note: This is a computer generated report, hence no signature required.');    
-                ob_start();
-                $pdf->Output();
-
-                $DBConnect->close();
  
             }
 

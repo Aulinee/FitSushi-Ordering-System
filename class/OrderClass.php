@@ -29,7 +29,7 @@ class Order{
 
     public function displayAllCustOrder(){
         $displayCustOrderQuery = "SELECT
-                                o.orderID, o.dateCreated, c.custName, c.deliveryAddress, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName
+                                o.orderID, o.dateCreated, c.custName, c.deliveryAddress, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName, o.orderTotal
                               FROM orders o, customer c, delivery d, payment p, orderstatus s
                               WHERE
                                 o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID";
@@ -47,6 +47,7 @@ class Order{
                     $deliveryOption = $row["deliveryOption"];
                     $paymentMethod = $row["paymentMethod"];
                     $status = $row["statusName"];
+                    $total = $row["orderTotal"];
 
                     echo '
                     <div>
@@ -59,6 +60,7 @@ class Order{
                             <td>'.$deliveryOption.'</td>
                             <td>'.$paymentMethod.'</td>
                             <td>'.$status.'</td>
+                            <td>'.$total.'</td>
                         </tr>
                     </div>
                     ';
