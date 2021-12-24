@@ -60,10 +60,11 @@ and open the template in the editor.
                 while($row = $result->fetch_assoc()){
                     $sushiID = $row['sushiID'];
                     $sushiName = $row['sushiName'];
-                    $qty = $row['qty'];
-                    $pdf->Cell(40,8,$sushiID,1,1,'C');
-                    $pdf->Cell(55,8,$sushiName,1);
-                    $pdf->Cell(30,8,$qty,1,1,'C');
+                    $qty = $row['totalqty'];
+                    $pdf->Cell(30,8,$sushiID,1,0,'C');
+                    $pdf->Cell(55,8,$sushiName,1,0);
+                    $pdf->Cell(30,8,$qty,1,0,'C');
+                    $pdf->Cell(10,8,'',1,0,'C');
                     $pdf->Ln();                            
                 }
             

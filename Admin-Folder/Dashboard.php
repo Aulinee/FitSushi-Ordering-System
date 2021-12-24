@@ -327,7 +327,94 @@
 
             <!-- Store Tab -->
             <div id="Store-div" style="display: none;">
-                <h2>Store</h2>
+                <br>
+                <div id="Store-title-header" align="center">
+                    <h1>Store</h1>
+                </div>
+                <br>
+                <!-- Div for entire content under header, consist of two content: Upper & Lower Div -->
+                <div id="StoreContentDiv">
+
+                    <!-- Upper content -->
+                    <div id="UpStore_Content-div" align="center" >
+                        <h1>About us</h1>
+                        <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editAUicon" onclick="enableAboutUsedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exitAUicon" onclick="exitAboutUsedit()" class="fa fa-close"></i></a></div>
+                        <div id="threeaboutus-div" style="display: inline-block;">
+                            <div class="aboutus_img_container">
+                                <img src="../img/logo.png" alt="About Us" width="100" height="100">
+                                <form>
+                                    <input disabled title="About Us 1" name="AboutUs1" class="input-detail" type="text" id="AboutUs1" value="About Us 1">
+                                    <div>
+                                        <input disabled type='submit' id="SaveAUBtn1" class='button' name='SaveAUInfo-btn' value='Save' /> 
+                                        <input disabled type='submit' id="ResetAUBtn1" class='button' name='ResetAUInfo-btn' value='Reset' />                                           
+                                    </div>                                     
+                                </form>
+                            </div>
+                            <div class="aboutus_img_container">
+                                <img src="../img/logo.png" alt="About Us" width="100" height="100">
+                                <form>
+                                    <input disabled title="About Us 2" name="AboutUs2" class="input-detail" type="text" id="AboutUs2" value="About Us 2">   
+                                    <div>
+                                        <input disabled type='submit' id="SaveAUBtn2" class='button' name='SaveAUInfo-btn' value='Save' /> 
+                                        <input disabled type='submit' id="ResetAUBtn2" class='button' name='ResetAUInfo-btn' value='Reset' />          
+                                    </div>                      
+                                </form>
+                            </div>
+                            <div class="aboutus_img_container">
+                                <img src="../img/logo.png" alt="About Us" width="100" height="100">
+                                <form>
+                                    <input disabled title="About Us 3" name="AboutUs3" class="input-detail" type="text" id="AboutUs3" value="About Us 3">    
+                                    <div>
+                                        <input disabled type='submit' id="SaveAUBtn3" class='button' name='SaveAUInfo-btn' value='Save' /> 
+                                        <input disabled type='submit' id="ResetAUBtn3" class='button' name='ResetAUInfo-btn' value='Reset' /> 
+                                    </div>                                                                         
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lower content -->
+                    <div id="UpStore_Content-div" align="center">
+                        <h1>Contact Info</h1>
+                        <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i></a></div>
+                        <div id="storecontactinfo-form-div">
+                            <form>
+                                <div id="Location-inputfield">
+                                    <h2>Location: </h2>
+                                    <input disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" value="Test">                                    
+                                </div>
+                                <div id="OperatingHrs-inputfield">
+                                    <h2>Operating Hours: </h2>
+                                    <input disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" value="Test">     
+                                </div>
+                                <div id="Whatsapp-inputfield">
+                                    <h2>Whatsapp: </h2>
+                                    <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="Test">  
+                                </div>
+                                <div id="Insta-inputfield">
+                                    <h2>Instagram: </h2>
+                                    <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="Test">  
+                                </div>
+                                <div id="FB-inputfield">
+                                    <h2>Facebook: </h2>
+                                    <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="Test">  
+                                </div>
+                                <br><br>
+                                <div id="SaveContactInfo-btn">
+                                    <input disabled type='submit' id="SaveContactBtn" class='button' name='SaveContantInfo-btn' value='Save' /> 
+                                    <input disabled type='submit' id="ResetContactBtn" class='button' name='ResetContantInfo-btn' value='Reset' />                                         
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
             </div>
 
             <!-- Customer Tab --> <!-- UNDER DEVELOPMENT -->
@@ -387,6 +474,7 @@
                         <div class="user-detail">
                             <h2>Username</h2>
                             <div>
+                                <input name="userid" id="fullname" class="input-detail" type="hidden" value="<?php echo $fullname?>">
                                 <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
                             </div>
                         </div>                    
@@ -399,7 +487,7 @@
                         <div class="user-detail">
                             <h2>Full Name</h2>
                             <div>
-                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $password?>">
                             </div>
                         </div>                    
                     </form>
@@ -587,6 +675,78 @@
 
         }
 
+        function enableAboutUsedit(){
+
+            //Enabling the input field
+            document.getElementById("AboutUs1").disabled = false;
+            document.getElementById("AboutUs2").disabled = false;
+            document.getElementById("AboutUs3").disabled = false;
+            document.getElementById("SaveAUBtn1").disabled = false;
+            document.getElementById("ResetAUBtn1").disabled = false;
+            document.getElementById("SaveAUBtn2").disabled = false;
+            document.getElementById("ResetAUBtn2").disabled = false;
+            document.getElementById("SaveAUBtn3").disabled = false;
+            document.getElementById("ResetAUBtn3").disabled = false;
+
+            document.getElementById("editAUicon").style.display = "none";
+            document.getElementById("exitAUicon").style.display = "block";            
+
+        }        
+
+        function exitAboutUsedit(){
+
+            //Enabling the input field
+            document.getElementById("AboutUs1").disabled = true;
+            document.getElementById("AboutUs2").disabled = true;
+            document.getElementById("AboutUs3").disabled = true;
+            document.getElementById("SaveAUBtn1").disabled = true;
+            document.getElementById("ResetAUBtn1").disabled = true;            
+            document.getElementById("SaveAUBtn2").disabled = true;
+            document.getElementById("ResetAUBtn2").disabled = true; 
+            document.getElementById("SaveAUBtn3").disabled = true;
+            document.getElementById("ResetAUBtn3").disabled = true; 
+
+            document.getElementById("editAUicon").style.display = "block";
+            document.getElementById("exitAUicon").style.display = "none";   
+
+        }  
+
+        function enableContactedit(){
+
+            //Enabling the input field
+            document.getElementById("location").disabled = false;
+            document.getElementById("OpHrs").disabled = false;
+            document.getElementById("WA").disabled = false;
+            document.getElementById("IG").disabled = false;
+            document.getElementById("FB").disabled = false;
+            document.getElementById("SaveContactBtn").disabled = false;
+            document.getElementById("ResetContactBtn").disabled = false;
+
+            document.getElementById("editicon").style.display = "none";
+            document.getElementById("exiticon").style.display = "block";            
+
+        }        
+
+        function exitContactedit(){
+
+            //Enabling the input field
+            document.getElementById("location").disabled = true;
+            document.getElementById("OpHrs").disabled = true;
+            document.getElementById("WA").disabled = true;
+            document.getElementById("IG").disabled = true;
+            document.getElementById("FB").disabled = true;
+            document.getElementById("SaveContactBtn").disabled = true;
+            document.getElementById("ResetContactBtn").disabled = true;
+
+
+            document.getElementById("editicon").style.display = "block";
+            document.getElementById("exiticon").style.display = "none";   
+
+        }    
+
+
+
+
         function viewStore(){
 
             //Set div visibility
@@ -637,7 +797,7 @@
         }        
 
         function editCustUsn(){
-            alert("Usn");
+            //alert("Usn");
             usndiv.style.display = "block";
             fndiv.style.display = "none";
             mobdiv.style.display = "none";
@@ -648,7 +808,7 @@
 
         function editCustFn(){
 
-            alert("Fn");            
+            //alert("Fn");            
 
             usndiv.style.display = "none";
             fndiv.style.display = "block";
@@ -660,7 +820,7 @@
 
         function editCustMob(){
 
-            alert("Mob");     
+            //alert("Mob");     
 
             usndiv.style.display = "none";
             fndiv.style.display = "none";
@@ -673,7 +833,7 @@
 
         function editCustEmail(){
 
-            alert("Email");       
+            //alert("Email");       
 
             usndiv.style.display = "none";
             fndiv.style.display = "none";
@@ -686,7 +846,7 @@
 
         function editCustHome(){
 
-            alert("Home"); 
+            //alert("Home"); 
 
             usndiv.style.display = "none";
             fndiv.style.display = "none";
@@ -797,5 +957,12 @@
         }
 
     </script>
+    <style>
+        .aboutus_img_container {
+            float:left;
+            position: relative;
+            width: 30%;            
+        }
+    </style>
 </body>
 </html>
