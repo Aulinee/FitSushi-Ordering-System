@@ -79,7 +79,22 @@
                     </script>";
                 }
             }
-        }/*else if(isset($_POST['buy-again-btn'])){
+        }else if(isset($_POST['edit-customer'])){
+            if(isset($_SESSION['cust_id'])){
+                unset($_SESSION['cust_id']);
+                $_SESSION['cust_id'] = $_POST['cust-id'];
+            }else{
+                $_SESSION['cust_id'] = $_POST['cust-id'];
+            }
+
+            // $cust_detail = $adminObj->setSessionCustomer($_SESSION['cust_id']);
+            header('LOCATION: dashboard.php');
+
+        }
+        
+        
+        
+        /*else if(isset($_POST['buy-again-btn'])){
             $prev_orderid = $_POST['order-id'];
             $total_order = $_POST['order-total'];
 
@@ -95,6 +110,8 @@
         $data = htmlspecialchars($data);
         return $data;
     }
+    echo $_SESSION['cust_id'];
+    $cust_detail = $adminObj->setSessionCustomer($_SESSION['cust_id']);
 
 ?>
 
@@ -322,8 +339,7 @@
                         </div>
                     </div>                      
                 </form>
-              
-            </div>   
+            </div>  
 
             <!-- Store Tab -->
             <div id="Store-div" style="display: none;">
@@ -474,8 +490,12 @@
                         <div class="user-detail">
                             <h2>Username</h2>
                             <div>
+<<<<<<< Updated upstream
                                 <input name="userid" id="fullname" class="input-detail" type="hidden" value="<?php echo $fullname?>">
                                 <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+=======
+                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $cust_detail[1];?>">
+>>>>>>> Stashed changes
                             </div>
                         </div>                    
                     </form>

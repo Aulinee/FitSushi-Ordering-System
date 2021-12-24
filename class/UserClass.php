@@ -167,7 +167,7 @@ class User{
                     echo '
                     <div>
                         <tr>
-                            <td>'.$id.'</td>
+                            <td>'.$id.' <input type="hidden" name="cust-id" value="'.$id.'"> </td>
                             <td>'.$username.'</td>
                             <td>'.$custname.'</td>
                             <td>'.$phoneNum.'</td>
@@ -175,7 +175,7 @@ class User{
                             <td>'.$address.'</td>
                             <td style="background-color: rgb(75, 70, 70);text-align: center;">
                                 <div class="action-col"">
-                                    <button id='.$id.' value='.$id.' onclick="editCustomer(\''.$id.'\')"><i class="fa fa-edit"></button>
+                                    <button id='.$id.' value='.$id.' onclick="editCustomer(\''.$id.'\')" type="submit" name="edit-customer"><i class="fa fa-edit"></button>
                                     <p class="delete-btn inline"><a href="deleteTVSeries.php?id='.$id.'" style="color: white;"><i class="fa fa-trash-o"></i></a></p>
                                 </div>
                                 <form>

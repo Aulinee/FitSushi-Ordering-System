@@ -90,6 +90,45 @@ class Admin{
         }        
     }
 
+    public function setSessionCustomer(string $cust_id){
+        $query = "SELECT * FROM customer WHERE customerID = $cust_id";
+        $result = $this->conn->query($query);
+        $arrayData = array();
+		if($result){
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $userid = $row['customerID'];
+                $username = $row['username'];
+                $password = $row['password'];
+                $fullname = $row['custName'];
+                $email = $row['email'];
+                $gender = $row['gender'];
+                $phonenum = "0".$row['phoneNo'];
+
+                //Query for postal code
+                $addressline = $row['deliveryAddress'];
+                $postalcode = $row['PostalCode'];
+                $queryPC = "SELECT * FROM address WHERE PostalCode =  $postalcode";
+                $resultPC = $this->conn->query($queryPC);
+
+                if($resultPC){
+                    if($resultPC->num_rows > 0){
+                        $rowPC = $resultPC->fetch_assoc();
+                        $area = $rowPC['Area'];
+                        $state = $rowPC['State'];
+                        $country = $rowPC['Country'];
+                        $arrayData = array($userid, $username, $fullname, $email, $gender, $phonenum, $addressline, $password, $postalcode, $area, $state, $country);
+                    }
+                }
+                return $arrayData;
+            }else{
+                echo "Record not found";
+            }
+        }else{
+            echo "Error in ".$query." ".$this->conn->error;
+        } 
+    }
+
 
     public function createCustomer(){
         echo "Customer cretaed";
