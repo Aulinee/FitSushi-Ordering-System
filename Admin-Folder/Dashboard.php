@@ -79,22 +79,7 @@
                     </script>";
                 }
             }
-        }else if(isset($_POST['edit-customer'])){
-            if(isset($_SESSION['cust_id'])){
-                unset($_SESSION['cust_id']);
-                $_SESSION['cust_id'] = $_POST['cust-id'];
-            }else{
-                $_SESSION['cust_id'] = $_POST['cust-id'];
-            }
-
-            // $cust_detail = $adminObj->setSessionCustomer($_SESSION['cust_id']);
-            header('LOCATION: dashboard.php');
-
-        }
-        
-        
-        
-        /*else if(isset($_POST['buy-again-btn'])){
+        }/*else if(isset($_POST['buy-again-btn'])){
             $prev_orderid = $_POST['order-id'];
             $total_order = $_POST['order-total'];
 
@@ -110,8 +95,6 @@
         $data = htmlspecialchars($data);
         return $data;
     }
-    echo $_SESSION['cust_id'];
-    $cust_detail = $adminObj->setSessionCustomer($_SESSION['cust_id']);
 
 ?>
 
@@ -339,7 +322,8 @@
                         </div>
                     </div>                      
                 </form>
-            </div>  
+              
+            </div>   
 
             <!-- Store Tab -->
             <div id="Store-div" style="display: none;">
@@ -490,12 +474,8 @@
                         <div class="user-detail">
                             <h2>Username</h2>
                             <div>
-<<<<<<< Updated upstream
                                 <input name="userid" id="fullname" class="input-detail" type="hidden" value="<?php echo $fullname?>">
                                 <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
-=======
-                                <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $cust_detail[1];?>">
->>>>>>> Stashed changes
                             </div>
                         </div>                    
                     </form>
@@ -562,7 +542,31 @@
                 </div>
                 <br>
                 <div id="Productlist-div" style="display: block;" align="center">
+                    <div class="productinput-icons">
+                        <i class="fa fa-search seriesicon"></i>
+                        <input class="filterProductinput-field" type="text" id="productcodeInput" onkeyup="filterProduct()" placeholder="Enter ID.." title="Type in a ID">
+                    </div>                    
                     <h1>LIST OF PRODUCTS</h1>
+                    <div class="productTable-div">
+                            <table id="productTable" cellpadding="0" cellspacing="0" border="0" align="center">
+                                <thead>
+                                    <tr>
+                                        <th class="info-20">CODE</th>
+                                        <th class="info-20">NAME</th>
+                                        <th class="info-20">DESCRIPTION</th>
+                                        <th class="info-20">PRICE</th>
+                                        <th class="info-20">SUSHI IMAGE</th>
+                                        <th class="info-20">AVAILABILITY</th>
+                                        <th class="info-20">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                                        <?php $menuObj->displayAllProduct(); ?>
+                                    </form>                                     
+                                </tbody>
+                            </table>
+                        </div>                       
                 </div>
 
                 <!-- Hidden div: Edit Product -->
@@ -981,6 +985,25 @@
                 }       
             }
         }
+
+        function filterProduct() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("productcodeInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("productTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+                }       
+            }
+        }        
 
         //From Order Tab
         function filterCustOrder() {

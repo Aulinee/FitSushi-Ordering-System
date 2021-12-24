@@ -129,6 +129,63 @@ class Menu{
         return false;
     }
 
+    public function displayAllProduct(){
+        $displayProductQuery = "SELECT * FROM sushi";
+        $result = $this->conn->query($displayProductQuery);
+
+        if($result){
+            if ($result->num_rows > 0) {
+                while($row = mysqli_fetch_array($result)){
+                    $id = $row["sushiID"];
+                    $sushiname = $row["sushiName"];
+                    $sushiDesc = $row["sushiDesc"];
+                    $sushiPrice = $row["price"];
+                    $sushiimg = $row["sushiImg"];
+                    $availability = $row["availability"];
+
+                    if($availability == 1){
+                        $td_availability = "<div>
+                                                <select id=\"cars\">
+                                                    <option value=\"Available\" selected>Available</option>
+                                                    <option value=\"Not Available\">Not Available</option>
+                                                </select>
+                                            </div>";
+                    }
+                    else{
+                        $td_availability = "<div>
+                                                <select id=\"cars\">
+                                                    <option value=\"Available\">Available</option>
+                                                    <option value=\"Not Available\" selected>Not Available</option>
+                                                </select>
+                                            </div>";
+                    }
+                    echo '
+                    <div>
+                        <tr>
+                            <td>'.$id.'</td>
+                            <td>'.$sushiname.'</td>
+                            <td>'.$sushiDesc.'</td>
+                            <td>'.$sushiPrice.'</td>
+                            <td></td>
+                            <td>'.$td_availability.'</td>                               
+                            <td style="background-color: rgb(75, 70, 70);text-align: center;">
+                                <div class="action-col"">
+                                    <button id='.$id.' value='.$id.' onclick="editProduct()"><i class="fa fa-edit" style="font-size:12px"></button>
+                                </div>
+                            </td>                            
+                        </tr>
+                    </div>
+                    ';
+                }
+            }else{
+                echo "Record not found";
+            }
+        }
+        else{
+            echo "Error in ".$displayCustomerQuery." ".$this->conn->error;
+        }        
+    }
+
 
     public function displayAlacarteSushibox(){
         $menuQuery = "SELECT s.sushiID AS sushiid ,s.sushiName AS sushiname, s.price AS sushiprice, a.qty AS sushiqty FROM alacartesushibox a, sushi s WHERE a.sushiID = s.sushiID";
