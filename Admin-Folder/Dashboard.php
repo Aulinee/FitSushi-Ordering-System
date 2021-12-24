@@ -534,7 +534,28 @@
 
             <!-- Product Tab -->
             <div id="Product-div" style="display: none;">
-                <h2>Product</h2>
+                
+                <div align="center">
+                    <h1 >Product Details</h1>     
+                    <button onclick="addNewProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Add New Product</button>
+                    <button onclick="editProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Edit Button (Remove later)</button>                   
+                </div>
+                <br>
+                <div id="Productlist-div" style="display: block;" align="center">
+                    <h1>LIST OF PRODUCTS</h1>
+                </div>
+
+                <!-- Hidden div: Edit Product -->
+                <div id="EditProduct-div" style="display: none;" align="center">
+                    <h1>Edit Product</h1>
+                    <button onclick="backtoProductlist()"><i class="fas fa-arrow-alt-circle-left" style="font-size:24px"></i> Exit (Remove later)</button>                      
+                </div>
+                <!-- Hidden div: Add New Product -->
+                <div id="AddnewProduct-div" style="display: none;" align="center">
+                    <h1>Add Product</h1>
+                    <button onclick="backtoProductlist()"><i class="fas fa-arrow-alt-circle-left" style="font-size:24px"></i> Exit (Remove later)</button>  
+                </div>
+
             </div>
 
             <!-- Order Tab -->
@@ -606,6 +627,9 @@
         var customerdiv = document.getElementById('Customer-div');
         var editcustomerdiv = document.getElementById('editCust-div');
         var productdiv = document.getElementById('Product-div');
+        var productlistdiv = document.getElementById('Productlist-div');
+        var editProductdiv = document.getElementById('EditProduct-div');
+        var addProductdiv = document.getElementById('AddnewProduct-div');
         var orderdiv = document.getElementById('Order-div');
         var signoutdiv = document.getElementById('Signout-div');
 
@@ -873,6 +897,28 @@
 
 
             
+        }
+
+        function addNewProduct(){
+            //alert("New Product accessed!");
+            productlistdiv.style.display = "none";
+            addProductdiv.style.display = "block";
+            editProductdiv.style.display = "none";
+
+        }
+
+        function editProduct(){
+            //alert("Edit Product accessed!");
+            productlistdiv.style.display = "none";
+            addProductdiv.style.display = "none";
+            editProductdiv.style.display = "block";
+        }
+
+        function backtoProductlist(){
+            //alert("Edit Product accessed!");
+            productlistdiv.style.display = "block";
+            addProductdiv.style.display = "none";
+            editProductdiv.style.display = "none";            
         }
 
         function viewOrder(){
