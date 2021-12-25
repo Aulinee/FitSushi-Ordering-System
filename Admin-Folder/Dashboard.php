@@ -9,6 +9,10 @@
     $fname_edit = $username_edit = $email_edit = $mobileNum_edit = $gender_edit = $password_edit = "";
     $boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolPassword = false;
 
+    $locErr = $opnHrsErr = $WAErr = $IGErr = $FBErr = "";
+    $loc_edit = $opnHrs_edit = $WA_edit = $IG_edit = $FB_edit = "";
+    $boolloc= $boolopnHrs = $boolWA = $boolIG = $boolFB = false;
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if (isset($_POST["update_Admin"]) ) {
 
@@ -79,14 +83,57 @@
                     </script>";
                 }
             }
-        }/*else if(isset($_POST['buy-again-btn'])){
-            $prev_orderid = $_POST['order-id'];
-            $total_order = $_POST['order-total'];
+        }else if(isset($_POST["SaveContactInfo-btn"])){
 
-            $_SESSION['prev-orderid'] = $prev_orderid;
-            $_SESSION['total-order'] = $total_order;
+            $temp_storeID = $_POST["storeidtext"];
 
-            header("Location: buy-again-checkout-page.php");*/
+            //echo '<script>alert('.$temp_storeID.');</script>'; //Trial-and-error
+            //Location 
+            $loc_edit = $_POST["locationtext"];
+            if (empty($loc_edit)) {
+                $locErr = "Location is required";
+            } else {
+                $boolloc = true;
+            }
+
+            //Open hours
+            $opnHrs_edit = $_POST["OpHrstext"];
+            if (empty($opnHrs_edit)) {
+                $opnHrsErr = "Open hours is required";
+            } else {
+                $boolopnHrs = true;
+            }
+
+            //WA
+            $WA_edit = $_POST["WAtext"];
+            if (empty($WA_edit)) {
+                $WAErr = "Whatsapp is required";
+            } else {
+                $boolWA = true;
+            }            
+
+            //IG
+            $IG_edit = $_POST["IGtext"];
+            if (empty($IG_edit)) {
+                $IGErr = "Instagram is required";
+            } else {
+                $boolIG = true;
+            }
+
+            //FB
+            $FB_edit = $_POST["FBtext"];
+            if (empty($FB_edit)) {
+                $FBErr = "Facebook is required";
+            } else {
+                $boolFB = true;
+            }
+
+            //confirmation feedback
+            if (($boolloc = $boolopnHrs = $boolWA = $boolIG = $boolFB = true)) {
+                $updateStoreStatus = $adminObj->editStore($temp_storeID, $loc_edit, $opnHrs_edit, $WA_edit, $IG_edit, $FB_edit);
+                echo "<script>window.location.href='dashboard.php';</script>";
+            }
+        }
     }
 
     function test_input($data) {
@@ -335,35 +382,43 @@
                 <!-- Div for entire content under header, consist of two content: Upper & Lower Div -->
                 <div id="StoreContentDiv">
 
+
                     <div id="UpStore_Content-div" align="center">
                         <h1>Contact Info</h1>
                         <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i></a></div>
                         <div id="storecontactinfo-form-div">
-                            <form>
-                                <div id="Location-inputfield">
-                                    <h2>Location: </h2>
-                                    <input disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" value="<?php echo $loc?>">                                    
+                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                <div id="Loc-OpHrs-div" style="display: inline-block;">
+                                    <div id="Location-inputfield" style="float:left; margin-right: 30px;">
+                                        <h2>Location: </h2>
+                                        <textarea disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" rows="4" cols="30"><?php echo $loc?></textarea>                                   
+                                    </div>
+                                    <div id="OperatingHrs-inputfield" style="float:left;">
+                                        <h2>Operating Hours: </h2>
+                                        <textarea disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" rows="4" cols="30"><?php echo $opnHrs?></textarea>       
+                                    </div>
                                 </div>
-                                <div id="OperatingHrs-inputfield">
-                                    <h2>Operating Hours: </h2>
-                                    <input disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" value="<?php echo $opnHrs?>">     
+
+                                <div id="SocMed-div" align="center">
+                                    <div id="Whatsapp-inputfield"style="float:left; margin-right: 30px;">
+                                        <h2>Whatsapp: </h2>
+                                        <input name="storeidtext" class="input-detail" type="hidden" id="storeid" value="<?php echo $store_ID?>">  
+                                        <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
+                                    </div>
+                                    <div id="Insta-inputfield" style="float:left; margin-right: 30px;">
+                                        <h2>Instagram: </h2>
+                                        <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
+                                    </div>
+                                    <div id="FB-inputfield" style="float:left; margin-right: 30px;">
+                                        <h2>Facebook: </h2>
+                                        <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
+                                    </div>
                                 </div>
-                                <div id="Whatsapp-inputfield">
-                                    <h2>Whatsapp: </h2>
-                                    <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
-                                </div>
-                                <div id="Insta-inputfield">
-                                    <h2>Instagram: </h2>
-                                    <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
-                                </div>
-                                <div id="FB-inputfield">
-                                    <h2>Facebook: </h2>
-                                    <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
-                                </div>
+
                                 <br><br>
                                 <div id="SaveContactInfo-btn">
-                                    <input disabled type='submit' id="SaveContactBtn" class='button' name='SaveContantInfo-btn' value='Save' /> 
-                                    <input disabled type='submit' id="ResetContactBtn" class='button' name='ResetContantInfo-btn' value='Reset' />                                         
+                                    <input disabled type='submit' id="SaveContactBtn" class='button' name='SaveContactInfo-btn' value='Save' /> 
+                                    <input disabled type='submit' id="ResetContactBtn" class='button' name='ResetContactInfo-btn' value='Reset' />                                         
                                 </div>
                             </form>
                         </div>
@@ -682,15 +737,6 @@
         function enableAboutUsedit(){
 
             //Enabling the input field
-            document.getElementById("AboutUs1").disabled = false;
-            document.getElementById("AboutUs2").disabled = false;
-            document.getElementById("AboutUs3").disabled = false;
-            document.getElementById("SaveAUBtn1").disabled = false;
-            document.getElementById("ResetAUBtn1").disabled = false;
-            document.getElementById("SaveAUBtn2").disabled = false;
-            document.getElementById("ResetAUBtn2").disabled = false;
-            document.getElementById("SaveAUBtn3").disabled = false;
-            document.getElementById("ResetAUBtn3").disabled = false;
 
             document.getElementById("editAUicon").style.display = "none";
             document.getElementById("exitAUicon").style.display = "block";            
@@ -700,16 +746,6 @@
         function exitAboutUsedit(){
 
             //Enabling the input field
-            document.getElementById("AboutUs1").disabled = true;
-            document.getElementById("AboutUs2").disabled = true;
-            document.getElementById("AboutUs3").disabled = true;
-            document.getElementById("SaveAUBtn1").disabled = true;
-            document.getElementById("ResetAUBtn1").disabled = true;            
-            document.getElementById("SaveAUBtn2").disabled = true;
-            document.getElementById("ResetAUBtn2").disabled = true; 
-            document.getElementById("SaveAUBtn3").disabled = true;
-            document.getElementById("ResetAUBtn3").disabled = true; 
-
             document.getElementById("editAUicon").style.display = "block";
             document.getElementById("exitAUicon").style.display = "none";   
 

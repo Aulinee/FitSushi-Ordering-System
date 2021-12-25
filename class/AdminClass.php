@@ -117,6 +117,20 @@ class Admin{
         }        
     }
 
+    public function editStore($hold_storeid, $new_loc, $new_OpnHrs, $new_WA, $new_IG, $new_FB){
+
+        //Update user detail in user table
+        $updateStoreQuery = "UPDATE storedetails SET operatingHours='$new_OpnHrs', location='$new_loc', whatsappDetails='$new_WA', instagramDetails='$new_IG', facebookDetails='$new_FB' WHERE storeID=$hold_storeid ";
+        $resultStore = mysqli_query($this->conn,  $updateStoreQuery) or die("Error: ".mysqli_error($this->conn));
+       
+        if ($resultStore == true) {
+            return true;
+        }else{
+            // echo "Error in ".$resultUser." ".$this->conn->error;
+            return false;
+        }        
+    }    
+
     public function setSessionCustomer(string $cust_id){
         $query = "SELECT * FROM customer WHERE customerID = $cust_id";
         $result = $this->conn->query($query);
