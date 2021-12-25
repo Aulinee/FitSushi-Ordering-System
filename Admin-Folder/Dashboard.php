@@ -335,45 +335,6 @@
                 <!-- Div for entire content under header, consist of two content: Upper & Lower Div -->
                 <div id="StoreContentDiv">
 
-                    <!-- Upper content -->
-                    <div id="UpStore_Content-div" align="center" >
-                        <h1>About us</h1>
-                        <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editAUicon" onclick="enableAboutUsedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exitAUicon" onclick="exitAboutUsedit()" class="fa fa-close"></i></a></div>
-                        <div id="threeaboutus-div" style="display: inline-block;">
-                            <div class="aboutus_img_container">
-                                <img src="../img/logo.png" alt="About Us" width="100" height="100">
-                                <form>
-                                    <input disabled title="About Us 1" name="AboutUs1" class="input-detail" type="text" id="AboutUs1" value="About Us 1">
-                                    <div>
-                                        <input disabled type='submit' id="SaveAUBtn1" class='button' name='SaveAUInfo-btn' value='Save' /> 
-                                        <input disabled type='submit' id="ResetAUBtn1" class='button' name='ResetAUInfo-btn' value='Reset' />                                           
-                                    </div>                                     
-                                </form>
-                            </div>
-                            <div class="aboutus_img_container">
-                                <img src="../img/logo.png" alt="About Us" width="100" height="100">
-                                <form>
-                                    <input disabled title="About Us 2" name="AboutUs2" class="input-detail" type="text" id="AboutUs2" value="About Us 2">   
-                                    <div>
-                                        <input disabled type='submit' id="SaveAUBtn2" class='button' name='SaveAUInfo-btn' value='Save' /> 
-                                        <input disabled type='submit' id="ResetAUBtn2" class='button' name='ResetAUInfo-btn' value='Reset' />          
-                                    </div>                      
-                                </form>
-                            </div>
-                            <div class="aboutus_img_container">
-                                <img src="../img/logo.png" alt="About Us" width="100" height="100">
-                                <form>
-                                    <input disabled title="About Us 3" name="AboutUs3" class="input-detail" type="text" id="AboutUs3" value="About Us 3">    
-                                    <div>
-                                        <input disabled type='submit' id="SaveAUBtn3" class='button' name='SaveAUInfo-btn' value='Save' /> 
-                                        <input disabled type='submit' id="ResetAUBtn3" class='button' name='ResetAUInfo-btn' value='Reset' /> 
-                                    </div>                                                                         
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Lower content -->
                     <div id="UpStore_Content-div" align="center">
                         <h1>Contact Info</h1>
                         <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i></a></div>
@@ -381,23 +342,23 @@
                             <form>
                                 <div id="Location-inputfield">
                                     <h2>Location: </h2>
-                                    <input disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" value="Test">                                    
+                                    <input disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" value="<?php echo $loc?>">                                    
                                 </div>
                                 <div id="OperatingHrs-inputfield">
                                     <h2>Operating Hours: </h2>
-                                    <input disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" value="Test">     
+                                    <input disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" value="<?php echo $opnHrs?>">     
                                 </div>
                                 <div id="Whatsapp-inputfield">
                                     <h2>Whatsapp: </h2>
-                                    <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="Test">  
+                                    <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
                                 </div>
                                 <div id="Insta-inputfield">
                                     <h2>Instagram: </h2>
-                                    <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="Test">  
+                                    <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
                                 </div>
                                 <div id="FB-inputfield">
                                     <h2>Facebook: </h2>
-                                    <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="Test">  
+                                    <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
                                 </div>
                                 <br><br>
                                 <div id="SaveContactInfo-btn">
@@ -409,11 +370,6 @@
                     </div>
 
                 </div>
-
-
-
-
-
 
             </div>
 

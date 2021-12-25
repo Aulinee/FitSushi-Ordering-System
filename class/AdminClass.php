@@ -46,7 +46,34 @@ class Admin{
         }else{
             echo "Error in ".$query." ".$this->conn->error;
         } 
-    }    
+    }
+    
+    public function setSessionStore(){
+        $query = "SELECT * FROM storedetails";
+        $result = $this->conn->query($query);
+        $arrayData = array();
+		if($result){
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $storeid = $row['storeID'];
+                $opHrs = $row['operatingHours'];
+                $location = $row['location'];
+                $WA = $row['whatsappDetails'];
+                $IG = $row['instagramDetails'];
+                $FB = $row['facebookDetails'];
+                $phonenum = "0".$row['contactNo'];
+
+                $arrayData = array($storeid, $opHrs, $location, $WA, $IG, $FB, $phonenum);
+
+                return $arrayData;
+
+            }else{
+                echo "Record not found";
+            }
+        }else{
+            echo "Error in ".$query." ".$this->conn->error;
+        }         
+    }
 
     public function displayStoreDetail()
     {
