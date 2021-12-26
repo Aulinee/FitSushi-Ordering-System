@@ -174,12 +174,9 @@ class User{
                             <td>'.$email.'</td>
                             <td>'.$address.'</td>
                             <td style="background-color: rgb(75, 70, 70);text-align: center;">
-                                <div class="action-col"">
-                                    <button id='.$id.' value='.$id.' onclick="editCustomer(\''.$id.'\')" type="submit" name="edit-customer"><i class="fa fa-edit"></button>
+                                <form  method="POST" action="editCust_page.php">
+                                    <button id='.$id.' value='.$id.' type="submit" name="edit-customer"><i class="fa fa-edit"></button>
                                     <p class="delete-btn inline"><a href="deleteTVSeries.php?id='.$id.'" style="color: white;"><i class="fa fa-trash-o"></i></a></p>
-                                </div>
-                                <form>
-
                                 </form>
                             </td>
                         </tr>
