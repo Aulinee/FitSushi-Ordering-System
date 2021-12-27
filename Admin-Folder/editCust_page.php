@@ -79,7 +79,7 @@
             $boolUsername = $boolFname = $boolMobileNum = $boolEmail = $boolHome = $boolPOS = false;
             $boolAllTrue = false;
 
-            echo "Input check<br>";
+            //echo "Input check<br>";
 
             //Username validation
             $username_edit = $cust_Usn;
@@ -198,15 +198,15 @@
                                 </label>";
             }
 
-            //To test for correct output
-            echo "Customer ID: ".$customer_id."<br>";
+            //To test for correct output (Uncomment to test)
+            /*echo "Customer ID: ".$customer_id."<br>";
             echo "New Username: ".$cust_Usn."<br>";
             echo "New Fullname: ".$cust_Fn."<br>";
             echo "New Mobile Number: 0".$cust_Mob."<br>";
             echo "New Email Address: ".$cust_EmailAdd."<br>";
             echo "New Home Address: ".$cust_HomeAdd."<br>";
             echo "New Postal Code: ".$cust_POS."<br>";
-            echo "New Gender: ".$cust_Gender."<br>";            
+            echo "New Gender: ".$cust_Gender."<br>";*/            
 
             $AllErr = $usernameErr.'\r\n'.$FullnameErr.'\r\n'.$mobileNumErr.'\r\n'.$emailErr.'\r\n'.$HomeErr.'\r\n'.$POSErr;
 
@@ -216,6 +216,22 @@
             else{
                 echo '<script>alert("'.$AllErr.'")</script>';
             }
+        }
+        else if(isset($_POST["delete-customer"])){
+            $customer_id = $_POST['delete-customer'];            
+
+
+            //Update user detail in user table
+            $delCustQuery = "DELETE FROM customer WHERE customerID='$customer_id'";
+            $resultDel = mysqli_query($conn,  $delCustQuery) or die("Error: ".mysqli_error($conn));
+
+            if ($resultDel){
+                echo '<script>alert("User (ID: '.$customer_id.') has been deleted.")</script>';                                
+            }
+            else {
+                echo '<script>alert("User (ID: '.$customer_id.') failed to delete.")</script>';  
+            }
+            echo "<script>window.location.href='dashboard.php';</script>";
         }
     }
 
@@ -285,6 +301,7 @@
                 </div>                                                
             </form>
         </div>
+        <br>
         <div>
             <a href="Dashboard.php">Go back</a>
         </div>

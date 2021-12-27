@@ -175,8 +175,8 @@ class User{
                             <td>'.$address.'</td>
                             <td style="background-color: rgb(75, 70, 70);text-align: center;">
                                 <form  method="POST" action="editCust_page.php">
-                                    <button id='.$id.' value='.$id.' type="submit" name="edit-customer"><i class="fa fa-edit"></button>
-                                    <p class="delete-btn inline"><a href="deleteTVSeries.php?id='.$id.'" style="color: white;"><i class="fa fa-trash-o"></i></a></p>
+                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="edit-customer" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
+                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="delete-customer" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
