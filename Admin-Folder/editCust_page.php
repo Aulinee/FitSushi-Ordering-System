@@ -1,11 +1,12 @@
 <?php
 
     include '../database/dbConnection.php'; 
+    include '../Login/sessionAdmin.php';
 
     echo "hello, welcome to editCust_page.php<br>";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        if (isset($_POST["edit-customer"]) ) {
+        if (isset($_POST["edit-customer"])) {
 
             $customer_id = $_POST['edit-customer'];
 
@@ -61,9 +62,168 @@
 
 
         }
-        /*else if(){
-            submmit thingy goes here (to update the data)
-        }*/
+        else if(isset($_POST["Save-customer"])){
+
+            //Initial data
+            $customer_id = $_POST["Save-customer"];
+            $cust_Usn = $_POST["cust_usn"];
+            $cust_Fn = $_POST["cust_fn"];
+            $cust_Mob = $_POST["cust_mob"];
+            $cust_EmailAdd = $_POST["cust_email"];
+            $cust_HomeAdd = $_POST["cust_home"];
+            $cust_POS = $_POST["cust_POS"];
+            $cust_Gender = $_POST["genderbtn"];
+
+            $usernameErr = $FullnameErr = $mobileNumErr = $emailErr = $HomeErr = $POSErr = "";
+            $username_edit = $fname_edit = $mobileNum_edit = $email_edit = $home_edit = $POS_edit = "";
+            $boolUsername = $boolFname = $boolMobileNum = $boolEmail = $boolHome = $boolPOS = false;
+            $boolAllTrue = false;
+
+            echo "Input check<br>";
+
+            //Username validation
+            $username_edit = $cust_Usn;
+            if (empty($username_edit)) {
+                //echo "Username is empty<br>";
+                $usernameErr = "Username is required";
+            } else {
+                //echo "Username is true<br>";
+                $boolUsername = true;
+            }
+
+            //full name validation
+            $fname_edit = $cust_Fn;
+            if (empty($fname_edit)) {
+                //echo "Fullname is empty<br>";
+                $FullnameErr = "Full name is required";
+            } else {
+                //echo "Fullname is true<br>";
+                $boolFname = true;
+            }
+        
+            //email validation
+            if (empty($cust_EmailAdd)) {
+                //echo "email is empty<br>";
+                $emailErr = "Email is required";
+            } else {
+                $email_edit = test_input($cust_EmailAdd);
+                // check if e-mail address is well-formed
+                if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
+                    //echo "email is wrong format<br>";
+                    $emailErr = "Invalid email format";
+                } else {
+                    //echo "email is true<br>";
+                    $boolEmail = true;
+                }
+            }
+        
+            //Home validation
+            $home_edit = $cust_HomeAdd;
+            if (empty($home_edit)) {
+                //echo "Address is wrong<br>";
+                $HomeErr = "Full name is required";
+            } else {
+                //echo "Address is true<br>";
+                $boolHome = true;
+            }
+
+            //Postal validation
+            if (empty($cust_POS)) {
+                //echo "POS is empty<br>";
+                $POSErr = "Postal code is required";
+            } else {
+                $POS_edit = test_input($cust_POS);
+                // check if postal code is valid
+                if (!preg_match("/^([1-9])\d{4}$/", $POS_edit)) {
+                    $POSErr = "Invalid postal format";
+                    //echo "POS is wrong format<br>";
+                } else {
+                    //echo "POS is true<br>";
+                    $boolPOS = true;
+                }
+            }            
+
+            //mobile number validation
+            if (empty($cust_Mob)) {
+                echo "Mob is empty<br>";
+                $mobileNumErr = "Mobile number is required";
+            } else {
+                $mobileNum_edit = test_input($cust_Mob);
+                // check if phone number is valid
+                if (!preg_match("/^(1)[0-9]\d{6,7}$/", $mobileNum_edit)) {
+                    $mobileNumErr = "Invalid mobile number format";
+                   // echo "Mob is wrong format<br>";
+                } else {
+                    //echo "Mob is true<br>";
+                    $boolMobileNum = true;
+                }
+            }
+
+            if ($boolUsername == true){
+                if($boolFname == true){
+                    if($boolMobileNum == true){
+                        if($boolEmail == true){
+                            if($boolHome == true){
+                                if($boolPOS == true){
+                                    $boolAllTrue = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($boolAllTrue == true){
+
+                //Update user detail in user table
+                $updateCustQuery = "UPDATE customer SET username='$cust_Usn', custName='$cust_Fn', phoneNo='$cust_Mob', email='$cust_EmailAdd', deliveryAddress='$cust_HomeAdd', PostalCode='$cust_POS', gender='$cust_Gender' WHERE customerID=$customer_id ";
+                $resultCust = mysqli_query($conn,  $updateCustQuery) or die("Error: ".mysqli_error($conn));
+            
+            }
+
+            //Create a preset code for gender
+            if($cust_Gender=="male"){
+                $printGender = "<label> Male
+                                    <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\" checked>
+                                </label>
+                                <label> Female
+                                    <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\">
+                                </label>";
+            }else{
+                $printGender = "<label> Male
+                                    <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\">
+                                </label>
+                                <label> Female
+                                    <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\" checked>
+                                </label>";
+            }
+
+            //To test for correct output
+            echo "Customer ID: ".$customer_id."<br>";
+            echo "New Username: ".$cust_Usn."<br>";
+            echo "New Fullname: ".$cust_Fn."<br>";
+            echo "New Mobile Number: 0".$cust_Mob."<br>";
+            echo "New Email Address: ".$cust_EmailAdd."<br>";
+            echo "New Home Address: ".$cust_HomeAdd."<br>";
+            echo "New Postal Code: ".$cust_POS."<br>";
+            echo "New Gender: ".$cust_Gender."<br>";            
+
+            $AllErr = $usernameErr.'\r\n'.$FullnameErr.'\r\n'.$mobileNumErr.'\r\n'.$emailErr.'\r\n'.$HomeErr.'\r\n'.$POSErr;
+
+            if ($boolAllTrue == true){
+                echo '<script>alert("Congratulations. Customer\'s profile has been updated.")</script>';
+            }
+            else{
+                echo '<script>alert("'.$AllErr.'")</script>';
+            }
+        }
+    }
+
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
     //Display all the output in textfield and so on (with suitable field)
@@ -120,8 +280,8 @@
                     <?php echo $printGender; ?>
                 </div>
                 <div>
-                    <input type='submit' id="SaveEdit-btn" class='button' name='SaveEdit-btn' value='Save' /> 
-                    <button id="ResetContactBtn" value=<?php echo $customer_id;?> type="submit" name="edit-customer">Reset</button>                                         
+                    <button id="SaveCustBtn" value=<?php echo $customer_id;?> type="submit" name="Save-customer">Save</button>                         
+                    <button id="ResetCustBtn" value=<?php echo $customer_id;?> type="submit" name="edit-customer">Reset</button>                                         
                 </div>                                                
             </form>
         </div>
