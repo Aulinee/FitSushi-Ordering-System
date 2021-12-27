@@ -3,7 +3,7 @@
     include '../database/dbConnection.php'; 
     include '../Login/sessionAdmin.php';
 
-    echo "hello, welcome to editCust_page.php<br>";
+    //echo "hello, welcome to editCust_page.php<br>";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if (isset($_POST["edit-customer"])) {
@@ -32,8 +32,8 @@
                 echo "Error in ".$query." ".$conn->error;
             } 
 
-            //To test for correct output
-            echo "Customer ID: ".$customer_id."<br>";
+            //To test for correct output (_Uncomment to use_)
+            /*echo "Customer ID: ".$customer_id."<br>";
             echo "Username: ".$cust_Usn."<br>";
             echo "Password: ".$cust_pass."<br>";
             echo "Fullname: ".$cust_Fn."<br>";
@@ -41,7 +41,7 @@
             echo "Email Address: ".$cust_EmailAdd."<br>";
             echo "Home Address: ".$cust_HomeAdd."<br>";
             echo "Postal Code: ".$cust_POS."<br>";
-            echo "Gender: ".$cust_Gender."<br>";
+            echo "Gender: ".$cust_Gender."<br>";*/
 
             //Create a preset code for gender
             if($cust_Gender=="male"){
