@@ -133,6 +133,88 @@
                 $updateStoreStatus = $adminObj->editStore($temp_storeID, $loc_edit, $opnHrs_edit, $WA_edit, $IG_edit, $FB_edit);
                 echo "<script>window.location.href='dashboard.php';</script>";
             }
+        }elseif(isset($_POST["Add-product"])){
+            
+            $sushiName = $_POST["sushi_name"];
+            $sushiDesc = $_POST["sushi_desc"];
+            $sushiImg = $_FILES["selectedImage"]["tmp_name"];
+
+            //Get the content of the uploaded image
+            $imgContent = addslashes(file_get_contents($sushiImg));
+
+            $sushiPrice = $_POST["sushi_price"];
+
+            $AllErr = $sushiNameErr = $sushiDescErr = $sushiImgErr = $sushiPriceErr = "";
+            $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiImg = $boolsushiPrice = false;
+
+            //Validate Name
+            if (empty($sushiName)){
+                $sushiNameErr = "Sushi name cannot be empty.";
+            }
+            else{
+                $boolsushiName = true;
+            }
+
+            //Validate Desc
+            if (empty($sushiDesc)){
+                $sushiDescErr = "Sushi description cannot be empty.";
+            }
+            else{
+                $boolsushiDesc = true;
+            } 
+            
+            //Validate Img
+            if (empty($sushiImg)){
+                $sushiImgErr = "Select an image.";
+            }
+            else{
+                $boolsushiImg = true;
+            }               
+
+            //Validate Price
+            if (empty($sushiPrice)){
+                $sushiPriceErr = "Insert a price.";
+            }
+            else{
+                $PriceAdd = test_input($_POST["sushi_price"]);
+                // check if price is valid
+                if (!preg_match("/^\d{0,8}(\.\d{1,4})?$/", $PriceAdd)) {
+                    $sushiPriceErr = "Invalid price format";
+                } else {
+                    $boolsushiPrice = true;
+                }
+            } 
+            
+            if($boolsushiName == true){
+                if($boolsushiDesc == true){
+                    if($boolsushiImg == true){
+                        if($boolsushiPrice == true){
+                            $boolAllTrue = true;
+                        }
+                    }
+                }
+            }
+
+            $AllErr = $sushiNameErr.'\r\n'.$sushiDescErr.'\r\n'.$sushiImgErr.'\r\n'.$sushiPriceErr;
+            $AllInput = $sushiName.'\r\n'.$sushiDesc.'\r\n'.$sushiImg.'\r\n'.$sushiPrice;
+            if($boolAllTrue == true){
+                
+                $addproductStatus = $menuObj->addproduct($sushiName, $sushiDesc, $imgContent, $sushiPrice);
+
+                if($addproductStatus){
+                    echo '<script>alert("Product added successfully!")</script>';
+                }else{
+                    echo '<script>alert("Something went wrong while add :( ")</script>';
+                }
+                
+            }
+            else{
+                echo '<script>alert("'.$AllErr.'")</script>';
+            }
+
+        }elseif(isset($_POST["delete-product"])){
+            $deleteproductid = $_POST["delete-product"];
+            echo '<script>alert("Delete:'.$deleteproductid.'")</script>'; 
         }
     }
 
@@ -428,7 +510,7 @@
 
             </div>
 
-            <!-- Customer Tab --> <!-- UNDER DEVELOPMENT -->
+            <!-- Customer Tab -->
             <div id="Customer-div" style="display: none;">
                 <h1 align="center">Customer Details</h1>
                 <br>
@@ -548,8 +630,7 @@
                 
                 <div align="center">
                     <h1 >Product Details</h1>     
-                    <button onclick="addNewProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Add New Product</button>
-                    <button onclick="editProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Edit Button (Remove later)</button>                   
+                    <button onclick="addNewProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Add New Product</button>              
                 </div>
                 <br>
                 <div id="Productlist-div" style="display: block;" align="center">
@@ -580,15 +661,39 @@
                         </div>                       
                 </div>
 
-                <!-- Hidden div: Edit Product -->
-                <div id="EditProduct-div" style="display: none;" align="center">
-                    <h1>Edit Product</h1>
-                    <button onclick="backtoProductlist()"><i class="fas fa-arrow-alt-circle-left" style="font-size:24px"></i> Exit (Remove later)</button>                      
-                </div>
                 <!-- Hidden div: Add New Product -->
                 <div id="AddnewProduct-div" style="display: none;" align="center">
                     <h1>Add Product</h1>
-                    <button onclick="backtoProductlist()"><i class="fas fa-arrow-alt-circle-left" style="font-size:24px"></i> Exit (Remove later)</button>  
+                    <!-- New Product Form -->
+                    <div id="Product-Form">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+                            <div>
+                                <label> Sushi Name: 
+                                    <input name="sushi_name" class="input-detail" type="text" id="sushi_name">                        
+                                </label>                                
+                            </div>
+                            <div>
+                                <label> Description: 
+                                    <textarea name="sushi_desc" class="input-detail" type="text" id="sushi_desc" rows="4" cols="30"></textarea>                      
+                                </label>                                
+                            </div>
+                            <div>
+                                <label> Upload a new image: 
+                                    <input name="selectedImage" class="input-detail" type="file" id="new_image" accept=".png,.jpeg,.jpg">                        
+                                </label>                                
+                            </div>
+                            <div>
+                                <label> Price: 
+                                    <input name="sushi_price" class="input-detail" type="text" id="sushi_price"">                        
+                                </label>                                
+                            </div>
+                            <div>
+                                <button id="AddProductBtn" type="submit" name="Add-product">Save</button>                         
+                                <button id="ClearProductBtn" type="submit" name="clear-product">Clear</button>                                         
+                            </div>                                                     
+                        </form>
+                    </div><br>
+                    <button onclick="backtoProductlist()"><i class="fas fa-arrow-alt-circle-left" style="font-size:24px"></i>Back to list</button>  
                 </div>
 
             </div>
@@ -663,7 +768,6 @@
         var editcustomerdiv = document.getElementById('editCust-div');
         var productdiv = document.getElementById('Product-div');
         var productlistdiv = document.getElementById('Productlist-div');
-        var editProductdiv = document.getElementById('EditProduct-div');
         var addProductdiv = document.getElementById('AddnewProduct-div');
         var orderdiv = document.getElementById('Order-div');
         var signoutdiv = document.getElementById('Signout-div');
@@ -921,13 +1025,6 @@
             addProductdiv.style.display = "block";
             editProductdiv.style.display = "none";
 
-        }
-
-        function editProduct(){
-            //alert("Edit Product accessed!");
-            productlistdiv.style.display = "none";
-            addProductdiv.style.display = "none";
-            editProductdiv.style.display = "block";
         }
 
         function backtoProductlist(){

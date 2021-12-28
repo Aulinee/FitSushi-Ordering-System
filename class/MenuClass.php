@@ -166,12 +166,14 @@ class Menu{
                             <td>'.$sushiname.'</td>
                             <td>'.$sushiDesc.'</td>
                             <td>'.$sushiPrice.'</td>
-                            <td></td>
+                            <td><img src="data:image/jpg;charset=utf8;base64, '.base64_encode($sushiimg).'" width="100" height="100"></td>
                             <td>'.$td_availability.'</td>                               
                             <td style="background-color: rgb(75, 70, 70);text-align: center;">
-                                <div class="action-col"">
-                                    <button id='.$id.' value='.$id.' onclick="editProduct()"><i class="fa fa-edit" style="font-size:12px"></button>
-                                </div>
+                                <form  method="POST" action="editProduct_page.php">
+                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="edit-product" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
+                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="delete-product" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
+                                </form>                                    
+
                             </td>                            
                         </tr>
                     </div>
@@ -185,6 +187,25 @@ class Menu{
             echo "Error in ".$displayCustomerQuery." ".$this->conn->error;
         }        
     }
+
+    public function addproduct($name, $desc, $img, $price){
+
+        $dateToday = date("Y-m-d");
+
+        //Insert product detail in user table
+        $insertProductQuery = "INSERT INTO sushi(sushiName, sushiDesc, sushiImg, price, dateAdded, availability)
+        VALUES ('$name', '$desc', '$img', '$price', '$dateToday', '0')";
+        $resultAdd = mysqli_query($this->conn,  $insertProductQuery) or die("Error: ".mysqli_error($this->conn));
+       
+        if ($resultAdd == true) {
+            // echo "Success";
+            return true;
+        }else{
+            echo "Error in ".$resultAdd." ".$this->conn->error;
+            return false;
+        }
+        
+    }    
 
 
     public function displayAlacarteSushibox(){
