@@ -231,6 +231,32 @@
         return $data;
     }
 
+    //----------- Sum up total sales and users
+    $getTotalSales = "SELECT orderTotal FROM orders WHERE orderStatusID=2";
+    $resultTotalSales = $conn->query($getTotalSales);
+    $TotalSales = 0;
+
+    if($resultTotalSales){
+        if($resultTotalSales->num_rows > 0){
+            while($row = mysqli_fetch_array($resultTotalSales)){
+                $TotalSales = $TotalSales + $row['orderTotal'];
+            }
+        }
+    }
+
+    $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
+    $resultTotalUser = $conn->query($getTotalUser);
+
+    if($resultTotalUser){
+        if($resultTotalUser->num_rows > 0){
+            while($row = mysqli_fetch_array($resultTotalUser)){
+                $TotalUser = $row['TotalCustomer'];
+            }
+        }
+    }
+    else{
+
+    }
 ?>
 
 <!DOCTYPE html>
@@ -311,16 +337,20 @@
                 <div class="flex-container1">
                     <div>
                         <h2 class="h2-dashboard">Overview</h2>
+                        <div id="overview-TSales" style="background-color: white;margin-right:30px;border-radius: 10px;">
+                            <h2>Total Sales</h2>
+                            <h2>RM <?php  echo $TotalSales ?></h2>
+                        </div>
+                        <div id="overview-TUser" style="background-color: white;margin-right:30px;border-radius: 10px;">
+                            <h2>Total User</h2>
+                            <h2><?php  echo $TotalUser ?></h2>
+                        </div>
 
                     </div>
                     <div>
                         <h2 class="h2-dashboard">Top Buyer</h2>
                         <ul class="ul1">
-                            <li class="li2">lorem ipsum</li>
-                            <li class="li2">lorem ipsum</li>
-                            <li class="li2">lorem ipsum</li>
-                            <li class="li2">lorem ipsum</li>
-                            <li class="li2">lorem ipsum</li>
+                            <?php $adminObj->displayTopBuyer(); ?>
                         </ul>
 
                     </div>
@@ -374,7 +404,7 @@
 
             <!-- Admin's Profile Tab-->
             <div id="Profile-div" style="display: none;"> 
-                <h1>Profile   <a  onclick="editAdmin()"> (Edit Profile)</a></h1>
+                <h1>Profile   <a  onclick="editAdmin()" style="cursor: pointer;"> (Edit Profile)</a></h1>
                 <div id="view-profile-div">
                     <div class="main-profile-detail">
                         <div class="profile-width-5"></div>
@@ -418,7 +448,7 @@
             <!-- Admin's Edit Profile Tab-->
             <div id="Edit-Profile-div" style="display: none;"> 
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <h1>Profile   <a  onclick="viewProfile()"> (View Profile)</a></h1>
+                    <h1>Profile   <a  onclick="viewProfile()" style="cursor: pointer;"> (View Profile)</a></h1>
                     <div id="view-profile-div">
                         <div class="main-profile-detail">
                             <div class="profile-width-5"></div>
@@ -1149,6 +1179,10 @@
             float:left;
             position: relative;
             width: 30%;            
+        }
+
+        a:hover{
+            color: green;
         }
     </style>
 </body>

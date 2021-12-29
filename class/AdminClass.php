@@ -170,6 +170,33 @@ class Admin{
         } 
     }
 
+    public function displayTopBuyer(){
+
+        $sqlGetTop5 = "SELECT o.customerID AS custID, COUNT(o.customerID) AS Frequency, c.custName AS customerName FROM orders o, customer c WHERE o.customerID = c.customerID AND o.orderStatusID = 2 GROUP BY o.customerID ORDER BY Frequency DESC LIMIT 5";
+        $ResultGetTop5 = $this->conn->query($sqlGetTop5);
+
+        if ($ResultGetTop5){
+            if($ResultGetTop5->num_rows > 0){
+                while($row = mysqli_fetch_array($ResultGetTop5)){
+                    echo '<li class="li2">'.$row['customerName'].'</li>';
+                }
+            }
+        }
+
+        /*while($row = $ResultGetTop5->fetch_assoc()){
+
+            $sqlgetData = "SELECT custName FROM customer WHERE customerID='".$row['customerID']."'";
+            $resultgetData = mysqli_query($conn, $sqlgetData);   
+
+            $getResult = mysqli_fetch_assoc($resultgetData);    
+            $custName = $getResult['custName'];
+            
+            echo '<li class="li2">'.$custName.'</li>';
+
+        }*/
+
+    }
+
 
     public function createCustomer(){
         echo "Customer cretaed";
