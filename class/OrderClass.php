@@ -32,7 +32,7 @@ class Order{
                                 o.orderID, o.dateCreated, c.custName, c.deliveryAddress, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName, o.orderTotal
                               FROM orders o, customer c, delivery d, payment p, orderstatus s
                               WHERE
-                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID";
+                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID AND o.orderStatusID=4";
 
         $result = $this->conn->query($displayCustOrderQuery);
 
@@ -50,19 +50,25 @@ class Order{
                     $total = $row["orderTotal"];
 
                     echo '
-                    <div>
-                        <tr>
-                            <td>'.$id.'</td>
-                            <td>'.$dateCreated.'</td>
-                            <td>'.$custname.'</td>
-                            <td>'.$address.'</td>
-                            <td>'.$deliverydate.'</td>
-                            <td>'.$deliveryOption.'</td>
-                            <td>'.$paymentMethod.'</td>
-                            <td>'.$status.'</td>
-                            <td>'.$total.'</td>
-                        </tr>
-                    </div>
+                    
+                    <tr>
+                        <td align=\'center\'>'.$id.'</td>
+                        <td>'.$dateCreated.'</td>
+                        <td>'.$custname.'</td>
+                        <td>'.$address.'</td>
+                        <td>'.$deliverydate.'</td>
+                        <td align=\'center\'>'.$deliveryOption.'</td>
+                        <td>'.$paymentMethod.'</td>
+                        <td>'.$status.'</td>
+                        <td align=\'center\'>'.$total.'</td>
+                        <td style="background-color: rgb(75, 70, 70);text-align: center;">
+                            <form  method="POST" action="editCust_page.php">
+                                <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
+                                <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
+                            </form>                                    
+                        </td>                            
+                    </tr>
+                    
                     ';
                 }
             }else{

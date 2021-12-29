@@ -233,6 +233,38 @@
             }
             echo "<script>window.location.href='dashboard.php';</script>";
         }
+        else if(isset($_POST["order_delivered"])){
+            $id_delivered = $_POST['order_delivered'];
+
+            //Update status to Completed
+            $updatestatusQuery = "UPDATE orders SET orderStatusID = 2 WHERE orderID = $id_delivered";
+
+            $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
+    
+            if ($resultStatus) {
+                echo '<script>alert("Order ID ('.$id_delivered.') delivered.")</script>';
+            }else{
+                echo '<script>alert("Something went wrong. :(")</script>';
+            }
+            echo "<script>window.location.href='dashboard.php';</script>";            
+
+        }
+        else if(isset($_POST["order_cancelled"])){
+            $id_delivered = $_POST['order_cancelled'];
+
+            //Update status to cancel
+            $updatestatusQuery = "UPDATE orders SET orderStatusID = 3 WHERE orderID = $id_delivered";
+
+            $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
+    
+            if ($resultStatus) {
+                echo '<script>alert("Order ID ('.$id_delivered.') cancelled.")</script>';
+            }else{
+                echo '<script>alert("Something went wrong. :(")</script>';
+            }
+            echo "<script>window.location.href='dashboard.php';</script>";            
+
+        }        
     }
 
     function test_input($data) {

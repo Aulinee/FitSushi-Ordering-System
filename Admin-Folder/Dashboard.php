@@ -215,7 +215,13 @@
         }elseif(isset($_POST["delete-product"])){
             $deleteproductid = $_POST["delete-product"];
             echo '<script>alert("Delete:'.$deleteproductid.'")</script>'; 
+        }elseif(isset($_POST["order-delivered"])){
+
+            $id_delivered = $_POST['order_delivered'];
+
+            echo '<script>alert("'.$id_delivered.'")</script>';
         }
+        
     }
 
     function test_input($data) {
@@ -730,11 +736,14 @@
                                         <th class="info-20">PAYMENT METHOD</th>
                                         <th class="info-20">STATUS</th>
                                         <th class="info-20">AMOUNT</th>
+                                        <th class="info-20">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                        <?php $orderObj->displayAllCustOrder(); ?>
+                                        <div>
+                                            <?php $orderObj->displayAllCustOrder(); ?>
+                                        </div>
                                     </form>                                     
                                 </tbody>
                             </table>
