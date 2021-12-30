@@ -104,6 +104,7 @@
                 $boolopnHrs = true;
             }
 
+
             //WA
             $WA_edit = $_POST["WAtext"];
             if (empty($WA_edit)) {
@@ -829,10 +830,6 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
-
-
-
-
         }
 
         function viewProfile(){
