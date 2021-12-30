@@ -258,10 +258,16 @@
 
     //-----------Get new user this month and last month
 
+    $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
+    $resultTotalUser = $conn->query($getTotalUser);
 
-
-
-
+    if($resultTotalUser){
+        if($resultTotalUser->num_rows > 0){
+            while($row = mysqli_fetch_array($resultTotalUser)){
+                $TotalUser = $row['TotalCustomer'];
+            }
+        }
+    }    
 
     //-----------To get data to be displayed in Pie Chart
     $getSushi_PieChart = "SELECT s.sushiName, SUM(a.qty) AS Frequency FROM sushi s, alacarteorder a, orders o WHERE a.sushiID = s.sushiID AND o.orderID = a.orderID AND o.orderStatusID = 2 GROUP BY s.sushiName ORDER BY Frequency";
@@ -270,8 +276,21 @@
     //-----------To get the data to be displayed in curve chart
 
     $getRevenueChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
-    $resultRevenueChart = mysqli_query($conn, $getRevenueChart);    
+    $resultRevenueChart = mysqli_query($conn, $getRevenueChart);      
 
+    $getPendingChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=4 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
+    $resultPendingChart = mysqli_query($conn, $getPendingChart);
+
+    /*$getRevenueChart20 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
+    $resultRevenueChart20 = mysqli_query($conn, $getRevenueChart20);
+    
+    $getRevenueChart21 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
+    $resultRevenueChart21 = mysqli_query($conn, $getRevenueChart21);    
+
+    $getRevenueChart22 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
+    $resultRevenueChart22 = mysqli_query($conn, $getRevenueChart22);  */
+
+    //--------------To get the data to be displayed for this month
 ?>
 
 <!DOCTYPE html>
@@ -358,7 +377,40 @@
 
         Linechart.draw(Revenuedata, Revenueoptions);
       }
+    
     </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawPendingChart);
+
+      function drawPendingChart() {
+        var Pendingdata = google.visualization.arrayToDataTable([
+          ['Month', 'RM'],
+
+            <?php 
+
+                while($CurvePchart = mysqli_fetch_assoc($resultPendingChart)){
+
+                    echo "['".$CurvePchart['month']."',".$CurvePchart['TotalSales']."],";
+
+                }
+
+            ?>          
+        ]);
+
+        var Pendingoptions = {
+          title: 'Sales each month',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var PLinechart = new google.visualization.PLineChart(document.getElementById('curve_Pchart'));
+
+        PLinechart.draw(Pendingdata, Pendingoptions);
+      }
+    
+    </script>
+
 
 
     <title>Home</title>
@@ -444,7 +496,7 @@
                     <div>
                         <h2 class="h2-dashboard">Sales Revenue</h2>
                         <label for="year" class="year"><b>Year:</b></label>
-                        <select id="yearRevenue" name="yearRevenue" class="select-year" onChange=""> 
+                        <select id="yearRevenue" name="yearRevenue" class="select-year" onchange="updateYear()"> 
                             <option value="2017">2017</option>
                             <option value="2018">2018</option>
                             <option value="2019">2019</option>
@@ -453,10 +505,18 @@
                             <option value="2022">2022</option>
                         </select>
                         <div id="curve_chart" style="width: 470px; height: 200px;"></div>
+                        <div id="curve_Pchart" style="width: 470px; height: 200px;"></div>
                     </div>
                     <div>
                         <h2 class="h2-dashboard">New User Data</h2>
-                        
+                        <div id="overview-TSales" style="background-color: white;margin-right:30px;border-radius: 10px;">
+                            <h2>Amount of new user this month:</h2>
+                            <h2>RM <?php  echo $TotalSales ?></h2>
+                        </div>
+                        <div id="overview-TUser" style="background-color: white;margin-right:30px;border-radius: 10px;">
+                            <h2>Total User</h2>
+                            <h2><?php  echo $TotalUser ?></h2>
+                        </div>                        
                     </div>
                     
                     <!-- <div>
@@ -486,6 +546,7 @@
                             <option value="2022">2022</option>
                         </select>
                     </div> -->
+
                 </div>
             </div>
 
@@ -777,7 +838,9 @@
                                 </thead>
                                 <tbody>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                        <?php $menuObj->displayAllProduct(); ?>
+                                        <div>
+                                            <?php $menuObj->displayAllProduct(); ?>
+                                        </div>
                                     </form>                                     
                                 </tbody>
                             </table>
@@ -835,7 +898,7 @@
                         <div id="Title-header" align="center">
                             <h1>LIST OF CUSTOMER ORDER</h1>
                             <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
-                                <input type='submit' class='button' name='Report_CustOrder' value='Download Report' />      <!-- Button: Report_CustOrder -->                                
+                                <input type='submit' class='button' name='Report_CustOrder' value='Download Pending Order' />      <!-- Button: Report_CustOrder -->                                
                             </form>
                         </div>
                     </div>
@@ -914,6 +977,12 @@
             editcustomerdiv.style.display = "none";
             productdiv.style.display = "none";
             orderdiv.style.display = "none";
+        }
+
+        function updateYear(){
+            var selectYear = document.getElementById('yearRevenue').value;
+
+            alert("Selected year: "+selectYear);
         }
 
         function viewProfile(){

@@ -144,30 +144,20 @@ class Menu{
                     $availability = $row["availability"];
 
                     if($availability == 1){
-                        $td_availability = "<div>
-                                                <select id=\"cars\">
-                                                    <option value=\"Available\" selected>Available</option>
-                                                    <option value=\"Not Available\">Not Available</option>
-                                                </select>
-                                            </div>";
+                        $td_availability = "Available";
                     }
                     else{
-                        $td_availability = "<div>
-                                                <select id=\"cars\">
-                                                    <option value=\"Available\">Available</option>
-                                                    <option value=\"Not Available\" selected>Not Available</option>
-                                                </select>
-                                            </div>";
+                        $td_availability = "Not Available";
                     }
+
                     echo '
-                    <div>
                         <tr>
-                            <td>'.$id.'</td>
-                            <td>'.$sushiname.'</td>
+                            <td align="center">'.$id.'</td>
+                            <td align="center">'.$sushiname.'</td>
                             <td>'.$sushiDesc.'</td>
-                            <td>'.$sushiPrice.'</td>
+                            <td align="center">'.$sushiPrice.'</td>
                             <td><img src="data:image/jpg;charset=utf8;base64, '.base64_encode($sushiimg).'" width="100" height="100"></td>
-                            <td>'.$td_availability.'</td>                               
+                            <td align="center">'.$td_availability.'</td>                               
                             <td style="background-color: rgb(75, 70, 70);text-align: center;">
                                 <form  method="POST" action="editProduct_page.php">
                                     <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="edit-product" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
@@ -176,7 +166,6 @@ class Menu{
 
                             </td>                            
                         </tr>
-                    </div>
                     ';
                 }
             }else{

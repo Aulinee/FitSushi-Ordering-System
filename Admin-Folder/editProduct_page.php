@@ -68,8 +68,8 @@
             $sushi_Price = $_POST["sushi_price"];
             $sushi_Available = $_POST["sushi_available"];
 
-            //To check if the image is changed
-            if(empty($hold_sushi_Img)){
+            //To check if the image is changed (Uncomment to test)
+            /*if(empty($hold_sushi_Img)){
                 echo "No image selected<br>";
             }else{
                 $sushi_Img = addslashes(file_get_contents($hold_sushi_Img));
@@ -84,7 +84,7 @@
             echo "Sushi Name: ".$sushi_Name."<br>";
             echo "Sushi Desc: ".addslashes($sushi_Desc)."<br>";            
             echo "Sushi Price: ".$sushi_Price."<br>";
-            echo "Sushi Available:".$sushi_Available."<br>";
+            echo "Sushi Available:".$sushi_Available."<br>";*/
 
             $AllErr = $sushiNameErr = $sushiDescErr = $sushiImgErr = $sushiPriceErr = "";
             $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiPrice = false;
