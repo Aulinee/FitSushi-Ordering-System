@@ -12,7 +12,7 @@
     $locErr = $opnHrsErr = $WAErr = $IGErr = $FBErr = "";
     $loc_edit = $opnHrs_edit = $WA_edit = $IG_edit = $FB_edit = "";
     $boolloc= $boolopnHrs = $boolWA = $boolIG = $boolFB = false;
-
+    
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if (isset($_POST["update_Admin"]) ) {
 
@@ -255,9 +255,23 @@
             }
         }
     }
-    else{
 
-    }
+    //-----------Get new user this month and last month
+
+
+
+
+
+
+    //-----------To get data to be displayed in Pie Chart
+    $getSushi_PieChart = "SELECT s.sushiName, SUM(a.qty) AS Frequency FROM sushi s, alacarteorder a, orders o WHERE a.sushiID = s.sushiID AND o.orderID = a.orderID AND o.orderStatusID = 2 GROUP BY s.sushiName ORDER BY Frequency";
+    $getResultSushi_PieChart = mysqli_query($conn, $getSushi_PieChart);
+
+    //-----------To get the data to be displayed in curve chart
+
+    $getRevenueChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
+    $resultRevenueChart = mysqli_query($conn, $getRevenueChart);    
+
 ?>
 
 <!DOCTYPE html>
@@ -284,7 +298,73 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<<<<<<< Updated upstream
     <link href="../style/admin.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
+=======
+    <link rel="stylesheet" href="../style/admin.css">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawPieChart);
+
+      function drawPieChart() {
+
+        var TopProductdata = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+            <?php 
+
+                while($piechart = mysqli_fetch_assoc($getResultSushi_PieChart)){
+
+                    echo "['".$piechart['sushiName']."',".$piechart['Frequency']."],";
+
+                }
+           
+            ?>
+        ]);
+
+        var optionsSushi = {
+          title: 'Sushi'
+        };
+
+        var Piechart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        Piechart.draw(TopProductdata, optionsSushi);
+      }
+    </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawLineChart);
+
+      function drawLineChart() {
+        var Revenuedata = google.visualization.arrayToDataTable([
+          ['Month', 'RM'],
+
+            <?php 
+
+                while($Curvechart = mysqli_fetch_assoc($resultRevenueChart)){
+
+                    echo "['".$Curvechart['month']."',".$Curvechart['TotalSales']."],";
+
+                }
+
+            ?>          
+        ]);
+
+        var Revenueoptions = {
+          title: 'Sales each month',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var Linechart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        Linechart.draw(Revenuedata, Revenueoptions);
+      }
+    </script>
+
+
+>>>>>>> Stashed changes
     <title>Home</title>
 </head>
 <body class="flex-col">
@@ -361,7 +441,7 @@
                     </div>
                     <div>
                         <h2 class="h2-dashboard">Top product</h2>
-
+                        <div id="piechart" style="width: 270px; height: 230px;"></div>
                     </div>            
                 </div>
                 <div class="flex-container2">
@@ -376,8 +456,14 @@
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
                         </select>
+                        <div id="curve_chart" style="width: 470px; height: 200px;"></div>
                     </div>
                     <div>
+                        <h2 class="h2-dashboard">New User Data</h2>
+                        
+                    </div>
+                    
+                    <!-- <div>
                         <h2 class="h2-dashboard">New User Data</h2>
                         <label for="month" class="month"><b>Month:</b></label>
                         <select id="month" name="month" class="select-month">
@@ -403,7 +489,7 @@
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
