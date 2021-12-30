@@ -412,7 +412,7 @@
                 <div class="adminlogo-sidebar-div-1">
                     <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
                 </div>
-                <div  class="adminlogo-sidebar-div-2">
+                <div class="adminlogo-sidebar-div-2">
                     <h1><?php echo $username; ?></h1>
                     <h2>Admin</h2>
                 </div>
@@ -431,58 +431,73 @@
             </div>
         </div>
         <div class="admin-page-dashboard">
-
             <!-- Home Tab -->
-            <div  class="home-tab" id="Home-div" style="display: block;">
-                <h1 class="h1-dashboard">Sales Report</h1>
-                <div class="calendar">
-                    <form action="/action_page.php"></form>
-                    <label for="month"><img src="img/admin-img/calendar.jpg" alt="calendar" width="39" height="52"><b>:</b></label>
-                    <select id="month" name="month" class="cal">
-                        <option value=" "><em>-- select a month --</em></option>
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June</option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="December">December</option>
-                    </select>
+            <div class="home-tab-content" id="Home-div" style="display: block;">
+                <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Sales Report</h1>
                 </div>
-                <div class="flex-container1">
-                    <div>
-                        <h2 class="h2-dashboard">Overview</h2>
-                        <div id="overview-TSales" style="background-color: white;margin-right:30px;border-radius: 10px;">
-                            <h2>Total Sales</h2>
-                            <h2>RM <?php  echo $TotalSales ?></h2>
+                <div class="calendar">
+                    <form action="/action_page.php">
+                        <label for="month"><i style="font-size:24px" class="fa">&#xf073;</i></label>
+                        <select id="month" name="month" class="datebox">
+                            <option value="select"><em>-- select a month --</em></option>
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                        <select id="year" name="year" class="datebox">
+                            <option value="select"><em>-- select a year --</em></option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="flex-container">
+                    <div class="overview-div">
+                        <h2 class="inside-div-title">Overview</h2>
+                        <div class="flex-row space-between">
+                            <div class="total-sales flex-row" id="overview-TSales">
+                                <div class="width-20">
+                                    <img class= "dollar-icon" src="../img/admin-img/TotalSales.png" alt="dollar-sign">
+                                </div>
+                                <div class="padding-left-10 width-70">
+                                    <h2 class="title">Total Sales</h2>
+                                    <h2 class="content">RM <?php  echo $TotalSales ?></h2>
+                                </div>
+                            </div>
+                            <div class="total-user flex-row space-between" id="overview-TUser">
+                                <div class="width-20">
+                                    <img class= "user-icon" src="../img/admin-img/TotalUser.png" alt="user-sign">
+                                </div>
+                                <div class="padding-left-10 width-70">
+                                    <h2 class="title">Total User</h2>
+                                    <h2 class="content"><?php  echo $TotalUser ?></h2>
+                                </div>
+                            </div>
                         </div>
-                        <div id="overview-TUser" style="background-color: white;margin-right:30px;border-radius: 10px;">
-                            <h2>Total User</h2>
-                            <h2><?php  echo $TotalUser ?></h2>
-                        </div>
-
                     </div>
-                    <div>
-                        <h2 class="h2-dashboard">Top Buyer</h2>
+                    <div class="topbuyer-div">
+                        <h2 class="inside-div-title">Top Buyer</h2>
                         <ul class="ul1">
                             <?php $adminObj->displayTopBuyer(); ?>
                         </ul>
-
-                    </div>
-                    <div>
-                        <h2 class="h2-dashboard">Top product</h2>
-                        <div id="piechart" style="width: 270px; height: 230px;"></div>
-                    </div>            
+                    </div>           
                 </div>
-                <div class="flex-container2">
-                    <div>
-                        <h2 class="h2-dashboard">Sales Revenue</h2>
-                        <label for="year" class="year"><b>Year:</b></label>
+                <div class="flex-container">
+                    <div class="revenue-div">
+                        <h2 class="inside-div-title ">Sales Revenue</h2>
+                        <!-- RASANYA YEAR BOLEH BUANG SBB DAH ADA -->
+                        <!-- <label for="year" class="year"><b>Year:</b></label>
                         <select id="yearRevenue" name="yearRevenue" class="select-year" onchange="updateYear()"> 
                             <option value="2017">2017</option>
                             <option value="2018">2018</option>
@@ -490,18 +505,24 @@
                             <option value="2020">2020</option>
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
-                        </select>
-                        <div id="curve_chart" style="width: 470px; height: 200px;"></div>
-                        <div id="curve_Pchart" style="width: 470px; height: 200px;"></div>
+                        </select> -->
+                        <div id="curve_chart" style="width:100%; height: 300px;"></div>
                     </div>
+                    <div class="topproduct-div">
+                        <h2 class="inside-div-title ">Top product</h2>
+                        <div id="piechart" style="width:100%; height: 300px;"></div>
+                    </div> 
                 </div>
             </div>
 
             <!-- Admin's Profile Tab-->
             <div  class="home-tab" id="Profile-div" style="display: none;"> 
-                <h1>Profile   <a  onclick="editAdmin()" style="cursor: pointer;"> (Edit Profile)</a></h1>
-                <div id="view-profile-div">
-                    <div class="main-profile-detail">
+                <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Administrator Profile</h1>
+                </div>
+                <button class="edit-admin-btn"><a onclick="editAdmin()" style="cursor: pointer;">Edit Profile</a></button>
+                <div class="profile-tbl" id="view-profile-div">
+                    <div class="main-profile-detail profile-width-80">
                         <div class="profile-width-5"></div>
                         <div class="main-profile-detail-left ">
                             <div class="user-detail">
@@ -541,48 +562,48 @@
 
             <!-- This div only visible when Edit Profile button is triggered!!! -->
             <!-- Admin's Edit Profile Tab-->
-            <div  class="home-tab" id="Edit-Profile-div" style="display: none;"> 
+            <div class="home-tab" id="Edit-Profile-div" style="display: none;"> 
+                <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Administrator Profile</h1>
+                </div>
+                <button class="edit-admin-btn"><a  onclick="viewProfile()" style="cursor: pointer;">View Profile</a></button>
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <h1>Profile   <a  onclick="viewProfile()" style="cursor: pointer;"> (View Profile)</a></h1>
-                    <div id="view-profile-div">
-                        <div class="main-profile-detail">
-                            <div class="profile-width-5"></div>
-                            <div class="main-profile-detail-left ">
-                                <div class="user-detail">
-                                    <h2>Username</h2>
-                                    <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
-                                </div>
-                                <div class="user-detail">
-                                    <h2>Full Name</h2>
-                                    <div>
-                                        <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
-                                    </div>
-                                </div>
-                                <div class="user-detail">
-                                    <h2>Email</h2>
-                                    <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
-                                </div>
-                                <div class="user-detail">
-                                    <h2>Phone Number</h2>
-                                    <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                    <div class="main-profile-detail profile-width-80">
+                        <div class="profile-width-5"></div>
+                        <div class="main-profile-detail-left ">
+                            <div class="user-detail">
+                                <h2>Username</h2>
+                                <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                            </div>
+                            <div class="user-detail">
+                                <h2>Full Name</h2>
+                                <div>
+                                    <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
                                 </div>
                             </div>
-                            <div class="profile-width-20"></div>
-                            <div class="main-profile-detail-right">
-                                <div class="user-detail">
-                                    <h2>Password</h2>
-                                    <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
-                                </div>
-                                <br>
-                                <div class="user-detail-btn">
-                                    <button name="update_Admin" id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
-                                </div>
+                            <div class="user-detail">
+                                <h2>Email</h2>
+                                <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
                             </div>
-                            <div class="profile-width-5"></div>
+                            <div class="user-detail">
+                                <h2>Phone Number</h2>
+                                <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                            </div>
                         </div>
+                        <div class="profile-width-20"></div>
+                        <div class="main-profile-detail-right">
+                            <div class="user-detail">
+                                <h2>Password</h2>
+                                <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                            </div>
+                            <br>
+                            <div class="user-detail-btn">
+                                <button class="save-edit-btn red-bg">Save Changes</button>
+                            </div>
+                        </div>
+                        <div class="profile-width-5"></div>
                     </div>                      
                 </form>
-              
             </div>   
 
             <!-- Store Tab -->
@@ -940,6 +961,12 @@
             document.getElementById("email").disabled = true;
             document.getElementById("phonenumber").disabled = true;
             document.getElementById("password").disabled = true;
+
+            document.getElementById("username").style.backgroundColor = "#f9f9f9";
+            document.getElementById("fullname").style.backgroundColor = "#f9f9f9";
+            document.getElementById("email").style.backgroundColor = "#f9f9f9";
+            document.getElementById("phonenumber").style.backgroundColor = "#f9f9f9";
+            document.getElementById("password").style.backgroundColor = "#f9f9f9";
 
             //Set div visibility
             homediv.style.display = "none";

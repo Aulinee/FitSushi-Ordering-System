@@ -92,6 +92,18 @@ a {
   flex-direction: row;
 }
 
+.width-70 {
+  width: 70%;
+}
+
+.padding-left-10 {
+  padding-left: 10%;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
 /*-----------------Dashboard Page - Sidebar----------------*/
 .admin-page {
   font-family: "Roboto";
@@ -128,7 +140,8 @@ a {
 }
 
 .adminlogo-sidebar-div {
-  height: 20%;
+  height: 10%;
+  margin-bottom: 10%;
 }
 
 .adminlogo-sidebar-div-1 {
@@ -150,7 +163,7 @@ a {
 .adminlogo-sidebar-div-2 h2 {
   font-family: "Roboto";
   font-size: 15px;
-  color: #ed011e;
+  color: #f598a4;
 }
 
 .admin-sidebar-tab-div {
@@ -184,7 +197,7 @@ a {
 
 .admin-page-dashboard {
   width: 85%;
-  margin: 0px;
+  margin: 2%;
   padding: 0px;
 }
 
@@ -195,104 +208,360 @@ a {
   overflow-x: hidden;
 }
 
-.h1-dashboard {
-  font-family: "NATS";
-  font-size: 50px;
-  text-align: center;
+.home-tab-content {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-title {
+  font-family: "Poppins";
+  font-size: 30px;
+  border-bottom: 5px solid var(--red);
+  width: fit-content;
+  margin: auto auto 5% auto;
+}
+
+.dashboard-title-div {
 }
 
 .calendar {
-  padding-left: 200px;
+  margin: 2% 0;
 }
 
-.cal {
-  border: 2px solid var(--black);
+.datebox {
+  background: #82a2d3;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
-  border-style: inset;
-  width: 180px;
   text-align: center;
   padding: 3px;
   font-family: "poppins";
-  font-size: 12px;
+  font-size: 15px;
+  margin: 0 2%;
 }
 
-.flex-container1 {
+.flex-container {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
 }
 
-.flex-container1 > div {
-  background-color: var(--yellow);
-  width: 300px;
-  margin: 20px;
-  padding-left: 30px;
-  border-radius: 10px;
-  border: 2px #7c7373;
-  border-style: outset;
+.flex-container > div {
+  background: #edd2d6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  margin: 2% 0.5%;
+  padding: 2%;
+}
+
+.overview-div {
+  width: 70%;
+}
+
+.topbuyer-div {
+  width: 30%;
+}
+
+.topproduct-div {
+  width: 50%;
+}
+
+.revenue-div {
+  width: 50%;
+}
+
+.inside-div-title {
+  border-left: 5px solid var(--red);
+  padding-left: 2%;
+  margin: 0 0 5% 0;
+  font-size: 25px;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+.total-sales,
+.total-user {
+  background: #c1273a;
+  border-radius: 13px;
+  width: 42%;
+  padding: 5% 3%;
+}
+
+.title {
+  font-family: "DM Serif Text";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 21px;
+  color: #fffafa;
+}
+
+.content {
+  margin: 0;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  color: #fff9f9;
+}
+
+.user-icon {
+  width: 120px;
+}
+
+.dollar-icon {
+  width: 80px;
 }
 
 .ul1 {
-  list-style-type: disc;
+  list-style-type: none;
   font-family: "Poppins";
-  font-size: 14px;
-  padding-left: 30px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  text-align: center;
+  color: #000000;
 }
 
 .li2 {
-  padding: 5px;
+  background: #fcecee;
+  padding: 3% 0;
 }
 
-.flex-container2 {
+.li2:nth-child(even) {
+  background: #fff;
+}
+
+/*----------------------- Admin-profile------------------------- */
+.flex-col {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 
-.flex-container2 > div {
-  background-color: var(--yellow);
-  width: 500px;
-  margin: 20px;
-  padding-left: 20px;
-  border-radius: 10px;
-  border: 2px #7c7373;
-  border-style: outset;
+.flex-row {
+  display: flex;
+  flex-direction: row;
 }
 
-.h2-dashboard {
-  font-family: "NATS";
-  font-size: 25px;
-  text-align: justify;
+.profile-detail {
+  font-family: "Poppins";
+  text-align: center;
+  width: 90%;
+  height: 100%;
+  margin: auto;
+}
+
+.profile-tbl {
+  display: flex;
+  margin: auto;
+  width: 100%;
+}
+
+.sidebar-profile {
+  padding-top: 5%;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.sidebar-profile i {
+  margin: 0 auto;
+  width: 70%;
+  border-radius: 50%;
+  border: 2px solid var(--red);
+  font-size: 130px;
+}
+
+.sidebar-profile-btn {
+  outline: none;
+  border: none;
+  background: #fdfdfd;
+  margin: 1% 0;
+  padding: 15px;
+  font-size: 18px;
+  font-family: "Poppins";
+}
+
+.sidebar-btn-active,
+.sidebar-profile-btn:hover {
+  margin: 1% 0;
+  padding: 15px;
+  font-size: 18px;
+  font-family: "Poppins";
+  border-left: 10px solid var(--red);
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+  color: var(--red);
+  outline: none;
+  background: #fdfdfd;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.main-profile {
+  background: #f6f6f6;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.main-profile-detail {
+  display: flex;
+  width: 100%;
+  text-align: left;
+  background: #f6f6f6;
+  border: 4px solid #455b7c;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.main-profile-detail-left {
+  margin-top: 4%;
+  margin-bottom: 4%;
+  width: 40%;
+}
+
+.main-profile-detail-right {
+  margin-top: 4%;
+  margin-bottom: 4%;
+  width: 40%;
+}
+
+button:disabled,
+button[disabled] {
+  opacity: 0.7;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.margin-0 {
+  margin: 0;
+}
+
+.user-detail div {
+  width: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+}
+
+.gender-detail {
+  flex: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.gender-detail label {
+  font-size: 17px;
+  padding: 0px 30px;
+}
+
+.user-detail {
+  margin-bottom: 5%;
+}
+
+.user-detail-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-detail-btn {
+  margin: 0;
+  width: 60%;
+  float: right;
+}
+
+.save-edit-btn {
+  width: 100%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  letter-spacing: 2px;
   color: var(--white);
+  text-transform: uppercase;
+  padding: 0.7vw 1.5vw;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
 }
 
-.month {
+.edit-admin-btn {
+  margin: 1% 0;
+  background-color: var(--darkblue);
+  border-radius: 5px;
+  width: 20%;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-transform: uppercase;
+  padding: 0.7vw 1.5vw;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-admin-btn a:hover {
+  color: white;
+  font-weight: 700;
+}
+
+.save-edit-btn:hover,
+.edit-admin-btn:hover {
+  opacity: 0.7;
+}
+
+.user-detail-col input {
+  padding: 6% 5%;
+}
+
+.user-detail h3 {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.input-detail {
+  width: 94%;
+  padding: 3%;
+  font-size: 20px;
   color: var(--black);
-  font-family: "Roboto";
-  font-size: 12px;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  outline: none;
+  border: none;
 }
 
-.select-month {
-  border: 1px #888585;
-  border-radius: 3px;
-  border-style: inset;
-  font-family: "Roboto";
-  font-size: 12px;
-  text-align: center;
-}
-
-.year {
+.input-detail-2 {
+  width: 100%;
+  padding: 3%;
+  font-size: 20px;
   color: var(--black);
-  font-family: "Roboto";
-  font-size: 12px;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  outline: none;
+  border: none;
 }
 
-.select-year {
-  border: 1px #888585;
-  border-radius: 3px;
-  border-style: inset;
-  font-family: "Roboto";
-  font-size: 12px;
-  text-align: center;
+.profile-margin-3 {
+  margin-right: 3%;
 }
+
+.profile-width-20 {
+  width: 15%;
+}
+.profile-width-50 {
+  width: 50%;
+}
+
+.profile-width-5 {
+  width: 5%;
+}
+
+.profile-width-80 {
+  width: 95%;
+}
+
+.none {
+  display: none;
+}
+
+/* -----------footer----------- */
 
 .footer {
   font-size: 10px;
@@ -319,8 +588,4 @@ table {
   float: left;
   position: relative;
   width: 30%;
-}
-
-a:hover {
-  color: green;
 }
