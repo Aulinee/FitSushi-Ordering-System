@@ -13,15 +13,17 @@ html {
 }
 
 body {
-  height: 100vh;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
   font-family: "Poller One", "cursive", "NATS", sans-serif;
 }
 
+.red-border {
+  border: 2px solid red;
+}
+
 /*global*/
+
 .container {
   margin: auto;
   width: 90%;
@@ -81,13 +83,20 @@ a {
   text-transform: uppercase;
 }
 
-/*-----------------Home Page----------------*/
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+/*-----------------Dashboard Page - Sidebar----------------*/
 .admin-page {
   font-family: "Roboto";
   font-size: 10px;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
+  height: 100vh;
 }
 
 .admin-pic {
@@ -104,54 +113,78 @@ a {
 }
 
 .admin-page-sidebar {
-  border: 2px solid var(--blue);
   color: var(--white);
   background-color: var(--blue);
+  width: 15%;
 }
 
-h1 {
+.logo-sidebar-div {
+  height: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-sidebar-div img {
+  width: fit-content;
+}
+
+.adminlogo-sidebar-div {
+  height: 20%;
+}
+
+.adminlogo-sidebar-div-1 {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
+
+.adminlogo-sidebar-div-2 {
+  padding-left: 5%;
+  width: 50%;
+}
+
+.adminlogo-sidebar-div-2 h1 {
   font-family: "Roboto";
   font-size: 20px;
-  bottom: 0;
-  top: auto;
-  padding-left: 10px;
 }
 
-h2 {
+.adminlogo-sidebar-div-2 h2 {
   font-family: "Roboto";
   font-size: 15px;
   color: #ed011e;
-  top: 0;
-  padding-left: 10px;
 }
 
-.padding {
-  padding-left: 15px;
+.admin-sidebar-tab-div {
+  height: 70%;
 }
 
-.size {
+.admin-sidebar-tab-div .size {
   width: 27px;
   height: 27px;
 }
 
-ul {
+.admin-sidebar-tab-div ul {
   list-style-type: none;
-  font-family: "NATS";
   font-size: 20px;
-  padding-top: 15px;
 }
 
-.li-padding {
-  padding-left: 12px;
+.admin-sidebar-tab-div .li-padding {
+  padding: 5%;
 }
 
-.li-padding:hover {
+.admin-sidebar-tab-div .li-padding img {
+}
+
+.admin-sidebar-tab-div .li-padding:hover {
+  border: 1px solid var(--blue);
   background-color: var(--white);
   color: var(--black);
 }
 
+/*-----------------Dashboard Page - Content----------------*/
+
 .admin-page-dashboard {
-  width: 100%;
+  width: 85%;
   height: 100%;
   margin: 0px;
   padding: 0px;
@@ -167,18 +200,18 @@ ul {
   margin-bottom: 0px;
 }
 
-.calendar{
+.calendar {
   padding-left: 200px;
 }
 
-.cal{
+.cal {
   border: 2px solid var(--black);
   border-radius: 3px;
   border-style: inset;
   width: 180px;
   text-align: center;
   padding: 3px;
-  font-family: 'poppins';
+  font-family: "poppins";
   font-size: 12px;
 }
 
@@ -193,18 +226,18 @@ ul {
   margin: 20px;
   padding-left: 30px;
   border-radius: 10px;
-  border: 2px #7C7373;
+  border: 2px #7c7373;
   border-style: outset;
 }
 
-.ul1{
+.ul1 {
   list-style-type: disc;
   font-family: "Poppins";
   font-size: 14px;
   padding-left: 30px;
 }
 
-.li2{
+.li2 {
   padding: 5px;
 }
 
@@ -219,12 +252,12 @@ ul {
   margin: 20px;
   padding-left: 20px;
   border-radius: 10px;
-  border: 2px #7C7373;
+  border: 2px #7c7373;
   border-style: outset;
 }
 
-.h2-dashboard{
-  font-family: 'NATS';
+.h2-dashboard {
+  font-family: "NATS";
   font-size: 25px;
   text-align: justify;
   color: var(--white);
@@ -232,55 +265,63 @@ ul {
   margin-bottom: 0px;
 }
 
-.month{
+.month {
   color: var(--black);
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
 }
 
-.select-month{
+.select-month {
   border: 1px #888585;
   border-radius: 3px;
   border-style: inset;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   text-align: center;
 }
 
-.year{
+.year {
   color: var(--black);
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
 }
 
-.select-year{
+.select-year {
   border: 1px #888585;
   border-radius: 3px;
   border-style: inset;
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-size: 12px;
   text-align: center;
 }
 
 .footer {
+  font-size: 10px;
   font-family: "Neucha";
-  font-size: 3px;
+  font-size: 8px;
   text-align: center;
   background-color: var(--black);
   color: var(--white);
 }
 
-/* Pop-up tab (edit-customer)*/
-.sub-hidden-form {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(255, 255, 255); /* Fallback color */
-  background: rgba(255, 255, 255, 0.4);
-  padding-top: 60px;
+/* Table css */
+table,
+th,
+td {
+  border: 1px solid black;
+}
+table {
+  overflow-y: scroll;
+  height: 300px;
+  display: block;
+}
+
+.aboutus_img_container {
+  float: left;
+  position: relative;
+  width: 30%;
+}
+
+a:hover {
+  color: green;
 }

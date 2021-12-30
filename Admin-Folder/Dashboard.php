@@ -284,22 +284,26 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../style/admin.css">
+    <link href="../style/admin.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Home</title>
 </head>
-<body>
-    <section class="admin-page">
-        <div class="admin-page-sidebar">
-            <div class="padding">
+<body class="flex-col">
+    <section class="admin-page flex-row">
+        <div class="admin-page-sidebar flex-col">
+            <div class="logo-sidebar-div">
                 <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
             </div>
-            <div class="padding">
-                <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
-                <h1><?php echo $username; ?></h1><h2>Admin</h2>
+            <div class="adminlogo-sidebar-div flex-row">
+                <div class="adminlogo-sidebar-div-1">
+                    <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
+                </div>
+                <div  class="adminlogo-sidebar-div-2">
+                    <h1><?php echo $username; ?></h1>
+                    <h2>Admin</h2>
+                </div>
             </div>
-            <br><br>
             <script>Home();</script>
-            <div>
+            <div class="admin-sidebar-tab-div">
                 <ul>
                     <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav" style="cursor: pointer;" onclick="Home()"> HOME</a></li>
                     <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav" style="cursor: pointer;" onclick="viewProfile()"> PROFILE</a></li>
@@ -783,13 +787,11 @@
                 </div>
                 <br>        
             </div>
-
         </div>
     </section>
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
-
     <script>
 
         //Disable the input field
