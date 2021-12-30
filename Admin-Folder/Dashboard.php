@@ -298,10 +298,7 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<<<<<<< Updated upstream
     <link href="../style/admin.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
-=======
-    <link rel="stylesheet" href="../style/admin.css">
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -364,7 +361,6 @@
     </script>
 
 
->>>>>>> Stashed changes
     <title>Home</title>
 </head>
 <body class="flex-col">
