@@ -608,15 +608,11 @@
 
             <!-- Store Tab -->
             <div  class="home-tab" id="Store-div" style="display: none;">
-                <br>
-                <div id="Store-title-header" align="center">
-                    <h1>Store</h1>
+                <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Store Detail</h1>
                 </div>
-                <br>
                 <!-- Div for entire content under header, consist of two content: Upper & Lower Div -->
                 <div id="StoreContentDiv">
-
-
                     <div id="UpStore_Content-div" align="center">
                         <h1>Contact Info</h1>
                         <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i></a></div>
@@ -664,8 +660,9 @@
 
             <!-- Customer Tab -->
             <div  class="home-tab" id="Customer-div" style="display: none;">
-                <h1 align="center">Customer Details</h1>
-                <br>
+                <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Customer Detail</h1>
+                </div>
                 <div class="List-of-user-acc-div">
                     <div id="Search-and-Title-header" display="inline">
                         <div class="custinput-icons">
@@ -779,7 +776,6 @@
 
             <!-- Product Tab -->
             <div  class="home-tab" id="Product-div" style="display: none;">
-                
                 <div align="center">
                     <h1 >Product Details</h1>     
                     <button onclick="addNewProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Add New Product</button>              
