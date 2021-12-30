@@ -296,16 +296,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-        }
-        table{
-            overflow-y:scroll;
-            height:300px;
-            display:block;
-        }
-    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -410,9 +400,6 @@
       }
     
     </script>
-
-
-
     <title>Home</title>
 </head>
 <body class="flex-col">
@@ -507,46 +494,6 @@
                         <div id="curve_chart" style="width: 470px; height: 200px;"></div>
                         <div id="curve_Pchart" style="width: 470px; height: 200px;"></div>
                     </div>
-                    <div>
-                        <h2 class="h2-dashboard">New User Data</h2>
-                        <div id="overview-TSales" style="background-color: white;margin-right:30px;border-radius: 10px;">
-                            <h2>Amount of new user this month:</h2>
-                            <h2>RM <?php  echo $TotalSales ?></h2>
-                        </div>
-                        <div id="overview-TUser" style="background-color: white;margin-right:30px;border-radius: 10px;">
-                            <h2>Total User</h2>
-                            <h2><?php  echo $TotalUser ?></h2>
-                        </div>                        
-                    </div>
-                    
-                    <!-- <div>
-                        <h2 class="h2-dashboard">New User Data</h2>
-                        <label for="month" class="month"><b>Month:</b></label>
-                        <select id="month" name="month" class="select-month">
-                            <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
-                        </select>
-                        <label for="year" class="year"><b>Year:</b></label>
-                        <select id="year" name="year" class="select-year">
-                            <option value="2017">2017</option>
-                            <option value="2018">2018</option>
-                            <option value="2019">2019</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                        </select>
-                    </div> -->
-
                 </div>
             </div>
 
@@ -1324,16 +1271,5 @@
         }
 
     </script>
-    <style>
-        .aboutus_img_container {
-            float:left;
-            position: relative;
-            width: 30%;            
-        }
-
-        a:hover{
-            color: green;
-        }
-    </style>
 </body>
 </html>
