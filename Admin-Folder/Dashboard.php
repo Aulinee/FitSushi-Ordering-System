@@ -394,7 +394,7 @@
         <div class="admin-page-dashboard">
 
             <!-- Home Tab -->
-            <div id="Home-div" style="display: block;">
+            <div class="home-tab" id="Home-div" style="display: block;">
                 <h1 class="h1-dashboard">Sales Report</h1>
                 <div class="calendar">
                     <form action="/action_page.php"></form>
@@ -490,7 +490,7 @@
             </div>
 
             <!-- Admin's Profile Tab-->
-            <div id="Profile-div" style="display: none;"> 
+            <div class="home-tab" id="Profile-div" style="display: none;"> 
                 <h1>Profile   <a  onclick="editAdmin()" style="cursor: pointer;"> (Edit Profile)</a></h1>
                 <div id="view-profile-div">
                     <div class="main-profile-detail">
@@ -533,7 +533,7 @@
 
             <!-- This div only visible when Edit Profile button is triggered!!! -->
             <!-- Admin's Edit Profile Tab-->
-            <div id="Edit-Profile-div" style="display: none;"> 
+            <div class="home-tab" id="Edit-Profile-div" style="display: none;"> 
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <h1>Profile   <a  onclick="viewProfile()" style="cursor: pointer;"> (View Profile)</a></h1>
                     <div id="view-profile-div">
@@ -578,7 +578,7 @@
             </div>   
 
             <!-- Store Tab -->
-            <div id="Store-div" style="display: none;">
+            <div class="home-tab" id="Store-div" style="display: none;">
                 <br>
                 <div id="Store-title-header" align="center">
                     <h1>Store</h1>
@@ -634,7 +634,7 @@
             </div>
 
             <!-- Customer Tab -->
-            <div id="Customer-div" style="display: none;">
+            <div class="home-tab" id="Customer-div" style="display: none;">
                 <h1 align="center">Customer Details</h1>
                 <br>
                 <div class="List-of-user-acc-div">
@@ -674,7 +674,7 @@
             </div>
 
             <!-- Hidden div for edit customer -->
-            <div id="editCust-div" align="center" style="display: none;">
+            <div class="home-tab" id="editCust-div" align="center" style="display: none;">
                 <br>
                 <div class="edit-cust-btn-list">
                    <button id="editUsn" type="button" onclick="editCustUsn()">Username</button> 
@@ -749,7 +749,7 @@
             </div>            
 
             <!-- Product Tab -->
-            <div id="Product-div" style="display: none;">
+            <div class="home-tab" id="Product-div" style="display: none;">
                 
                 <div align="center">
                     <h1 >Product Details</h1>     
@@ -785,7 +785,7 @@
                 </div>
 
                 <!-- Hidden div: Add New Product -->
-                <div id="AddnewProduct-div" style="display: none;" align="center">
+                <div class="home-tab" id="AddnewProduct-div" style="display: none;" align="center">
                     <h1>Add Product</h1>
                     <!-- New Product Form -->
                     <div id="Product-Form">
@@ -822,7 +822,7 @@
             </div>
 
             <!-- Order Tab -->
-            <div id="Order-div" style="display: none;">
+            <div class="home-tab" id="Order-div" style="display: none;">
                 <h1 align="center">Order Details</h1>
                 <br>
                 <!-- List of Customer Order -->
