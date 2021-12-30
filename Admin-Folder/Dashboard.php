@@ -770,8 +770,6 @@
                         </div>                    
                     </form>
                 </div>
-
-
             </div>            
 
             <!-- Product Tab -->
