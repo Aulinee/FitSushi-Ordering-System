@@ -222,52 +222,6 @@
 
             echo '<script>alert("'.$id_delivered.'")</script>';
         }
-
-        /*if(($_POST["month"] == "") && ($_POST["year"] == "")){
-
-            //----------- Sum up total sales and users
-            $getTotalSales = "SELECT orderTotal FROM orders WHERE orderStatusID=2";
-            $resultTotalSales = $conn->query($getTotalSales);
-            $TotalSales = 0;
-
-            if($resultTotalSales){
-                if($resultTotalSales->num_rows > 0){
-                    while($row = mysqli_fetch_array($resultTotalSales)){
-                        $TotalSales = $TotalSales + $row['orderTotal'];
-                    }
-                }
-            }
-
-            $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
-            $resultTotalUser = $conn->query($getTotalUser);
-
-            if($resultTotalUser){
-                if($resultTotalUser->num_rows > 0){
-                    while($row = mysqli_fetch_array($resultTotalUser)){
-                        $TotalUser = $row['TotalCustomer'];
-                    }
-                }
-            }            
-            echo '<script>alert("None selected");</script>';
-
-
-        }else if (($_POST["month"] !== "") && ($_POST["year"] == "")){
-            $CalenderM = $_POST["month"];
-            $TotalSales = 0;
-            $TotalUser = 0;
-            echo '<script>alert("Month: '.$CalenderM .'");</script>';
-        }else if (($_POST["month"] == "") && ($_POST["year"] !== "")){
-            $CalenderY = $_POST["year"];
-            $TotalSales = 0;
-            $TotalUser = 0;
-            echo '<script>alert("Year: '.$CalenderY .'");</script>';
-        }else{
-            $CalenderM = $_POST["month"];
-            $CalenderY = $_POST["year"];
-            $TotalSales = 0;
-            $TotalUser = 0;
-            echo '<script>alert("'.$CalenderM.' '.$CalenderY.'");</script>';
-        }*/
         
     }
 
@@ -277,19 +231,6 @@
         $data = htmlspecialchars($data);
         return $data;
     }
-
-    //-----------Get new user this month and last month
-
-    $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
-    $resultTotalUser = $conn->query($getTotalUser);
-
-    if($resultTotalUser){
-        if($resultTotalUser->num_rows > 0){
-            while($row = mysqli_fetch_array($resultTotalUser)){
-                $TotalUser = $row['TotalCustomer'];
-            }
-        }
-    }    
 
     //----------- Sum up total sales and users
     $getTotalSales = "SELECT orderTotal FROM orders WHERE orderStatusID=2";
@@ -313,7 +254,20 @@
                 $TotalUser = $row['TotalCustomer'];
             }
         }
-    }  
+    }
+
+    //-----------Get new user this month and last month
+
+    $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
+    $resultTotalUser = $conn->query($getTotalUser);
+
+    if($resultTotalUser){
+        if($resultTotalUser->num_rows > 0){
+            while($row = mysqli_fetch_array($resultTotalUser)){
+                $TotalUser = $row['TotalCustomer'];
+            }
+        }
+    }    
 
     //-----------To get data to be displayed in Pie Chart
     $getSushi_PieChart = "SELECT s.sushiName, SUM(a.qty) AS Frequency FROM sushi s, alacarteorder a, orders o WHERE a.sushiID = s.sushiID AND o.orderID = a.orderID AND o.orderStatusID = 2 GROUP BY s.sushiName ORDER BY Frequency";
@@ -483,10 +437,10 @@
                     <h1 class="dashboard-title">Sales Report</h1>
                 </div>
                 <div class="calendar">
-                    <form name="calenderform" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="POST">
+                    <form action="/action_page.php">
                         <label for="month"><i style="font-size:24px" class="fa">&#xf073;</i></label>
                         <select id="month" name="month" class="datebox">
-                            <option value=""><em>-- select a month --</em></option>
+                            <option value="select"><em>-- select a month --</em></option>
                             <option value="January">January</option>
                             <option value="February">February</option>
                             <option value="March">March</option>
@@ -501,12 +455,11 @@
                             <option value="December">December</option>
                         </select>
                         <select id="year" name="year" class="datebox">
-                            <option value=""><em>-- select a year --</em></option>
+                            <option value="select"><em>-- select a year --</em></option>
                             <option value="2017">2017</option>
                             <option value="2018">2018</option>
                             <option value="2019">2019</option>
                         </select>
-                        <button style="cursor: pointer;" id='searchbtn' type="submit" name="searchbyCalender" title="Sort"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
                 <div class="flex-container">
