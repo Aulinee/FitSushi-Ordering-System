@@ -476,7 +476,7 @@
                                 </div>
                             </div>
                             <div class="total-user flex-row space-between" id="overview-TUser">
-                                <div class="width-20">
+                                <div class="">
                                     <img class= "user-icon" src="../img/admin-img/TotalUser.png" alt="user-sign">
                                 </div>
                                 <div class="padding-left-10 width-70">
