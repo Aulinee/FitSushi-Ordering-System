@@ -821,6 +821,13 @@
                                                 <input placeholder="Enter your sushi price.." name="sushi_price" class="input-detail" type="number" id="sushi_price">
                                             </div>
                                             <div class="editinfo-div editinfo-div-2">
+                                                <label for="add-sushi">Availability Status</label>
+                                                <select class="input-detail" name="status" id="status">
+                                                    <option selected value="1">Available</option>
+                                                    <option value="0">Not Available</option>
+                                                </select>
+                                            </div>
+                                            <div class="editinfo-div editinfo-div-2">
                                                 <label for="add-sushi">Upload Menu Picture</label>
                                                 <input name="selectedImage" class="input-detail" type="file" id="new_image" accept=".png,.jpeg,.jpg">
                                             </div>
@@ -901,7 +908,7 @@
             </div>
 
             <!-- Order Tab -->
-            <div  class="home-tab" id="Order-div" style="display: none;">
+            <div id="Order-div" style="display: none;">
                 <div class="dashboard-title-div">
                     <h1 class="dashboard-title">Order Detail</h1> 
                 </div>
@@ -911,7 +918,7 @@
                             <i class="fa fa-search seriesicon"></i>
                             <input class="seriesinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
                         </div>
-                        <h1 class="width-60">LIST OF CUSTOMER ORDER</h1>
+                        <h1 class="width-60">LIST OF PENDING CUSTOMER ORDER</h1>
                         <div class="">
                             <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
                                 <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Pending Order' />      <!-- Button: Report_CustOrder -->                                
@@ -939,15 +946,53 @@
                     <div class="tbl-content">
                         <table id="custOrderTable" cellpadding="0" cellspacing="0" border="0">
                             <tbody>
-                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                    <div>
-                                        <?php $orderObj->displayAllCustOrder(); ?>
-                                    </div>
-                                </form>                                     
+                                <?php $orderObj->displayAllCustOrder(4); ?>                                     
                             </tbody>
                         </table>
                     </div>
-                </section>        
+                </section>
+                <br>
+                <br>
+                <br>
+                <section class="table-1">
+                    <div class="header-table">
+                        <div class="seriesinput-icons">
+                            <i class="fa fa-search seriesicon"></i>
+                            <input class="seriesinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
+                        </div>
+                        <h1 class="width-60">LIST OF RECEIVED CUSTOMER ORDER</h1>
+                        <div class="">
+                            <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
+                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Confirm Order' />      <!-- Button: Report_CustOrder -->                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tbl-header">
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <thead>
+                            <tr>
+                                <th class="info-20">ORDER ID</th>
+                                <th class="info-20">DATE</th>
+                                <th class="info-20">CUSTOMER NAME</th>
+                                <th class="info-20">DELIVERY ADDRESS</th>
+                                <th class="info-20">DELIVERY DATE</th>
+                                <th class="info-20">DELIVERY OPTION</th>
+                                <th class="info-20">PAYMENT METHOD</th>
+                                <th class="info-20">STATUS</th>
+                                <th class="info-20">AMOUNT</th>
+                                <th class="info-20">Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="tbl-content">
+                        <table id="custOrderTable" cellpadding="0" cellspacing="0" border="0">
+                            <tbody>
+                                <?php $orderObj->displayAllCustOrder(1); ?>                                     
+                            </tbody>
+                        </table>
+                    </div>
+                </section>         
             </div>
         </div>
     </section>

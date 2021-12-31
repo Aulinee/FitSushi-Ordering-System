@@ -27,12 +27,12 @@ class Order{
 
     }
 
-    public function displayAllCustOrder(){
+    public function displayAllCustOrder($orderstatusid){
         $displayCustOrderQuery = "SELECT
                                 o.orderID, o.dateCreated, c.custName, c.deliveryAddress, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName, o.orderTotal
                               FROM orders o, customer c, delivery d, payment p, orderstatus s
                               WHERE
-                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID AND o.orderStatusID=4";
+                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID AND o.orderStatusID=$orderstatusid";
 
         $result = $this->conn->query($displayCustOrderQuery);
 
