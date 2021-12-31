@@ -620,50 +620,51 @@
                     <h1 class="dashboard-title">Store Detail</h1>
                 </div>
                 <!-- Div for entire content under header, consist of two content: Upper & Lower Div -->
-                <div id="StoreContentDiv">
-                    <div id="UpStore_Content-div" align="center">
-                        <h1>Contact Info</h1>
-                        <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i></a></div>
-                        <div id="storecontactinfo-form-div">
-                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                <div id="Loc-OpHrs-div" style="display: inline-block;">
-                                    <div id="Location-inputfield" style="float:left; margin-right: 30px;">
-                                        <h2>Location: </h2>
-                                        <textarea disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" rows="4" cols="30"><?php echo $loc?></textarea>                                   
-                                    </div>
-                                    <div id="OperatingHrs-inputfield" style="float:left;">
-                                        <h2>Operating Hours: </h2>
-                                        <textarea disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" rows="4" cols="30"><?php echo $opnHrs?></textarea>       
-                                    </div>
-                                </div>
-
-                                <div id="SocMed-div" align="center">
-                                    <div id="Whatsapp-inputfield"style="float:left; margin-right: 30px;">
-                                        <h2>Whatsapp: </h2>
-                                        <input name="storeidtext" class="input-detail" type="hidden" id="storeid" value="<?php echo $store_ID?>">  
-                                        <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
-                                    </div>
-                                    <div id="Insta-inputfield" style="float:left; margin-right: 30px;">
-                                        <h2>Instagram: </h2>
-                                        <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
-                                    </div>
-                                    <div id="FB-inputfield" style="float:left; margin-right: 30px;">
-                                        <h2>Facebook: </h2>
-                                        <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
-                                    </div>
-                                </div>
-
-                                <br><br>
-                                <div id="SaveContactInfo-btn">
-                                    <input disabled type='submit' id="SaveContactBtn" class='button' name='SaveContactInfo-btn' value='Save' /> 
-                                    <input disabled type='submit' id="ResetContactBtn" class='button' name='ResetContactInfo-btn' value='Reset' />                                         
-                                </div>
-                            </form>
+                <div class="store-detail-main">
+                    <div class="store-detail-title flex-row">
+                        <h1 class="">Contact Info</h1>
+                        <div class="edit-detail-icon">
+                            <a>
+                                <i id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i>
+                                <i id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i>
+                            </a>
                         </div>
                     </div>
-
+                    <div class="store-detail-content">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <div class="" id="Loc-OpHrs-div" >
+                                <div id="Location-inputfield">
+                                    <h2>Location: </h2>
+                                    <textarea disabled title="Location" name="locationtext" class="store-input-detail" type="text" id="location" rows="4" cols="30"><?php echo $loc?></textarea>                                   
+                                </div>
+                                <div id="OperatingHrs-inputfield">
+                                    <h2>Operating Hours: </h2>
+                                    <textarea disabled title="Operating Hours" name="OpHrstext" class="store-input-detail" type="text" id="OpHrs" rows="4" cols="30"><?php echo $opnHrs?></textarea>       
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="" id="SocMed-div">
+                                <div id="Whatsapp-inputfield">
+                                    <h2>Whatsapp: </h2>
+                                    <input name="storeidtext" class="store-input-detail" type="hidden" id="storeid" value="<?php echo $store_ID?>">  
+                                    <input disabled title="Whatsapp" name="WAtext" class="store-input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
+                                </div>
+                                <div id="Insta-inputfield">
+                                    <h2>Instagram: </h2>
+                                    <input disabled title="Instagram" name="IGtext" class="store-input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
+                                </div>
+                                <div id="FB-inputfield">
+                                    <h2>Facebook: </h2>
+                                    <input disabled title="Facebook" name="FBtext" class="store-input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
+                                </div>
+                            </div>
+                            <div id="SaveContactInfo-btn">
+                                <input disabled type='submit' id="SaveContactBtn" class='button' name='SaveContactInfo-btn' value='Save' /> 
+                                <input disabled type='submit' id="ResetContactBtn" class='button' name='ResetContactInfo-btn' value='Reset' />                                         
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
             </div>
 
             <!-- Customer Tab -->
