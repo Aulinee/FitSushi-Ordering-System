@@ -673,38 +673,40 @@
                     <h1 class="dashboard-title">Customer Detail</h1>
                 </div>
                 <div class="List-of-user-acc-div">
-                    <div id="Search-and-Title-header" display="inline">
-                        <div class="custinput-icons">
-                            <i class="fa fa-search seriesicon"></i>
-                            <input class="custinput-field" type="text" id="custInput" onkeyup="filterCust()" placeholder="Search username.." title="Type in a name">
+                    <section class="table-1">
+                        <div class="header-table">
+                            <div class="seriesinput-icons">
+                                <i class="fa fa-search seriesicon"></i>
+                                <input class="seriesinput-field" type="text" id="custInput" onkeyup="filterCust()" placeholder="Search username.." title="Type in a name">
+                            </div>
+                            <h1>List of Users Account </h1>
+                            <div style="visibility: hidden; width: 30%;"></div>
                         </div>
-                        <div id="Title-header" align="center">
-                            <h1>LIST OF USERS ACCOUNT</h1>
-                        </div>
-                    </div>
-                    <div id="list-of-customers" align="center">
                         <div class="tbl-header">
-                            <table id="custTable" cellpadding="0" cellspacing="0" border="0" align="center">
+                            <table cellpadding="0" cellspacing="0" border="0">
                                 <thead>
-                                    <tr>
-                                        <th class="info-20">CUSTOMER ID</th>
-                                        <th class="info-20">USERNAME</th>
-                                        <th class="info-20">FULLNAME</th>
-                                        <th class="info-20">EMAIL ADDRESS</th>
-                                        <th class="info-20">MOBILE NUMBER</th>
-                                        <th class="info-20">HOME ADDRESS</th>
-                                        <th class="info-20">ACTION</th>
-                                    </tr>
+                                <tr>
+                                    <th>Customer ID</th>
+                                    <th>Username</th>
+                                    <th>Full Name</th>
+                                    <th>Mobile Number</th>
+                                    <th>Email Address</th>
+                                    <th>Home Address</th>
+                                    <th>Action</th>
+                                </tr>
                                 </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table id="custTable" cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
                                         <?php $userObj->displayAllCustomer(); ?>
                                     </form>                                     
                                 </tbody>
                             </table>
-                        </div>                       
-                    </div>
-                    
+                        </div>
+                    </section>
                 </div>
             </div>
 
@@ -783,19 +785,62 @@
 
             <!-- Product Tab -->
             <div  class="home-tab" id="Product-div" style="display: none;">
-                <div align="center">
-                    <h1 >Product Details</h1>     
-                    <button onclick="addNewProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Add New Product</button>              
+                <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Menu Detail</h1> 
                 </div>
-                <br>
                 <div id="Productlist-div" style="display: block;" align="center">
-                    <div class="productinput-icons">
-                        <i class="fa fa-search seriesicon"></i>
-                        <input class="filterProductinput-field" type="text" id="productcodeInput" onkeyup="filterProduct()" placeholder="Enter ID.." title="Type in a ID">
-                    </div>                    
-                    <h1>LIST OF PRODUCTS</h1>
-                    <div class="productTable-div">
-                            <table id="productTable" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <section class="table-1">
+                        <div class="header-table">
+                            <div class="seriesinput-icons flex-row">
+                                <h2>Search</h2>
+                                <input class="seriesinput-field" type="text" id="productcodeInput" onkeyup="filterProduct()" placeholder="Enter ID.." title="Type in a ID">
+                            </div>                    
+                            <h1>LIST OF MENUS</h1>
+                            <div class="create-series-btn">
+                                <i class="fa fa-plus addicon"></i>
+                                <button class="create" onclick="document.getElementById('add-sushi').style.display='block'">CREATE</button>
+                                <!-- hidden div inside button add menu tag -->
+                                <div id="add-sushi" class="sub-hidden-form">
+                                    <form class="hidden-form animate" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                                        <div class="titlecontainer">
+                                            <h2 class="main-page-title">ADD MENU</h2>
+                                            <h5 class="sub-title-main">add new menu here</h5>
+                                            <span class="close-btn" onclick="document.getElementById('add-sushi').style.display='none'" title="Close Modal">&times;</span>
+                                        </div>
+                                        <div class="contentcontainer">
+                                            <div class="editinfo-div editinfo-div-2">
+                                                <label for="sushi-name">New Menu Name</label>
+                                                <br>
+                                                <input placeholder="Enter your sushi name.." name="sushi_name" class="input-detail" type="text" id="sushi_name">
+                                            </div>
+                                            <div class="editinfo-div editinfo-div-2">
+                                                <label for="add-sushi">New Menu Description:</label>
+                                                <br>
+                                                <textarea placeholder="Enter your sushi description.." name="sushi_desc" class="input-detail" type="text" id="sushi_desc" cols="80" rows="10"></textarea>
+                                            </div>
+                                            <div class="editinfo-div editinfo-div-2">
+                                                <label for="add-sushi">New Menu Price</label>
+                                                <br>
+                                                <input placeholder="Enter your sushi price.." name="sushi_price" class="input-detail" type="number" id="sushi_price">
+                                            </div>
+                                            <div class="editinfo-div editinfo-div-2">
+                                                <label for="add-sushi">Upload Menu Picture</label>
+                                                <input name="selectedImage" class="input-detail" type="file" id="new_image" accept=".png,.jpeg,.jpg">
+                                            </div>
+                                            <br>
+                                            <div class="margin-5"></div>
+                                            <div class="hidden-div-btn">
+                                                <button class="submitbtn inline" id="AddProductBtn" type="submit" name="Add-product">Submit</button>
+                                                <button class="cancelbtn inline" type="button" onclick="document.getElementById('add-sushi').style.display='none'" >Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- <button onclick="addNewProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Add New Product</button>    -->
+                        </div>
+                        <div class="tbl-header">
+                            <table cellpadding="0" cellspacing="0" border="0">
                                 <thead>
                                     <tr>
                                         <th class="info-20">CODE</th>
@@ -807,15 +852,20 @@
                                         <th class="info-20">ACTION</th>
                                     </tr>
                                 </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table id="productTable" cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
                                         <div>
                                             <?php $menuObj->displayAllProduct(); ?>
                                         </div>
-                                    </form>                                     
+                                    </form>                                      
                                 </tbody>
                             </table>
-                        </div>                       
+                        </div>
+                    </section>                 
                 </div>
 
                 <!-- Hidden div: Add New Product -->
@@ -841,7 +891,7 @@
                             </div>
                             <div>
                                 <label> Price: 
-                                    <input name="sushi_price" class="input-detail" type="text" id="sushi_price"">                        
+                                    <input name="sushi_price" class="input-detail" type="text" id="sushi_price">                        
                                 </label>                                
                             </div>
                             <div>
@@ -857,51 +907,50 @@
 
             <!-- Order Tab -->
             <div  class="home-tab" id="Order-div" style="display: none;">
-                <h1 align="center">Order Details</h1>
-                <br>
-                <!-- List of Customer Order -->
-                <div class="List-of-CustOrders-div">
-                    <div id="Search-and-Title-header" display="inline">
+                <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Order Detail</h1> 
+                </div>
+                <section class="table-1">
+                    <div class="header-table">
                         <div class="orderinput-icons">
                             <i class="fa fa-search seriesicon"></i>
                             <input class="cust-orderinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
                         </div>
-                        <div id="Title-header" align="center">
-                            <h1>LIST OF CUSTOMER ORDER</h1>
-                            <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
-                                <input type='submit' class='button' name='Report_CustOrder' value='Download Pending Order' />      <!-- Button: Report_CustOrder -->                                
-                            </form>
-                        </div>
+                        <h1>LIST OF CUSTOMER ORDER</h1>
+                        <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
+                            <input type='submit' class='button' name='Report_CustOrder' value='Download Pending Order' />      <!-- Button: Report_CustOrder -->                                
+                        </form>
                     </div>
-                    <div id="list-of-cust-order" align="center">
-                        <div class="tbl-header">
-                            <table id="custOrderTable" cellpadding="0" cellspacing="0" border="0" align="center">
-                                <thead>
-                                    <tr>
-                                        <th class="info-20">ORDER ID</th>
-                                        <th class="info-20">DATE</th>
-                                        <th class="info-20">CUSTOMER NAME</th>
-                                        <th class="info-20">DELIVERY ADDRESS</th>
-                                        <th class="info-20">DELIVERY DATE</th>
-                                        <th class="info-20">DELIVERY OPTION</th>
-                                        <th class="info-20">PAYMENT METHOD</th>
-                                        <th class="info-20">STATUS</th>
-                                        <th class="info-20">AMOUNT</th>
-                                        <th class="info-20">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                        <div>
-                                            <?php $orderObj->displayAllCustOrder(); ?>
-                                        </div>
-                                    </form>                                     
-                                </tbody>
-                            </table>
-                        </div>                       
-                    </div>                    
-                </div>
-                <br>        
+                    <div class="tbl-header">
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <thead>
+                            <tr>
+                                <th class="info-20">ORDER ID</th>
+                                <th class="info-20">DATE</th>
+                                <th class="info-20">CUSTOMER NAME</th>
+                                <th class="info-20">DELIVERY ADDRESS</th>
+                                <th class="info-20">DELIVERY DATE</th>
+                                <th class="info-20">DELIVERY OPTION</th>
+                                <th class="info-20">PAYMENT METHOD</th>
+                                <th class="info-20">STATUS</th>
+                                <th class="info-20">AMOUNT</th>
+                                <th class="info-20">Action</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="tbl-content">
+                        <table id="custOrderTable" cellpadding="0" cellspacing="0" border="0">
+                            <tbody>
+                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                                    <div>
+                                        <?php $orderObj->displayAllCustOrder(); ?>
+                                    </div>
+                                </form>                                     
+                            </tbody>
+                        </table>
+                    </div>
+                </section>        
             </div>
         </div>
     </section>

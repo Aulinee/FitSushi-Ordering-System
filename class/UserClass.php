@@ -170,13 +170,13 @@ class User{
                             <td>'.$id.' <input type="hidden" name="cust-id" value="'.$id.'"> </td>
                             <td>'.$username.'</td>
                             <td>'.$custname.'</td>
-                            <td>'.$phoneNum.'</td>
+                            <td> 0'.$phoneNum.'</td>
                             <td>'.$email.'</td>
                             <td>'.$address.'</td>
-                            <td style="background-color: rgb(75, 70, 70);text-align: center;">
+                            <td>
                                 <form  method="POST" action="editCust_page.php">
-                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="edit-customer" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
-                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="delete-customer" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="edit-customer" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="delete-customer" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

@@ -684,7 +684,320 @@ button[disabled] {
 }
 
 /*----------------------- Customer-detail------------------------- */
+.table-1 {
+  background: #f6f6f6;
+  border: 2px solid #c1273a;
+  box-sizing: border-box;
+  border-radius: 9px;
+}
+
+.table-1 .button {
+  background-color: var(--red);
+  border: none;
+  color: white;
+  margin: 0;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 45px;
+  cursor: pointer;
+}
+
+.table-1 .button:hover {
+  opacity: 0.7;
+}
+
+.table-1 h1 {
+  font-family: "Playfair Display", sans-serif;
+  font-weight: bolder;
+  font-size: 30px;
+  color: black;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.table-1 table {
+  width: 100%;
+  table-layout: fixed;
+}
+.table-1 .tbl-header {
+  background-color: var(--red);
+}
+
+.table-1 .tbl-header th {
+  color: white;
+  font-weight: bolder;
+  font-size: 15px;
+}
+
+.table-1 .tbl-content {
+  text-align: center;
+  height: 300px;
+  overflow-x: auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.table-1 th {
+  padding: 20px 15px;
+  font-weight: 500;
+  font-size: 12px;
+  color: black;
+  text-transform: uppercase;
+}
+
+.table-1 td {
+  padding: 15px;
+  vertical-align: middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: black;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+.header-table {
+  display: flex;
+  flex-direction: row;
+  margin: 2% 0;
+  justify-content: space-between;
+}
+
+.header-table h1 {
+  margin: 0;
+}
 /*----------------------- Product-detail------------------------- */
+
+/*----------------------- search input------------------------- */
+.seriesInput {
+  display: block;
+  font-size: 16px;
+  border: 1px solid #ddd;
+}
+
+.seriesinput-icons i {
+  font-size: 20px;
+  color: black;
+}
+
+.seriesinput-icons {
+  width: 30%;
+}
+
+.seriesinput-field {
+  color: black;
+  background-color: white;
+  outline: none;
+  border: rgb(75, 70, 70) solid 1px;
+  width: 60%;
+  padding: 10px;
+  text-align: center;
+}
+
+.seriesicon {
+  border: rgb(75, 70, 70) solid 1px;
+  height: fit-content;
+  background-color: gray;
+  padding: 10px;
+}
+
+/*----------------------- endss search input------------------------- */
+
+.create-series-btn {
+  width: 30%;
+  text-align: center;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.create {
+  margin: 0;
+  font-weight: 50;
+  font-size: 15px;
+  background-color: var(--dark-red);
+  border: none;
+  padding: 10px 20px;
+  font-family: "roboto", sans-serif;
+  color: black;
+}
+
+.create:hover {
+  opacity: 0.7;
+  transition: ease-in 0.2s;
+}
+
+.addicon {
+  border: var(--dark-red) solid 1px;
+  height: fit-content;
+  background-color: lightcoral;
+  padding: 10px;
+}
+
+/* hidden div form */
+.hidden-form {
+  background-color: black;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid black;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+/* The Modal (background) */
+.sub-hidden-form {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(255, 255, 255); /* Fallback color */
+  background: rgba(255, 255, 255, 0.4);
+  padding-top: 60px;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes animatezoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Center the title and position the close button */
+.titlecontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.main-page-title {
+  text-transform: uppercase;
+  text-align: center;
+  margin: auto;
+  font-weight: 600;
+  letter-spacing: 5px;
+  color: black;
+  font-size: 35px;
+}
+
+.sub-title-main {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: black;
+  font-size: 15px;
+  text-align: center;
+  font-style: italic;
+}
+
+/* The Close Button (x) */
+.close-btn {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: var(--dark-red);
+  cursor: pointer;
+}
+
+.contentcontainer {
+  margin: auto auto 5% auto;
+  width: 80%;
+  padding: 16px;
+  background-color: #555;
+}
+
+.editinfo-div {
+  margin: auto;
+  padding-bottom: 10px;
+  width: fit-content;
+}
+
+.editinfo-div-2 {
+  width: 80%;
+}
+
+.editinfo-div-2 label {
+  float: left;
+}
+
+.editinfo-div label {
+  font-family: "roboto", sans-serif;
+  font-weight: lighter;
+  font-size: 20px;
+  font-weight: 100;
+  color: var(--blur-white);
+}
+
+.editinfo-div input,
+.editinfo-div textarea,
+.editinfo-div select {
+  padding: 3% 2%;
+  width: 96%;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  outline: none;
+  border: none;
+  color: white;
+  -webkit-box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px 1px rgba(0, 0, 0, 0.5);
+}
+
+.editinfo-div input:focus {
+  color: #000;
+  background-color: white;
+}
+
+.hidden-div-btn {
+  text-align: center;
+}
+
+.submitbtn {
+  background-color: rgb(163, 216, 240);
+}
+
+.cancelbtn {
+  background-color: var(--red);
+}
+
+.cancelbtn,
+.submitbtn {
+  font-weight: 50;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px;
+}
+
+.cancelbtn:hover,
+.submitbtn:hover {
+  opacity: 0.7;
+}
+
 /*----------------------- Order-detail------------------------- */
 
 /* -----------footer----------- */
@@ -696,18 +1009,6 @@ button[disabled] {
   text-align: center;
   background-color: var(--black);
   color: var(--white);
-}
-
-/* Table css */
-table,
-th,
-td {
-  border: 1px solid black;
-}
-table {
-  overflow-y: scroll;
-  height: 300px;
-  display: block;
 }
 
 .aboutus_img_container {

@@ -52,19 +52,19 @@ class Order{
                     echo '
                     
                     <tr>
-                        <td align=\'center\'>'.$id.'</td>
+                        <td>'.$id.'</td>
                         <td>'.$dateCreated.'</td>
                         <td>'.$custname.'</td>
                         <td>'.$address.'</td>
                         <td>'.$deliverydate.'</td>
-                        <td align=\'center\'>'.$deliveryOption.'</td>
+                        <td>'.$deliveryOption.'</td>
                         <td>'.$paymentMethod.'</td>
                         <td>'.$status.'</td>
-                        <td align=\'center\'>'.$total.'</td>
-                        <td style="background-color: rgb(75, 70, 70);text-align: center;">
+                        <td>'.$total.'</td>
+                        <td>
                             <form  method="POST" action="editCust_page.php">
-                                <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
-                                <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
+                                <button class="button" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
+                                <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
                             </form>                                    
                         </td>                            
                     </tr>

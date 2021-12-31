@@ -152,16 +152,16 @@ class Menu{
 
                     echo '
                         <tr>
-                            <td align="center">'.$id.'</td>
-                            <td align="center">'.$sushiname.'</td>
+                            <td>'.$id.'</td>
+                            <td>'.$sushiname.'</td>
                             <td>'.$sushiDesc.'</td>
-                            <td align="center">'.$sushiPrice.'</td>
+                            <td>'.$sushiPrice.'</td>
                             <td><img src="data:image/jpg;charset=utf8;base64, '.base64_encode($sushiimg).'" width="100" height="100"></td>
-                            <td align="center">'.$td_availability.'</td>                               
-                            <td style="background-color: rgb(75, 70, 70);text-align: center;">
+                            <td>'.$td_availability.'</td>                               
+                            <td >
                                 <form  method="POST" action="editProduct_page.php">
-                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="edit-product" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
-                                    <button style="cursor: pointer;" id='.$id.' value='.$id.' type="submit" name="delete-product" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="edit-product" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="delete-product" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
                                 </form>                                    
 
                             </td>                            
@@ -173,7 +173,7 @@ class Menu{
             }
         }
         else{
-            echo "Error in ".$displayCustomerQuery." ".$this->conn->error;
+            echo "Error in ".$displayProductQuery." ".$this->conn->error;
         }        
     }
 
