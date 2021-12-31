@@ -222,52 +222,6 @@
 
             echo '<script>alert("'.$id_delivered.'")</script>';
         }
-
-        /*if(($_POST["month"] == "") && ($_POST["year"] == "")){
-
-            //----------- Sum up total sales and users
-            $getTotalSales = "SELECT orderTotal FROM orders WHERE orderStatusID=2";
-            $resultTotalSales = $conn->query($getTotalSales);
-            $TotalSales = 0;
-
-            if($resultTotalSales){
-                if($resultTotalSales->num_rows > 0){
-                    while($row = mysqli_fetch_array($resultTotalSales)){
-                        $TotalSales = $TotalSales + $row['orderTotal'];
-                    }
-                }
-            }
-
-            $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
-            $resultTotalUser = $conn->query($getTotalUser);
-
-            if($resultTotalUser){
-                if($resultTotalUser->num_rows > 0){
-                    while($row = mysqli_fetch_array($resultTotalUser)){
-                        $TotalUser = $row['TotalCustomer'];
-                    }
-                }
-            }            
-            echo '<script>alert("None selected");</script>';
-
-
-        }else if (($_POST["month"] !== "") && ($_POST["year"] == "")){
-            $CalenderM = $_POST["month"];
-            $TotalSales = 0;
-            $TotalUser = 0;
-            echo '<script>alert("Month: '.$CalenderM .'");</script>';
-        }else if (($_POST["month"] == "") && ($_POST["year"] !== "")){
-            $CalenderY = $_POST["year"];
-            $TotalSales = 0;
-            $TotalUser = 0;
-            echo '<script>alert("Year: '.$CalenderY .'");</script>';
-        }else{
-            $CalenderM = $_POST["month"];
-            $CalenderY = $_POST["year"];
-            $TotalSales = 0;
-            $TotalUser = 0;
-            echo '<script>alert("'.$CalenderM.' '.$CalenderY.'");</script>';
-        }*/
         
     }
 
@@ -277,19 +231,6 @@
         $data = htmlspecialchars($data);
         return $data;
     }
-
-    //-----------Get new user this month and last month
-
-    $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
-    $resultTotalUser = $conn->query($getTotalUser);
-
-    if($resultTotalUser){
-        if($resultTotalUser->num_rows > 0){
-            while($row = mysqli_fetch_array($resultTotalUser)){
-                $TotalUser = $row['TotalCustomer'];
-            }
-        }
-    }    
 
     //----------- Sum up total sales and users
     $getTotalSales = "SELECT orderTotal FROM orders WHERE orderStatusID=2";
@@ -313,7 +254,20 @@
                 $TotalUser = $row['TotalCustomer'];
             }
         }
-    }  
+    }
+
+    //-----------Get new user this month and last month
+
+    $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
+    $resultTotalUser = $conn->query($getTotalUser);
+
+    if($resultTotalUser){
+        if($resultTotalUser->num_rows > 0){
+            while($row = mysqli_fetch_array($resultTotalUser)){
+                $TotalUser = $row['TotalCustomer'];
+            }
+        }
+    }    
 
     //-----------To get data to be displayed in Pie Chart
     $getSushi_PieChart = "SELECT s.sushiName, SUM(a.qty) AS Frequency FROM sushi s, alacarteorder a, orders o WHERE a.sushiID = s.sushiID AND o.orderID = a.orderID AND o.orderStatusID = 2 GROUP BY s.sushiName ORDER BY Frequency";
@@ -483,10 +437,10 @@
                     <h1 class="dashboard-title">Sales Report</h1>
                 </div>
                 <div class="calendar">
-                    <form name="calenderform" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="POST">
+                    <form action="/action_page.php">
                         <label for="month"><i style="font-size:24px" class="fa">&#xf073;</i></label>
                         <select id="month" name="month" class="datebox">
-                            <option value=""><em>-- select a month --</em></option>
+                            <option value="select"><em>-- select a month --</em></option>
                             <option value="January">January</option>
                             <option value="February">February</option>
                             <option value="March">March</option>
@@ -501,12 +455,11 @@
                             <option value="December">December</option>
                         </select>
                         <select id="year" name="year" class="datebox">
-                            <option value=""><em>-- select a year --</em></option>
+                            <option value="select"><em>-- select a year --</em></option>
                             <option value="2017">2017</option>
                             <option value="2018">2018</option>
                             <option value="2019">2019</option>
                         </select>
-                        <button style="cursor: pointer;" id='searchbtn' type="submit" name="searchbyCalender" title="Sort"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
                 <div class="flex-container">
@@ -667,50 +620,50 @@
                     <h1 class="dashboard-title">Store Detail</h1>
                 </div>
                 <!-- Div for entire content under header, consist of two content: Upper & Lower Div -->
-                <div id="StoreContentDiv">
-                    <div id="UpStore_Content-div" align="center">
+                <div class="store-detail-main" > 
+                    <div class="store-detail-title flex-row">
                         <h1>Contact Info</h1>
-                        <div><a><i  style="font-size:24px;cursor: pointer;color:DarkOrange;"  id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i><i  style="display: none;font-size:24px;cursor: pointer;color:DarkOrange;" id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i></a></div>
-                        <div id="storecontactinfo-form-div">
-                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                <div id="Loc-OpHrs-div" style="display: inline-block;">
-                                    <div id="Location-inputfield" style="float:left; margin-right: 30px;">
-                                        <h2>Location: </h2>
-                                        <textarea disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" rows="4" cols="30"><?php echo $loc?></textarea>                                   
-                                    </div>
-                                    <div id="OperatingHrs-inputfield" style="float:left;">
-                                        <h2>Operating Hours: </h2>
-                                        <textarea disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" rows="4" cols="30"><?php echo $opnHrs?></textarea>       
-                                    </div>
-                                </div>
-
-                                <div id="SocMed-div" align="center">
-                                    <div id="Whatsapp-inputfield"style="float:left; margin-right: 30px;">
-                                        <h2>Whatsapp: </h2>
-                                        <input name="storeidtext" class="input-detail" type="hidden" id="storeid" value="<?php echo $store_ID?>">  
-                                        <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
-                                    </div>
-                                    <div id="Insta-inputfield" style="float:left; margin-right: 30px;">
-                                        <h2>Instagram: </h2>
-                                        <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
-                                    </div>
-                                    <div id="FB-inputfield" style="float:left; margin-right: 30px;">
-                                        <h2>Facebook: </h2>
-                                        <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
-                                    </div>
-                                </div>
-
-                                <br><br>
-                                <div id="SaveContactInfo-btn">
-                                    <input disabled type='submit' id="SaveContactBtn" class='button' name='SaveContactInfo-btn' value='Save' /> 
-                                    <input disabled type='submit' id="ResetContactBtn" class='button' name='ResetContactInfo-btn' value='Reset' />                                         
-                                </div>
-                            </form>
+                        <div class="">
+                            <a>
+                                <i  style="font-size:24px;cursor: pointer;color:white;"  id="editicon" onclick="enableContactedit()" class="fa fa-edit"></i>
+                                <i  class="" style="display: none;font-size:24px;cursor: pointer;color:white; " id="exiticon" onclick="exitContactedit()" class="fa fa-close"></i>
+                            </a>
                         </div>
                     </div>
-
+                    <div class="store-detail-content flex-container">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <div style="display: inline-block;">
+                                <div style="float:left; margin-right: 30px;">
+                                    <h2>Location: </h2>
+                                    <textarea disabled title="Location" name="locationtext" class="input-detail" type="text" id="location" rows="4" cols="30"><?php echo $loc?></textarea>                                   
+                                </div>
+                                <div style="float:left;">
+                                    <h2>Operating Hours: </h2>
+                                    <textarea disabled title="Operating Hours" name="OpHrstext" class="input-detail" type="text" id="OpHrs" rows="4" cols="30"><?php echo $opnHrs?></textarea>       
+                                </div>
+                            </div>
+                            <div>
+                                <div id="Whatsapp-inputfield"style="float:left; margin-right: 30px;">
+                                    <h2>Whatsapp: </h2>
+                                    <input name="storeidtext" class="input-detail" type="hidden" id="storeid" value="<?php echo $store_ID?>">  
+                                    <input disabled title="Whatsapp" name="WAtext" class="input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
+                                </div>
+                                <div id="Insta-inputfield" style="float:left; margin-right: 30px;">
+                                    <h2>Instagram: </h2>
+                                    <input disabled title="Instagram" name="IGtext" class="input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
+                                </div>
+                                <div id="FB-inputfield" style="float:left; margin-right: 30px;">
+                                    <h2>Facebook: </h2>
+                                    <input disabled title="Facebook" name="FBtext" class="input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
+                                </div>
+                            </div>
+                            <div id="SaveContactInfo-btn">
+                                <input disabled type='submit' id="SaveContactBtn" class='button' name='SaveContactInfo-btn' value='Save' /> 
+                                <input disabled type='submit' id="ResetContactBtn" class='button' name='ResetContactInfo-btn' value='Reset' />                                         
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
             </div>
 
             <!-- Customer Tab -->
