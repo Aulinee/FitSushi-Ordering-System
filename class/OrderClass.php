@@ -62,7 +62,7 @@ class Order{
                         <td>'.$status.'</td>
                         <td>'.$total.'</td>
                         <td>
-                            <form  method="POST" action="editCust_page.php">
+                            <form  method="POST" action="../Admin-Folder/editCust_page.php">
                                 <button class="button" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
                                 <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
                             </form>                                    

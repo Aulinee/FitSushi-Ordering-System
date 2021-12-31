@@ -700,9 +700,7 @@
                         <div class="tbl-content">
                             <table id="custTable" cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
-                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                        <?php $userObj->displayAllCustomer(); ?>
-                                    </form>                                     
+                                    <?php $userObj->displayAllCustomer(); ?>                                     
                                 </tbody>
                             </table>
                         </div>
@@ -856,11 +854,9 @@
                         <div class="tbl-content">
                             <table id="productTable" cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
-                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                                        <div>
-                                            <?php $menuObj->displayAllProduct(); ?>
-                                        </div>
-                                    </form>                                      
+                                    <div>
+                                        <?php $menuObj->displayAllProduct(); ?>
+                                    </div>                                      
                                 </tbody>
                             </table>
                         </div>

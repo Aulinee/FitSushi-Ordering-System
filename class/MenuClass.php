@@ -159,7 +159,7 @@ class Menu{
                             <td><img src="data:image/jpg;charset=utf8;base64, '.base64_encode($sushiimg).'" width="100" height="100"></td>
                             <td>'.$td_availability.'</td>                               
                             <td >
-                                <form  method="POST" action="editProduct_page.php">
+                                <form  method="POST" action="../Admin-Folder/editProduct_page.php">
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="edit-product" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="delete-product" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
                                 </form>                                    

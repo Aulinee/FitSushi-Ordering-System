@@ -174,7 +174,7 @@ class User{
                             <td>'.$email.'</td>
                             <td>'.$address.'</td>
                             <td>
-                                <form  method="POST" action="editCust_page.php">
+                                <form method="POST" action="../Admin-Folder/editCust_page.php">
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="edit-customer" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="delete-customer" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
                                 </form>

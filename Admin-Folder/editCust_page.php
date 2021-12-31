@@ -1,5 +1,4 @@
 <?php
-
     include '../database/dbConnection.php'; 
     include '../Login/sessionAdmin.php';
 
@@ -283,60 +282,90 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap" rel="stylesheet">
+    <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Neucha" />
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../style/admin.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Customer Edit Page</title>
 </head>
 <body>
-    <div id="User-edit-container">
-        <div id="User-edit-title" align="center">
-            <h1>Edit Customer Details</h1>
+<section class="admin-page flex-row">
+        <div class="admin-page-sidebar flex-col">
+            <div class="logo-sidebar-div">
+                <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
+            </div>
+            <div class="adminlogo-sidebar-div flex-row">
+                <div class="adminlogo-sidebar-div-1">
+                    <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
+                </div>
+                <div class="adminlogo-sidebar-div-2">
+                    <h1><?php echo $username; ?></h1>
+                    <h2>Admin</h2>
+                </div>
+            </div>
         </div>
-
-        <!-- All Customer Detail goes here -->
-        <div>
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                <div>
-                    <label> Username: 
-                        <input name="cust_usn" class="input-detail" type="text" id="username" value="<?php echo $cust_Usn?>">                        
-                    </label>
+        <div class="admin-page-dashboard">
+            <div id="User-edit-container">
+                <div id="User-edit-title" align="center">
+                    <h1>Edit Customer Details</h1>
                 </div>
+                <!-- All Customer Detail goes here -->
                 <div>
-                    <label> Fullname: 
-                        <input name="cust_fn" class="input-detail" type="text" id="fullname" value="<?php echo $cust_Fn?>">                        
-                    </label>
+                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <div>
+                            <label> Username: 
+                                <input name="cust_usn" class="input-detail" type="text" id="username" value="<?php echo $cust_Usn?>">                        
+                            </label>
+                        </div>
+                        <div>
+                            <label> Fullname: 
+                                <input name="cust_fn" class="input-detail" type="text" id="fullname" value="<?php echo $cust_Fn?>">                        
+                            </label>
+                        </div>
+                        <div>
+                            <label> Mobile Number: 
+                                <input name="cust_mob" class="input-detail" type="text" id="mobilenumber" value="<?php echo $cust_Mob?>">                        
+                            </label>
+                        </div>
+                        <div>
+                            <label> Email Address: 
+                                <input name="cust_email" class="input-detail" type="text" id="email_address" value="<?php echo $cust_EmailAdd?>">                        
+                            </label>
+                        </div>
+                        <div>
+                            <label> Home Address: 
+                                <textarea name="cust_home" class="input-detail" type="text" id="home_address" rows="4" cols="30"><?php echo $cust_HomeAdd?></textarea>                      
+                            </label>
+                        </div>
+                        <div>
+                            <label> Postal: 
+                                <input name="cust_POS" class="input-detail" type="text" id="home_address" value="<?php echo $cust_POS?>">                        
+                            </label>
+                        </div>   
+                        <div>
+                            <?php echo $printGender; ?>
+                        </div>
+                        <div>
+                            <button id="SaveCustBtn" value=<?php echo $customer_id;?> type="submit" name="Save-customer">Save</button>                         
+                            <button id="ResetCustBtn" value=<?php echo $customer_id;?> type="submit" name="edit-customer">Reset</button>                                         
+                        </div>                                                
+                    </form>
                 </div>
+                <br>
                 <div>
-                    <label> Mobile Number: 
-                        <input name="cust_mob" class="input-detail" type="text" id="mobilenumber" value="<?php echo $cust_Mob?>">                        
-                    </label>
+                    <a href="Dashboard.php">Go back</a>
                 </div>
-                <div>
-                    <label> Email Address: 
-                        <input name="cust_email" class="input-detail" type="text" id="email_address" value="<?php echo $cust_EmailAdd?>">                        
-                    </label>
-                </div>
-                <div>
-                    <label> Home Address: 
-                        <textarea name="cust_home" class="input-detail" type="text" id="home_address" rows="4" cols="30"><?php echo $cust_HomeAdd?></textarea>                      
-                    </label>
-                </div>
-                <div>
-                    <label> Postal: 
-                        <input name="cust_POS" class="input-detail" type="text" id="home_address" value="<?php echo $cust_POS?>">                        
-                    </label>
-                </div>   
-                <div>
-                    <?php echo $printGender; ?>
-                </div>
-                <div>
-                    <button id="SaveCustBtn" value=<?php echo $customer_id;?> type="submit" name="Save-customer">Save</button>                         
-                    <button id="ResetCustBtn" value=<?php echo $customer_id;?> type="submit" name="edit-customer">Reset</button>                                         
-                </div>                                                
-            </form>
+            </div>
         </div>
-        <br>
-        <div>
-            <a href="Dashboard.php">Go back</a>
-        </div>
-    </div>
+    </section>
+    <footer class="footer">
+        <h1>&copy; Copyright 2021 FitSushi</h1>
+    </footer>
+    
 </body>
 </html>
