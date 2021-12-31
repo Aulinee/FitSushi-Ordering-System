@@ -554,20 +554,6 @@ button[disabled] {
 }
 
 /*----------------------- Store-detail------------------------- */
-.store-detail-main {
-  border: 1px solid var(--red);
-}
-
-.store-detail-title {
-  background: var(--red);
-}
-
-.store-detail-title h1 {
-  margin: 0;
-}
-
-.edit-detail-icon {
-}
 /*----------------------- Customer-detail------------------------- */
 /*----------------------- Product-detail------------------------- */
 /*----------------------- Order-detail------------------------- */
