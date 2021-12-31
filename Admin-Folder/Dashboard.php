@@ -510,44 +510,52 @@
                 <div class="dashboard-title-div">
                     <h1 class="dashboard-title">Administrator Profile</h1>
                 </div>
-                <button class="edit-admin-btn"><a onclick="editAdmin()" style="cursor: pointer;">Edit Profile</a></button>
-                <div class="profile-tbl" id="view-profile-div">
-                    <div class="main-profile-detail profile-width-80">
-                        <div class="profile-width-5"></div>
-                        <div class="main-profile-detail-left ">
-                            <div class="user-detail">
-                                <h2>Username</h2>
-                                <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
-                            </div>
-                            <div class="user-detail">
-                                <h2>Full Name</h2>
-                                <div>
-                                    <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                <div class="profile-tbl">
+                    <div class="sidebar-profile profile-width-20 flex-col">
+                        <i class="fa fa-user"></i>
+                        <h1><?php echo $username?></h1>   
+                        <button id="viewbtn" class="sidebar-profile-btn sidebar-btn-active" onclick="viewProfile()">View Profile</button> 
+                        <button id="editbtn" class="sidebar-profile-btn" onclick="editAdmin()">Edit Profile</button>        
+                    </div>
+                    <!-- <button class="edit-admin-btn"><a onclick="editAdmin()" style="cursor: pointer;">Edit Profile</a></button> -->
+                    <div class="main-profile profile-width-80">
+                        <div class="main-profile-detail">
+                            <div class="profile-width-5"></div>
+                            <div class="main-profile-detail-left ">
+                                <div class="user-detail">
+                                    <h2>Username</h2>
+                                    <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h2>Full Name</h2>
+                                    <div>
+                                        <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h2>Email</h2>
+                                    <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h2>Phone Number</h2>
+                                    <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
                                 </div>
                             </div>
-                            <div class="user-detail">
-                                <h2>Email</h2>
-                                <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                            <div class="profile-width-20"></div>
+                            <div class="main-profile-detail-right">
+                                <div class="user-detail">
+                                    <h2>Password</h2>
+                                    <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                                </div>
+                                <br>
+                                <div class="user-detail-btn">
+                                    <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
+                                </div>
                             </div>
-                            <div class="user-detail">
-                                <h2>Phone Number</h2>
-                                <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
-                            </div>
+                            <div class="profile-width-5"></div>
                         </div>
-                        <div class="profile-width-20"></div>
-                        <div class="main-profile-detail-right">
-                            <div class="user-detail">
-                                <h2>Password</h2>
-                                <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
-                            </div>
-                            <br>
-                            <div class="user-detail-btn">
-                                <button disabled id="save-edit" class="save-edit-btn red-bg">Save Changes</button>
-                            </div>
-                        </div>
-                        <div class="profile-width-5"></div>
                     </div>
-                </div>                
+                </div>               
             </div>
 
             <!-- This div only visible when Edit Profile button is triggered!!! -->
@@ -556,44 +564,54 @@
                 <div class="dashboard-title-div">
                     <h1 class="dashboard-title">Administrator Profile</h1>
                 </div>
-                <button class="edit-admin-btn"><a  onclick="viewProfile()" style="cursor: pointer;">View Profile</a></button>
-                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <div class="main-profile-detail profile-width-80">
-                        <div class="profile-width-5"></div>
-                        <div class="main-profile-detail-left ">
-                            <div class="user-detail">
-                                <h2>Username</h2>
-                                <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
-                            </div>
-                            <div class="user-detail">
-                                <h2>Full Name</h2>
-                                <div>
-                                    <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                <div class="profile-tbl">
+                    <div class="sidebar-profile profile-width-20 flex-col">
+                        <i class="fa fa-user"></i>
+                        <h1><?php echo $username?></h1>   
+                        <button id="viewbtn" class="sidebar-profile-btn" onclick="viewProfile()">View Profile</button> 
+                        <button id="editbtn" class="sidebar-profile-btn sidebar-btn-actives" onclick="editAdmin()">Edit Profile</button>        
+                    </div>
+                    <div class="main-profile profile-width-80">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <div class="main-profile-detail">
+                                <div class="profile-width-5"></div>
+                                <div class="main-profile-detail-left ">
+                                    <div class="user-detail">
+                                        <h2>Username</h2>
+                                        <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $username?>">
+                                    </div>
+                                    <div class="user-detail">
+                                        <h2>Full Name</h2>
+                                        <div>
+                                            <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
+                                        </div>
+                                    </div>
+                                    <div class="user-detail">
+                                        <h2>Email</h2>
+                                        <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
+                                    </div>
+                                    <div class="user-detail">
+                                        <h2>Phone Number</h2>
+                                        <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="user-detail">
-                                <h2>Email</h2>
-                                <input name="email" id="email" class="input-detail" type="text" value="<?php echo $email?>">
-                            </div>
-                            <div class="user-detail">
-                                <h2>Phone Number</h2>
-                                <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
-                            </div>
-                        </div>
-                        <div class="profile-width-20"></div>
-                        <div class="main-profile-detail-right">
-                            <div class="user-detail">
-                                <h2>Password</h2>
-                                <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
-                            </div>
-                            <br>
-                            <div class="user-detail-btn">
-                                <button class="save-edit-btn red-bg">Save Changes</button>
-                            </div>
-                        </div>
-                        <div class="profile-width-5"></div>
-                    </div>                      
-                </form>
+                                <div class="profile-width-20"></div>
+                                <div class="main-profile-detail-right">
+                                    <div class="user-detail">
+                                        <h2>Password</h2>
+                                        <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $password?>">
+                                    </div>
+                                    <br>
+                                    <div class="user-detail-btn">
+                                        <button class="save-edit-btn red-bg">Save Changes</button>
+                                    </div>
+                                </div>
+                                <div class="profile-width-5"></div>
+                            </div>                      
+                        </form>
+                    </div>
+                </div> 
+                <!-- <button class="edit-admin-btn"><a  onclick="viewProfile()" style="cursor: pointer;">View Profile</a></button> -->
             </div>   
 
             <!-- Store Tab -->
