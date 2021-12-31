@@ -496,16 +496,6 @@
                 <div class="flex-container">
                     <div class="revenue-div">
                         <h2 class="inside-div-title ">Sales Revenue</h2>
-                        <!-- RASANYA YEAR BOLEH BUANG SBB DAH ADA -->
-                        <!-- <label for="year" class="year"><b>Year:</b></label>
-                        <select id="yearRevenue" name="yearRevenue" class="select-year" onchange="updateYear()"> 
-                            <option value="2017">2017</option>
-                            <option value="2018">2018</option>
-                            <option value="2019">2019</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                        </select> -->
                         <div id="curve_chart" style="width:100%; height: 300px;"></div>
                     </div>
                     <div class="topproduct-div">
