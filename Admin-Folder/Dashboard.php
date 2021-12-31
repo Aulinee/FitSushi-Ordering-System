@@ -788,17 +788,16 @@
                 <div class="dashboard-title-div">
                     <h1 class="dashboard-title">Menu Detail</h1> 
                 </div>
-                <div id="Productlist-div" style="display: block;" align="center">
+                <div id="Productlist-div" style="display: block;">
                     <section class="table-1">
-                        <div class="header-table">
-                            <div class="seriesinput-icons flex-row">
-                                <h2>Search</h2>
+                        <div class="header-table" >
+                            <div class="seriesinput-icons width-20">
+                                <i class="fa fa-search seriesicon"></i>
                                 <input class="seriesinput-field" type="text" id="productcodeInput" onkeyup="filterProduct()" placeholder="Enter ID.." title="Type in a ID">
-                            </div>                    
-                            <h1>LIST OF MENUS</h1>
+                            </div>                   
+                            <h1 class="width-60">LIST OF MENUS</h1>
                             <div class="create-series-btn">
-                                <i class="fa fa-plus addicon"></i>
-                                <button class="create" onclick="document.getElementById('add-sushi').style.display='block'">CREATE</button>
+                                <button class='cancelbtn white-txt' onclick="document.getElementById('add-sushi').style.display='block'"> <i class="fa fa-plus"></i>   CREATE</button>
                                 <!-- hidden div inside button add menu tag -->
                                 <div id="add-sushi" class="sub-hidden-form">
                                     <form class="hidden-form animate" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
@@ -912,14 +911,16 @@
                 </div>
                 <section class="table-1">
                     <div class="header-table">
-                        <div class="orderinput-icons">
+                        <div class="seriesinput-icons">
                             <i class="fa fa-search seriesicon"></i>
-                            <input class="cust-orderinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
+                            <input class="seriesinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
                         </div>
-                        <h1>LIST OF CUSTOMER ORDER</h1>
-                        <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
-                            <input type='submit' class='button' name='Report_CustOrder' value='Download Pending Order' />      <!-- Button: Report_CustOrder -->                                
-                        </form>
+                        <h1 class="width-60">LIST OF CUSTOMER ORDER</h1>
+                        <div class="">
+                            <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
+                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Pending Order' />      <!-- Button: Report_CustOrder -->                                
+                            </form>
+                        </div>
                     </div>
                     <div class="tbl-header">
                         <table cellpadding="0" cellspacing="0" border="0">
