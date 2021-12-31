@@ -420,13 +420,13 @@
             <script>Home();</script>
             <div class="admin-sidebar-tab-div">
                 <ul>
-                    <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav" style="cursor: pointer;" onclick="Home()"> HOME</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav" style="cursor: pointer;" onclick="viewProfile()"> PROFILE</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/store.png" alt="store" class="size"><a class="left-nav" style="cursor: pointer;" onclick="viewStore()"> STORE</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/customer.jpg" alt="customer" class="size"><a class="left-nav" style="cursor: pointer;" onclick="viewCustomer()"> CUSTOMER</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/product.png" alt="product" class="size"><a class="left-nav" style="cursor: pointer;" onclick="viewProduct()"> PRODUCT</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/order.png" alt="order" class="size"><a class="left-nav" style="cursor: pointer;" onclick="viewOrder()"> ORDER</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/sign-out.png" alt="sign-out" class="size"><a class="left-nav" style="cursor: pointer;" onclick="SignOut()"> SIGN OUT</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav black-txt " style="cursor: pointer;" onclick="Home()"> HOME</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav black-txt " style="cursor: pointer;" onclick="viewProfile()"> PROFILE</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/store.png" alt="store" class="size"><a class="left-nav black-txt " style="cursor: pointer;" onclick="viewStore()"> STORE</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/customer.jpg" alt="customer" class="size"><a class="left-nav black-txt " style="cursor: pointer;" onclick="viewCustomer()"> CUSTOMER</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/product.png" alt="product" class="size"><a class="left-nav black-txt " style="cursor: pointer;" onclick="viewProduct()"> PRODUCT</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/order.png" alt="order" class="size"><a class="left-nav black-txt " style="cursor: pointer;" onclick="viewOrder()"> ORDER</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/sign-out.png" alt="sign-out" class="size"><a class="left-nav black-txt " style="cursor: pointer;" onclick="SignOut()"> SIGN OUT</a></li>
                 </ul>
             </div>
         </div>

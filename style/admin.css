@@ -79,6 +79,10 @@ a {
   color: var(--white);
 }
 
+.black-txt {
+  color: black;
+}
+
 .uppercase-txt {
   text-transform: uppercase;
 }
@@ -448,6 +452,18 @@ button[disabled] {
 
 .user-detail {
   margin-bottom: 5%;
+}
+
+.gender-detail {
+  flex: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.gender-detail label {
+  font-size: 17px;
+  padding: 0px 30px;
 }
 
 .user-detail-col {
@@ -845,6 +861,14 @@ button[disabled] {
   border-radius: 9px;
 }
 
+/* hidden div form */
+.display-form {
+  background-color: white;
+  margin: -3% auto auto auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 2px solid #455b7c;
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
 /* The Modal (background) */
 .sub-hidden-form {
   display: none; /* Hidden by default */
@@ -857,6 +881,12 @@ button[disabled] {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(255, 255, 255); /* Fallback color */
   background: rgba(255, 255, 255, 0.4);
+  padding-top: 60px;
+}
+
+/* The Modal (background) */
+.sub-display-form {
+  width: 100%; /* Full width */
   padding-top: 60px;
 }
 
@@ -1000,6 +1030,14 @@ button[disabled] {
 .cancelbtn:hover,
 .submitbtn:hover {
   opacity: 0.7;
+}
+
+.img-preview {
+  width: 100%;
+}
+
+.edit-img-side {
+  background: white;
 }
 
 /*----------------------- Order-detail------------------------- */

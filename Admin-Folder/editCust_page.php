@@ -4,217 +4,276 @@
 
     //echo "hello, welcome to editCust_page.php<br>";
 
+    $custDetailArr = array();
+    $fnameErr = $usernameErr = $emailErr = $mobileNumErr = $genderErr = $addressErr = $postcodeErr = $cityErr = $stateErr = $passwordErr = $confirmPassErr = "";
+    $fname_edit = $username_edit = $email_edit = $mobileNum_edit = $gender_edit = $address_edit = $postcode_edit = $city_edit = $state_edit = $password_edit = "";
+    $boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = false;
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if (isset($_POST["edit-customer"])) {
-
             $customer_id = $_POST['edit-customer'];
-
-            $query = "SELECT * FROM customer WHERE customerID=$customer_id";
-            $result = $conn->query($query);
-
-            if($result){
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $cust_Usn = $row['username'];
-                    $cust_pass = $row['password'];
-                    $cust_Fn = $row['custName'];
-                    $cust_Mob = $row['phoneNo'];
-                    $cust_EmailAdd = $row['email'];
-                    $cust_HomeAdd = $row['deliveryAddress'];
-                    $cust_POS = $row['PostalCode'];
-                    $cust_Gender = $row['gender'];
-    
-                }else{
-                    echo "Record not found";
-                }
-            }else{
-                echo "Error in ".$query." ".$conn->error;
-            } 
-
-            //To test for correct output (_Uncomment to use_)
-            /*echo "Customer ID: ".$customer_id."<br>";
-            echo "Username: ".$cust_Usn."<br>";
-            echo "Password: ".$cust_pass."<br>";
-            echo "Fullname: ".$cust_Fn."<br>";
-            echo "Mobile Number: 0".$cust_Mob."<br>";
-            echo "Email Address: ".$cust_EmailAdd."<br>";
-            echo "Home Address: ".$cust_HomeAdd."<br>";
-            echo "Postal Code: ".$cust_POS."<br>";
-            echo "Gender: ".$cust_Gender."<br>";*/
-
-            //Create a preset code for gender
-            if($cust_Gender=="male"){
-                $printGender = "<label> Male
-                                    <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\" checked>
-                                </label>
-                                <label> Female
-                                    <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\">
-                                </label>";
-            }else{
-                $printGender = "<label> Male
-                                    <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\">
-                                </label>
-                                <label> Female
-                                    <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\" checked>
-                                </label>";
-            }
-
-
+            $custDetailArr = $adminObj->setSessionCustomer($customer_id);
+            $_SESSION['current_userid_edit'] = $customer_id;
         }
         else if(isset($_POST["Save-customer"])){
-
-            //Initial data
             $customer_id = $_POST["Save-customer"];
-            $cust_Usn = $_POST["cust_usn"];
-            $cust_Fn = $_POST["cust_fn"];
-            $cust_Mob = $_POST["cust_mob"];
-            $cust_EmailAdd = $_POST["cust_email"];
-            $cust_HomeAdd = $_POST["cust_home"];
-            $cust_POS = $_POST["cust_POS"];
-            $cust_Gender = $_POST["genderbtn"];
-
-            $usernameErr = $FullnameErr = $mobileNumErr = $emailErr = $HomeErr = $POSErr = "";
-            $username_edit = $fname_edit = $mobileNum_edit = $email_edit = $home_edit = $POS_edit = "";
-            $boolUsername = $boolFname = $boolMobileNum = $boolEmail = $boolHome = $boolPOS = false;
-            $boolAllTrue = false;
-
-            //echo "Input check<br>";
-
-            //Username validation
-            $username_edit = $cust_Usn;
-            if (empty($username_edit)) {
-                //echo "Username is empty<br>";
-                $usernameErr = "Username is required";
+            //full name validation
+            $fname_edit = $_POST["fname"];
+            if (empty($fname_edit)) {
+                $fnameErr = "Full name is required";
             } else {
-                //echo "Username is true<br>";
+                $boolFname = true;
+            }
+            
+            //username validation
+            $username_edit = $_POST["usern"];
+            if (empty($username_edit)) {
+                $usernameErr = "Username is required";
+            } elseif ($userObj->checkExistUsername($username_edit)) {
+                $usernameErr = "This username already exist!";
+            } else {
                 $boolUsername = true;
             }
 
-            //full name validation
-            $fname_edit = $cust_Fn;
-            if (empty($fname_edit)) {
-                //echo "Fullname is empty<br>";
-                $FullnameErr = "Full name is required";
-            } else {
-                //echo "Fullname is true<br>";
-                $boolFname = true;
-            }
-        
             //email validation
-            if (empty($cust_EmailAdd)) {
-                //echo "email is empty<br>";
+            if (empty($_POST["email"])) {
                 $emailErr = "Email is required";
             } else {
-                $email_edit = test_input($cust_EmailAdd);
+                $email_edit = test_input($_POST["email"]);
                 // check if e-mail address is well-formed
                 if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
-                    //echo "email is wrong format<br>";
                     $emailErr = "Invalid email format";
                 } else {
-                    //echo "email is true<br>";
                     $boolEmail = true;
                 }
             }
-        
-            //Home validation
-            $home_edit = $cust_HomeAdd;
-            if (empty($home_edit)) {
-                //echo "Address is wrong<br>";
-                $HomeErr = "Full name is required";
-            } else {
-                //echo "Address is true<br>";
-                $boolHome = true;
-            }
-
-            //Postal validation
-            if (empty($cust_POS)) {
-                //echo "POS is empty<br>";
-                $POSErr = "Postal code is required";
-            } else {
-                $POS_edit = test_input($cust_POS);
-                // check if postal code is valid
-                if (!preg_match("/^([1-9])\d{4}$/", $POS_edit)) {
-                    $POSErr = "Invalid postal format";
-                    //echo "POS is wrong format<br>";
-                } else {
-                    //echo "POS is true<br>";
-                    $boolPOS = true;
-                }
-            }            
 
             //mobile number validation
-            if (empty($cust_Mob)) {
-                echo "Mob is empty<br>";
+            if (empty($_POST["phone"])) {
                 $mobileNumErr = "Mobile number is required";
             } else {
-                $mobileNum_edit = test_input($cust_Mob);
+                $mobileNum_edit = test_input($_POST["phone"]);
                 // check if phone number is valid
-                if (!preg_match("/^(1)[0-9]\d{6,7}$/", $mobileNum_edit)) {
+                if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
                     $mobileNumErr = "Invalid mobile number format";
-                   // echo "Mob is wrong format<br>";
                 } else {
-                    //echo "Mob is true<br>";
                     $boolMobileNum = true;
                 }
             }
 
-            if ($boolUsername == true){
-                if($boolFname == true){
-                    if($boolMobileNum == true){
-                        if($boolEmail == true){
-                            if($boolHome == true){
-                                if($boolPOS == true){
-                                    $boolAllTrue = true;
-                                }
-                            }
-                        }
-                    }
+            //empty button validation
+            //gender
+            if (!isset($_POST["gender"])) {
+                $genderErr = "Gender is required";
+            } else {
+                $gender_edit = $_POST["gender"];
+                $boolGender = true;
+            }
+
+            //address
+            $address_edit = $_POST["add-1"];
+            if (empty($address_edit)) {
+                $addressErr = "Address Line is required!";
+            } else {
+                $boolAddress= true;
+            }
+
+            //postcode
+            $postcode_edit = $_POST["post"];
+            if (empty($postcode_edit)) {
+                $postcodeErr = "Postcode is required";
+            } else {
+                $boolPostcode = true;
+            }
+
+            //city
+            $city_edit = $_POST["city"];
+            if (empty($city_edit)) {
+                $cityErr = "City name is required";
+            } else {
+                $boolCity = true;
+            }
+
+            //state
+            $state_edit = $_POST['state'];
+            if ($state_edit === "select") {
+                $stateErr = "Please select your state.";
+            } else {
+                $boolState = true;
+            }
+
+            //password validation
+            if (empty($_POST["passw"])) {
+                $passwordErr = "Password is required";
+            } else {
+                $password_edit = test_input($_POST["passw"]);
+                $boolPassword = true;
+            }
+
+            //confirmation feedback
+            if (($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = true)) {
+                $updateStatus = $userObj->updateProfile($customer_id, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
+                if ($updateStatus) {
+                    echo'<script>alert("Update successfully!")</script>';
+                    $custDetailArr = $adminObj->setSessionCustomer($_SESSION['current_userid_edit'] );
+                } else {
+                    // header('location:editCust_page.php');
                 }
             }
 
-            if ($boolAllTrue == true){
 
-                //Update user detail in user table
-                $updateCustQuery = "UPDATE customer SET username='$cust_Usn', custName='$cust_Fn', phoneNo='$cust_Mob', email='$cust_EmailAdd', deliveryAddress='$cust_HomeAdd', PostalCode='$cust_POS', gender='$cust_Gender' WHERE customerID=$customer_id ";
-                $resultCust = mysqli_query($conn,  $updateCustQuery) or die("Error: ".mysqli_error($conn));
+            // //Initial data
+            // $customer_id = $_POST["Save-customer"];
+            // $cust_Usn = $_POST["cust_usn"];
+            // $cust_Fn = $_POST["cust_fn"];
+            // $cust_Mob = $_POST["cust_mob"];
+            // $cust_EmailAdd = $_POST["cust_email"];
+            // $cust_HomeAdd = $_POST["cust_home"];
+            // $cust_POS = $_POST["cust_POS"];
+            // $cust_Gender = $_POST["genderbtn"];
+
+            // $usernameErr = $FullnameErr = $mobileNumErr = $emailErr = $HomeErr = $POSErr = "";
+            // $username_edit = $fname_edit = $mobileNum_edit = $email_edit = $home_edit = $POS_edit = "";
+            // $boolUsername = $boolFname = $boolMobileNum = $boolEmail = $boolHome = $boolPOS = false;
+            // $boolAllTrue = false;
+
+            // //echo "Input check<br>";
+
+            // //Username validation
+            // $username_edit = $cust_Usn;
+            // if (empty($username_edit)) {
+            //     //echo "Username is empty<br>";
+            //     $usernameErr = "Username is required";
+            // } else {
+            //     //echo "Username is true<br>";
+            //     $boolUsername = true;
+            // }
+
+            // //full name validation
+            // $fname_edit = $cust_Fn;
+            // if (empty($fname_edit)) {
+            //     //echo "Fullname is empty<br>";
+            //     $FullnameErr = "Full name is required";
+            // } else {
+            //     //echo "Fullname is true<br>";
+            //     $boolFname = true;
+            // }
+        
+            // //email validation
+            // if (empty($cust_EmailAdd)) {
+            //     //echo "email is empty<br>";
+            //     $emailErr = "Email is required";
+            // } else {
+            //     $email_edit = test_input($cust_EmailAdd);
+            //     // check if e-mail address is well-formed
+            //     if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
+            //         //echo "email is wrong format<br>";
+            //         $emailErr = "Invalid email format";
+            //     } else {
+            //         //echo "email is true<br>";
+            //         $boolEmail = true;
+            //     }
+            // }
+        
+            // //Home validation
+            // $home_edit = $cust_HomeAdd;
+            // if (empty($home_edit)) {
+            //     //echo "Address is wrong<br>";
+            //     $HomeErr = "Full name is required";
+            // } else {
+            //     //echo "Address is true<br>";
+            //     $boolHome = true;
+            // }
+
+            // //Postal validation
+            // if (empty($cust_POS)) {
+            //     //echo "POS is empty<br>";
+            //     $POSErr = "Postal code is required";
+            // } else {
+            //     $POS_edit = test_input($cust_POS);
+            //     // check if postal code is valid
+            //     if (!preg_match("/^([1-9])\d{4}$/", $POS_edit)) {
+            //         $POSErr = "Invalid postal format";
+            //         //echo "POS is wrong format<br>";
+            //     } else {
+            //         //echo "POS is true<br>";
+            //         $boolPOS = true;
+            //     }
+            // }            
+
+            // //mobile number validation
+            // if (empty($cust_Mob)) {
+            //     echo "Mob is empty<br>";
+            //     $mobileNumErr = "Mobile number is required";
+            // } else {
+            //     $mobileNum_edit = test_input($cust_Mob);
+            //     // check if phone number is valid
+            //     if (!preg_match("/^(1)[0-9]\d{6,7}$/", $mobileNum_edit)) {
+            //         $mobileNumErr = "Invalid mobile number format";
+            //        // echo "Mob is wrong format<br>";
+            //     } else {
+            //         //echo "Mob is true<br>";
+            //         $boolMobileNum = true;
+            //     }
+            // }
+
+            // if ($boolUsername == true){
+            //     if($boolFname == true){
+            //         if($boolMobileNum == true){
+            //             if($boolEmail == true){
+            //                 if($boolHome == true){
+            //                     if($boolPOS == true){
+            //                         $boolAllTrue = true;
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+
+            // if ($boolAllTrue == true){
+
+            //     //Update user detail in user table
+            //     $updateCustQuery = "UPDATE customer SET username='$cust_Usn', custName='$cust_Fn', phoneNo='$cust_Mob', email='$cust_EmailAdd', deliveryAddress='$cust_HomeAdd', PostalCode='$cust_POS', gender='$cust_Gender' WHERE customerID=$customer_id ";
+            //     $resultCust = mysqli_query($conn,  $updateCustQuery) or die("Error: ".mysqli_error($conn));
             
-            }
+            // }
 
-            //Create a preset code for gender
-            if($cust_Gender=="male"){
-                $printGender = "<label> Male
-                                    <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\" checked>
-                                </label>
-                                <label> Female
-                                    <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\">
-                                </label>";
-            }else{
-                $printGender = "<label> Male
-                                    <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\">
-                                </label>
-                                <label> Female
-                                    <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\" checked>
-                                </label>";
-            }
+            // //Create a preset code for gender
+            // if($cust_Gender=="male"){
+            //     $printGender = "<label> Male
+            //                         <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\" checked>
+            //                     </label>
+            //                     <label> Female
+            //                         <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\">
+            //                     </label>";
+            // }else{
+            //     $printGender = "<label> Male
+            //                         <input type=\"radio\" id=\"male\" name=\"genderbtn\" value=\"male\">
+            //                     </label>
+            //                     <label> Female
+            //                         <input type=\"radio\" id=\"female\" name=\"genderbtn\" value=\"female\" checked>
+            //                     </label>";
+            // }
 
-            //To test for correct output (Uncomment to test)
-            /*echo "Customer ID: ".$customer_id."<br>";
-            echo "New Username: ".$cust_Usn."<br>";
-            echo "New Fullname: ".$cust_Fn."<br>";
-            echo "New Mobile Number: 0".$cust_Mob."<br>";
-            echo "New Email Address: ".$cust_EmailAdd."<br>";
-            echo "New Home Address: ".$cust_HomeAdd."<br>";
-            echo "New Postal Code: ".$cust_POS."<br>";
-            echo "New Gender: ".$cust_Gender."<br>";*/            
+            // //To test for correct output (Uncomment to test)
+            // /*echo "Customer ID: ".$customer_id."<br>";
+            // echo "New Username: ".$cust_Usn."<br>";
+            // echo "New Fullname: ".$cust_Fn."<br>";
+            // echo "New Mobile Number: 0".$cust_Mob."<br>";
+            // echo "New Email Address: ".$cust_EmailAdd."<br>";
+            // echo "New Home Address: ".$cust_HomeAdd."<br>";
+            // echo "New Postal Code: ".$cust_POS."<br>";
+            // echo "New Gender: ".$cust_Gender."<br>";*/            
 
-            $AllErr = $usernameErr.'\r\n'.$FullnameErr.'\r\n'.$mobileNumErr.'\r\n'.$emailErr.'\r\n'.$HomeErr.'\r\n'.$POSErr;
+            // $AllErr = $usernameErr.'\r\n'.$FullnameErr.'\r\n'.$mobileNumErr.'\r\n'.$emailErr.'\r\n'.$HomeErr.'\r\n'.$POSErr;
 
-            if ($boolAllTrue == true){
-                echo '<script>alert("Congratulations. Customer\'s profile has been updated.")</script>';
-            }
-            else{
-                echo '<script>alert("'.$AllErr.'")</script>';
-            }
+            // if ($boolAllTrue == true){
+            //     echo '<script>alert("Congratulations. Customer\'s profile has been updated.")</script>';
+            // }
+            // else{
+            //     echo '<script>alert("'.$AllErr.'")</script>';
+            // }
         }
         else if(isset($_POST["delete-customer"])){
             $customer_id = $_POST['delete-customer'];            
@@ -293,8 +352,8 @@
     <link href="../style/admin.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Customer Edit Page</title>
 </head>
-<body>
-<section class="admin-page flex-row">
+<body class="flex-col">
+    <section class="admin-page flex-row">
         <div class="admin-page-sidebar flex-col">
             <div class="logo-sidebar-div">
                 <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
@@ -308,14 +367,160 @@
                     <h2>Admin</h2>
                 </div>
             </div>
+            <div class="admin-sidebar-tab-div">
+                <ul>
+                    <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav black-txt" style="cursor: pointer;" href="Dashboard.php"> HOME</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> PROFILE</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/store.png" alt="store" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> STORE</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/customer.jpg" alt="customer" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> CUSTOMER</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/product.png" alt="product" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> PRODUCT</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/order.png" alt="order" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> ORDER</a></li>
+                    <li class="li-padding"><img src="../img/admin-img/sign-out.png" alt="sign-out" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> SIGN OUT</a></li>
+                </ul>
+            </div>
         </div>
         <div class="admin-page-dashboard">
             <div id="User-edit-container">
-                <div id="User-edit-title" align="center">
-                    <h1>Edit Customer Details</h1>
+            <div class="dashboard-title-div">
+                    <h1 class="dashboard-title">Edit Customer Details</h1>
                 </div>
                 <!-- All Customer Detail goes here -->
-                <div>
+                <!-- hidden div inside button add menu tag -->
+                <div class="main-profile profile-width-80" >
+                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <div class="main-profile-detail">
+                            <div class="profile-width-5"></div>
+                            <div class="main-profile-detail-left ">
+                                <div class="user-detail">
+                                    <h3>Username</h3>
+                                    <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $custDetailArr[1]?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Full Name</h3>
+                                    <div>
+                                        <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $custDetailArr[2]?>">
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Email</h3>
+                                    <input name="email" id="email" class="input-detail" type="text" value="<?php echo $custDetailArr[3]?>">
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Gender</h3>
+                                    <div>
+                                        <div class="gender-detail">
+                                            <input id="gender" name="gender" type="radio" value="male" <?php if($custDetailArr[4] == 'male') echo 'checked=checked';?>/>
+                                            <label for="gender">Male</label>
+                                        </div>
+                                        <div class="gender-detail">
+                                            <input id="gender" name="gender" type="radio" value="female" <?php if($custDetailArr[4] == 'female') echo 'checked=checked';?>/>
+                                            <label for="gender">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Phone Number</h3>
+                                    <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $custDetailArr[5]?>">
+                                </div>
+                            </div>
+                            <div class="profile-width-20"></div>
+                            <div class="main-profile-detail-right">
+                                <div class="user-detail">
+                                    <h3>Address Line</h3>
+                                    <input name="add-1" id="addressline" class="input-detail" type="textarea" value="<?php echo $custDetailArr[6]?>">
+                                </div>
+                                <div class="user-detail flex-row">
+                                    <div class="user-detail-col profile-margin-3">
+                                        <h3>City</h3>
+                                        <input name="city" id="city" class="input-detail" type="text" value="<?php echo $custDetailArr[9]?>">
+                                    </div>
+                                    <div class="user-detail-col">
+                                        <h3>Postcode</h3>
+                                        <input name="post" id="postcode" class="input-detail" type="number" value="<?php echo $custDetailArr[8]?>">
+                                    </div>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>State</h3>
+                                    <select class="input-detail-2" name="state" id="state">
+                                        <option <?php if($custDetailArr[10]=="") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
+                                        <option <?php if($custDetailArr[10]=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
+                                        <option <?php if($custDetailArr[10]=="Terengganu") echo 'selected="selected"'; ?> value="Terengganu">Terengganu</option>
+                                        <option <?php if($custDetailArr[10]=="Selangor") echo 'selected="selected"'; ?> value="Selangor">Selangor</option>
+                                        <option <?php if($custDetailArr[10]=="Sarawak") echo 'selected="selected"'; ?> value="Sarawak">Sarawak</option>
+                                        <option <?php if($custDetailArr[10]=="Sabah") echo 'selected="selected"'; ?> value="Sabah">Sabah</option>
+                                        <option <?php if($custDetailArr[10]=="Perlis") echo 'selected="selected"'; ?> value="Perlis">Perlis</option>
+                                        <option <?php if($custDetailArr[10]=="Perak") echo 'selected="selected"'; ?> value="Perak">Perak</option>
+                                        <option <?php if($custDetailArr[10]=="Pahang") echo 'selected="selected"'; ?> value="Pahang">Pahang</option>
+                                        <option <?php if($custDetailArr[10]=="Negeri Sembilan") echo 'selected="selected"'; ?> value="Negeri Sembilan">Negeri Sembilan</option>
+                                        <option <?php if($custDetailArr[10]=="Kelantan") echo 'selected="selected"'; ?> value="Kelantan">Kelantan</option>
+                                        <option <?php if($custDetailArr[10]=="Kuala Lumpur") echo 'selected="selected"'; ?> value="Kuala Lumpur">Kuala Lumpur</option>
+                                        <option <?php if($custDetailArr[10]=="Pulau Pinang") echo 'selected="selected"'; ?> value="Pulau Pinang">Pulau Pinang</option>
+                                        <option <?php if($custDetailArr[10]=="Kedah") echo 'selected="selected"'; ?> value="Kedah">Kedah</option>
+                                        <option <?php if($custDetailArr[10]=="Johor") echo 'selected="selected"'; ?> value="Johor">Johor</option>
+                                        <option <?php if($custDetailArr[10]=="Labuan") echo 'selected="selected"'; ?> value="Labuan">Labuan</option>
+                                        <option <?php if($custDetailArr[10]=="Putrajaya") echo 'selected="selected"'; ?> value="Putrajaya">Putrajaya</option>
+                                    </select>
+                                </div>
+                                <div class="user-detail">
+                                    <h3>Password</h3>
+                                    <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $custDetailArr[7]?>">
+                                </div>
+                                <br>
+                                <div class="user-detail-btn">
+                                    <button id="SaveCustBtn" value=<?php echo $customer_id;?> type="submit" name="Save-customer" class="save-edit-btn red-bg">Save Changes</button>
+                                </div>
+                            </div>
+                            <div class="profile-width-5"></div>
+                        </div>
+                    </form>
+                </div>
+                <!-- <div class="sub-display-form">
+                    <form class="display-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
+                        <div class="titlecontainer">
+                            <h2 class="main-page-title">Customer Detail</h2>
+                            <h5 class="sub-title-main">edit customer detail here</h5>
+                        </div>
+                        <div class="contentcontainer">
+                            <div class="editinfo-div editinfo-div-2">
+                                <label for="username"> Username</label>
+                                <br>
+                                <input name="cust_usn" class="input-detail" type="text" id="username" value="<?php echo $cust_Usn?>">
+                            </div>
+                            <div class="editinfo-div editinfo-div-2">
+                                <label for="fullname">Fullname</label>
+                                <br>
+                                <input name="cust_fn" class="input-detail" type="text" id="fullname" value="<?php echo $cust_Fn?>">
+                            </div>
+                            <div class="editinfo-div editinfo-div-2">
+                                <label for="mobilenum">Mobile Number</label>
+                                <br>
+                                <input name="cust_mob" class="input-detail" type="text" id="mobilenumber" value="<?php echo $cust_Mob?>">
+                            </div>
+                            <div class="editinfo-div editinfo-div-2">
+                                <label for="mobilenum">Email Address</label>
+                                <br>
+                                <input name="cust_email" class="input-detail" type="text" id="email_address" value="<?php echo $cust_EmailAdd?>">
+                            </div>
+                            <div class="editinfo-div editinfo-div-2">
+                                <label for="mobilenum">Home Address Line</label>
+                                <br>
+                                <textarea name="cust_home" class="input-detail" type="text" id="home_address" rows="4" cols="30"><?php echo $cust_HomeAdd?></textarea>
+                            </div>
+                            <div class="editinfo-div editinfo-div-2">
+                                <label for="mobilenum">Postal Code</label>
+                                <br>
+                                <input name="cust_POS" class="input-detail" type="text" id="home_address" value="<?php echo $cust_POS?>">   
+                            </div>
+                            <br>
+                            <div class="margin-5"></div>
+                            <div class="hidden-div-btn">
+                                <button class="submitbtn inline" id="SaveCustBtn" value=<?php echo $customer_id;?> type="submit" name="Save-customer">Save</button>
+                                <button class="cancelbtn inline" id="ResetCustBtn" value=<?php echo $customer_id;?> type="submit" name="edit-customer">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div> -->
+                <!-- <div>
                     <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div>
                             <label> Username: 
@@ -355,17 +560,13 @@
                             <button id="ResetCustBtn" value=<?php echo $customer_id;?> type="submit" name="edit-customer">Reset</button>                                         
                         </div>                                                
                     </form>
-                </div>
+                </div> -->
                 <br>
-                <div>
-                    <a href="Dashboard.php">Go back</a>
-                </div>
             </div>
         </div>
     </section>
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
-    
 </body>
 </html>
