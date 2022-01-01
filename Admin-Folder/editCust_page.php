@@ -300,13 +300,29 @@
             $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
     
             if ($resultStatus) {
-                echo '<script>alert("Order ID ('.$id_delivered.') delivered.")</script>';
+                echo '<script>alert("Order ID ('.$id_delivered.') is on delivery.")</script>';
             }else{
                 echo '<script>alert("Something went wrong. :(")</script>';
             }
             echo "<script>window.location.href='dashboard.php';</script>";            
 
         }
+        else if(isset($_POST["order_Received"])){
+            $id_delivered = $_POST['order_Received'];
+
+            //Update status to Completed
+            $updatestatusQuery = "UPDATE orders SET orderStatusID = 2,  deliverydateTime=CURRENT_TIMESTAMP WHERE orderID = $id_delivered";
+
+            $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
+    
+            if ($resultStatus) {
+                echo '<script>alert("Order ID ('.$id_delivered.') delivered.")</script>';
+            }else{
+                echo '<script>alert("Something went wrong. :(")</script>';
+            }
+            echo "<script>window.location.href='dashboard.php';</script>";            
+
+        }        
         else if(isset($_POST["order_cancelled"])){
             $id_delivered = $_POST['order_cancelled'];
 

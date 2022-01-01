@@ -60,16 +60,27 @@ class Order{
                         <td>'.$deliveryOption.'</td>
                         <td>'.$paymentMethod.'</td>
                         <td>'.$status.'</td>
-                        <td>'.$total.'</td>
-                        <td>
-                            <form  method="POST" action="../Admin-Folder/editCust_page.php">
-                                <button class="button" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
-                                <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
-                            </form>                                    
-                        </td>                            
-                    </tr>
+                        <td>'.$total.'</td>';
+
+
+                    if ($orderstatusid == 4){
+                        echo '<td>
+                                <form  method="POST" action="../Admin-Folder/editCust_page.php">
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
+                                </form>                                    
+                            </td>';
+                    }else{
+                        echo '<td>
+                                <form  method="POST" action="../Admin-Folder/editCust_page.php">
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="order_Received" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
+                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
+                                </form>                                    
+                            </td>';
+                    }
+                    echo '</tr>';
                     
-                    ';
+                    
                 }
             }else{
                 echo "Record not found";
