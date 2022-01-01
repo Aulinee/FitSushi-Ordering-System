@@ -709,7 +709,7 @@
                         <div class="header-table" >
                             <div class="seriesinput-icons width-20">
                                 <i class="fa fa-search seriesicon"></i>
-                                <input class="seriesinput-field" type="text" id="productcodeInput" onkeyup="filterProduct()" placeholder="Enter ID.." title="Type in a ID">
+                                <input class="seriesinput-field" type="text" id="productcodeInput" onkeyup="filterProduct()" placeholder="Search for menu name.." title="Type in menu name">
                             </div>                   
                             <h1 class="width-60">LIST OF MENUS</h1>
                             <div class="create-series-btn">
@@ -1039,6 +1039,12 @@
             document.getElementById("SaveContactBtn").disabled = false;
             document.getElementById("ResetContactBtn").disabled = false;
 
+            document.getElementById("location").style.backgroundColor = "#ffffff";
+            document.getElementById("OpHrs").style.backgroundColor = "#ffffff";
+            document.getElementById("WA").style.backgroundColor = "#ffffff";
+            document.getElementById("IG").style.backgroundColor = "#ffffff";
+            document.getElementById("FB").style.backgroundColor = "#ffffff";
+
             document.getElementById("editicon").style.display = "none";
             document.getElementById("exiticon").style.display = "block";            
 
@@ -1054,6 +1060,12 @@
             document.getElementById("FB").disabled = true;
             document.getElementById("SaveContactBtn").disabled = true;
             document.getElementById("ResetContactBtn").disabled = true;
+
+            document.getElementById("location").style.backgroundColor = "#cfcfcf";
+            document.getElementById("OpHrs").style.backgroundColor = "#cfcfcf";
+            document.getElementById("WA").style.backgroundColor = "#cfcfcf";
+            document.getElementById("IG").style.backgroundColor = "#cfcfcf";
+            document.getElementById("FB").style.backgroundColor = "#cfcfcf";
 
 
             document.getElementById("editicon").style.display = "block";
@@ -1255,7 +1267,7 @@
             table = document.getElementById("productTable");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
+                td = tr[i].getElementsByTagName("td")[1];
                 if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
