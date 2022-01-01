@@ -278,9 +278,6 @@
     $getRevenueChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
     $resultRevenueChart = mysqli_query($conn, $getRevenueChart);      
 
-    $getPendingChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=4 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
-    $resultPendingChart = mysqli_query($conn, $getPendingChart);
-
     /*$getRevenueChart20 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
     $resultRevenueChart20 = mysqli_query($conn, $getRevenueChart20);
     
@@ -369,37 +366,7 @@
       }
     
     </script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawPendingChart);
 
-      function drawPendingChart() {
-        var Pendingdata = google.visualization.arrayToDataTable([
-          ['Month', 'RM'],
-
-            <?php 
-
-                while($CurvePchart = mysqli_fetch_assoc($resultPendingChart)){
-
-                    echo "['".$CurvePchart['month']."',".$CurvePchart['TotalSales']."],";
-
-                }
-
-            ?>          
-        ]);
-
-        var Pendingoptions = {
-          title: 'Sales each month',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var PLinechart = new google.visualization.PLineChart(document.getElementById('curve_Pchart'));
-
-        PLinechart.draw(Pendingdata, Pendingoptions);
-      }
-    
-    </script>
     <title>Home</title>
 </head>
 <body class="flex-col">
