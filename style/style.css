@@ -1289,7 +1289,6 @@ th .info-checkout:hover {
   margin: 0 auto;
   width: 70%;
   border-radius: 50%;
-  border: 2px solid var(--red);
   font-size: 130px;
 }
 
