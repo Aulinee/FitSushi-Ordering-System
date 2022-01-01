@@ -434,9 +434,11 @@
             <!-- Home Tab -->
             <div class="home-tab-content" id="Home-div" style="display: block;">
                 <div class="dashboard-title-div">
-                    <h1 class="dashboard-title">Sales Report</h1>
+                    <h1 class="dashboard-title" style="margin: 0 auto;">Sales Report</h1>
+                    <br>
+                    <h5 class="sub-title-main" style="margin: 0;">statistic of current year data</h5>
                 </div>
-                <div class="calendar">
+                <!-- <div class="calendar">
                     <form action="/action_page.php">
                         <label for="month"><i style="font-size:24px" class="fa">&#xf073;</i></label>
                         <select id="month" name="month" class="datebox">
@@ -461,7 +463,7 @@
                             <option value="2019">2019</option>
                         </select>
                     </form>
-                </div>
+                </div> -->
                 <div class="flex-container">
                     <div class="overview-div">
                         <h2 class="inside-div-title">Overview</h2>
