@@ -2,8 +2,6 @@
     include '../database/dbConnection.php'; 
     include '../Login/sessionAdmin.php';
 
-    //echo "hello, welcome to editCust_page.php<br>";
-
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if (isset($_POST["edit-product"])) {
 
@@ -208,7 +206,6 @@
         return $data;
     }
 
-    //Display all the output in textfield and so on (with suitable field)
 ?>
 
 <!DOCTYPE html>

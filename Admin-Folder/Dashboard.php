@@ -87,7 +87,6 @@
 
             $temp_storeID = $_POST["storeidtext"];
 
-            //echo '<script>alert('.$temp_storeID.');</script>'; //Trial-and-error
             //Location 
             $loc_edit = $_POST["locationtext"];
             if (empty($loc_edit)) {
@@ -232,11 +231,11 @@
         return $data;
     }
 
-    //----------- Sum up total sales and users
-    $getTotalSales = "SELECT orderTotal FROM orders WHERE orderStatusID=2";
+    //----------- Sum up total sales
+    $getTotalSales = "SELECT orderTotal FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=year(curdate())";
     $resultTotalSales = $conn->query($getTotalSales);
     $TotalSales = 0;
-
+    
     if($resultTotalSales){
         if($resultTotalSales->num_rows > 0){
             while($row = mysqli_fetch_array($resultTotalSales)){
@@ -244,7 +243,7 @@
             }
         }
     }
-
+    //----------- Sum up total users
     $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
     $resultTotalUser = $conn->query($getTotalUser);
 
@@ -256,41 +255,14 @@
         }
     }
 
-    //-----------Get new user this month and last month
-
-    $getTotalUser = "SELECT COUNT(customerID) AS TotalCustomer FROM customer";    
-    $resultTotalUser = $conn->query($getTotalUser);
-
-    if($resultTotalUser){
-        if($resultTotalUser->num_rows > 0){
-            while($row = mysqli_fetch_array($resultTotalUser)){
-                $TotalUser = $row['TotalCustomer'];
-            }
-        }
-    }    
-
     //-----------To get data to be displayed in Pie Chart
-    $getSushi_PieChart = "SELECT s.sushiName, SUM(a.qty) AS Frequency FROM sushi s, alacarteorder a, orders o WHERE a.sushiID = s.sushiID AND o.orderID = a.orderID AND o.orderStatusID = 2 GROUP BY s.sushiName ORDER BY Frequency";
+    $getSushi_PieChart = "SELECT s.sushiName, SUM(a.qty) AS Total FROM sushi s, alacarteorder a, orders o WHERE o.orderID=a.orderID AND a.sushiID=s.sushiID AND o.orderStatusID=2 AND YEAR(o.deliverydateTime)=year(curdate()) GROUP BY s.sushiName";
     $getResultSushi_PieChart = mysqli_query($conn, $getSushi_PieChart);
 
     //-----------To get the data to be displayed in curve chart
-
-    $getRevenueChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
+    $getRevenueChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=year(curdate()) GROUP BY month";
     $resultRevenueChart = mysqli_query($conn, $getRevenueChart);      
 
-    $getPendingChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=4 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
-    $resultPendingChart = mysqli_query($conn, $getPendingChart);
-
-    /*$getRevenueChart20 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
-    $resultRevenueChart20 = mysqli_query($conn, $getRevenueChart20);
-    
-    $getRevenueChart21 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
-    $resultRevenueChart21 = mysqli_query($conn, $getRevenueChart21);    
-
-    $getRevenueChart22 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
-    $resultRevenueChart22 = mysqli_query($conn, $getRevenueChart22);  */
-
-    //--------------To get the data to be displayed for this month
 ?>
 
 <!DOCTYPE html>
@@ -322,7 +294,7 @@
 
                 while($piechart = mysqli_fetch_assoc($getResultSushi_PieChart)){
 
-                    echo "['".$piechart['sushiName']."',".$piechart['Frequency']."],";
+                    echo "['".$piechart['sushiName']."',".$piechart['Total']."],";
 
                 }
            
@@ -349,8 +321,11 @@
             <?php 
 
                 while($Curvechart = mysqli_fetch_assoc($resultRevenueChart)){
+                    $monthNum = $Curvechart['month'];
+                    $dateObj = DateTime::createFromFormat('!m', $monthNum);
+                    $monthName = $dateObj->format('M');
 
-                    echo "['".$Curvechart['month']."',".$Curvechart['TotalSales']."],";
+                    echo "['".$monthName."',".$Curvechart['TotalSales']."],";
 
                 }
 
@@ -366,37 +341,6 @@
         var Linechart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
         Linechart.draw(Revenuedata, Revenueoptions);
-      }
-    
-    </script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawPendingChart);
-
-      function drawPendingChart() {
-        var Pendingdata = google.visualization.arrayToDataTable([
-          ['Month', 'RM'],
-
-            <?php 
-
-                while($CurvePchart = mysqli_fetch_assoc($resultPendingChart)){
-
-                    echo "['".$CurvePchart['month']."',".$CurvePchart['TotalSales']."],";
-
-                }
-
-            ?>          
-        ]);
-
-        var Pendingoptions = {
-          title: 'Sales each month',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-
-        var PLinechart = new google.visualization.PLineChart(document.getElementById('curve_Pchart'));
-
-        PLinechart.draw(Pendingdata, Pendingoptions);
       }
     
     </script>
@@ -438,32 +382,6 @@
                     <br>
                     <h5 class="sub-title-main" style="margin: 0;">statistic of current year data</h5>
                 </div>
-                <!-- <div class="calendar">
-                    <form action="/action_page.php">
-                        <label for="month"><i style="font-size:24px" class="fa">&#xf073;</i></label>
-                        <select id="month" name="month" class="datebox">
-                            <option value="select"><em>-- select a month --</em></option>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
-                        </select>
-                        <select id="year" name="year" class="datebox">
-                            <option value="select"><em>-- select a year --</em></option>
-                            <option value="2017">2017</option>
-                            <option value="2018">2018</option>
-                            <option value="2019">2019</option>
-                        </select>
-                    </form>
-                </div> -->
                 <div class="flex-container">
                     <div class="overview-div">
                         <h2 class="inside-div-title">Overview</h2>
@@ -519,7 +437,6 @@
                         <button id="viewbtn" class="sidebar-profile-btn sidebar-btn-active" onclick="viewProfile()">View Profile</button> 
                         <button id="editbtn" class="sidebar-profile-btn" onclick="editAdmin()">Edit Profile</button>        
                     </div>
-                    <!-- <button class="edit-admin-btn"><a onclick="editAdmin()" style="cursor: pointer;">Edit Profile</a></button> -->
                     <div class="main-profile profile-width-80">
                         <div class="main-profile-detail">
                             <div class="profile-width-5"></div>
@@ -560,7 +477,7 @@
                 </div>               
             </div>
 
-            <!-- This div only visible when Edit Profile button is triggered!!! -->
+            <!-- This div only visible when Edit Profile button is triggered-->
             <!-- Admin's Edit Profile Tab-->
             <div class="home-tab" id="Edit-Profile-div" style="display: none;"> 
                 <div class="dashboard-title-div">
@@ -613,7 +530,6 @@
                         </form>
                     </div>
                 </div> 
-                <!-- <button class="edit-admin-btn"><a  onclick="viewProfile()" style="cursor: pointer;">View Profile</a></button> -->
             </div>   
 
             <!-- Store Tab -->
@@ -842,8 +758,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                            <!-- <button onclick="addNewProduct()"><i class="fa fa-plus" style="font-size:24px"></i> Add New Product</button>    -->
+                            </div>                            
                         </div>
                         <div class="tbl-header">
                             <table cellpadding="0" cellspacing="0" border="0">
@@ -922,8 +837,8 @@
                         </div>
                         <h1 class="width-60">LIST OF PENDING CUSTOMER ORDER</h1>
                         <div class="">
-                            <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
-                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Pending Order' />      <!-- Button: Report_CustOrder -->                                
+                            <form method='POST' action="../pdfGenerator.php">
+                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Pending Order' />                             
                             </form>
                         </div>
                     </div>
@@ -935,7 +850,6 @@
                                 <th class="info-20">DATE</th>
                                 <th class="info-20">CUSTOMER NAME</th>
                                 <th class="info-20">DELIVERY ADDRESS</th>
-                                <th class="info-20">DELIVERY DATE</th>
                                 <th class="info-20">DELIVERY OPTION</th>
                                 <th class="info-20">PAYMENT METHOD</th>
                                 <th class="info-20">STATUS</th>
@@ -964,8 +878,8 @@
                         </div>
                         <h1 class="width-60">LIST OF RECEIVED CUSTOMER ORDER</h1>
                         <div class="">
-                            <form method='POST' action="../pdfGenerator.php">  <!-- 'action=...' set it to redirect to generatePDF.php -->
-                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Confirm Order' />      <!-- Button: Report_CustOrder -->                                
+                            <form method='POST' action="../pdfGenerator.php">
+                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Confirm Order' />                              
                             </form>
                         </div>
                     </div>

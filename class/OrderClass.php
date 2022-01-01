@@ -49,29 +49,36 @@ class Order{
                     $status = $row["statusName"];
                     $total = $row["orderTotal"];
 
-                    echo '
-                    
-                    <tr>
-                        <td>'.$id.'</td>
-                        <td>'.$dateCreated.'</td>
-                        <td>'.$custname.'</td>
-                        <td>'.$address.'</td>
-                        <td>'.$deliverydate.'</td>
-                        <td>'.$deliveryOption.'</td>
-                        <td>'.$paymentMethod.'</td>
-                        <td>'.$status.'</td>
-                        <td>'.$total.'</td>';
-
+                    echo '<tr>';
 
                     if ($orderstatusid == 4){
-                        echo '<td>
+
+                        echo '<td>'.$id.'</td>
+                            <td>'.$dateCreated.'</td>
+                            <td>'.$custname.'</td>
+                            <td>'.$address.'</td>
+                            <td>'.$deliveryOption.'</td>
+                            <td>'.$paymentMethod.'</td>
+                            <td>'.$status.'</td>
+                            <td>'.$total.'</td>
+                            <td>
                                 <form  method="POST" action="../Admin-Folder/editCust_page.php">
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
                                 </form>                                    
                             </td>';
                     }else{
-                        echo '<td>
+
+                        echo '<td>'.$id.'</td>
+                            <td>'.$dateCreated.'</td>
+                            <td>'.$custname.'</td>
+                            <td>'.$address.'</td>
+                            <td>'.$deliverydate.'</td>
+                            <td>'.$deliveryOption.'</td>
+                            <td>'.$paymentMethod.'</td>
+                            <td>'.$status.'</td>
+                            <td>'.$total.'</td>
+                            <td>
                                 <form  method="POST" action="../Admin-Folder/editCust_page.php">
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="order_Received" title="Order ID: '.$id.'"><i class="fa fa-check"></i></button>
                                     <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
