@@ -916,7 +916,7 @@
                     <div class="header-table">
                         <div class="seriesinput-icons">
                             <i class="fa fa-search seriesicon"></i>
-                            <input class="seriesinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
+                            <input class="seriesinput-field" type="text" id="custorderInput" onkeyup="filterCustOrderPending()" placeholder="Search customer.." title="Type in a name">
                         </div>
                         <h1 class="width-60">LIST OF PENDING CUSTOMER ORDER</h1>
                         <div class="">
@@ -958,7 +958,7 @@
                     <div class="header-table">
                         <div class="seriesinput-icons">
                             <i class="fa fa-search seriesicon"></i>
-                            <input class="seriesinput-field" type="text" id="custorderInput" onkeyup="filterCustOrder()" placeholder="Search customer.." title="Type in a name">
+                            <input class="seriesinput-field" type="text" id="custorderPendingInput" onkeyup="filterCustOrderOnDeliver()" placeholder="Search customer.." title="Type in a name">
                         </div>
                         <h1 class="width-60">LIST OF RECEIVED CUSTOMER ORDER</h1>
                         <div class="">
@@ -986,7 +986,7 @@
                         </table>
                     </div>
                     <div class="tbl-content">
-                        <table id="custOrderTable" cellpadding="0" cellspacing="0" border="0">
+                        <table id="custOrderPendingTable" cellpadding="0" cellspacing="0" border="0">
                             <tbody>
                                 <?php $orderObj->displayAllCustOrder(1); ?>                                     
                             </tbody>
@@ -1352,7 +1352,7 @@
         }        
 
         //From Order Tab
-        function filterCustOrder() {
+        function filterCustOrderPending() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("custorderInput");
             filter = input.value.toUpperCase();
@@ -1370,16 +1370,15 @@
                 }       
             }
         }
-
         //From Order Tab
-        function filterTransaction() {
+        function filterCustOrderOnDeliver() {
             var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("transInput");
+            input = document.getElementById("custorderPendingInput");
             filter = input.value.toUpperCase();
-            table = document.getElementById("transTable");
+            table = document.getElementById("custOrderPendingTable");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
+                td = tr[i].getElementsByTagName("td")[2];
                 if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
