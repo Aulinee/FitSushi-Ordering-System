@@ -63,9 +63,9 @@
             $sushi_id = $_POST["Save-product"];
             $sushi_Name = $_POST["sushi_name"];
             $sushi_Desc = $_POST["sushi_desc"];
-            $hold_sushi_Img = $_FILES['selectedImage']['tmp_name'];
+            $hold_sushi_Img = $_FILES["selectedImg"]["tmp_name"];
             $sushi_Price = $_POST["sushi_price"];
-            $sushi_Available = $_POST["sushi_available"];
+            $sushi_Available = $_POST["status"];
 
             //To check if the image is changed (Uncomment to test)
             /*if(empty($hold_sushi_Img)){
@@ -277,7 +277,7 @@
                 <!-- All Customer Detail goes here -->
                 <!-- hidden div inside button add menu tag -->
                 <div class="main-profile profile-width-80" >
-                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
                         <div class="main-profile-detail">
                             <div class="profile-width-5"></div>
                             <div class="main-profile-detail-left">
@@ -288,7 +288,7 @@
                                 <div class="user-detail">
                                     <h3> Upload a new image</h3>
                                     <div>
-                                        <input name="selectedImage" class="input-detail" type="file" id="new_image" accept=".png,.jpeg,.jpg"> 
+                                        <input name="selectedImg" class="input-detail" type="file" id="new_image" accept=".png,.jpeg,.jpg"> 
                                     </div>
                                 </div>
                             </div>
