@@ -56,7 +56,7 @@ try {
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: "Source Sans Pro", Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
                 <h1>FitSushi</h1>
-              <p style="margin: 0;">Here is a summary of your recent order. If you have any questions or concerns about your order, please <a href="https://www.instagram.com/_expresseat/">contact us</a>.</p>
+              <p style="margin: 0;">Here is a summary of your recent order. If you have any questions or concerns about your order, please <a href="https://www.instagram.com/fitsushii/">contact us</a>.</p>
             </td>
           </tr>
           <tr>
