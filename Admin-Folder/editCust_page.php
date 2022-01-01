@@ -295,7 +295,7 @@
             $id_delivered = $_POST['order_delivered'];
 
             //Update status to Completed
-            $updatestatusQuery = "UPDATE orders SET orderStatusID = 2,  deliverydateTime=CURRENT_TIMESTAMP WHERE orderID = $id_delivered";
+            $updatestatusQuery = "UPDATE orders SET orderStatusID = 1,  deliverydateTime=CURRENT_TIMESTAMP WHERE orderID = $id_delivered";
 
             $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
     
