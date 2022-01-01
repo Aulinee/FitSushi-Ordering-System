@@ -183,18 +183,6 @@ class Admin{
             }
         }
 
-        /*while($row = $ResultGetTop5->fetch_assoc()){
-
-            $sqlgetData = "SELECT custName FROM customer WHERE customerID='".$row['customerID']."'";
-            $resultgetData = mysqli_query($conn, $sqlgetData);   
-
-            $getResult = mysqli_fetch_assoc($resultgetData);    
-            $custName = $getResult['custName'];
-            
-            echo '<li class="li2">'.$custName.'</li>';
-
-        }*/
-
     }
 
 

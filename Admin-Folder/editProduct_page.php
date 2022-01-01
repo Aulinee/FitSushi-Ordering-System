@@ -67,20 +67,6 @@
             $sushi_Price = $_POST["sushi_price"];
             $sushi_Available = $_POST["status"];
 
-            //To check if the image is changed (Uncomment to test)
-            /*if(empty($hold_sushi_Img)){
-                echo "No image selected<br>";
-            }else{
-                $sushi_Img = addslashes(file_get_contents($hold_sushi_Img));
-                echo "Image name: Already selected! <br>";
-            }
-
-            echo "Sushi ID: ".$sushi_id."<br>";
-            echo "Sushi Name: ".$sushi_Name."<br>";
-            echo "Sushi Desc: ".addslashes($sushi_Desc)."<br>";            
-            echo "Sushi Price: ".$sushi_Price."<br>";
-            echo "Sushi Available:".$sushi_Available."<br>";*/
-
             $AllErr = $sushiNameErr = $sushiDescErr = $sushiImgErr = $sushiPriceErr = "";
             $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiPrice = false;
 
@@ -328,53 +314,6 @@
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
-    <!-- <div id="User-edit-container">
-        <div id="User-edit-title" align="center">
-            <h1>Edit Sushi Details</h1>
-        </div>
-
-        
-        <div>
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-                <div>
-                    <label> Sushi Name: 
-                        <input name="sushi_name" class="input-detail" type="text" id="sushi_name" value="<?php echo $sushi_Name?>">                        
-                    </label>
-                </div>
-                <div>
-                    <label> Description: 
-                        <textarea name="sushi_desc" class="input-detail" type="text" id="sushi_desc" rows="4" cols="30"><?php echo $sushi_Desc?></textarea>                      
-                    </label>
-                </div>                
-                <div>
-                    <label> Image Preview: 
-                        <img src="data:image/jpg;charset=utf8;base64, <?php echo base64_encode($sushi_Img) ?>" width="100" height="100">                         
-                    </label>
-                </div>
-                <div>
-                    <label> Upload a new image: 
-                        <input name="selectedImage" class="input-detail" type="file" id="new_image" accept=".png,.jpeg,.jpg">                        
-                    </label>
-                </div>
-                <div>
-                    <label> Price: 
-                        <input name="sushi_price" class="input-detail" type="text" id="sushi_price" value="<?php echo $sushi_Price?>">                        
-                    </label>
-                </div>   
-                <div>
-                    <?php echo $printAvailability; ?>
-                </div>
-                <div>
-                    <button id="SaveProductBtn" value=<?php echo $sushi_id;?> type="submit" name="Save-product">Save</button>                         
-                    <button id="ResetProductBtn" value=<?php echo $sushi_id;?> type="submit" name="edit-product">Reset</button>                                         
-                </div>                                                
-            </form>
-        </div>
-        <br>
-        <div>
-            <a href="Dashboard.php">Go back</a>
-        </div>
-    </div> -->
 
 </body>
 </html>
