@@ -278,6 +278,9 @@
     $getRevenueChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
     $resultRevenueChart = mysqli_query($conn, $getRevenueChart);      
 
+    $getPendingChart = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=4 AND YEAR(deliverydateTime)=date('y') GROUP BY month";
+    $resultPendingChart = mysqli_query($conn, $getPendingChart);
+
     /*$getRevenueChart20 = "SELECT MONTH(deliverydateTime) AS month, SUM(orderTotal) AS TotalSales FROM orders WHERE orderStatusID=2 AND YEAR(deliverydateTime)=2018 GROUP BY month";
     $resultRevenueChart20 = mysqli_query($conn, $getRevenueChart20);
     
@@ -366,7 +369,37 @@
       }
     
     </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawPendingChart);
 
+      function drawPendingChart() {
+        var Pendingdata = google.visualization.arrayToDataTable([
+          ['Month', 'RM'],
+
+            <?php 
+
+                while($CurvePchart = mysqli_fetch_assoc($resultPendingChart)){
+
+                    echo "['".$CurvePchart['month']."',".$CurvePchart['TotalSales']."],";
+
+                }
+
+            ?>          
+        ]);
+
+        var Pendingoptions = {
+          title: 'Sales each month',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var PLinechart = new google.visualization.PLineChart(document.getElementById('curve_Pchart'));
+
+        PLinechart.draw(Pendingdata, Pendingoptions);
+      }
+    
+    </script>
     <title>Home</title>
 </head>
 <body class="flex-col">
@@ -434,7 +467,7 @@
                         <h2 class="inside-div-title">Overview</h2>
                         <div class="flex-row space-between">
                             <div class="total-sales flex-row" id="overview-TSales">
-                                <div>
+                                <div class="width-20">
                                     <img class= "dollar-icon" src="../img/admin-img/TotalSales.png" alt="dollar-sign">
                                 </div>
                                 <div class="padding-left-10 width-70">
@@ -479,7 +512,7 @@
                 </div>
                 <div class="profile-tbl">
                     <div class="sidebar-profile profile-width-20 flex-col">
-                        <img src="..\img\user-profile-border.png" alt="Admin profile picture" class="profile-img" >   
+                        <i class="fa fa-user"></i>
                         <h1><?php echo $username?></h1>   
                         <button id="viewbtn" class="sidebar-profile-btn sidebar-btn-active" onclick="viewProfile()">View Profile</button> 
                         <button id="editbtn" class="sidebar-profile-btn" onclick="editAdmin()">Edit Profile</button>        
