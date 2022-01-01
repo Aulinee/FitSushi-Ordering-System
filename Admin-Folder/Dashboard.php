@@ -467,7 +467,7 @@
                         <h2 class="inside-div-title">Overview</h2>
                         <div class="flex-row space-between">
                             <div class="total-sales flex-row" id="overview-TSales">
-                                <div class="width-20">
+                                <div>
                                     <img class= "dollar-icon" src="../img/admin-img/TotalSales.png" alt="dollar-sign">
                                 </div>
                                 <div class="padding-left-10 width-70">
@@ -512,7 +512,7 @@
                 </div>
                 <div class="profile-tbl">
                     <div class="sidebar-profile profile-width-20 flex-col">
-                        <i class="fa fa-user"></i>
+                        <img src="..\img\user-profile-border.png" alt="Admin profile picture" class="profile-img" >   
                         <h1><?php echo $username?></h1>   
                         <button id="viewbtn" class="sidebar-profile-btn sidebar-btn-active" onclick="viewProfile()">View Profile</button> 
                         <button id="editbtn" class="sidebar-profile-btn" onclick="editAdmin()">Edit Profile</button>        
