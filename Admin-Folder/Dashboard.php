@@ -837,8 +837,8 @@
                         </div>
                         <h1 class="width-60">LIST OF PENDING CUSTOMER ORDER</h1>
                         <div class="">
-                            <form method='POST' action="../pdfGenerator.php">
-                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Pending Order' />                             
+                            <form method='POST' action="../generatepdf/pdfGenerator.php">
+                                <input type='submit' class='cancelbtn white-txt' name='Report_PendingOrder' value='Download Pending Order' style="cursor: pointer;"/>                             
                             </form>
                         </div>
                     </div>
@@ -878,8 +878,8 @@
                         </div>
                         <h1 class="width-60">LIST OF RECEIVED CUSTOMER ORDER</h1>
                         <div class="">
-                            <form method='POST' action="../pdfGenerator.php">
-                                <input type='submit' class='cancelbtn white-txt' name='Report_CustOrder' value='Download Confirm Order' />                              
+                            <form method='POST' action="../generatepdf/pdfGenerator.php">
+                                <input type='submit' class='cancelbtn white-txt' name='Report_OnDeliverOrder' value='Download Confirm Order' style="cursor: pointer;"/>                              
                             </form>
                         </div>
                     </div>

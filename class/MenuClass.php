@@ -183,7 +183,7 @@ class Menu{
 
         //Insert product detail in user table
         $insertProductQuery = "INSERT INTO sushi(sushiName, sushiDesc, sushiImg, price, dateAdded, availability)
-        VALUES ('$name', '$desc', '$img', '$price', '$dateToday', '0')";
+        VALUES ('$name', '".mysqli_real_escape_string($this->conn, $desc)."', '$img', '$price', '$dateToday', '0')";
         $resultAdd = mysqli_query($this->conn,  $insertProductQuery) or die("Error: ".mysqli_error($this->conn));
        
         if ($resultAdd == true) {
