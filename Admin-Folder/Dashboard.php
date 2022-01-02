@@ -891,7 +891,6 @@
                                 <th class="info-20">DATE</th>
                                 <th class="info-20">CUSTOMER NAME</th>
                                 <th class="info-20">DELIVERY ADDRESS</th>
-                                <th class="info-20">DELIVERY DATE</th>
                                 <th class="info-20">DELIVERY OPTION</th>
                                 <th class="info-20">PAYMENT METHOD</th>
                                 <th class="info-20">STATUS</th>
