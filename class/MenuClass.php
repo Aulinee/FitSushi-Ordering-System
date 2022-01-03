@@ -208,11 +208,6 @@ class Menu{
         
     }
 
-    public function updateMenu($menuid){
-        
-        
-    }
-
     public function deleteMenu($menuid){
         $delsushiQuery = "DELETE FROM sushi WHERE sushiID=$menuid";
         $deletemenu = $this->conn->query($delsushiQuery);
@@ -222,6 +217,33 @@ class Menu{
         }else{
             return false;
         }
+    }
+
+    public function updateMenuImage($sushiid, $sushiimg){
+        $updateSushiQuery = "UPDATE sushi SET sushiImg='$sushiimg' WHERE sushiID='$sushiid'";
+        $resultUser = mysqli_query($this->conn,  $updateSushiQuery) or die("Error: ".mysqli_error($this->conn));
+
+        if ($resultUser == true) {
+            return true;
+        }else{
+            // echo "Error in ".$resultUser." ".$this->conn->error;
+            return false;
+        }
+        
+    }
+
+    public function updateMenuDetail($sushiid, $sushiname, $sushidesc, $sushiprice, $status){
+        $updateSushiQuery = "UPDATE sushi SET sushiName='$sushiname', sushiDesc='$sushidesc', price= $sushiprice, availability= $status WHERE sushiID='$sushiid'";
+        $resultUser = mysqli_query($this->conn,  $updateSushiQuery) or die("Error: ".mysqli_error($this->conn));
+
+        if ($resultUser == true) {
+            return true;
+        }else{
+            // echo "Error in ".$resultUser." ".$this->conn->error;
+            return false;
+        }
+        
+        
     }
 }
 

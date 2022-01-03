@@ -8,6 +8,34 @@ class User{
         $this->conn = $DB_con;
 	}
 
+    //This function is still under development 
+    public function displayAllCustomer(){
+        $displayCustomerQuery = "SELECT * FROM customer c, address a WHERE c.PostalCode = a.PostalCode";
+        $result = $this->conn->query($displayCustomerQuery);
+
+        $customerData = array();
+
+        while($row = mysqli_fetch_array($result)){
+            $id = $row["customerID"];
+            $username = $row["username"];
+            $custname = $row["custName"];
+            $phoneNum = $row["phoneNo"];
+            $email = $row["email"];
+            $address = $row["deliveryAddress"].', '.$row["PostalCode"].' '.$row["Area"].', '.$row["State"].', '.$row["Country"];
+
+            $customerData[] = array(
+                "id" => $id,
+                "username" => $username,
+                "custname" => $custname,
+                "phone" => $phoneNum,
+                "email" => $email,
+                "address" => $address
+            );
+        }
+
+        return $customerData;
+    }
+
     public function checkExistUsername($username){
         //Create query string
         $checkUsernameQuery = "SELECT * FROM `customer` WHERE username = '$username'";
@@ -149,32 +177,16 @@ class User{
         
     }
 
-    //This function is still under development 
-    public function displayAllCustomer(){
-        $displayCustomerQuery = "SELECT * FROM customer c, address a WHERE c.PostalCode = a.PostalCode";
-        $result = $this->conn->query($displayCustomerQuery);
+     function deleteProfile($cust_id)
+    {
+        $delprofileQuery = "DELETE FROM customer WHERE customerID=$cust_id";
+        $deleteprofile = $this->conn->query($delprofileQuery);
 
-        $customerData = array();
-
-        while($row = mysqli_fetch_array($result)){
-            $id = $row["customerID"];
-            $username = $row["username"];
-            $custname = $row["custName"];
-            $phoneNum = $row["phoneNo"];
-            $email = $row["email"];
-            $address = $row["deliveryAddress"].', '.$row["PostalCode"].' '.$row["Area"].', '.$row["State"].', '.$row["Country"];
-
-            $customerData[] = array(
-                "id" => $id,
-                "username" => $username,
-                "custname" => $custname,
-                "phone" => $phoneNum,
-                "email" => $email,
-                "address" => $address
-            );
+        if($deleteprofile == true){
+            return true;
+        }else{
+            return false;
         }
-
-        return $customerData;
     }
 
 }

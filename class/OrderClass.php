@@ -409,6 +409,19 @@ class Order{
 
     }
 
+    public function changeOrderStatus($orderid, $orderstatusid){
+        $updateQuery = "UPDATE orders SET orderStatusID = $orderstatusid, deliverydateTime=CURRENT_TIMESTAMP WHERE orderID = $orderid";
+        $result = mysqli_query($this->conn,  $updateQuery) or die("Error: ".mysqli_error($this->conn));
+
+        if ($result == true) {
+            return true;
+        }else{
+            // echo "Error in ".$result." ".$this->conn->error;
+            return false;
+        }
+
+    }
+
     public function editDeliveryTime($customerid, $orderid, $deliverytime){
         $updateQuery = "UPDATE orders SET deliveryDateTime = '$deliverytime' WHERE customerID = $customerid AND orderID = $orderid";
         $result = mysqli_query($this->conn,  $updateQuery) or die("Error: ".mysqli_error($this->conn));

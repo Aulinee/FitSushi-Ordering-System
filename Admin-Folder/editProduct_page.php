@@ -2,10 +2,12 @@
     include '../Login/sessionAdmin.php';
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $menu_detail = $menuObj->getMenu($_POST['edit-product']);
-
-        if(isset($_POST["Save-product"])){
-
+        if(isset($_POST["edit-product"])){
+            $menu_id = $_POST['edit-product'];
+            $menu_detail = $menuObj->getMenu($_POST['edit-product']);
+            $_SESSION['current_menuid_edit'] = $menu_id;
+        }
+        elseif(isset($_POST["Save-product"])){
             //Initial data
             $sushi_id = $_POST["Save-product"];
             $sushi_Name = $_POST["sushi_name"];
@@ -60,58 +62,36 @@
             $AllErr = $sushiNameErr.'\r\n'.$sushiDescErr.'\r\n'.$sushiPriceErr;
 
             if ($boolAllTrue == true){
-
                 //To check if the image is changed
                 if(empty($hold_sushi_Img)){
 
-                    //Update sushi detail
-                    $updateSushiQuery = "UPDATE sushi SET sushiName='$sushi_Name', sushiDesc='".mysqli_real_escape_string($conn, $sushi_Desc)."', price='$sushi_Price', availability='$sushi_Available' WHERE sushiID=$sushi_id ";
-                    $resultUpdateSushi = mysqli_query($conn,  $updateSushiQuery) or die("Error: ".mysqli_error($conn));   
+                    //Update sushi detail only
+                    $resultUpdateSushiDetail = $menuObj->updateMenuDetail($sushi_id, $sushi_Name, $sushi_Desc, $sushi_Price, $sushi_Available);   
 
-                    if($resultUpdateSushi){
-                        echo '<script>alert("Product (ID: '.$sushi_id.')(no image) has been updated.")</script>';  
+                    if($resultUpdateSushiDetail){
+                        echo '<script>alert("Product (ID: '.$sushi_id.')(no image) has been updated.")</script>'; 
+                        $menu_detail = $menuObj->getMenu($_SESSION['current_menuid_edit']); 
                     }else{
                         echo '<script>alert("Product (ID: '.$sushi_id.')(no image) has not been updated.")</script>';
                     }
 
                 }else{
-                    $sushi_Img = addslashes(file_get_contents($hold_sushi_Img));
+                    $sushi_Img = addslashes (file_get_contents($hold_sushi_Img));
                     
-                    //Update sushi detail
-                    $updateSushiQuery = "UPDATE sushi SET sushiName='$sushi_Name', sushiDesc='".mysqli_real_escape_string($conn, $sushi_Desc)."', sushiImg='$sushi_Img', price='$sushi_Price', availability='$sushi_Available' WHERE sushiID=$sushi_id ";
-                    $resultUpdateSushi = mysqli_query($conn,  $updateSushiQuery) or die("Error: ".mysqli_error($conn));   
+                    //Update both sushi detail and img
+                    $resultUpdateSushiDetail = $menuObj->updateMenuDetail($sushi_id, $sushi_Name, $sushi_Desc, $sushi_Price, $sushi_Available);
+                    $resultUpdateSushiImg = $menuObj->updateMenuImage($sushi_id, $sushi_Img);      
 
-                    if($resultUpdateSushi){
-                        echo '<script>alert("Product (ID: '.$sushi_id.')(with image) has been updated.")</script>';  
+                    if($resultUpdateSushiDetail && $resultUpdateSushiImg){
+                        echo '<script>alert("Product (ID: '.$sushi_id.')(with image) has been updated.")</script>'; 
+                        $menu_detail = $menuObj->getMenu($_SESSION['current_menuid_edit']);  
                     }else{
-                        echo '<script>alert("Product (ID: '.$sushi_id.')(without image) has not been updated.")</script>';
+                        echo '<script>alert("Product (ID: '.$sushi_id.')(with image) has not been updated.")</script>';
                     }
 
-                }  
-
-                $query = "SELECT sushiImg FROM sushi WHERE sushiID=$sushi_id";
-                $result = $conn->query($query);
-
-                if($result){
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $sushi_Img = $row['sushiImg'];   
-                    }
-                }                
+                }               
             
-            }else{
-
-                $query = "SELECT sushiImg FROM sushi WHERE sushiID=$sushi_id";
-                $result = $conn->query($query);
-
-                if($result){
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $sushi_Img = $row['sushiImg'];   
-                    }
-                }                 
-                echo '<script>alert("'.$AllErr.'")</script>';                    
-            } 
+            }
          
         }
         else if(isset($_POST["delete-product"])){
@@ -202,7 +182,7 @@
                             <div class="main-profile-detail-left">
                                 <div class="user-detail">
                                     <h3>Image Preview</h3>
-                                    <img class="img-preview edit-img-side " src="data:image/jpg;charset=utf8;base64, <?php echo base64_encode($menu_detail[4]) ?>">
+                                    <img name="previewImg" class="img-preview edit-img-side " src="data:image/jpg;charset=utf8;base64, <?php echo base64_encode($menu_detail[4]) ?>">
                                 </div>
                                 <div class="user-detail">
                                     <h3> Upload a new image</h3>

@@ -122,10 +122,8 @@
         else if(isset($_POST["delete-customer"])){
             $customer_id = $_POST['delete-customer'];            
 
-
             //Update user detail in user table
-            $delCustQuery = "DELETE FROM customer WHERE customerID='$customer_id'";
-            $resultDel = mysqli_query($conn,  $delCustQuery) or die("Error: ".mysqli_error($conn));
+            $resultStatus = $userObj->deleteProfile($customer_id);
 
             if ($resultDel){
                 echo '<script>alert("User (ID: '.$customer_id.') has been deleted.")</script>';                                
@@ -133,54 +131,48 @@
             else {
                 echo '<script>alert("User (ID: '.$customer_id.') failed to delete.")</script>';  
             }
-            echo "<script>window.location.href='dashboard.php';</script>";
+            echo "<script>window.location.href='customer-list-page.php';</script>";
         }
         else if(isset($_POST["order_delivered"])){
             $id_delivered = $_POST['order_delivered'];
 
             //Update status to Completed
-            $updatestatusQuery = "UPDATE orders SET orderStatusID = 1,  deliverydateTime=CURRENT_TIMESTAMP WHERE orderID = $id_delivered";
-
-            $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
+            $resultStatus = $orderObj->changeOrderStatus($id_delivered, 1);
     
             if ($resultStatus) {
                 echo '<script>alert("Order ID ('.$id_delivered.') is on delivery.")</script>';
             }else{
                 echo '<script>alert("Something went wrong. :(")</script>';
             }
-            echo "<script>window.location.href='dashboard.php';</script>";            
+            echo "<script>window.location.href='order-list-page.php';</script>";            
 
         }
         else if(isset($_POST["order_Received"])){
             $id_delivered = $_POST['order_Received'];
 
             //Update status to Completed
-            $updatestatusQuery = "UPDATE orders SET orderStatusID = 2,  deliverydateTime=CURRENT_TIMESTAMP WHERE orderID = $id_delivered";
-
-            $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
+            $resultStatus = $orderObj->changeOrderStatus($id_delivered, 2);
     
             if ($resultStatus) {
                 echo '<script>alert("Order ID ('.$id_delivered.') delivered.")</script>';
             }else{
                 echo '<script>alert("Something went wrong. :(")</script>';
             }
-            echo "<script>window.location.href='dashboard.php';</script>";            
+            echo "<script>window.location.href='order-list-page.php';</script>";            
 
         }        
         else if(isset($_POST["order_cancelled"])){
             $id_delivered = $_POST['order_cancelled'];
 
             //Update status to cancel
-            $updatestatusQuery = "UPDATE orders SET orderStatusID = 3 WHERE orderID = $id_delivered";
-
-            $resultStatus = mysqli_query($conn,  $updatestatusQuery) or die("Error: ".mysqli_error($conn));
+            $resultStatus = $orderObj->changeOrderStatus($id_delivered, 3);
     
             if ($resultStatus) {
                 echo '<script>alert("Order ID ('.$id_delivered.') cancelled.")</script>';
             }else{
                 echo '<script>alert("Something went wrong. :(")</script>';
             }
-            echo "<script>window.location.href='dashboard.php';</script>";            
+            echo "<script>window.location.href='order-list-page.php';</script>";            
 
         }        
     }
@@ -192,7 +184,6 @@
         return $data;
     }
 
-    //Display all the output in textfield and so on (with suitable field)
 ?>
 
 <!DOCTYPE html>
