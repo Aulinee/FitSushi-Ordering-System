@@ -141,6 +141,8 @@ class User{
         $resultUser = mysqli_query($this->conn,  $updateUserQuery) or die("Error: ".mysqli_error($this->conn));
        
         if ($resultUser == true) {
+            echo '<script>alert("Profile successfully edited! Please re-login!");</script>';
+            header('location: ../Customer/logout.php');
             return true;
         }else{
             // echo "Error in ".$resultUser." ".$this->conn->error;
