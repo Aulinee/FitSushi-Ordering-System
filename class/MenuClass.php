@@ -24,7 +24,7 @@ class Menu{
     public function displayMenu()
     {
         // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
-        $menuQuery = "SELECT s.sushiName AS name, s.sushiImg AS image from sushi s WHERE s.sushiImg != 'NULL' LIMIT 5";
+        $menuQuery = "SELECT s.sushiName AS name, s.sushiImg AS image from sushi s WHERE s.sushiImg != 'NULL' AND s.availability != 0 LIMIT 5";
         $result = $this->conn->query($menuQuery);
 
         if($result){
@@ -53,7 +53,7 @@ class Menu{
 
     public function getAlacarteMenuList(){
         // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
-        $menuQuery = "SELECT * from sushi s ";
+        $menuQuery = "SELECT * from sushi s WHERE s.availability != 0";
         $displayQuery = mysqli_query($this->conn, $menuQuery);
 
         $orderData = array();
@@ -130,7 +130,7 @@ class Menu{
     }
 
     public function displayAllProduct(){
-        $displayProductQuery = "SELECT * FROM sushi";
+        $displayProductQuery = "SELECT * FROM sushi WHERE s.availability != 0";
         $result = $this->conn->query($displayProductQuery);
 
         if($result){
