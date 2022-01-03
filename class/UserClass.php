@@ -196,4 +196,5 @@ class User{
 
 }
 
-?>
+//end of line
+?> 
