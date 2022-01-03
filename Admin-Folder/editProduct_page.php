@@ -2,59 +2,9 @@
     include '../Login/sessionAdmin.php';
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        if (isset($_POST["edit-product"])) {
+        $menu_detail = $menuObj->getMenu($_POST['edit-product']);
 
-            $sushi_id = $_POST['edit-product'];
-
-            $query = "SELECT * FROM sushi WHERE sushiID=$sushi_id";
-            $result = $conn->query($query);
-
-            if($result){
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $sushi_Name = $row['sushiName'];
-                    $sushi_Desc= $row['sushiDesc'];
-                    $sushi_Img = $row['sushiImg'];
-                    $sushi_Price = $row['price'];
-                    $sushi_Available = $row['availability'];    
-                }else{
-                    echo "Record not found";
-                }
-            }else{
-                echo "Error in ".$query." ".$conn->error;
-            } 
-
-            //To test for correct output (_Uncomment to use_)
-            /*echo "Customer ID: ".$customer_id."<br>";
-            echo "Username: ".$cust_Usn."<br>";
-            echo "Password: ".$cust_pass."<br>";
-            echo "Fullname: ".$cust_Fn."<br>";
-            echo "Mobile Number: 0".$cust_Mob."<br>";
-            echo "Email Address: ".$cust_EmailAdd."<br>";
-            echo "Home Address: ".$cust_HomeAdd."<br>";
-            echo "Postal Code: ".$cust_POS."<br>";
-            echo "Gender: ".$cust_Gender."<br>";*/
-
-            //Create a preset code for gender
-            if($sushi_Available=="1"){
-                $printAvailability = "<label>
-                                    <select id=\"availability\" name=\"sushi_available\">
-                                        <option value=\"1\" selected>Available</option>
-                                        <option value=\"0\">Not Available</option>
-                                    </select>
-                                </label>";
-            }else{
-                $printAvailability = "<label>
-                                    <select id=\"availability\" name=\"sushi_available\">
-                                        <option value=\"1\">Available</option>
-                                        <option value=\"0\" selected>Not Available</option>
-                                    </select>
-                                </label>";
-            }
-
-
-        }
-        else if(isset($_POST["Save-product"])){
+        if(isset($_POST["Save-product"])){
 
             //Initial data
             $sushi_id = $_POST["Save-product"];
@@ -162,39 +112,25 @@
                 }                 
                 echo '<script>alert("'.$AllErr.'")</script>';                    
             } 
-
-            //Create a preset code for gender
-            if($sushi_Available=="1"){
-                $printAvailability = "<label>
-                                    <select id=\"availability\" name=\"sushi_available\">
-                                        <option value=\"1\" selected>Available</option>
-                                        <option value=\"0\">Not Available</option>
-                                    </select>
-                                </label>";
-            }else{
-                $printAvailability = "<label>
-                                    <select id=\"availability\" name=\"sushi_available\">
-                                        <option value=\"1\">Available</option>
-                                        <option value=\"0\" selected>Not Available</option>
-                                    </select>
-                                </label>";
-            }            
+         
         }
         else if(isset($_POST["delete-product"])){
             $sushi_id = $_POST['delete-product'];            
 
+            $delete_status = $menuObj->deleteMenu($sushi_id);
 
-            //Update user detail in user table
-            $delsushiQuery = "DELETE FROM sushi WHERE sushiID='$sushi_id'";
-            $resultDel = mysqli_query($conn,  $delsushiQuery) or die("Error: ".mysqli_error($conn));
-
-            if ($resultDel){
-                echo '<script>alert("Product (ID: '.$sushi_id.') has been deleted.")</script>';                                
+            if ($delete_status){
+                echo '<script>
+                        alert("Product (ID: '.$sushi_id.') has been deleted.");
+                        window.location.href="menu-list-page.php";
+                    </script>';                                
             }
             else {
-                echo '<script>alert("Product (ID: '.$sushi_id.') failed to delete.")</script>';  
+                echo '<script>
+                        alert("Product (ID: '.$sushi_id.') failed to delete.")
+                        window.location.href="menu-list-page.php";
+                    </script>'; 
             }
-            echo "<script>window.location.href='dashboard.php';</script>";
         }
     }
 
@@ -225,30 +161,33 @@
     <title>Menu Edit Page</title>
 </head>
 <body class="flex-col">
-<section class="admin-page flex-row">
+    <section class="admin-page flex-row">
         <div class="admin-page-sidebar flex-col">
-            <div class="logo-sidebar-div">
-                <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
-            </div>
-            <div class="adminlogo-sidebar-div flex-row">
-                <div class="adminlogo-sidebar-div-1">
-                    <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
+            <div style="height:600px">
+                <div class="logo-sidebar-div">
+                    <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
                 </div>
-                <div class="adminlogo-sidebar-div-2">
-                    <h1><?php echo $username; ?></h1>
-                    <h2>Admin</h2>
+                <div class="adminlogo-sidebar-div flex-row">
+                    <div class="adminlogo-sidebar-div-1">
+                        <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
+                    </div>
+                    <div class="adminlogo-sidebar-div-2">
+                        <h1><?php echo $username; ?></h1>
+                        <h2>Admin</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="admin-sidebar-tab-div">
-                <ul>
-                    <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav black-txt" style="cursor: pointer;" href="Dashboard.php"> HOME</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> PROFILE</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/store.png" alt="store" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> STORE</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/customer.jpg" alt="customer" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> CUSTOMER</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/product.png" alt="product" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> PRODUCT</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/order.png" alt="order" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> ORDER</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/sign-out.png" alt="sign-out" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> SIGN OUT</a></li>
-                </ul>
+                <br>
+                <div class="admin-sidebar-tab-div">
+                    <ul>
+                        <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> HOME</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="admin-profile-page.php"> PROFILE</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/store.png" alt="store" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="store-detail-page.php"> STORE</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/customer.jpg" alt="customer" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="customer-list-page.php"> CUSTOMER</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/product.png" alt="product" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="menu-list-page.php"> MENU</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/order.png" alt="order" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="order-list-page.php"> ORDER</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/sign-out.png" alt="sign-out" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="logout.php"> SIGN OUT</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="admin-page-dashboard">
@@ -256,8 +195,6 @@
             <div class="dashboard-title-div">
                     <h1 class="dashboard-title">Edit Menu Details</h1>
                 </div>
-                <!-- All Customer Detail goes here -->
-                <!-- hidden div inside button add menu tag -->
                 <div class="main-profile profile-width-80" >
                     <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
                         <div class="main-profile-detail">
@@ -265,7 +202,7 @@
                             <div class="main-profile-detail-left">
                                 <div class="user-detail">
                                     <h3>Image Preview</h3>
-                                    <img class="img-preview edit-img-side " src="data:image/jpg;charset=utf8;base64, <?php echo base64_encode($sushi_Img) ?>">
+                                    <img class="img-preview edit-img-side " src="data:image/jpg;charset=utf8;base64, <?php echo base64_encode($menu_detail[4]) ?>">
                                 </div>
                                 <div class="user-detail">
                                     <h3> Upload a new image</h3>
@@ -278,26 +215,26 @@
                             <div class="main-profile-detail-right">
                                 <div class="user-detail">
                                     <h3>Sushi Name</h3>
-                                    <input name="sushi_name" class="input-detail" type="text" id="sushi_name" value="<?php echo $sushi_Name?>">
+                                    <input name="sushi_name" class="input-detail" type="text" id="sushi_name" value="<?php echo $menu_detail[1]?>">
                                 </div>
                                 <div class="user-detail">
                                     <h3>Sushi Description</h3>
-                                    <textarea name="sushi_desc" class="input-detail" type="text" id="sushi_desc" rows="4" cols="30"><?php echo $sushi_Desc?></textarea>
+                                    <textarea name="sushi_desc" class="input-detail" type="text" id="sushi_desc" rows="4" cols="30"><?php echo $menu_detail[2]?></textarea>
                                 </div>
                                 <div class="user-detail">
                                     <h3>Price: </h3>
-                                    <input name="sushi_price" class="input-detail" type="text" id="sushi_price" value="<?php echo $sushi_Price?>">
+                                    <input name="sushi_price" class="input-detail" type="text" id="sushi_price" value="<?php echo $menu_detail[3]?>">
                                 </div>
                                 <div class="user-detail">
                                     <h3>Availability</h3>
                                     <select class="input-detail-2" name="status" id="status">
-                                        <option <?php if($sushi_Available== 1) echo 'selected="selected"'; ?> value="1">Available</option>
-                                        <option <?php if($sushi_Available== 0) echo 'selected="selected"'; ?> value="0">Not Available</option>
+                                        <option <?php if($menu_detail[5]== 1) echo 'selected="selected"'; ?> value="1">Available</option>
+                                        <option <?php if($menu_detail[5]== 0) echo 'selected="selected"'; ?> value="0">Not Available</option>
                                     </select>
                                 </div>
                                 <br>
                                 <div class="user-detail-btn">
-                                    <button id="SaveProductBtn" value=<?php echo $sushi_id;?> type="submit" name="Save-product" class="save-edit-btn red-bg">Save Changes</button>
+                                    <button id="SaveProductBtn" value=<?php echo $menu_detail[0];?> type="submit" name="Save-product" class="save-edit-btn red-bg">Save Changes</button>
                                 </div>
                             </div>
                             <div class="profile-width-5"></div>
@@ -310,6 +247,5 @@
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
-
 </body>
 </html>

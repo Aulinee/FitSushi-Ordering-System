@@ -95,7 +95,20 @@ $store_detail = $adminObj->displayStoreDetail();
             <h2 class="white-txt margin-minus">Keep browsing and it will get your mouth watering, just a few clicks and we will deliver it to you!</h2>
             <div class="menu-display white-border">
                 <div class="width-4"></div>
-                <?php $menuObj->displayMenu(); ?>
+                <?php $menulist = $menuObj->getTopMenu();
+
+                    foreach($menulist  as $array) {
+                        echo'
+                            <div style="width: 1%;"></div>
+                            <div style="display: flex; flex-direction: column; text-align: center; border: 1px solid var(--blue); width: 20%;">
+                                <img style="margin: auto; width: 80%;" src="data:image/jpeg;base64,'.base64_encode( $array['img'] ).'" alt="'.$array['name'].'"/>
+                                <div style="background-color: var(--blue);">
+                                    <h1 style="font-size: 30px; color:white;">'.$array['name'].'</h1>
+                                </div>
+                            </div>
+                        ';
+                    }
+                ?>
                 <!-- <div class="width-1"></div>
                 <div class="menu-display-detail">
                     <img class="menu-icon" src="img/sushi.png" alt="logo">

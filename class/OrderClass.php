@@ -29,96 +29,41 @@ class Order{
 
     public function displayAllCustOrder($orderstatusid){
         $displayCustOrderQuery = "SELECT
-                                o.orderID, o.dateCreated, c.custName, c.deliveryAddress, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName, o.orderTotal
-                              FROM orders o, customer c, delivery d, payment p, orderstatus s
+                                o.orderID, o.dateCreated, c.custName, c.deliveryAddress, a.PostalCode, a.State, a.Area, a.Country, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName, o.orderTotal
+                              FROM orders o, customer c, delivery d, payment p, orderstatus s, address a
                               WHERE
-                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID AND o.orderStatusID=$orderstatusid";
+                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID AND c.PostalCode = a.PostalCode AND o.orderStatusID=$orderstatusid";
 
         $result = $this->conn->query($displayCustOrderQuery);
 
-        if($result){
-            if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $id = $row["orderID"];
-                    $dateCreated = $row["dateCreated"];
-                    $custname = $row["custName"];
-                    $address = $row["deliveryAddress"];
-                    $deliverydate = $row["deliverydateTime"];
-                    $deliveryOption = $row["deliveryOption"];
-                    $paymentMethod = $row["paymentMethod"];
-                    $status = $row["statusName"];
-                    $total = $row["orderTotal"];
+        $orderData = array();
+        while($roworder = mysqli_fetch_array($result)){
+            $orderid = $roworder['orderID'];
+            $datecreate = $roworder['dateCreated'];
+            $customername = $roworder['custName'];
+            $address = $roworder["deliveryAddress"].", ".$roworder['PostalCode'].' '.$roworder['Area'].', '.$roworder['State'].', '.$roworder['Country'];
+            $deliverydate = $roworder["deliverydateTime"];
+            $deliveryopt = $roworder['deliveryOption'];
+            $paymentmethod = $roworder['paymentMethod'];
+            $status = $roworder["statusName"];
+            $ordertotal = $roworder['orderTotal'];
 
-
-                    echo '<tr>
-                            <td>'.$id.'</td>
-                            <td>'.$dateCreated.'</td>
-                            <td>'.$custname.'</td>
-                            <td>'.$address.'</td>
-                            <td>'.$deliveryOption.'</td>
-                            <td>'.$paymentMethod.'</td>
-                            <td>'.$status.'</td>
-                            <td>'.$total.'</td>';
-                            
-                            if ($orderstatusid == 4){
-                                echo '<td>
-                                        <form  method="POST" action="../Admin-Folder/editCust_page.php">
-                                            <button class="button" id='.$id.' value='.$id.' type="submit" name="order_delivered" title="Deliver Order ID: '.$id.'"><i class="fa fa-check"></i></button>
-                                            <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Cancel Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
-                                        </form>                                    
-                                    </td>';
-                            }else{
-                                echo '<td>
-                                        <form  method="POST" action="../Admin-Folder/editCust_page.php">
-                                            <button class="button" id='.$id.' value='.$id.' type="submit" name="order_Received" title="Received Order ID: '.$id.'"><i class="fa fa-check"></i></button>
-                                            <button class="button" id='.$id.' value='.$id.' type="submit" name="order_cancelled" title="Cancel Order ID: '.$id.'"><i class="fa fa-trash"></i></button>
-                                        </form>                                    
-                                    </td>';
-                            }
-
-                        echo '</tr>';         
-                }
-            }else{
-                echo "Record not found";
-            }
+            $orderData[] = array(
+                "id" => $orderid,
+                "datecreate" => $datecreate,
+                "custname" => $customername,
+                "address" => $address,
+                "deliverydate" => $deliverydate,
+                "deliveryopt" => $deliveryopt,
+                "paymentmethod" => $paymentmethod,
+                "status" => $status,
+                "ordertotal" => $ordertotal
+            );
         }
-        else{
-            echo "Error in ".$displayCustOrderQuery." ".$this->conn->error;
-        }
-    }  
-    
-    public function displayAllTransaction(){
-        $displayTransactionQuery = "SELECT paymentID, orderID, dateCreated, orderTotal FROM orders";
 
-        $result = $this->conn->query($displayTransactionQuery);
+        return $orderData;
 
-        if($result){
-            if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $paymentid = $row["paymentID"];
-                    $orderid = $row["orderID"];
-                    $dateCreated = $row["dateCreated"];
-                    $orderTotal = $row["orderTotal"];
-
-                    echo '
-                    <div>
-                        <tr>
-                            <td>'.$paymentid.'</td>
-                            <td>'.$orderid.'</td>
-                            <td>'.$dateCreated.'</td>
-                            <td>'.$orderTotal.'</td>
-                        </tr>
-                    </div>
-                    ';
-                }
-            }else{
-                echo "Record not found";
-            }
-        }
-        else{
-            echo "Error in ".$displayTransactionQuery." ".$this->conn->error;
-        }
-    }      
+    }     
 
     public function getPaymentOptionList(){
         $paymentQuery = "SELECT * from payment";
@@ -438,21 +383,6 @@ class Order{
             return false;
         }
     }
-
-    // literally delete order func yuhh
-    // public function cancelOrder($customerid, $orderid){
-    //     $deleteAlacarteQuery = "DELETE FROM orders WHERE orderID = $orderid AND customerID = $customerid";
-
-    //     $sql_alacartemenu = $this->conn->query($deleteAlacarteQuery);
-
-	// 	if ($sql_alacartemenu == true) {
-    //         $this->deleteAlacarteOrder($customerid, $orderid);
-    //         return true;
-    //     }
-
-    //     return false;
-    // }
-
 
     public function clearSushibox($customerid, $sushiid){
         $deleteAlacarteQuery = "DELETE FROM alacartesushibox WHERE sushiID = $sushiid AND customerID = $customerid";

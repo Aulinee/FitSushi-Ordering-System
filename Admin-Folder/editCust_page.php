@@ -215,28 +215,31 @@
 <body class="flex-col">
     <section class="admin-page flex-row">
         <div class="admin-page-sidebar flex-col">
-            <div class="logo-sidebar-div">
-                <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
-            </div>
-            <div class="adminlogo-sidebar-div flex-row">
-                <div class="adminlogo-sidebar-div-1">
-                    <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
+            <div style="height:600px">
+                <div class="logo-sidebar-div">
+                    <img src="..\img\logo-title.png" alt="FitSushi logo" class="logo">
                 </div>
-                <div class="adminlogo-sidebar-div-2">
-                    <h1><?php echo $username; ?></h1>
-                    <h2>Admin</h2>
+                <div class="adminlogo-sidebar-div flex-row">
+                    <div class="adminlogo-sidebar-div-1">
+                        <img src="..\img\admin-img\admin-picture.png" alt="Admin picture" class="admin-pic left">
+                    </div>
+                    <div class="adminlogo-sidebar-div-2">
+                        <h1><?php echo $username; ?></h1>
+                        <h2>Admin</h2>
+                    </div>
                 </div>
-            </div>
-            <div class="admin-sidebar-tab-div">
-                <ul>
-                    <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav black-txt" style="cursor: pointer;" href="Dashboard.php"> HOME</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> PROFILE</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/store.png" alt="store" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> STORE</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/customer.jpg" alt="customer" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> CUSTOMER</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/product.png" alt="product" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> PRODUCT</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/order.png" alt="order" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> ORDER</a></li>
-                    <li class="li-padding"><img src="../img/admin-img/sign-out.png" alt="sign-out" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> SIGN OUT</a></li>
-                </ul>
+                <br>
+                <div class="admin-sidebar-tab-div">
+                    <ul>
+                        <li class="li-padding"><img src="../img/admin-img/home.png" alt="home" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="Dashboard.php"> HOME</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/profile.jpg" alt="profile" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="admin-profile-page.php"> PROFILE</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/store.png" alt="store" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="store-detail-page.php"> STORE</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/customer.jpg" alt="customer" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="customer-list-page.php"> CUSTOMER</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/product.png" alt="product" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="menu-list-page.php"> MENU</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/order.png" alt="order" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="order-list-page.php"> ORDER</a></li>
+                        <li class="li-padding"><img src="../img/admin-img/sign-out.png" alt="sign-out" class="size"><a class="left-nav black-txt " style="cursor: pointer;" href="logout.php"> SIGN OUT</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="admin-page-dashboard">

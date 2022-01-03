@@ -54,21 +54,83 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </header>
         <div class="sushibox-detail">
             <h1 class="black-txt">Sushi Box</h1>
-            <div class="tbl-header">
-                <table cellpadding="0" cellspacing="0" border="0">
-                    <thead>
-                        <tr>
-                            <th class="info-20">Item Name</th>
-                            <th class="info-20">Set Quantity</th>
-                            <th class="info-20">Unit Price (RM)</th>
-                            <th class="info-20">Total Price (RM)</th>
-                            <th class="info-20">Action</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
             <form onsubmit="return errorPopout(this);" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" enctype="multipart/form-data">
-                <?php $menuObj->displayAlacarteSushibox(); ?>
+                <?php 
+                   $sushiboxArray = $menuObj->displayAlacarteSushibox($userid);
+                   if(empty($sushiboxArray)){
+                        echo '
+                        <div class="sushibox-detail white-txt red-bg margin-empty-sushi">
+                            <h1>YOUR SUSHI BOX IS EMPTY!</h1>
+                            <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
+                        </div>
+                        ';
+                   }else{
+                        echo'
+                        <div class="tbl-header">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <thead>
+                                    <tr>
+                                        <th class="info-20">Item Name</th>
+                                        <th class="info-20">Set Quantity</th>
+                                        <th class="info-20">Unit Price (RM)</th>
+                                        <th class="info-20">Total Price (RM)</th>
+                                        <th class="info-20">Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="tbl-content">
+                            <table cellpadding="0" cellspacing="0" border="0">';
+                                foreach($sushiboxArray as $sushiboxList) {
+                                    echo'
+                                    <tr>
+                                        <th class="info-20" style="text-align: left;">
+                                            <label class="sushi-container">
+                                                <input type="checkbox" value="'.$sushiboxList['id'].'" name="sushibox[]" onclick="totalIt(\''.$sushiboxList['name'].'\')" disabled>
+                                                <input type="hidden" name="sushilist[]" value="'.$sushiboxList['id'].'" /> 
+                                                <span style="opacity: 0.7; border:none;" class="checkmark"></span>
+                                                <label class="">'.$sushiboxList['name'].'</label>
+                                            </label>
+                                        </th>
+                                        <th class="info-20">
+                                            <div class="sushi-list-input menu-row fit-width">
+                                                <div class="input-btn menu-row">
+                                                    <h5 class="minus-btn" onclick="decrement(\''.$sushiboxList['name'].'\')">-</h5>
+                                                    <input id="'.$sushiboxList['name'].'" name="sushiqty[]" type=number min=1 value="'.$sushiboxList['qty'].'" readonly="readonly">
+                                                    <h5 class="plus-btn" onclick="increment(\''.$sushiboxList['name'].'\')">+</h5>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th class="info-20"><input class="none-outline" type="text" name="'.$sushiboxList['name'].'" id="unit-price-'.$sushiboxList['name'].'" value="'.$sushiboxList['price'].'" readonly="readonly"></th>
+                                        <th class="info-20"> <input class="none-outline" name="sushitotal" id="total-price-'.$sushiboxList['name'].'" type="number" value="'.$sushiboxList['total'].'" onclick="totalIt(\''.$sushiboxList['name'].'\')" readonly="readonly"></th>
+                                        <th class="info-20"><a href="delete-alacarte.php?id='.$sushiboxList['id'].'" style="color: #c1273a;"><i class="fa fa-trash"></i></a></th>
+                                    </tr>';
+                                }
+                        echo'</table>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="tbl-content-checkout">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                    <tr>
+                                        <th style="text-align:left;" class="info-20">
+                                            <label class="sushi-container">
+                                                <input name="chk"  type="checkbox" onclick="toggle(this)" >
+                                                <span class="checkmark"></span>
+                                                <label class="">SELECT ALL</label>
+                                            </label>
+                                        </th>
+                                        <th class="info-10">Total(RM): </th>
+                                        <th class="info-30"><input name="totalorder" id="total" class="info-amount none-outline" value="0.00"></th>
+                                        <th class="info-30"><button name ="sushibox-form" type="submit" class="info-checkout red-bg white-txt">CHECKOUT</button></th>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>';
+                    }
+                ?>
             </form>
         </div>  
     </div>

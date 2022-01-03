@@ -151,45 +151,30 @@ class User{
 
     //This function is still under development 
     public function displayAllCustomer(){
-        $displayCustomerQuery = "SELECT * FROM customer";
+        $displayCustomerQuery = "SELECT * FROM customer c, address a WHERE c.PostalCode = a.PostalCode";
         $result = $this->conn->query($displayCustomerQuery);
 
-        if($result){
-            if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $id = $row["customerID"];
-                    $username = $row["username"];
-                    $custname = $row["custName"];
-                    $phoneNum = $row["phoneNo"];
-                    $email = $row["email"];
-                    $address = $row["deliveryAddress"];
+        $customerData = array();
 
-                    echo '
-                    <div>
-                        <tr>
-                            <td>'.$id.' <input type="hidden" name="cust-id" value="'.$id.'"> </td>
-                            <td>'.$username.'</td>
-                            <td>'.$custname.'</td>
-                            <td> 0'.$phoneNum.'</td>
-                            <td>'.$email.'</td>
-                            <td>'.$address.'</td>
-                            <td>
-                                <form method="POST" action="../Admin-Folder/editCust_page.php">
-                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="edit-customer" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
-                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="delete-customer" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
-                                </form>
-                            </td>
-                        </tr>
-                    </div>
-                    ';
-                }
-            }else{
-                echo "Record not found";
-            }
+        while($row = mysqli_fetch_array($result)){
+            $id = $row["customerID"];
+            $username = $row["username"];
+            $custname = $row["custName"];
+            $phoneNum = $row["phoneNo"];
+            $email = $row["email"];
+            $address = $row["deliveryAddress"].', '.$row["PostalCode"].' '.$row["Area"].', '.$row["State"].', '.$row["Country"];
+
+            $customerData[] = array(
+                "id" => $id,
+                "username" => $username,
+                "custname" => $custname,
+                "phone" => $phoneNum,
+                "email" => $email,
+                "address" => $address
+            );
         }
-        else{
-            echo "Error in ".$displayCustomerQuery." ".$this->conn->error;
-        }
+
+        return $customerData;
     }
 
 }

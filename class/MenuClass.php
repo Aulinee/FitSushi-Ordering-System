@@ -1,18 +1,4 @@
 <?php 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $database = "fitsushi";
-
-// // Create connection
-// $conn = new mysqli($servername, $username, $password, $database);
-
-// // Check connection
-// if ($conn->connect_error) {
-//     die("Connection failed: " . $conn->connect_error);
-// }else{
-    
-// }
 
 class Menu{
     /* Constructor */
@@ -21,38 +7,42 @@ class Menu{
         $this->conn = $DB_con;
 	}
 
-    public function displayMenu()
+    public function checkExistMenu($customerid, $sushiid){
+        $menuQuery = "SELECT * FROM alacartesushibox WHERE customerID = $customerid AND sushiID = $sushiid";
+
+        $result = mysqli_query($this->conn, $menuQuery) or die("Error: ".mysqli_error($this->conn));
+        $count = mysqli_num_rows($result);
+    
+        // If result matched $username, table row must be 1 row
+        if($count == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getTopMenu()
     {
         // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
         $menuQuery = "SELECT s.sushiName AS name, s.sushiImg AS image from sushi s WHERE s.sushiImg != 'NULL' AND s.availability != 0 LIMIT 5";
         $result = $this->conn->query($menuQuery);
 
-        if($result){
-            if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $name = $row["name"];
-                    $image = $row["image"];
+        $menuData = array();
 
-                    echo'
-                        <div style="width: 1%;"></div>
-                        <div style="display: flex; flex-direction: column; text-align: center; border: 1px solid var(--blue); width: 20%;">
-                            <img style="margin: auto; width: 80%;" src="data:image/jpeg;base64,'.base64_encode( $image ).'" alt="'.$name.'"/>
-                            <div style="background-color: var(--blue);">
-                                <h1 style="font-size: 30px; color:white;">'.$name.'</h1>
-                            </div>
-                        </div>
-                    ';
-                }
-            }else{
-                echo "Record not found";
-            }
-        }else{
-            echo "Error in ".$menuQuery." ".$this->conn->error;
+        while($row = mysqli_fetch_array($result)){
+            $name = $row["name"];
+            $image = $row["image"];
+
+            $menuData[] = array(
+                "name" => $name,
+                "img" => $image,
+            );
         }
+
+        return $menuData;
     }
 
     public function getAlacarteMenuList(){
-        // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
         $menuQuery = "SELECT * from sushi s WHERE s.availability != 0";
         $displayQuery = mysqli_query($this->conn, $menuQuery);
 
@@ -77,18 +67,31 @@ class Menu{
         return $orderData;
     }
 
-    public function checkExistMenu($customerid, $sushiid){
-        $menuQuery = "SELECT * FROM alacartesushibox WHERE customerID = $customerid AND sushiID = $sushiid";
+    public function displayAlacarteSushibox($customerid){
+        $customerid = $this->conn->real_escape_string($customerid);
+        $menuQuery = "SELECT s.sushiID AS sushiID ,s.sushiName AS sushiName , s.price AS price, a.qty AS qty FROM alacartesushibox a, sushi s WHERE a.sushiID = s.sushiID AND customerID = '$customerid'";
+        $displayQuery = mysqli_query($this->conn, $menuQuery);
 
-        $result = mysqli_query($this->conn, $menuQuery) or die("Error: ".mysqli_error($this->conn));
-        $count = mysqli_num_rows($result);
-    
-        // If result matched $username, table row must be 1 row
-        if($count == 1){
-            return true;
-        }else{
-            return false;
+        $sushiboxData = array();
+
+        while($row = mysqli_fetch_array($displayQuery)){
+            $id = $row["sushiID"];
+            $name = $row["sushiName"];
+            $unitprice = $row["price"];
+            $qty = $row["qty"];
+            $totalprice = $qty * $unitprice;
+
+            $sushiboxData[] = array(
+                "id" => $id,
+                "name" => $name,
+                "price" => $unitprice,
+                "qty" => $qty,
+                "total" =>$totalprice
+            );
         }
+
+        return $sushiboxData;
+
     }
 
     public function addAlacarte($customerid, $sushiid, $qty){
@@ -129,55 +132,64 @@ class Menu{
         return false;
     }
 
-    public function displayAllProduct(){
-        $displayProductQuery = "SELECT * FROM sushi s WHERE s.availability != 0";
+    public function displayAllMenu(){
+        $displayProductQuery = "SELECT * FROM sushi s";
         $result = $this->conn->query($displayProductQuery);
 
-        if($result){
-            if ($result->num_rows > 0) {
-                while($row = mysqli_fetch_array($result)){
-                    $id = $row["sushiID"];
-                    $sushiname = $row["sushiName"];
-                    $sushiDesc = $row["sushiDesc"];
-                    $sushiPrice = $row["price"];
-                    $sushiimg = $row["sushiImg"];
-                    $availability = $row["availability"];
+        $menuData = array();
 
-                    if($availability == 1){
-                        $td_availability = "Available";
-                    }
-                    else{
-                        $td_availability = "Not Available";
-                    }
+        while($row = mysqli_fetch_array( $result)){
+            $id = $row["sushiID"];
+            $sushiname = $row["sushiName"];
+            $sushiDesc = $row["sushiDesc"];
+            $sushiPrice = $row["price"];
+            $sushiimg = $row["sushiImg"];
+            $availability = $row["availability"];
 
-                    echo '
-                        <tr>
-                            <td>'.$id.'</td>
-                            <td>'.$sushiname.'</td>
-                            <td>'.$sushiDesc.'</td>
-                            <td>'.$sushiPrice.'</td>
-                            <td><img src="data:image/jpg;charset=utf8;base64, '.base64_encode($sushiimg).'" width="100" height="100"></td>
-                            <td>'.$td_availability.'</td>                               
-                            <td >
-                                <form  method="POST" action="../Admin-Folder/editProduct_page.php">
-                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="edit-product" title="Edit ID: '.$id.'"><i class="fa fa-edit"></i></button>
-                                    <button class="button" id='.$id.' value='.$id.' type="submit" name="delete-product" title="Delete ID: '.$id.'"><i class="fa fa-trash"></i></button>
-                                </form>                                    
-
-                            </td>                            
-                        </tr>
-                    ';
-                }
-            }else{
-                echo "Record not found";
+            if($availability == 1){
+                $td_availability = "Available";
             }
+            else{
+                $td_availability = "Not Available";
+            }
+
+            $menuData[] = array(
+                "id" => $id,
+                "name" => $sushiname,
+                "desc" =>  $sushiDesc,
+                "price" => $sushiPrice,
+                "img" => $sushiimg,
+                "status" => $td_availability
+            );
         }
-        else{
-            echo "Error in ".$displayProductQuery." ".$this->conn->error;
-        }        
+
+        return $menuData;    
     }
 
-    public function addproduct($name, $desc, $img, $price){
+    public function getMenu($menuid){
+        $menuQuery = "SELECT * from sushi s WHERE s.sushiID = $menuid";
+
+        $displayQuery = mysqli_query($this->conn, $menuQuery);
+
+        $menuData = array();
+
+        while($row = mysqli_fetch_array($displayQuery)){
+            $id = $row["sushiID"];
+            $sushiname = $row["sushiName"];
+            $sushiDesc = $row["sushiDesc"];
+            $sushiPrice = $row["price"];
+            $sushiimg = $row["sushiImg"];
+            $availability = $row["availability"];
+
+            $menuData = array($id, $sushiname, $sushiDesc, $sushiPrice, $sushiimg, $availability);
+            
+        }
+
+        return $menuData;
+        
+    }
+
+    public function addMenu($name, $desc, $img, $price){
 
         $dateToday = date("Y-m-d");
 
@@ -194,86 +206,23 @@ class Menu{
             return false;
         }
         
-    }    
-
-
-    public function displayAlacarteSushibox(){
-        $menuQuery = "SELECT s.sushiID AS sushiid ,s.sushiName AS sushiname, s.price AS sushiprice, a.qty AS sushiqty FROM alacartesushibox a, sushi s WHERE a.sushiID = s.sushiID";
-
-        $result = $this->conn->query($menuQuery);
-        if($result){
-            if ($result->num_rows > 0) {
-                echo'
-                <div class="tbl-content">
-                    <table cellpadding="0" cellspacing="0" border="0">';
-                       while($row = mysqli_fetch_array($result)){
-                        $id = $row["sushiid"];
-                        $name = $row["sushiname"];
-                        $unitprice = $row["sushiprice"];
-                        $qty = $row["sushiqty"];
-                        $totalprice = $qty * $unitprice;
-                        echo'
-                            <tr>
-                                <th class="info-20" style="text-align: left;">
-                                    <label class="sushi-container">
-                                        <input type="checkbox" value="'.$id.'" name="sushibox[]" onclick="totalIt(\''.$name.'\')" disabled>
-                                        <input type="hidden" name="sushilist[]" value="'.$id.'" /> 
-                                        <span style="opacity: 0.7; border:none;" class="checkmark"></span>
-                                        <label class="">'.$name.'</label>
-                                    </label>
-                                </th>
-                                <th class="info-20">
-                                    <div class="sushi-list-input menu-row fit-width">
-                                        <div class="input-btn menu-row">
-                                            <h5 class="minus-btn" onclick="decrement(\''.$name.'\')">-</h5>
-                                            <input id="'.$name.'" name="sushiqty[]" type=number min=1 value="'.$qty.'" readonly="readonly">
-                                            <h5 class="plus-btn" onclick="increment(\''.$name.'\')">+</h5>
-                                        </div>
-                                    </div>
-                                </th>
-                                <th class="info-20"><input class="none-outline" type="text" name="'.$name.'" id="unit-price-'.$name.'" value="'.$unitprice.'" readonly="readonly"></th>
-                                <th class="info-20"> <input class="none-outline" name="sushitotal" id="total-price-'.$name.'" type="number" value="'.$totalprice.'" onclick="totalIt(\''.$name.'\')" readonly="readonly"></th>
-                                <th class="info-20"><a href="delete-alacarte.php?id='.$id.'" style="color: #c1273a;">DELETE</a></th>
-                            </tr>';
-                    }
-                echo'</table>
-                </div>
-                <br>
-                <br>
-                <div class="tbl-content-checkout">
-                    <table cellpadding="0" cellspacing="0" border="0">
-                        <tbody>
-                            <tr>
-                                <th style="text-align:left;" class="info-20">
-                                    <label class="sushi-container">
-                                        <input name="chk"  type="checkbox" onclick="toggle(this)" >
-                                        <span class="checkmark"></span>
-                                        <label class="">SELECT ALL</label>
-                                    </label>
-                                </th>
-                                <th class="info-10">Total(RM): </th>
-                                <th class="info-30"><input name="totalorder" id="total" class="info-amount none-outline" value="0.00"></th>
-                                <th class="info-30"><button name ="sushibox-form" type="submit" class="info-checkout red-bg white-txt">CHECKOUT</button></th>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>';
-            }else{
-                echo '
-                <div class="sushibox-detail black-txt white-bg margin-empty-sushi">
-                    <h1>YOUR SUSHI BOX IS EMPTY!</h1>
-                    <h3>Discover our delicious sushi ala carte platter available in the MENU. </h3>
-                </div>
-                ';
-            }
-        }else{
-            echo "Error in ".$menuQuery." ".$this->conn->error;
-        }
-
     }
+
+    public function updateMenu($menuid){
         
-    
+        
+    }
+
+    public function deleteMenu($menuid){
+        $delsushiQuery = "DELETE FROM sushi WHERE sushiID=$menuid";
+        $deletemenu = $this->conn->query($delsushiQuery);
+
+        if($deletemenu == true){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 
 ?>
