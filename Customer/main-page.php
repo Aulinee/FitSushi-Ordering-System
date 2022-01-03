@@ -121,9 +121,9 @@ $store_detail = $adminObj->displayStoreDetail();
                         </div>
                         <div class="width-10"></div>
                         <div class="socmed-info">
-                            <h1>Instagram: &nbsp<a href="#">@fitsushii</a></h1>
-                            <h1>Facebook: &nbsp<a href="#">Fit Hanif</a></h1>
-                            <h1>Whatsapp: &nbsp<a href="#">+601112514020</a></h1>
+                            <h1>Instagram: &nbsp<a href="https://www.instagram.com/fitsushii/">@fitsushii</a></h1>
+                            <h1>Facebook: &nbsp<a href="https://www.facebook.com/favv.hijab">Fit Hanif</a></h1>
+                            <h1>Whatsapp: &nbsp<a href="wa.me/c/601112514020">+601112514020</a></h1>
                         </div>
                     </div>
                 </div>
