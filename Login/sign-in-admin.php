@@ -30,41 +30,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
 }
-
-// if($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-//     //Input data from Admin 
-//     $myusername = $_POST['usern'];
-//     $mypassword = $_POST['passw']; 
-    
-//     $sql = "SELECT * FROM administrator WHERE username = '$myusername' and password = '$mypassword'";
-    
-//     $result = mysqli_query($conn, $sql) or die("Error: ".mysqli_error($conn));
-//     $row = mysqli_fetch_array($result);
-    
-//     $count = mysqli_num_rows($result);
-    
-//     // If result matched $myusername and $mypassword, table row must be 1 row
-      
-//     if($count == 1) {
-
-//         // Set sessions
-//         if(!isset($_SESSION)) {
-//             session_start();
-//         }
-
-//         $_SESSION['login_user'] = $myusername;
-//         $_SESSION['login_pass'] = $mypassword;
-
-//         // Login time is stored in a session variable 
-//         $_SESSION["login_time_stamp"] = time(); 
-
-//         header('location:../Admin-Folder/dashboard.php');
-
-//     }else {
-//        $error = "Your Login Name or Password is invalid";
-//     }
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
