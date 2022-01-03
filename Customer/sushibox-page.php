@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <thead>
                         <tr>
                             <th class="info-20">Item Name</th>
-                            <th class="info-20">SetQuantity</th>
+                            <th class="info-20">Set Quantity</th>
                             <th class="info-20">Unit Price (RM)</th>
                             <th class="info-20">Total Price (RM)</th>
                             <th class="info-20">Action</th>
