@@ -1,8 +1,11 @@
 <?php
-    include_once 'database/dbConnection.php';
+    include 'database/dbConnection.php'; 
     include_once 'class/MenuClass.php'; 
+    include_once 'class/AdminClass.php'; 
 
     $menuObj = new Menu($conn);
+    $adminObj = new Admin($conn);
+    $session_StoreData = $adminObj->setSessionStore();
 
 ?>
 <!DOCTYPE html>

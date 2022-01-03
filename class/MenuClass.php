@@ -1,18 +1,18 @@
 <?php 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "fitsushi";
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "fitsushi";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+// // Create connection
+// $conn = new mysqli($servername, $username, $password, $database);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}else{
+// // Check connection
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }else{
     
-}
+// }
 
 class Menu{
     /* Constructor */
@@ -130,7 +130,7 @@ class Menu{
     }
 
     public function displayAllProduct(){
-        $displayProductQuery = "SELECT * FROM sushi WHERE s.availability != 0";
+        $displayProductQuery = "SELECT * FROM sushi s WHERE s.availability != 0";
         $result = $this->conn->query($displayProductQuery);
 
         if($result){

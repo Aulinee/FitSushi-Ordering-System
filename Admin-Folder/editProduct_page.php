@@ -1,5 +1,4 @@
 <?php
-    include '../database/dbConnection.php'; 
     include '../Login/sessionAdmin.php';
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){

@@ -1,6 +1,4 @@
 <?php 
-include '../database/dbConnection.php'; 
-
 class Admin{
     /* Constructor */
 	public function __construct($DB_con)

@@ -1,5 +1,5 @@
 <?php 
-include '../database/dbConnection.php'; 
+// include '../database/dbConnection.php'; 
 
 class Order{
     /* Constructor */

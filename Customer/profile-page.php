@@ -107,10 +107,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $updateStatus = $userObj->updateProfile($userid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
             if ($updateStatus) {
                 echo "<script>
-                window.location.href='profile-page.php';
+                alert('Profile successfully edited! Please re-login!');
+                window.location.href='logout.php';
                 </script>";
             } else {
                 echo "<script>
+                alert('Profile is not successfully edited! Please try again!');
                 window.location.href='profile-page.php';
                 </script>";
             }
