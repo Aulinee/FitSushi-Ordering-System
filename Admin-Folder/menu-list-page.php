@@ -1,24 +1,20 @@
 <?php
     include '../Login/sessionAdmin.php';
 
+    $AllErr = $sushiNameErr = $sushiDescErr = $statusErr = $sushiImgErr = $sushiPriceErr = "";
+    $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiImg = $boolsushiPrice = $boolStatus = false;
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["Add-product"])){
             
             $sushiName = $_POST["sushi_name"];
             $sushiDesc = $_POST["sushi_desc"];
             $sushiImg = $_FILES["selectedImage"]["tmp_name"];
-
-            //Get the content of the uploaded image
-            $imgContent = addslashes(file_get_contents($sushiImg));
-
             $sushiPrice = $_POST["sushi_price"];
-
-            $AllErr = $sushiNameErr = $sushiDescErr = $sushiImgErr = $sushiPriceErr = "";
-            $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiImg = $boolsushiPrice = false;
 
             //Validate Name
             if (empty($sushiName)){
-                $sushiNameErr = "Sushi name cannot be empty.";
+                $sushiNameErr = "(Sushi name cannot be empty)";
             }
             else{
                 $boolsushiName = true;
@@ -26,15 +22,23 @@
 
             //Validate Desc
             if (empty($sushiDesc)){
-                $sushiDescErr = "Sushi description cannot be empty.";
+                $sushiDescErr = "(Sushi description cannot be empty)";
             }
             else{
                 $boolsushiDesc = true;
-            } 
+            }
+
+            //Validate status
+            $status = $_POST['status'];
+            if ($status === "select") {
+                $statusErr = "(Please select your availability status)";
+            } else {
+                $boolStatus = true;
+            }
             
             //Validate Img
             if (empty($sushiImg)){
-                $sushiImgErr = "Select an image.";
+                $sushiImgErr = "(Select an image)";
             }
             else{
                 $boolsushiImg = true;
@@ -42,7 +46,7 @@
 
             //Validate Price
             if (empty($sushiPrice)){
-                $sushiPriceErr = "Insert a price.";
+                $sushiPriceErr = "(Insert a price)";
             }
             else{
                 $PriceAdd = test_input($_POST["sushi_price"]);
@@ -54,7 +58,7 @@
                 }
             } 
             
-            if($boolsushiName == true){
+            if(($boolsushiName == true) && ($boolStatus == true)){
                 if($boolsushiDesc == true){
                     if($boolsushiImg == true){
                         if($boolsushiPrice == true){
@@ -67,6 +71,8 @@
             $AllErr = $sushiNameErr.'\r\n'.$sushiDescErr.'\r\n'.$sushiImgErr.'\r\n'.$sushiPriceErr;
             $AllInput = $sushiName.'\r\n'.$sushiDesc.'\r\n'.$sushiImg.'\r\n'.$sushiPrice;
             if($boolAllTrue == true){
+                //Get the content of the uploaded image
+                $imgContent = addslashes(file_get_contents($sushiImg));
                 $addproductStatus = $menuObj->addMenu($sushiName, $sushiDesc, $imgContent, $sushiPrice);
 
                 if($addproductStatus){
@@ -85,10 +91,8 @@
             echo '<script>alert("Delete:'.$deleteproductid.'")</script>'; 
             
         }elseif(isset($_POST["order-delivered"])){
-
             $id_delivered = $_POST['order_delivered'];
-
-            echo '<script>alert("'.$id_delivered.'")</script>';
+            echo "<script>alert('.$id_delivered.')</script>";
         }
         
     }
@@ -174,36 +178,37 @@
                                         </div>
                                         <div class="contentcontainer">
                                             <div class="editinfo-div editinfo-div-2">
-                                                <label for="sushi-name">New Menu Name</label>
+                                                <label for="sushi-name">New Menu Name:  <span class="error"><?php echo $sushiNameErr; ?></span></label>
                                                 <br>
                                                 <input placeholder="Enter your sushi name.." name="sushi_name" class="input-detail" type="text" id="sushi_name">
                                             </div>
                                             <div class="editinfo-div editinfo-div-2">
-                                                <label for="add-sushi">New Menu Description:</label>
+                                                <label for="add-sushi">New Menu Description:  <span class="error"><?php echo $sushiDescErr; ?></span></label>
                                                 <br>
                                                 <textarea placeholder="Enter your sushi description.." name="sushi_desc" class="input-detail" type="text" id="sushi_desc" cols="80" rows="10"></textarea>
                                             </div>
                                             <div class="editinfo-div editinfo-div-2">
-                                                <label for="add-sushi">New Menu Price</label>
+                                                <label for="add-sushi">New Menu Price:  <span class="error"><?php echo $sushiPriceErr; ?></span></label>
                                                 <br>
                                                 <input placeholder="Enter your sushi price.." min="0" value="0" step="0.01" title="Currency" pattern="^\d+(?:\.\d{1,2})?$" name="sushi_price" class="input-detail" type="number" id="sushi_price">
                                             </div>
                                             <div class="editinfo-div editinfo-div-2">
-                                                <label for="add-sushi">Availability Status</label>
+                                                <label for="add-sushi">Availability Status  <span class="error"><?php echo $statusErr; ?></span></label>
                                                 <select class="input-detail" name="status" id="status">
-                                                    <option selected value="1">Available</option>
+                                                    <option value="select" selected>Not Selected</option>
+                                                    <option value="1">Available</option>
                                                     <option value="0">Not Available</option>
                                                 </select>
                                             </div>
                                             <div class="editinfo-div editinfo-div-2">
-                                                <label for="add-sushi">Upload Menu Picture</label>
+                                                <label for="add-sushi">Upload Menu Picture  <span class="error"><?php echo $sushiImgErr; ?></span></label>
                                                 <input name="selectedImage" class="input-detail" type="file" id="new_image" accept=".png,.jpeg,.jpg">
                                             </div>
                                             <br>
                                             <div class="margin-5"></div>
                                             <div class="hidden-div-btn">
                                                 <button class="submitbtn inline" id="AddProductBtn" type="submit" name="Add-product">Submit</button>
-                                                <button class="cancelbtn inline" type="button" onclick="document.getElementById('add-sushi').style.display='none'" >Cancel</button>
+                                                <button class="cancelbtn inline" type="button" onclick="document.getElementById('add-sushi').style.display='none'">Cancel</button>
                                             </div>
                                         </div>
                                     </form>

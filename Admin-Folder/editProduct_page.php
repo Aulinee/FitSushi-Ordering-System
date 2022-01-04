@@ -1,6 +1,9 @@
 <?php
     include '../Login/sessionAdmin.php';
 
+    $AllErr = $sushiNameErr = $sushiDescErr = $statusErr = $sushiImgErr = $sushiPriceErr = "";
+    $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiImg = $boolsushiPrice = $boolStatus = false;
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["edit-product"])){
             $menu_id = $_POST['edit-product'];
@@ -16,14 +19,9 @@
             $sushi_Price = $_POST["sushi_price"];
             $sushi_Available = $_POST["status"];
 
-            $AllErr = $sushiNameErr = $sushiDescErr = $sushiImgErr = $sushiPriceErr = "";
-            $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiPrice = false;
-
-            //echo "Input check<br>";
-
             //Validate Name
             if (empty($sushi_Name)){
-                $sushiNameErr = "Sushi name cannot be empty.";
+                $sushiNameErr = "(Sushi name cannot be empty)";
             }
             else{
                 $boolsushiName = true;
@@ -31,7 +29,7 @@
 
             //Validate Desc
             if (empty($sushi_Desc)){
-                $sushiDescErr = "Sushi description cannot be empty.";
+                $sushiDescErr = "(Sushi description cannot be empty)";
             }
             else{
                 $boolsushiDesc = true;
@@ -39,22 +37,32 @@
 
             //Validate Price
             if (empty($sushi_Price)){
-                $sushiPriceErr = "Insert a price.";
+                $sushiPriceErr = "(Insert a price)";
             }
             else{
                 $PriceAdd = test_input($_POST["sushi_price"]);
                 // check if price is valid
                 if (!preg_match("/^\d{0,8}(\.\d{1,4})?$/", $PriceAdd)) {
-                    $sushiPriceErr = "Invalid price format";
+                    $sushiPriceErr = "(Invalid price format)";
                 } else {
                     $boolsushiPrice = true;
                 }
             } 
 
-            if($boolsushiName == true){
+            //Validate status
+            $status = $_POST['status'];
+            if ($status === "select") {
+                $statusErr = "(Please select your availability status)";
+            } else {
+                $boolStatus = true;
+            }
+
+            if(($boolsushiName == true) && ($boolStatus == true)){
                 if($boolsushiDesc == true){
-                    if($boolsushiPrice == true){
-                        $boolAllTrue = true;                        
+                    if($boolsushiImg == true){
+                        if($boolsushiPrice == true){
+                            $boolAllTrue = true;
+                        }
                     }
                 }
             }
@@ -87,10 +95,13 @@
                         $menu_detail = $menuObj->getMenu($_SESSION['current_menuid_edit']);  
                     }else{
                         echo '<script>alert("Product (ID: '.$sushi_id.')(with image) has not been updated.")</script>';
+                        $menu_detail = $menuObj->getMenu($_SESSION['current_menuid_edit']); 
                     }
 
                 }               
             
+            }else{
+                $menu_detail = $menuObj->getMenu($_SESSION['current_menuid_edit']); 
             }
          
         }
@@ -194,19 +205,19 @@
                             <div class="profile-width-20"></div>
                             <div class="main-profile-detail-right">
                                 <div class="user-detail">
-                                    <h3>Sushi Name</h3>
+                                    <h3>Sushi Name  <span class="error"><?php echo $sushiNameErr; ?></span></h3>
                                     <input name="sushi_name" class="input-detail" type="text" id="sushi_name" value="<?php echo $menu_detail[1]?>">
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Sushi Description</h3>
+                                    <h3>Sushi Description <span class="error"><?php echo $sushiDescErr; ?></span></h3>
                                     <textarea name="sushi_desc" class="input-detail" type="text" id="sushi_desc" rows="4" cols="30"><?php echo $menu_detail[2]?></textarea>
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Price: </h3>
+                                    <h3>Price: <span class="error"><?php echo $sushiPriceErr; ?></span></h3>
                                     <input name="sushi_price" class="input-detail" type="text" id="sushi_price" value="<?php echo $menu_detail[3]?>">
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Availability</h3>
+                                    <h3>Availability </h3>
                                     <select class="input-detail-2" name="status" id="status">
                                         <option <?php if($menu_detail[5]== 1) echo 'selected="selected"'; ?> value="1">Available</option>
                                         <option <?php if($menu_detail[5]== 0) echo 'selected="selected"'; ?> value="0">Not Available</option>

@@ -103,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
 
         //confirmation feedback
-        if (($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = true)) {
+        if ($boolFname == true && $boolUsername == true && $boolEmail == true && $boolMobileNum == true && $boolGender == true && $boolAddress == true && $boolPostcode == true && $boolCity == true && $boolState == true && $boolPassword == true) {
             $updateStatus = $userObj->updateProfile($userid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
             if ($updateStatus) {
                 echo "<script>
@@ -779,21 +779,21 @@ function test_input($data) {
                                 <div class="profile-width-5"></div>
                                 <div class="main-profile-detail-left ">
                                     <div class="user-detail">
-                                        <h3>Username</h3>
+                                        <h3>Username  <span class="error"><?php echo $usernameErr; ?></span></h3>
                                         <input name="usern_edit" class="input-detail" type="text" id="username" value="<?php echo $username?>">
                                     </div>
                                     <div class="user-detail">
-                                        <h3>Full Name</h3>
+                                        <h3>Full Name  <span class="error"><?php echo $fnameErr; ?></span></h3>
                                         <div>
                                             <input name="fname_edit" id="fullname" class="input-detail" type="text" value="<?php echo $fullname?>">
                                         </div>
                                     </div>
                                     <div class="user-detail">
-                                        <h3>Email</h3>
+                                        <h3>Email  <span class="error"><?php echo $emailErr; ?></span></h3>
                                         <input name="email_edit" id="email" class="input-detail" type="text" value="<?php echo $email?>">
                                     </div>
                                     <div class="user-detail">
-                                        <h3>Gender</h3>
+                                        <h3>Gender  <span class="error"><?php echo $genderErr; ?></span></h3>
                                         <div>
                                             <div class="gender-detail">
                                                 <input id="gender" name="gender" type="radio" value="male" <?php if($gender == 'male') echo 'checked=checked';?>/>
@@ -806,28 +806,28 @@ function test_input($data) {
                                         </div>
                                     </div>
                                     <div class="user-detail">
-                                        <h3>Phone Number</h3>
+                                        <h3>Phone Number  <span class="error"><?php echo $mobileNumErr; ?></span></h3>
                                         <input name="phone_edit" id="phonenumber" class="input-detail" type="text" value="<?php echo $phonenum?>">
                                     </div>
                                 </div>
                                 <div class="profile-width-20"></div>
                                 <div class="main-profile-detail-right">
                                     <div class="user-detail">
-                                        <h3>Address Line</h3>
+                                        <h3>Address Line  <span class="error"><?php echo $addressErr; ?></span></h3>
                                         <input name="add-1_edit" id="addressline" class="input-detail" type="textarea" value="<?php echo $addressline?>">
                                     </div>
                                     <div class="user-detail flex-row">
                                         <div class="user-detail-col profile-margin-3">
-                                            <h3>City</h3>
+                                            <h3>City  <span class="error"><?php echo $cityErr; ?></span></h3>
                                             <input name="city_edit" id="city" class="input-detail" type="text" value="<?php echo $area?>">
                                         </div>
                                         <div class="user-detail-col">
-                                            <h3>Postcode</h3>
+                                            <h3>Postcode  <span class="error"><?php echo $postcodeErr; ?></span></h3>
                                             <input name="post_edit" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
                                         </div>
                                     </div>
                                     <div class="user-detail">
-                                        <h3>State</h3>
+                                        <h3>State <span class="error"><?php echo $stateErr; ?></span></h3>
                                         <select class="input-detail-2" name="state_edit" id="state">
                                             <option <?php if($state=="select") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
                                             <option <?php if($state=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
@@ -849,7 +849,7 @@ function test_input($data) {
                                         </select>
                                     </div>
                                     <div class="user-detail">
-                                        <h3>Password</h3>
+                                        <h3>Password  <span class="error"><?php echo $passwordErr; ?></span></h3>
                                         <input name="passw_edit" id="password" class="input-detail" type="password" value="<?php echo $password?>">
                                     </div>
                                     <br>

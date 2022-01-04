@@ -186,7 +186,6 @@
         exitContactedit();
 
         function enableContactedit(){
-
             //Enabling the input field
             document.getElementById("location").disabled = false;
             document.getElementById("OpHrs").disabled = false;

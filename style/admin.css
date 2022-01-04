@@ -462,6 +462,10 @@ button[disabled] {
   margin-bottom: 5%;
 }
 
+.user-detail h3 {
+  font-size: 20px;
+}
+
 .gender-detail {
   flex: auto;
   display: flex;
@@ -600,30 +604,20 @@ button[disabled] {
 }
 
 .edit-detail-icon {
+  width: 2%;
   text-align: end;
   margin: auto;
-  width: 5%;
 }
 
-#editicon {
-  text-align: center;
-  background: var(--yellow);
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  color: white;
-  padding: 2%;
-}
-
+#editicon,
 #exiticon {
   text-align: center;
-  display: none;
   background: var(--yellow);
-  border-radius: 50%;
-  font-size: 24px;
+  font-size: 20px;
+  border-radius: 60%;
   cursor: pointer;
   color: white;
-  padding: 2%;
+  padding: 5%;
 }
 
 .store-detail-content {

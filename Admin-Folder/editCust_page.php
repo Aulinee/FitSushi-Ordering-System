@@ -17,7 +17,7 @@
             //full name validation
             $fname_edit = $_POST["fname"];
             if (empty($fname_edit)) {
-                $fnameErr = "Full name is required";
+                $fnameErr = "(Full name is required)";
             } else {
                 $boolFname = true;
             }
@@ -25,21 +25,21 @@
             //username validation
             $username_edit = $_POST["usern"];
             if (empty($username_edit)) {
-                $usernameErr = "Username is required";
+                $usernameErr = "(Username is required)";
             } elseif ($userObj->checkExistUsername($username_edit)) {
-                $usernameErr = "This username already exist!";
+                $usernameErr = "(This username already exist!)";
             } else {
                 $boolUsername = true;
             }
 
             //email validation
             if (empty($_POST["email"])) {
-                $emailErr = "Email is required";
+                $emailErr = "(Email is required)";
             } else {
                 $email_edit = test_input($_POST["email"]);
                 // check if e-mail address is well-formed
                 if (!filter_var($email_edit, FILTER_VALIDATE_EMAIL)) {
-                    $emailErr = "Invalid email format";
+                    $emailErr = "(Invalid email format)";
                 } else {
                     $boolEmail = true;
                 }
@@ -47,12 +47,12 @@
 
             //mobile number validation
             if (empty($_POST["phone"])) {
-                $mobileNumErr = "Mobile number is required";
+                $mobileNumErr = "(Mobile number is required)";
             } else {
                 $mobileNum_edit = test_input($_POST["phone"]);
                 // check if phone number is valid
                 if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
-                    $mobileNumErr = "Invalid mobile number format";
+                    $mobileNumErr = "(Invalid mobile number format)";
                 } else {
                     $boolMobileNum = true;
                 }
@@ -61,7 +61,7 @@
             //empty button validation
             //gender
             if (!isset($_POST["gender"])) {
-                $genderErr = "Gender is required";
+                $genderErr = "(Gender is required)";
             } else {
                 $gender_edit = $_POST["gender"];
                 $boolGender = true;
@@ -70,7 +70,7 @@
             //address
             $address_edit = $_POST["add-1"];
             if (empty($address_edit)) {
-                $addressErr = "Address Line is required!";
+                $addressErr = "(Address Line is required!)";
             } else {
                 $boolAddress= true;
             }
@@ -78,7 +78,7 @@
             //postcode
             $postcode_edit = $_POST["post"];
             if (empty($postcode_edit)) {
-                $postcodeErr = "Postcode is required";
+                $postcodeErr = "(Postcode is required)";
             } else {
                 $boolPostcode = true;
             }
@@ -86,7 +86,7 @@
             //city
             $city_edit = $_POST["city"];
             if (empty($city_edit)) {
-                $cityErr = "City name is required";
+                $cityErr = "(City name is required)";
             } else {
                 $boolCity = true;
             }
@@ -94,27 +94,27 @@
             //state
             $state_edit = $_POST['state'];
             if ($state_edit === "select") {
-                $stateErr = "Please select your state.";
+                $stateErr = "(Please select your state)";
             } else {
                 $boolState = true;
             }
 
             //password validation
             if (empty($_POST["passw"])) {
-                $passwordErr = "Password is required";
+                $passwordErr = "(Password is required)";
             } else {
                 $password_edit = test_input($_POST["passw"]);
                 $boolPassword = true;
             }
 
             //confirmation feedback
-            if (($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolGender = $boolAddress = $boolPostcode = $boolCity = $boolState = $boolPassword = true)) {
+            if ($boolFname == true && $boolUsername == true && $boolEmail == true && $boolMobileNum == true && $boolGender == true && $boolAddress == true && $boolPostcode == true && $boolCity == true && $boolState == true && $boolPassword == true) {
                 $updateStatus = $userObj->updateProfile($customer_id, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
                 if ($updateStatus) {
                     echo'<script>alert("Update successfully!")</script>';
                     $custDetailArr = $adminObj->setSessionCustomer($_SESSION['current_userid_edit'] );
                 } else {
-                    // header('location:editCust_page.php');
+                    $custDetailArr = $adminObj->setSessionCustomer($_SESSION['current_userid_edit'] );
                 }
             }
 
@@ -246,21 +246,21 @@
                             <div class="profile-width-5"></div>
                             <div class="main-profile-detail-left ">
                                 <div class="user-detail">
-                                    <h3>Username</h3>
+                                    <h3>Username  <span class="error"><?php echo $usernameErr; ?></span></h3>
                                     <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $custDetailArr[1]?>">
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Full Name</h3>
+                                    <h3>Full Name  <span class="error"><?php echo $fnameErr; ?></span></h3>
                                     <div>
                                         <input name="fname" id="fullname" class="input-detail" type="text" value="<?php echo $custDetailArr[2]?>">
                                     </div>
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Email</h3>
+                                    <h3>Email  <span class="error"><?php echo $emailErr; ?></span></h3>
                                     <input name="email" id="email" class="input-detail" type="text" value="<?php echo $custDetailArr[3]?>">
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Gender</h3>
+                                    <h3>Gender  <span class="error"><?php echo $genderErr; ?></span> </h3>
                                     <div>
                                         <div class="gender-detail">
                                             <input id="gender" name="gender" type="radio" value="male" <?php if($custDetailArr[4] == 'male') echo 'checked=checked';?>/>
@@ -273,28 +273,28 @@
                                     </div>
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Phone Number</h3>
+                                    <h3>Phone Number  <span class="error"><?php echo $mobileNumErr; ?></span></h3>
                                     <input name="phone" id="phonenumber" class="input-detail" type="text" value="<?php echo $custDetailArr[5]?>">
                                 </div>
                             </div>
                             <div class="profile-width-20"></div>
                             <div class="main-profile-detail-right">
                                 <div class="user-detail">
-                                    <h3>Address Line</h3>
+                                    <h3>Address Line  <span class="error"><?php echo $addressErr; ?></span></h3>
                                     <input name="add-1" id="addressline" class="input-detail" type="textarea" value="<?php echo $custDetailArr[6]?>">
                                 </div>
                                 <div class="user-detail flex-row">
                                     <div class="user-detail-col profile-margin-3">
-                                        <h3>City</h3>
+                                        <h3>City <span class="error"><?php echo $cityErr; ?></span></h3>
                                         <input name="city" id="city" class="input-detail" type="text" value="<?php echo $custDetailArr[9]?>">
                                     </div>
                                     <div class="user-detail-col">
-                                        <h3>Postcode</h3>
+                                        <h3>Postcode <span class="error"><?php echo $postcodeErr; ?></span></h3>
                                         <input name="post" id="postcode" class="input-detail" type="number" value="<?php echo $custDetailArr[8]?>">
                                     </div>
                                 </div>
                                 <div class="user-detail">
-                                    <h3>State</h3>
+                                    <h3>State <span class="error"><?php echo $stateErr; ?></span></h3>
                                     <select class="input-detail-2" name="state" id="state">
                                         <option <?php if($custDetailArr[10]=="") echo 'selected="selected"'; ?> value="">SELECT A STATE</option>
                                         <option <?php if($custDetailArr[10]=="Melaka") echo 'selected="selected"'; ?> value="Melaka">Melaka</option>
@@ -316,7 +316,7 @@
                                     </select>
                                 </div>
                                 <div class="user-detail">
-                                    <h3>Password</h3>
+                                    <h3>Password  <span class="error"><?php echo $passwordErr; ?></span></h3>
                                     <input name="passw" id="password" class="input-detail" type="password" value="<?php echo $custDetailArr[7]?>">
                                 </div>
                                 <br>
