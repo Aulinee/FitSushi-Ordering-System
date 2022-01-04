@@ -136,14 +136,18 @@ include '../Login/sessionCustomer.php';
                 Swal.fire({
                     icon: 'error',
                     title: 'You added zero sushi quantity!',
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                    }
                 });
-                event.preventDefault();
             }else{
                 Swal.fire({
                     icon: 'success',
                     title: 'Successfully added menu to sushibox!',
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                    }
                 });
-                event.preventDefault();
             }
             
         }

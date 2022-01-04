@@ -11,10 +11,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if($sushiqty != 0 && $existMenu == false){
         $menuObj->addAlacarte($userid, $sushiid_token, $sushiqty);
-        echo "<script>
-            alert('Successful');
-            window.location.href='menu-page.php';
-            </script>";
+        echo "<script>alert('Successful')</script>";
+        header('location: menu-page.php');
     }else if($sushiqty == 0){
         echo "<script>
             alert('Your sushi quanitity is zero');
