@@ -154,6 +154,8 @@ function test_input($data) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Poppins:wght@100&display=swap" rel="stylesheet">
     <link href="../style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.min.css">
     <title>User Profile</title>
 </head>
 <body>

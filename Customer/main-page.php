@@ -21,6 +21,8 @@ $store_detail = $adminObj->displayStoreDetail();
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.min.css">
     <link href="../style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Home Page</title>
 </head>
