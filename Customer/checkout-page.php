@@ -122,7 +122,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     echo '<input name="delivery-option" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
                                 }
                             ?>
-                            <!-- <input name="deliveryopt" value="delivery" type="radio" readonly>Delivery</input>-->
                         </div>
                     </div>
                     <br>
@@ -135,12 +134,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 $paymentmethod = $orderObj->getPaymentOptionList();
 
                                 foreach($paymentmethod as $array) {
-                                    
-
                                     echo '<input name="payment-method" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
                                 }
                             ?>
-                            <!-- <input name="payment-method" value="delivery" type="radio" readonly>Delivery</input>-->
                         </div>
                     </div>
                     <br>

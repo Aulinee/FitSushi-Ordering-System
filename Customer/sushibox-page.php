@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab current" href="sushibox-page.php">SushiBox</a></li>
                     <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
-                    <li><a class="home-tab" href="logout.php">Sign Out</a></li>
+                    <li><a class="home-tab" onclick="logout()">Sign Out</a></li>
                 </ul>
             </div>
         </header>
@@ -222,6 +222,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             });
             event.preventDefault();
             }
+        }
+
+        function logout(){
+            Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Log Out'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href='logout.php';
+            }
+            })
         }
 
     </script>

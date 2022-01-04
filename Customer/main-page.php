@@ -28,7 +28,7 @@ $store_detail = $adminObj->displayStoreDetail();
     <div class="mainpage-bg">
         <header id="navbar" class="">
             <div class="container">
-                <img class="word-logo left" src="../img/title.png" alt="logo">
+                <img class="word-logo left" src="../img/logo-title.png" alt="logo">
                 <ul class="right">
                     <li><a class="home-tab current" href="main-page.php">Home</a></li>
                     <li><a class="home-tab" href="menu-page.php">Menu</a></li>
@@ -96,7 +96,6 @@ $store_detail = $adminObj->displayStoreDetail();
             <div class="menu-display white-border">
                 <div class="width-4"></div>
                 <?php $menulist = $menuObj->getTopMenu();
-
                     foreach($menulist  as $array) {
                         echo'
                             <div style="width: 1%;"></div>
@@ -109,13 +108,6 @@ $store_detail = $adminObj->displayStoreDetail();
                         ';
                     }
                 ?>
-                <!-- <div class="width-1"></div>
-                <div class="menu-display-detail">
-                    <img class="menu-icon" src="img/sushi.png" alt="logo">
-                    <div class="blue-bg">
-                        <h1 class="white-txt">Fried Sushi</h1>
-                    </div>
-                </div>-->
                 <div class="width-4"></div>
             </div>
             <div class="padding-tb">
@@ -146,9 +138,7 @@ $store_detail = $adminObj->displayStoreDetail();
                 </div>
                 <div class="contact-3 vertical-border">
                     <h1 class="title-underline">OPERATING HOURS</h1>
-                    <div class="operating-detail">
-                        <h1><?php echo $store_detail[0]; ?></h1>
-                    </div>
+                    <h1><?php echo $store_detail[0]; ?></h1>
                 </div>
             </div>
         </div>

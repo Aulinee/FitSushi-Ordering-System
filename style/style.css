@@ -53,7 +53,7 @@ body {
 }
 
 ul {
-  margin: 0;
+  margin: 1% 0%;
   padding: 0;
 }
 
@@ -249,6 +249,7 @@ header .home-tab {
 
 /*-----------------Main Page----------------*/
 .word-logo {
+  margin: 0.5% 0;
   object-fit: contain;
   height: 50px;
 }
@@ -644,6 +645,7 @@ header .home-tab {
 }
 
 .input-btn .minus-btn {
+  cursor: pointer;
   color: var(--yellow);
   font-size: 20px;
   margin: 0;
@@ -654,6 +656,7 @@ header .home-tab {
 }
 
 .input-btn .plus-btn {
+  cursor: pointer;
   color: var(--yellow);
   font-size: 20px;
   margin: 0;

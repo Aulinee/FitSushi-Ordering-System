@@ -22,7 +22,7 @@
     <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Neucha" />
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-    <link rel="stylesheet" href="style/style.css">
+    <link href="style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Home Page</title>
 </head>
 <body>
@@ -34,7 +34,6 @@
                     <li><a class="home-tab current" href="#">Home</a></li>
                     <li><a class="home-tab" href="Customer/menu-page-public.php">Menu</a></li>
                     <li><a class="home-tab" href="Login/sign-in.php">Sign In</a></li>
-                    <!-- <li><a class="home-tab" href="signin-page.php">Sign In</a></li> -->
                 </ul>
             </div>
         </header>
@@ -139,9 +138,7 @@
             </div>
             <div class="contact-3 vertical-border">
                 <h1 class="title-underline">OPERATING HOURS</h1>
-                <div class="operating-detail">
-                    <h1><?php echo $store_detail[0]; ?></h1>
-                </div>
+                <h1><?php echo $store_detail[0]; ?></h1>
             </div>
         </div>
     </div>

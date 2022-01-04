@@ -17,6 +17,8 @@ include '../Login/sessionCustomer.php';
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.min.css">
     <link href="../style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Menu</title>
 </head>
@@ -30,7 +32,7 @@ include '../Login/sessionCustomer.php';
                     <li><a class="home-tab current" href="menu-page.php">Menu</a></li>
                     <li><a class="home-tab" href="sushibox-page.php">Sushibox</a></li>
                     <li><a class="home-tab" href="profile-page.php"><i style="font-size:30px" class="fa fa-user" aria-hidden="true"></i>  <?php echo $username?></a></li>
-                    <li><a class="home-tab" href="logout.php">Sign Out</a></li>
+                    <li><a class="home-tab" onclick="logout()">Sign Out</a></li>
                 </ul>
             </div>
         </header>
@@ -46,7 +48,7 @@ include '../Login/sessionCustomer.php';
             <div class="menu-table red-bg white-txt">
                 <br>
                 <h1>ALA CARTE</h1>
-                <h3>Lorem ipsum basically instruction on how to order for ala carte</h3>
+                <h3>The list of our sushi menu</h3>
                 <div class="menu-table-detail">
                     <?php 
                         $menulist = $menuObj->getAlacarteMenuList();
@@ -62,8 +64,8 @@ include '../Login/sessionCustomer.php';
                                             <h5 class="details-title-desc margin-0">'.$array['desc'].'</h5>
                                             <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
                                         </div>
-                                        <div class="">
-                                            <form onsubmit="return successAdded(this)" class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
+                                        <div>
+                                            <form  class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
                                                 <div class="input-btn menu-row">
                                                     <h5 class="minus-btn" onclick="decrement(\''.$array['id'].'\')">-</h5>
                                                     <input id="'.$array['id'].'" name="'.$array['id'].'" type=number min=0 max=110>
@@ -110,6 +112,21 @@ include '../Login/sessionCustomer.php';
 
         function decrement(name) {
             document.getElementById(name).stepDown();
+        }
+
+        function logout(){
+            Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Log Out'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href='logout.php';
+            }
+            })
         }
 
         function successAdded(form) {
