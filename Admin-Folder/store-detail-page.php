@@ -7,13 +7,12 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["SaveContactInfo-btn"])){
-
             $temp_storeID = $_POST["storeidtext"];
 
             //Location 
             $loc_edit = $_POST["locationtext"];
             if (empty($loc_edit)) {
-                $locErr = "Location is required";
+                $locErr = "(Location is required)";
             } else {
                 $boolloc = true;
             }
@@ -21,7 +20,7 @@
             //Open hours
             $opnHrs_edit = $_POST["OpHrstext"];
             if (empty($opnHrs_edit)) {
-                $opnHrsErr = "Open hours is required";
+                $opnHrsErr = "(Open hours is required)";
             } else {
                 $boolopnHrs = true;
             }
@@ -30,7 +29,7 @@
             //WA
             $WA_edit = $_POST["WAtext"];
             if (empty($WA_edit)) {
-                $WAErr = "Whatsapp is required";
+                $WAErr = "(Whatsapp is required)";
             } else {
                 $boolWA = true;
             }            
@@ -38,7 +37,7 @@
             //IG
             $IG_edit = $_POST["IGtext"];
             if (empty($IG_edit)) {
-                $IGErr = "Instagram is required";
+                $IGErr = "(Instagram is required)";
             } else {
                 $boolIG = true;
             }
@@ -46,13 +45,13 @@
             //FB
             $FB_edit = $_POST["FBtext"];
             if (empty($FB_edit)) {
-                $FBErr = "Facebook is required";
+                $FBErr = "(Facebook is required)";
             } else {
                 $boolFB = true;
             }
 
             //confirmation feedback
-            if (($boolloc = $boolopnHrs = $boolWA = $boolIG = $boolFB = true)) {
+            if (($boolloc == true) && ($boolopnHrs == true) && ($boolWA == true) && ($boolIG == true) && ($boolFB == true)) {
                 $updateStoreStatus = $adminObj->editStore($temp_storeID, $loc_edit, $opnHrs_edit, $WA_edit, $IG_edit, $FB_edit);
 
                 if ($updateStoreStatus) {
@@ -146,27 +145,27 @@
                         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <div class="" id="Loc-OpHrs-div" >
                                 <div id="Location-inputfield">
-                                    <h2>Location: </h2>
+                                    <h2>Location: <span class="error"><?php echo $locErr; ?></span></h2>
                                     <textarea disabled title="Location" name="locationtext" class="store-input-detail" type="text" id="location" rows="4" cols="30"><?php echo $loc?></textarea>                                   
                                 </div>
                                 <div id="OperatingHrs-inputfield">
-                                    <h2>Operating Hours: </h2>
+                                    <h2>Operating Hours: <span class="error"><?php echo $opnHrsErr; ?></span></h2>
                                     <textarea disabled title="Operating Hours" name="OpHrstext" class="store-input-detail" type="text" id="OpHrs" rows="4" cols="30"><?php echo $opnHrs?></textarea>       
                                 </div>
                             </div>
                             <br><br>
                             <div class="" id="SocMed-div">
                                 <div id="Whatsapp-inputfield">
-                                    <h2>Whatsapp: </h2>
+                                    <h2>Whatsapp: <span class="error"><?php echo $WAErr; ?></span></h2>
                                     <input name="storeidtext" class="store-input-detail" type="hidden" id="storeid" value="<?php echo $store_ID?>">  
                                     <input disabled title="Whatsapp" name="WAtext" class="store-input-detail" type="text" id="WA" value="<?php echo $Whatsapp?>">  
                                 </div>
                                 <div id="Insta-inputfield">
-                                    <h2>Instagram: </h2>
+                                    <h2>Instagram: <span class="error"><?php echo $IGErr; ?></span></h2>
                                     <input disabled title="Instagram" name="IGtext" class="store-input-detail" type="text" id="IG" value="<?php echo $Instagram?>">  
                                 </div>
                                 <div id="FB-inputfield">
-                                    <h2>Facebook: </h2>
+                                    <h2>Facebook: <span class="error"><?php echo $FBErr; ?></span></h2>
                                     <input disabled title="Facebook" name="FBtext" class="store-input-detail" type="text" id="FB" value="<?php echo $Facebook?>">  
                                 </div>
                             </div>

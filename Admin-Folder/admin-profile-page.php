@@ -61,11 +61,10 @@
             }
 
             //confirmation feedback
-            if (($boolFname = $boolUsername = $boolEmail = $boolMobileNum = $boolPassword = true)) {
+            if (($boolFname == true) &&  ($boolUsername == true) && ($boolEmail == true) && ($boolMobileNum == true) && ($boolPassword == true)) {
                 $updateStatus = $adminObj->editProfile($adminid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit);
                 if ($updateStatus) {
                     echo "<script>
-                    alert('Profile successfully edited! Please re-login!');
                     window.location.href='logout.php';
                     </script>";
                 } else {
@@ -100,6 +99,8 @@
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.min.css">
     <link href="../style/admin.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <title>Customer Edit Page</title>
 </head>
@@ -231,7 +232,7 @@
                                     </div>
                                     <br>
                                     <div class="user-detail-btn">
-                                        <button class="save-edit-btn red-bg" type="submit" name="update_Admin">Save Changes</button>
+                                        <button class="save-edit-btn red-bg" type="submit" id="update_Admin" name="update_Admin">Save Changes</button>
                                     </div>
                                 </div>
                                 <div class="profile-width-5"></div>
@@ -289,6 +290,17 @@
             //Set div visibility
             profilediv.style.display = "none";
             editprofilediv.style.display = "block";
+        }
+
+        function confirmPopout() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+                
+            });
+            event.preventDefault();
         }
     </script>
 </body>

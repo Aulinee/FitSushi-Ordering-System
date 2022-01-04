@@ -108,6 +108,11 @@ a {
   justify-content: space-between;
 }
 
+.error {
+  color: red;
+  font-size: 20px;
+}
+
 /*-----------------Dashboard Page - Sidebar----------------*/
 .admin-page {
   font-family: "Roboto";
