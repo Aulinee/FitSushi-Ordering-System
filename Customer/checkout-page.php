@@ -23,10 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         unset($_SESSION['totalorder']);
 
         $_SESSION['currentOrderID'] = $orderStatus;
-        echo "<script>
-            alert('Your order is successful created!');
-            window.location.href='email.php';
-        </script>";
+        header('location: email.php');
     }
 }
 
@@ -74,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <br>
             <div class="payment-details">
-                <form name="payment" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <form onsubmit="return checkout(this)" name="payment" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <h4>Order for</h4>
                     <div class="row-payment">
                         <div class="payment-30">
@@ -121,7 +118,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 $deliveryOptArray = $orderObj->getDeliveryOptionList();
 
                                 foreach($deliveryOptArray as $array) {
-                                    echo '<input name="delivery-option" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
+                                    echo '<input name="delivery-option" value="'.$array['id'].'" type="radio">'.$array['name'].'</input>';
                                 }
                             ?>
                         </div>
@@ -168,6 +165,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
     <script>
+        function checkout(name)
+        {
+            Swal.fire({
+                icon: 'success',
+                title: 'Your Order is Done!',
+                text: "Check your email for receipt!",
+                }).then((result) => {
+                if (result.isConfirmed) {
+                }
+            });
+        }
+
         function logout(){
             Swal.fire({
             title: 'Are you sure?',

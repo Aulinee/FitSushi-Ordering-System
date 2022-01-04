@@ -16,10 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         unset($_SESSION['prev-orderid']);
         unset($_SESSION['total-order']);
 
-        echo "<script>
-                alert('Your order is successful!');
-                window.location.href='profile-page.php';
-            </script>";
+        header('location: email.php');
     }else{
         echo "<script>
                 alert('Your order is unsuccessful! Please try again!');
@@ -71,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <br>
             <div class="payment-details">
-                <form name="payment" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                <form onsubmit="return checkout(this)" name="payment" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <h4>Order for</h4>
                     <div class="row-payment">
                         <div class="payment-30">
@@ -169,6 +166,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
     <script>
+        function checkout(name)
+        {
+            Swal.fire({
+                icon: 'success',
+                title: 'Your Order is Done!',
+                text: "Check your email for receipt!",
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href='email.php';
+                }
+            });
+        }
+
         function logout(){
             Swal.fire({
             title: 'Are you sure?',
@@ -177,10 +187,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Log Out'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href='logout.php';
-            }
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href='logout.php';
+                }
             })
         }
     </script>
