@@ -233,7 +233,7 @@ class Menu{
     }
 
     public function updateMenuDetail($sushiid, $sushiname, $sushidesc, $sushiprice, $status){
-        $updateSushiQuery = "UPDATE sushi SET sushiName='$sushiname', sushiDesc='$sushidesc', price= $sushiprice, availability= $status WHERE sushiID='$sushiid'";
+        $updateSushiQuery = "UPDATE sushi SET sushiName='$sushiname', sushiDesc='".mysqli_real_escape_string($this->conn, $sushidesc)."', price= $sushiprice, availability= $status WHERE sushiID='$sushiid'";
         $resultUser = mysqli_query($this->conn,  $updateSushiQuery) or die("Error: ".mysqli_error($this->conn));
 
         if ($resultUser == true) {
