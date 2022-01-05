@@ -61,11 +61,8 @@
                 if($boolsushiDesc == true){
                     if($boolsushiPrice == true){
                         $boolAllTrue = true;
-                        echo "<script>alert(\"All true\");</script>";
-                    }
-                    else{
-                        echo "<script>alert(\"Some data are wrong\");</script>";
-                    }                    
+                        //echo "<script>alert(\"All true\");</script>";
+                    }                  
                 }
             }
             else{
