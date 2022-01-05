@@ -100,7 +100,7 @@
                                                     <td>
                                                         <form method="POST" action="../Admin-Folder/editCust_page.php">
                                                             <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="edit-customer" title="Edit ID: '.$array['id'].'"><i class="fa fa-edit"></i></button>
-                                                            <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="delete-customer" title="Delete ID: '.$array['id'].'"><i class="fa fa-trash"></i></button>
+                                                            <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="delete-customer" title="Delete ID: '.$array['id'].'" onClick="return confirm(\'Confirm deletion?\')"><i class="fa fa-trash"></i></button>
                                                         </form>
                                                     </td>
                                                 </tr>
