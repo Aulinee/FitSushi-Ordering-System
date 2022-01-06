@@ -21,8 +21,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_edit = $_POST["usern_edit"];
         if (empty($username_edit)) {
             $usernameErr = "Username is required";
-        } elseif ($userObj->checkExistUsername($username_edit)) {
-            $usernameErr = "This username already exist!";
         } else {
             $boolUsername = true;
         }
