@@ -54,7 +54,7 @@
             } else {
                 $mobileNum_edit = test_input($_POST["phone"]);
                 // check if phone number is valid
-                if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
+                if (!preg_match("/^(0)(1)\d{7,8}$/", $mobileNum_edit)) {
                     $mobileNumErr = "(Invalid mobile number format)";
                 } else {
                     $boolMobileNum = true;
