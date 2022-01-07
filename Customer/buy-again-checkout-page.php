@@ -156,11 +156,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </div>
         <br>
         <br>
-        <div class="sushibox-detail red-bg white-txt margin-empty-sushi">
+        <!-- <div class="sushibox-detail red-bg white-txt margin-empty-sushi">
             <h1>YOUR ORDER IS DONE!</h1>
             <h3>Sit back and relax while you wait for your order. Meeanwhile, discover our delicious sushi and its set in our MENU. </h3>
         </div>
-        <br><br>
+        <br><br> -->
     </div>
     <footer class="footer">
         <h1>&copy; Copyright 2021 FitSushi</h1>
