@@ -43,6 +43,7 @@
     $area= $session_data[9];
     $state= $session_data[10];
     $country= $session_data[11];
+    $postalid= $session_data[12];
 
     $fulladdress = $addressline.', '.$postalcode.' '.$area.', '.$state.', '.$country;
 

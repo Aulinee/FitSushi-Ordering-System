@@ -102,7 +102,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         //confirmation feedback
         if ($boolFname == true && $boolUsername == true && $boolEmail == true && $boolMobileNum == true && $boolGender == true && $boolAddress == true && $boolPostcode == true && $boolCity == true && $boolState == true && $boolPassword == true) {
-            $updateStatus = $userObj->updateProfile($userid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
+            $updateStatus = $userObj->updateProfile($userid, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit, $postalid);
             if ($updateStatus) {
                 echo "<script>
                 alert('Profile successfully edited! Please re-login!');
@@ -730,12 +730,12 @@ function test_input($data) {
                                 </div>
                                 <div class="user-detail flex-row">
                                     <div class="user-detail-col profile-margin-3">
-                                        <h3>City</h3>
-                                        <input name="city" id="city" class="input-detail" type="text" value="<?php echo $area?>">
-                                    </div>
-                                    <div class="user-detail-col">
                                         <h3>Postcode</h3>
                                         <input name="post" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
+                                    </div>
+                                    <div class="user-detail-col">
+                                        <h3>City</h3>
+                                        <input name="city" id="city" class="input-detail" type="text" value="<?php echo $area?>">
                                     </div>
                                 </div>
                                 <div class="user-detail">
@@ -818,12 +818,12 @@ function test_input($data) {
                                     </div>
                                     <div class="user-detail flex-row">
                                         <div class="user-detail-col profile-margin-3">
-                                            <h3>City  <span class="error"><?php echo $cityErr; ?></span></h3>
-                                            <input name="city_edit" id="city" class="input-detail" type="text" value="<?php echo $area?>">
-                                        </div>
-                                        <div class="user-detail-col">
                                             <h3>Postcode  <span class="error"><?php echo $postcodeErr; ?></span></h3>
                                             <input name="post_edit" id="postcode" class="input-detail" type="number" value="<?php echo $postalcode?>">
+                                        </div>
+                                        <div class="user-detail-col">
+                                            <h3>City  <span class="error"><?php echo $cityErr; ?></span></h3>
+                                            <input name="city_edit" id="city" class="input-detail" type="text" value="<?php echo $area?>">
                                         </div>
                                     </div>
                                     <div class="user-detail">

@@ -72,18 +72,20 @@ class User{
     }
 
     public function signUp($username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state){
-        $checkPostalQuery = "SELECT * FROM address WHERE PostalCode = $postcode";
+        $checkPostalQuery = "SELECT * FROM address WHERE PostalCode = $postcode AND State = '$state' AND Area = $city";
         $resultPostal = mysqli_query($this->conn,  $checkPostalQuery) or die("Error: ".mysqli_error($this->conn));
         $countPostal = mysqli_num_rows($resultPostal);
 
         if($countPostal == 0){
             //Insert new postal address in address table
             $this->addNewAddress($postcode, $city, $state, "Malaysia");
+            $last_id = $this->conn->insert_id;
+            $postalid= $last_id;
         }
 
         //Insert user detail in user table
         $insertUserQuery = "INSERT INTO customer(username, password, custName, email, gender, phoneNo, deliveryAddress, PostalCode)
-        VALUES ('$username', '$password', '$fullname', '$email', '$gender', $mobileNum, '$addressline', $postcode)";
+        VALUES ('$username', '$password', '$fullname', '$email', '$gender', $mobileNum, '$addressline', $postalid)";
         $resultUser = mysqli_query($this->conn,  $insertUserQuery) or die("Error: ".mysqli_error($this->conn));
        
         if ($resultUser == true) {
@@ -129,16 +131,17 @@ class User{
                 //Query for postal code
                 $addressline = $row['deliveryAddress'];
                 $postalcode = $row['PostalCode'];
-                $queryPC = "SELECT * FROM address WHERE PostalCode =  $postalcode";
+                $queryPC = "SELECT * FROM address WHERE PostalCodeID =  $postalcode";
                 $resultPC = $this->conn->query($queryPC);
 
                 if($resultPC){
                     if($resultPC->num_rows > 0){
                         $rowPC = $resultPC->fetch_assoc();
+                        $postalcodeno = $rowPC['PostalCode'];
                         $area = $rowPC['Area'];
                         $state = $rowPC['State'];
                         $country = $rowPC['Country'];
-                        $arrayData = array($userid, $username, $fullname, $email, $gender, $phonenum, $addressline, $password, $postalcode, $area, $state, $country);
+                        $arrayData = array($userid, $username, $fullname, $email, $gender, $phonenum, $addressline, $password, $postalcodeno, $area, $state, $country, $postalcode);
                     }
                 }
                 return $arrayData;
@@ -150,8 +153,8 @@ class User{
         } 
     }
 
-    public function updateProfile($id, $username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state){
-        $checkPostalQuery = "SELECT * FROM address WHERE PostalCode = $postcode";
+    public function updateProfile($id, $username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state, $postalid){
+        $checkPostalQuery = "SELECT * FROM address WHERE PostalCodeID = $postalid AND PostalCode = $postcode AND State = '$state' AND Area = '$city'";
         $resultPostal = mysqli_query($this->conn,  $checkPostalQuery) or die("Error: ".mysqli_error($this->conn));
         $countPostal = mysqli_num_rows($resultPostal);
 
@@ -161,11 +164,13 @@ class User{
         if($countPostal == 0){
             //Insert new postal address in address table
             $this->addNewAddress($postcode, $city, $state, "Malaysia");
+            $last_id = $this->conn->insert_id;
+            $postalid= $last_id;
         }
 
         //Update user detail in user table
         $updateUserQuery = "UPDATE customer SET username='$username', password='$fullname', phoneNo='$mobileNum', custName='$fullname', email='$email', gender='$gender', deliveryAddress='$addressline', 
-                            PostalCode=$postcode, password='$password' WHERE customerID=$id ";
+                            PostalCode=$postalid, password='$password' WHERE customerID=$id ";
         $resultUser = mysqli_query($this->conn,  $updateUserQuery) or die("Error: ".mysqli_error($this->conn));
        
         if ($resultUser == true) {
