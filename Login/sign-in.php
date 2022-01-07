@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Poppins:wght@100&display=swap" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <title>Login Main</title>
     <style>
         html{
