@@ -36,9 +36,9 @@ class User{
         return $customerData;
     }
 
-    public function checkExistUsername($id, $username){
+    public function checkExistUsername($username){
         //Create query string
-        $checkUsernameQuery = "SELECT * FROM `customer` WHERE username = '$username' AND customerID = $id";
+        $checkUsernameQuery = "SELECT * FROM `customer` WHERE username = '$username'";
         $result = mysqli_query($this->conn, $checkUsernameQuery) or die("Error: ".mysqli_error($this->conn));
         $count = mysqli_num_rows($result);
     
@@ -90,7 +90,7 @@ class User{
             // echo "Success";
             return true;
         }else{
-            echo "Error in ".$resultUser." ".$this->conn->error;
+            // echo "Error in ".$resultUser." ".$this->conn->error;
             return false;
         }
         
