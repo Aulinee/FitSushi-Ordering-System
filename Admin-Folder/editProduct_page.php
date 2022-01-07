@@ -59,10 +59,8 @@
 
             if(($boolsushiName == true) && ($boolStatus == true)){
                 if($boolsushiDesc == true){
-                    if($boolsushiImg == true){
-                        if($boolsushiPrice == true){
-                            $boolAllTrue = true;
-                        }
+                    if($boolsushiPrice == true){
+                        $boolAllTrue = true;
                     }
                 }
             }

@@ -226,7 +226,7 @@ class Menu{
         if ($resultUser == true) {
             return true;
         }else{
-            // echo "Error in ".$resultUser." ".$this->conn->error;
+            //echo "Error in ".$resultUser." ".$this->conn->error;
             return false;
         }
         
@@ -239,7 +239,7 @@ class Menu{
         if ($resultUser == true) {
             return true;
         }else{
-            // echo "Error in ".$resultUser." ".$this->conn->error;
+            echo "Error in ".$resultUser." ".$this->conn->error;
             return false;
         }
         
