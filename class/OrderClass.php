@@ -32,7 +32,7 @@ class Order{
                                 o.orderID, o.dateCreated, c.custName, c.deliveryAddress, a.PostalCode, a.State, a.Area, a.Country, o.deliverydateTime, d.deliveryOption, p.paymentMethod, s.statusName, o.orderTotal
                               FROM orders o, customer c, delivery d, payment p, orderstatus s, address a
                               WHERE
-                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID AND c.PostalCode = a.PostalCode AND o.orderStatusID=$orderstatusid";
+                                o.customerID = c.customerID AND o.orderStatusID = s.statusID AND o.deliveryID = d.deliveryID AND o.paymentID = p.paymentID AND c.PostalCode = a.PostalCodeID AND o.orderStatusID=$orderstatusid";
 
         $result = $this->conn->query($displayCustOrderQuery);
 

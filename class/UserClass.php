@@ -10,7 +10,7 @@ class User{
 
     //This function is still under development 
     public function displayAllCustomer(){
-        $displayCustomerQuery = "SELECT * FROM customer c, address a WHERE c.PostalCode = a.PostalCode";
+        $displayCustomerQuery = "SELECT * FROM customer c, address a WHERE c.PostalCode = a.PostalCodeID";
         $result = $this->conn->query($displayCustomerQuery);
 
         $customerData = array();
