@@ -24,8 +24,11 @@
             
             //username validation
             $username_edit = $_POST["usern"];
+            $hidden_prev_usn = $_POST["prevUsern"];
             if (empty($username_edit)) {
                 $usernameErr = "(Username is required)";
+            } elseif($username_edit === $hidden_prev_usn){
+                $boolUsername = true;
             } elseif ($userObj->checkExistUsername($username_edit)) {
                 $usernameErr = "(This username already exist!)";
             } else {
@@ -51,7 +54,7 @@
             } else {
                 $mobileNum_edit = test_input($_POST["phone"]);
                 // check if phone number is valid
-                if (!preg_match("/^(0)(1)[0-9]\d{7,8}$/", $mobileNum_edit)) {
+                if (!preg_match("/^(0)(1)\d{7,8}$/", $mobileNum_edit)) {
                     $mobileNumErr = "(Invalid mobile number format)";
                 } else {
                     $boolMobileNum = true;
@@ -116,16 +119,20 @@
                 } else {
                     $custDetailArr = $adminObj->setSessionCustomer($_SESSION['current_userid_edit'] );
                 }
+            }else{
+                echo'<script>alert("Update unsuccessful!")</script>';
+                $custDetailArr = $adminObj->setSessionCustomer($_SESSION['current_userid_edit'] );                
             }
+            
 
         }
         else if(isset($_POST["delete-customer"])){
             $customer_id = $_POST['delete-customer'];            
 
             //Update user detail in user table
-            $resultStatus = $userObj->deleteProfile($customer_id);
+            $resultDelStatus = $userObj->deleteProfile($customer_id);
 
-            if ($resultDel){
+            if ($resultDelStatus){
                 echo '<script>alert("User (ID: '.$customer_id.') has been deleted.")</script>';                                
             }
             else {
@@ -249,6 +256,7 @@
                             <div class="main-profile-detail-left ">
                                 <div class="user-detail">
                                     <h3>Username  <span class="error"><?php echo $usernameErr; ?></span></h3>
+                                    <input type="hidden" name="prevUsern" id="prev_username" value="<?php echo $custDetailArr[1]?>">                                    
                                     <input name="usern" class="input-detail" type="text" id="username" value="<?php echo $custDetailArr[1]?>">
                                 </div>
                                 <div class="user-detail">

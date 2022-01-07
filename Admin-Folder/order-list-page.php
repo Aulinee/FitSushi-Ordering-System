@@ -104,8 +104,8 @@
                                                 <td>'.$array['ordertotal'].'</td>';
                                                 echo '<td>
                                                     <form  method="POST" action="../Admin-Folder/editCust_page.php">
-                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_delivered" title="Deliver Order ID: '.$array['id'].'"><i class="fa fa-check"></i></button>
-                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_cancelled" title="Cancel Order ID: '.$array['id'].'"><i class="fa fa-trash"></i></button>
+                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_delivered" title="Pending Order ID: '.$array['id'].'"><i class="fa fa-check"></i></button>
+                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_cancelled" title="Cancel Order ID: '.$array['id'].'" onClick="return confirm(\'Confirm cancellation?\')"><i class="fa fa-trash"></i></button>
                                                     </form>                                    
                                                 </td>';
                                         echo '</tr>';  
@@ -165,8 +165,8 @@
                                                 <td>'.$array['ordertotal'].'</td>';
                                                 echo '<td>
                                                     <form  method="POST" action="../Admin-Folder/editCust_page.php">
-                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_delivered" title="Deliver Order ID: '.$array['id'].'"><i class="fa fa-check"></i></button>
-                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_cancelled" title="Cancel Order ID: '.$array['id'].'"><i class="fa fa-trash"></i></button>
+                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_Received" title="Received Order ID: '.$array['id'].'"><i class="fa fa-check"></i></button>
+                                                        <button class="button" id='.$array['id'].' value='.$array['id'].' type="submit" name="order_cancelled" title="Cancel Order ID: '.$array['id'].'" onClick="return confirm(\'Confirm cancellation?\')"><i class="fa fa-trash"></i></button>
                                                     </form>                                    
                                                 </td>';
                                         echo '</tr>';  

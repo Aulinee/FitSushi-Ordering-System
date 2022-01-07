@@ -2,7 +2,7 @@
     include '../Login/sessionAdmin.php';
 
     $AllErr = $sushiNameErr = $sushiDescErr = $statusErr = $sushiImgErr = $sushiPriceErr = "";
-    $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiImg = $boolsushiPrice = $boolStatus = false;
+    $boolAllTrue = $boolsushiName = $boolsushiDesc = $boolsushiPrice = $boolStatus = false;
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["edit-product"])){
@@ -56,13 +56,17 @@
             } else {
                 $boolStatus = true;
             }
-
+            echo "<script>alert(\"Before validating\");</script>";
             if(($boolsushiName == true) && ($boolStatus == true)){
                 if($boolsushiDesc == true){
                     if($boolsushiPrice == true){
                         $boolAllTrue = true;
-                    }
+                        //echo "<script>alert(\"All true\");</script>";
+                    }                  
                 }
+            }
+            else{
+                echo "<script>alert(\"Failed the validation\");</script>";
             }
 
             $AllErr = $sushiNameErr.'\r\n'.$sushiDescErr.'\r\n'.$sushiPriceErr;
