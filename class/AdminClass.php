@@ -129,7 +129,7 @@ class Admin{
         }        
     }    
 
-    public function setSessionCustomer(string $cust_id){
+    public function setSessionCustomer($cust_id){
         $query = "SELECT * FROM customer WHERE customerID = $cust_id";
         $result = $this->conn->query($query);
         $arrayData = array();
@@ -146,17 +146,18 @@ class Admin{
 
                 //Query for postal code
                 $addressline = $row['deliveryAddress'];
-                $postalcode = $row['PostalCode'];
-                $queryPC = "SELECT * FROM address WHERE PostalCode =  $postalcode";
+                $postalcodeID = $row['PostalCode'];
+                $queryPC = "SELECT * FROM address WHERE PostalCodeID =  $postalcodeID";
                 $resultPC = $this->conn->query($queryPC);
 
                 if($resultPC){
                     if($resultPC->num_rows > 0){
                         $rowPC = $resultPC->fetch_assoc();
+                        $postalCode = $rowPC['PostalCode'];
                         $area = $rowPC['Area'];
                         $state = $rowPC['State'];
                         $country = $rowPC['Country'];
-                        $arrayData = array($userid, $username, $fullname, $email, $gender, $phonenum, $addressline, $password, $postalcode, $area, $state, $country);
+                        $arrayData = array($userid, $username, $fullname, $email, $gender, $phonenum, $addressline, $password, $postalCode, $area, $state, $country, $postalcodeID);
                     }
                 }
                 return $arrayData;

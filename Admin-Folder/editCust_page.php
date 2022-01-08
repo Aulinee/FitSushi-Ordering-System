@@ -54,7 +54,7 @@
             } else {
                 $mobileNum_edit = test_input($_POST["phone"]);
                 // check if phone number is valid
-                if (!preg_match("/^(0)(1)\d{7,8}$/", $mobileNum_edit)) {
+                if (!preg_match("/^(0)(1)\d{7,9}$/", $mobileNum_edit)) {
                     $mobileNumErr = "(Invalid mobile number format)";
                 } else {
                     $boolMobileNum = true;
@@ -102,6 +102,15 @@
                 $boolState = true;
             }
 
+            //identify postal id
+            $postalcodeID_hidden = $_POST["pcID"];
+            $checkPostalQuery = "SELECT * FROM address WHERE PostalCodeID = $postalcodeID_hidden AND PostalCode = $postcode_edit AND State = '$state_edit' AND Area = '$city_edit'";
+            $resultPostal = mysqli_query($conn,  $checkPostalQuery) or die("Error: ".mysqli_error($conn));
+            $countPostal = mysqli_num_rows($resultPostal);            
+            if($countPostal == 0){
+                $postalcodeID_hidden = 0;
+            }
+
             //password validation
             if (empty($_POST["passw"])) {
                 $passwordErr = "(Password is required)";
@@ -112,7 +121,7 @@
 
             //confirmation feedback
             if ($boolFname == true && $boolUsername == true && $boolEmail == true && $boolMobileNum == true && $boolGender == true && $boolAddress == true && $boolPostcode == true && $boolCity == true && $boolState == true && $boolPassword == true) {
-                $updateStatus = $userObj->updateProfile($customer_id, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit);
+                $updateStatus = $userObj->updateProfile($customer_id, $username_edit, $fname_edit, $email_edit, $password_edit, $mobileNum_edit, $gender_edit, $address_edit, $postcode_edit, $city_edit, $state_edit, $postalcodeID_hidden);
                 if ($updateStatus) {
                     echo'<script>alert("Update successfully!")</script>';
                     $custDetailArr = $adminObj->setSessionCustomer($_SESSION['current_userid_edit'] );
@@ -300,6 +309,7 @@
                                     </div>
                                     <div class="user-detail-col">
                                         <h3>Postcode <span class="error"><?php echo $postcodeErr; ?></span></h3>
+                                        <input name="pcID" id="pcID" type="hidden" value="<?php echo $custDetailArr[12]?>">
                                         <input name="post" id="postcode" class="input-detail" type="number" value="<?php echo $custDetailArr[8]?>">
                                     </div>
                                 </div>
