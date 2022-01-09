@@ -63,16 +63,16 @@ include '../Login/sessionCustomer.php';
                                             <h2 class="detail-title margin-0">'.$array['name'].'</h2>
                                             <h5 class="details-title-desc margin-0">'.$array['desc'].'</h5>
                                             <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
-                                        </div>
-                                        <div>
-                                            <form onclick="" class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
-                                                <div class="input-btn menu-row">
-                                                    <h5 class="minus-btn" onclick="decrement(\''.$array['id'].'\')">-</h5>
-                                                    <input id="'.$array['id'].'" name="'.$array['id'].'" type=number min=0 max=110 value=0>
-                                                    <h5 class="plus-btn" onclick="increment(\''.$array['id'].'\')">+</h5>
-                                                </div>
-                                                <button class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
-                                            </form>
+                                            <div>
+                                                <form onclick="" class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
+                                                    <div class="input-btn menu-row">
+                                                        <h5 class="minus-btn" onclick="decrement(\''.$array['id'].'\')">-</h5>
+                                                        <input id="'.$array['id'].'" name="'.$array['id'].'" type=number min=0 max=110 value=0>
+                                                        <h5 class="plus-btn" onclick="increment(\''.$array['id'].'\')">+</h5>
+                                                    </div>
+                                                    <button class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
