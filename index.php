@@ -21,9 +21,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Neucha" />
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
-    <title>Home Page</title>
+    <title>FitSushi</title>
+    <link rel="fitsushi icon" href="../img/logo.png" type="image/x-icon">
 </head>
 <body>
     <div class="mainpage-bg">
