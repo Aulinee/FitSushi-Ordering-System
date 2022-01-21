@@ -273,7 +273,7 @@ class Order{
     }
 
     public function getOrderData($customerid, $orderid){
-        $stringQuery = "SELECT  o.orderID,c.custName, c.phoneNo , c.deliveryAddress, a.PostalCode, a.State, a.Area, a.Country, o.dateCreated, d.deliveryOption, p.paymentMethod, o.orderTotal FROM customer c, address a, orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderID = $orderid AND o.customerID = $customerid AND c.customerID = o.customerID AND c.PostalCode = a.PostalCode";
+        $stringQuery = "SELECT  o.orderID,c.custName, c.phoneNo , c.deliveryAddress, a.PostalCode, a.State, a.Area, a.Country, o.dateCreated, d.deliveryOption, p.paymentMethod, o.orderTotal FROM customer c, address a, orders o, payment p, orderstatus s, delivery d WHERE o.orderStatusID = s.statusID AND o.paymentID = p.paymentID AND o.deliveryID = d.deliveryID AND o.orderID = $orderid AND o.customerID = $customerid AND c.customerID = o.customerID AND c.PostalCode = a.PostalCodeID";
         $displayQuery = mysqli_query($this->conn, $stringQuery);
 
         $customerid = $orderid = 0;

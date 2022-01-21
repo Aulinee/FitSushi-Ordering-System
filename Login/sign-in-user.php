@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Poppins:wght@100&display=swap" rel="stylesheet">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="fitsushi icon" href="../img/logo.png" type="image/x-icon">
     <title>Login</title>
     <style>
         html{

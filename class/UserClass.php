@@ -72,7 +72,7 @@ class User{
     }
 
     public function signUp($username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state){
-        $checkPostalQuery = "SELECT * FROM address WHERE PostalCode = $postcode AND State = '$state' AND Area = $city";
+        $checkPostalQuery = "SELECT * FROM address WHERE PostalCode = $postcode AND State = '$state' AND Area = '$city'";
         $resultPostal = mysqli_query($this->conn,  $checkPostalQuery) or die("Error: ".mysqli_error($this->conn));
         $countPostal = mysqli_num_rows($resultPostal);
 
@@ -81,11 +81,16 @@ class User{
             $this->addNewAddress($postcode, $city, $state, "Malaysia");
             $last_id = $this->conn->insert_id;
             $postalid= $last_id;
+        }else{
+            $row = $resultPostal->fetch_assoc();
+            $postalid = $row['PostalCodeID'];
+
         }
 
         //Insert user detail in user table
         $insertUserQuery = "INSERT INTO customer(username, password, custName, email, gender, phoneNo, deliveryAddress, PostalCode)
-        VALUES ('$username', '$password', '$fullname', '$email', '$gender', $mobileNum, '$addressline', $postalid)";
+        VALUES ('$username', '$password', '$fullname', '$email', '$gender', '$mobileNum', '$addressline', $postalid)";
+
         $resultUser = mysqli_query($this->conn,  $insertUserQuery) or die("Error: ".mysqli_error($this->conn));
        
         if ($resultUser == true) {

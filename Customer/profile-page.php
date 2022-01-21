@@ -153,6 +153,7 @@ function test_input($data) {
     <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Poppins:wght@100&display=swap" rel="stylesheet">
     <link href="../style/style.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css"/>
     <script src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <link rel="fitsushi icon" href="../img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.min.css">
     <title>User Profile</title>
 </head>

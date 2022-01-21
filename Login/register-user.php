@@ -66,9 +66,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     //address
     $address = $_POST["add-1"];
     if (empty($address)) {
-      $addressErr = "Address Line is required!";
+        $addressErr = "Address Line is required!";
     } else {
-      $boolAddress= true;
+        $boolAddress= true;
     }
 
     //postcode
@@ -125,8 +125,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     //confirmation feedback
     if (isset($_POST["register"]) && $boolFname == true && $boolUsername == true && $boolEmail == true && $boolMobileNum == true && $boolGender == true && $boolAddress == true && $boolPostcode == true && $boolCity == true && $boolState == true && $boolPassword == true && $boolConfirmPass == true && $boolCondition == true) {
+        echo "8";
         $signUpStatus = $userObj->signUp($username, $fname, $email, $password, $mobileNum, $gender, $address, $postcode, $city, $state);
-
+        echo "9";
         if ($signUpStatus){
             echo "<script>
             alert('Successfully sign up! Redirecting to sign in page');
@@ -158,7 +159,7 @@ function test_input($data) {
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/nats" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Neucha" />
@@ -168,6 +169,7 @@ function test_input($data) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Neucha&family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <link rel="fitsushi icon" href="../img/logo.png" type="image/x-icon">
     <title>Registration Form For User</title>
     <style>
         html{
@@ -544,43 +546,43 @@ function test_input($data) {
                     <form name="register" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="input-box">
                             <p>USERNAME</p>
-                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="usern" id="usern" placeholder="Enter username" value="<?php echo $username; ?>" >
+                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="usern" id="usern" placeholder="Enter username (e.g Aulinee)" value="<?php echo $username; ?>" >
                             <br>
                             <span class="error"><?php echo $usernameErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>FULL NAME</p>
-                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="fname" id="fnm" placeholder="Enter full name" value="<?php echo $fname; ?>">
+                            <i class='fas fa-user-alt' style="color: #ffa200;"></i>  <input class="input-element" type="text" name="fname" id="fnm" placeholder="Enter full name (e.g Audrey Duyan anak Gima)" value="<?php echo $fname; ?>">
                             <br>
                             <span class="error"><?php echo $fnameErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>EMAIL ADDRESS</p>
-                            <i class='fas fa-envelope-open' style='color:#ffa200'></i>  <input class="input-element" type="email" name="email" id="emailadd" placeholder="Enter email address" value="<?php echo $email; ?>">
+                            <i class='fas fa-envelope-open' style='color:#ffa200'></i>  <input class="input-element" type="email" name="email" id="emailadd" placeholder="Enter email address (e.g audreyduyan@gmail.com)" value="<?php echo $email; ?>">
                             <br>
                             <span class="error"><?php echo $emailErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>PHONE NO.</p>
-                            <i class='fas fa-address-book' style='color:#ffa200'></i>  <input class="input-element" name="phone" id="hpno" placeholder="Enter phone no. exp: +60101234567" value="<?php echo $mobileNum; ?>">
+                            <i class='fas fa-address-book' style='color:#ffa200'></i>  <input class="input-element" type="text" name="phone" id="hpno" placeholder="Enter phone no. (e.g 01114095674)" value="<?php echo $mobileNum; ?>">
                             <br>
                             <span class="error"><?php echo $mobileNumErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>ADDRESS LINE</p>
-                            <i class='fas fa-home' style='color:#ffa200'></i>  <input class="input-element" type="text" name="add-1" id="ad1" placeholder="Enter address line" value="<?php echo $address; ?>">
+                            <i class='fas fa-home' style='color:#ffa200'></i>  <input class="input-element" type="text" name="add-1" id="ad1" placeholder="Enter address line (e.g Lot 6647, Kampung Rembus, Jalan Tan Sri Ikhwan)" value="<?php echo $address; ?>">
                             <br>
                             <span class="error"><?php echo $addressErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>POSTCODE</p>
-                            <i class='fas fa-map' style='color:#ffa200'></i>  <input class="input-element" type="number" name="post" id="pst" placeholder="Enter postcode" value="<?php echo $postcode; ?>">
+                            <i class='fas fa-map' style='color:#ffa200'></i>  <input class="input-element" type="number" name="post" id="pst" placeholder="Enter postcode (e.g 94300)" value="<?php echo $postcode; ?>">
                             <br>
                             <span class="error"><?php echo $postcodeErr; ?></span>
                         </div>
                         <div class="input-box">
                             <p>CITY</p>
-                            <i class='fas fa-building' style='color:#ffa200'></i>  <input class="input-element" type="text" name="city" id="cty" placeholder="Enter city" value="<?php echo $city; ?>">
+                            <i class='fas fa-building' style='color:#ffa200'></i>  <input class="input-element" type="text" name="city" id="cty" placeholder="Enter city (e.g Kota Samarahan)" value="<?php echo $city; ?>">
                             <br>
                             <span class="error"><?php echo $cityErr; ?></span>
                         </div>
