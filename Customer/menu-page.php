@@ -65,13 +65,13 @@ include '../Login/sessionCustomer.php';
                                             <h5 class="details-title-desc margin-0">'.$array['desc'].'</h5>
                                             <h1 class="details-title-price margin-0">RM '.$array['price'].'</h1>
                                             <div>
-                                                <form onclick="" class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
+                                                <form class="input-menu menu-row" name="menu" action="addAlacarte-page.php?id='.$array['id'].'" method="post">
                                                     <div class="input-btn menu-row">
                                                         <h5 class="minus-btn" onclick="decrement(\''.$array['id'].'\')">-</h5>
                                                         <input id="'.$array['id'].'" name="'.$array['id'].'" type=number min=0 max=110 value=0>
                                                         <h5 class="plus-btn" onclick="increment(\''.$array['id'].'\')">+</h5>
                                                     </div>
-                                                    <button class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
+                                                    <button onclick="successAdded(this)" class="cart" type="submit"><i class="fa fa-shopping-cart"></i></button>
                                                 </form>
                                             </div>
                                         </div>
@@ -134,21 +134,9 @@ include '../Login/sessionCustomer.php';
             var qty = document.getElementsByTagName("input")[0];
 
             if(qty == 0){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'You added zero sushi quantity!',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                    }
-                });
+                alert('You added zero sushi quantity!');
             }else{
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Successfully added menu to sushibox!',
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                    }
-                });
+                alert('Successfully added menu to sushibox!');
             }
             
         }
