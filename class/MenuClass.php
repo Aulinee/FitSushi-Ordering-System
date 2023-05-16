@@ -7,54 +7,49 @@ class Menu{
         $this->conn = $DB_con;
 	}
 
-    public function checkExistMenu($customerid, $sushiid){
-        $menuQuery = "SELECT * FROM alacartesushibox WHERE customerID = $customerid AND sushiID = $sushiid";
-
-        $result = mysqli_query($this->conn, $menuQuery) or die("Error: ".mysqli_error($this->conn));
-        $count = mysqli_num_rows($result);
+    public function checkExistMenu($customerid, $sushiid) {
+        $menuQuery = "SELECT * FROM alacartesushibox WHERE customerID = ? AND sushiID = ?";
+        $stmt = $this->conn->prepare($menuQuery);
+        $stmt->bind_param("ii", $customerid, $sushiid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $count = $result->num_rows;
     
-        // If result matched $username, table row must be 1 row
-        if($count == 1){
-            return true;
-        }else{
-            return false;
-        }
+        return $count == 1;
     }
-
-    public function getTopMenu()
-    {
-        // $menuQuery = "SELECT sushiName, sushiImg FROM sushi LIMIT 5";
-        $menuQuery = "SELECT s.sushiName AS name, s.sushiImg AS image from sushi s WHERE s.sushiImg != 'NULL' AND s.availability != 0 LIMIT 5";
+    
+    public function getTopMenu() {
+        $menuQuery = "SELECT sushiName AS name, sushiImg AS image FROM sushi WHERE sushiImg IS NOT NULL AND availability != 0 LIMIT 5";
         $result = $this->conn->query($menuQuery);
-
+    
         $menuData = array();
-
-        while($row = mysqli_fetch_array($result)){
+    
+        while ($row = $result->fetch_assoc()) {
             $name = $row["name"];
             $image = $row["image"];
-
+    
             $menuData[] = array(
                 "name" => $name,
                 "img" => $image,
             );
         }
-
+    
         return $menuData;
     }
-
-    public function getAlacarteMenuList(){
-        $menuQuery = "SELECT * from sushi s WHERE s.availability != 0";
-        $displayQuery = mysqli_query($this->conn, $menuQuery);
-
+    
+    public function getAlacarteMenuList() {
+        $menuQuery = "SELECT sushiID AS id, sushiName AS name, sushiDesc AS `desc`, sushiImg AS img, price FROM sushi WHERE availability != 0";
+        $result = $this->conn->query($menuQuery);
+    
         $orderData = array();
-
-        while($row = mysqli_fetch_array($displayQuery)){
-            $id = $row["sushiID"];
-            $name = $row["sushiName"];
-            $desc = $row["sushiDesc"];
-            $image = $row["sushiImg"];
+    
+        while ($row = $result->fetch_assoc()) {
+            $id = $row["id"];
+            $name = $row["name"];
+            $desc = $row["desc"];
+            $image = $row["img"];
             $price = $row["price"];
-
+    
             $orderData[] = array(
                 "id" => $id,
                 "name" => $name,
@@ -63,188 +58,140 @@ class Menu{
                 "price" => $price
             );
         }
-
+    
         return $orderData;
     }
-
-    public function displayAlacarteSushibox($customerid){
+    
+    public function displayAlacarteSushibox($customerid) {
         $customerid = $this->conn->real_escape_string($customerid);
-        $menuQuery = "SELECT s.sushiID AS sushiID ,s.sushiName AS sushiName , s.price AS price, a.qty AS qty FROM alacartesushibox a, sushi s WHERE a.sushiID = s.sushiID AND customerID = '$customerid'";
-        $displayQuery = mysqli_query($this->conn, $menuQuery);
-
+        $menuQuery = "SELECT s.sushiID, s.sushiName, s.price, a.qty FROM alacartesushibox a INNER JOIN sushi s ON a.sushiID = s.sushiID WHERE a.customerID = '$customerid'";
+        $displayQuery = $this->conn->query($menuQuery);
+    
         $sushiboxData = array();
-
-        while($row = mysqli_fetch_array($displayQuery)){
+    
+        while ($row = $displayQuery->fetch_assoc()) {
             $id = $row["sushiID"];
             $name = $row["sushiName"];
             $unitprice = $row["price"];
             $qty = $row["qty"];
             $totalprice = $qty * $unitprice;
-
+    
             $sushiboxData[] = array(
                 "id" => $id,
                 "name" => $name,
                 "price" => $unitprice,
                 "qty" => $qty,
-                "total" =>$totalprice
+                "total" => $totalprice
             );
         }
-
+    
         return $sushiboxData;
-
     }
 
-    public function addAlacarte($customerid, $sushiid, $qty){
-        /* Insert query template */
-        $stringQuery = "INSERT INTO alacartesushibox (customerID, sushiID, qty) VALUES ('$customerid','$sushiid', '$qty')";
-        $sqlQuery = $this->conn->query($stringQuery);
-        if ($sqlQuery == true) {
-            return true;
-        }else{
-            echo "Error in ".$sqlQuery." ".$this->conn->error;
-            //echo "Unsuccessful add query. try again!";
-            return false;
-        }
-    }
+    public function addAlacarte($customerid, $sushiid, $qty) {
+        $stmt = $this->conn->prepare("INSERT INTO alacartesushibox (customerID, sushiID, qty) VALUES (?, ?, ?)");
+        $stmt->bind_param("iii", $customerid, $sushiid, $qty);
+        $result = $stmt->execute();
+        $stmt->close();
+    
+        return $result;
+    }    
 
-    public function updateAlacarteQty($customerid, $sushiid, $qty){
-        $updateMenuQuery = "UPDATE alacartesushibox SET qty = $qty WHERE customerID = $customerid AND sushiID = $sushiid";
+    public function updateAlacarteQty($customerid, $sushiid, $qty) {
+        $stmt = $this->conn->prepare("UPDATE alacartesushibox SET qty = ? WHERE customerID = ? AND sushiID = ?");
+        $stmt->bind_param("iii", $qty, $customerid, $sushiid);
+        $result = $stmt->execute();
+        $stmt->close();
+    
+        return $result;
+    }    
 
-        $resultUser = mysqli_query($this->conn,  $updateMenuQuery) or die("Error: ".mysqli_error($this->conn));
+    public function deleteAlacarte($customerid, $sushiid) {
+        $stmt = $this->conn->prepare("DELETE FROM alacartesushibox WHERE sushiID = ? AND customerID = ?");
+        $stmt->bind_param("ii", $sushiid, $customerid);
+        $result = $stmt->execute();
+        $stmt->close();
+    
+        return $result;
+    }    
 
-        if ($resultUser == true) {
-            return true;
-        }else{
-            // echo "Error in ".$resultUser." ".$this->conn->error;
-            return false;
-        }
-    }
-
-    public function deleteAlacarte($customerid, $sushiid){
-        $deleteAlacarteQuery = "DELETE FROM alacartesushibox WHERE sushiID = $sushiid AND customerID = $customerid";
-
-        $sql_alacartemenu = $this->conn->query($deleteAlacarteQuery);
-
-		if ($sql_alacartemenu == true) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function displayAllMenu(){
-        $displayProductQuery = "SELECT * FROM sushi s";
+    public function displayAllMenu() {
+        $displayProductQuery = "SELECT * FROM sushi";
         $result = $this->conn->query($displayProductQuery);
-
+    
         $menuData = array();
-
-        while($row = mysqli_fetch_array( $result)){
+    
+        while ($row = $result->fetch_assoc()) {
             $id = $row["sushiID"];
             $sushiname = $row["sushiName"];
             $sushiDesc = $row["sushiDesc"];
             $sushiPrice = $row["price"];
             $sushiimg = $row["sushiImg"];
             $availability = $row["availability"];
-
-            if($availability == 1){
-                $td_availability = "Available";
-            }
-            else{
-                $td_availability = "Not Available";
-            }
-
+    
+            $td_availability = $availability == 1 ? "Available" : "Not Available";
+    
             $menuData[] = array(
                 "id" => $id,
                 "name" => $sushiname,
-                "desc" =>  $sushiDesc,
+                "desc" => $sushiDesc,
                 "price" => $sushiPrice,
                 "img" => $sushiimg,
                 "status" => $td_availability
             );
         }
-
-        return $menuData;    
-    }
-
-    public function getMenu($menuid){
-        $menuQuery = "SELECT * from sushi s WHERE s.sushiID = $menuid";
-
-        $displayQuery = mysqli_query($this->conn, $menuQuery);
-
-        $menuData = array();
-
-        while($row = mysqli_fetch_array($displayQuery)){
-            $id = $row["sushiID"];
-            $sushiname = $row["sushiName"];
-            $sushiDesc = $row["sushiDesc"];
-            $sushiPrice = $row["price"];
-            $sushiimg = $row["sushiImg"];
-            $availability = $row["availability"];
-
-            $menuData = array($id, $sushiname, $sushiDesc, $sushiPrice, $sushiimg, $availability);
-            
-        }
-
+    
         return $menuData;
-        
+    }    
+
+    public function getMenu($menuid) {
+        $stmt = $this->conn->prepare("SELECT * FROM sushi WHERE sushiID = ?");
+        $stmt->bind_param("i", $menuid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+    
+        return $row;
     }
-
-    public function addMenu($name, $desc, $img, $price){
-
+    
+    public function addMenu($name, $desc, $img, $price) {
         $dateToday = date("Y-m-d");
-
-        //Insert product detail in user table
-        $insertProductQuery = "INSERT INTO sushi(sushiName, sushiDesc, sushiImg, price, dateAdded, availability)
-        VALUES ('$name', '".mysqli_real_escape_string($this->conn, $desc)."', '$img', '$price', '$dateToday', '0')";
-        $resultAdd = mysqli_query($this->conn,  $insertProductQuery) or die("Error: ".mysqli_error($this->conn));
-       
-        if ($resultAdd == true) {
-            // echo "Success";
-            return true;
-        }else{
-            echo "Error in ".$resultAdd." ".$this->conn->error;
-            return false;
-        }
-        
+        $stmt = $this->conn->prepare("INSERT INTO sushi (sushiName, sushiDesc, sushiImg, price, dateAdded, availability) VALUES (?, ?, ?, ?, ?, 0)");
+        $stmt->bind_param("sssss", $name, $desc, $img, $price, $dateToday);
+        $result = $stmt->execute();
+        $stmt->close();
+    
+        return $result;
     }
 
-    public function deleteMenu($menuid){
-        $delsushiQuery = "DELETE FROM sushi WHERE sushiID=$menuid";
-        $deletemenu = $this->conn->query($delsushiQuery);
-
-        if($deletemenu == true){
-            return true;
-        }else{
-            return false;
-        }
+    public function deleteMenu($menuid) {
+        $stmt = $this->conn->prepare("DELETE FROM sushi WHERE sushiID = ?");
+        $stmt->bind_param("i", $menuid);
+        $result = $stmt->execute();
+        $stmt->close();
+    
+        return $result;
     }
-
-    public function updateMenuImage($sushiid, $sushiimg){
-        $updateSushiQuery = "UPDATE sushi SET sushiImg='$sushiimg' WHERE sushiID='$sushiid'";
-        $resultUser = mysqli_query($this->conn,  $updateSushiQuery) or die("Error: ".mysqli_error($this->conn));
-
-        if ($resultUser == true) {
-            return true;
-        }else{
-            //echo "Error in ".$resultUser." ".$this->conn->error;
-            return false;
-        }
-        
+    
+    public function updateMenuImage($sushiid, $sushiimg) {
+        $stmt = $this->conn->prepare("UPDATE sushi SET sushiImg = ? WHERE sushiID = ?");
+        $stmt->bind_param("si", $sushiimg, $sushiid);
+        $result = $stmt->execute();
+        $stmt->close();
+    
+        return $result;
     }
-
-    public function updateMenuDetail($sushiid, $sushiname, $sushidesc, $sushiprice, $status){
-        $updateSushiQuery = "UPDATE sushi SET sushiName='$sushiname', sushiDesc='".mysqli_real_escape_string($this->conn, $sushidesc)."', price= $sushiprice, availability= $status WHERE sushiID='$sushiid'";
-        $resultUser = mysqli_query($this->conn,  $updateSushiQuery) or die("Error: ".mysqli_error($this->conn));
-
-        if ($resultUser == true) {
-            return true;
-        }else{
-            echo "Error in ".$resultUser." ".$this->conn->error;
-            return false;
-        }
-        
-        
+    
+    public function updateMenuDetail($sushiid, $sushiname, $sushidesc, $sushiprice, $status) {
+        $stmt = $this->conn->prepare("UPDATE sushi SET sushiName = ?, sushiDesc = ?, price = ?, availability = ? WHERE sushiID = ?");
+        $stmt->bind_param("sssii", $sushiname, $sushidesc, $sushiprice, $status, $sushiid);
+        $result = $stmt->execute();
+        $stmt->close();
+    
+        return $result;
     }
+    
 }
 
 ?>

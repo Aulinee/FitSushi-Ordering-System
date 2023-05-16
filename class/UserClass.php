@@ -8,21 +8,22 @@ class User{
         $this->conn = $DB_con;
 	}
 
-    //This function is still under development 
-    public function displayAllCustomer(){
+    public function displayAllCustomer() {
         $displayCustomerQuery = "SELECT * FROM customer c, address a WHERE c.PostalCode = a.PostalCodeID";
-        $result = $this->conn->query($displayCustomerQuery);
-
+        $stmt = $this->conn->prepare($displayCustomerQuery);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
         $customerData = array();
-
-        while($row = mysqli_fetch_array($result)){
+    
+        while ($row = $result->fetch_assoc()) {
             $id = $row["customerID"];
             $username = $row["username"];
             $custname = $row["custName"];
             $phoneNum = $row["phoneNo"];
             $email = $row["email"];
-            $address = $row["deliveryAddress"].', '.$row["PostalCode"].' '.$row["Area"].', '.$row["State"].', '.$row["Country"];
-
+            $address = $row["deliveryAddress"] . ', ' . $row["PostalCode"] . ' ' . $row["Area"] . ', ' . $row["State"] . ', ' . $row["Country"];
+    
             $customerData[] = array(
                 "id" => $id,
                 "username" => $username,
@@ -32,98 +33,105 @@ class User{
                 "address" => $address
             );
         }
-
+    
         return $customerData;
     }
+    
 
-    public function checkExistUsername($username){
-        //Create query string
-        $checkUsernameQuery = "SELECT * FROM `customer` WHERE username = '$username'";
-        $result = mysqli_query($this->conn, $checkUsernameQuery) or die("Error: ".mysqli_error($this->conn));
+    public function checkExistUsername($username) {
+        $checkUsernameQuery = "SELECT * FROM `customer` WHERE username = ?";
+        $stmt = mysqli_prepare($this->conn, $checkUsernameQuery);
+        mysqli_stmt_bind_param($stmt, "s", $username);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $count = mysqli_num_rows($result);
     
         // If result matched $username, table row must be 1 row
-        if($count == 1){
+        if ($count == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
-
     }
+    
 
-    public function addNewAddress($postalcode, $city, $state, $country){
+    public function addNewAddress($postalcode, $city, $state, $country) {
         $postalcode = $this->conn->real_escape_string($postalcode);
         $city = $this->conn->real_escape_string($city);
         $state = $this->conn->real_escape_string($state);
         $country = $this->conn->real_escape_string($country);
-
-        /* Insert query template */
-        $stringQuery = "INSERT INTO address(PostalCode, State, Area, Country) VALUES ('$postalcode', '$state', '$city', '$country')";
+    
+        $insertQuery = "INSERT INTO address(PostalCode, State, Area, Country) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($insertQuery);
+        $stmt->bind_param("ssss", $postalcode, $state, $city, $country);
         
-        $sqlQuery = $this->conn->query($stringQuery);
-        if ($sqlQuery == true) {
-            //echo "Successful update query";
+        if ($stmt->execute()) {
+            // echo "Successful update query";
             return true;
-        }else{
+        } else {
             return false;
-            // echo "Error in ". $sqlQuery." ".$this->conn->error;
-            //echo "Unsuccessful update query. try again!";
+            // echo "Error: " . $stmt->error;
+            // echo "Unsuccessful update query. Try again!";
         }
     }
+    
 
-    public function signUp($username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state){
-        $checkPostalQuery = "SELECT * FROM address WHERE PostalCode = $postcode AND State = '$state' AND Area = '$city'";
-        $resultPostal = mysqli_query($this->conn,  $checkPostalQuery) or die("Error: ".mysqli_error($this->conn));
+    public function signUp($username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state) {
+        $checkPostalQuery = "SELECT * FROM address WHERE PostalCode = ? AND State = ? AND Area = ?";
+        $stmtPostal = mysqli_prepare($this->conn, $checkPostalQuery);
+        mysqli_stmt_bind_param($stmtPostal, "sss", $postcode, $state, $city);
+        mysqli_stmt_execute($stmtPostal);
+        $resultPostal = mysqli_stmt_get_result($stmtPostal);
         $countPostal = mysqli_num_rows($resultPostal);
-
-        if($countPostal == 0){
-            //Insert new postal address in address table
+    
+        if ($countPostal == 0) {
+            // Insert new postal address in address table
             $this->addNewAddress($postcode, $city, $state, "Malaysia");
-            $last_id = $this->conn->insert_id;
-            $postalid= $last_id;
-        }else{
+            $postalid = $this->conn->insert_id;
+        } else {
             $row = $resultPostal->fetch_assoc();
             $postalid = $row['PostalCodeID'];
-
         }
-
-        //Insert user detail in user table
+    
+        // Insert user detail in user table
         $insertUserQuery = "INSERT INTO customer(username, password, custName, email, gender, phoneNo, deliveryAddress, PostalCode)
-        VALUES ('$username', '$password', '$fullname', '$email', '$gender', '$mobileNum', '$addressline', $postalid)";
-
-        $resultUser = mysqli_query($this->conn,  $insertUserQuery) or die("Error: ".mysqli_error($this->conn));
-       
-        if ($resultUser == true) {
-            // echo "Success";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmtUser = mysqli_prepare($this->conn, $insertUserQuery);
+        mysqli_stmt_bind_param($stmtUser, "sssssssi", $username, $password, $fullname, $email, $gender, $mobileNum, $addressline, $postalid);
+        $resultUser = mysqli_stmt_execute($stmtUser);
+    
+        if ($resultUser) {
             return true;
-        }else{
-            // echo "Error in ".$resultUser." ".$this->conn->error;
+        } else {
             return false;
         }
-        
     }
-
-    public function loginAuthentication(string $username, string $password){
-        $query = "SELECT * FROM customer WHERE username = '$username' AND password = '$password'";
-        $result = mysqli_query($this->conn, $query) or die("Error: ".mysqli_error($this->conn));
+    
+    public function loginAuthentication(string $username, string $password) {
+        $query = "SELECT * FROM customer WHERE username = ? AND password = ?";
+        $stmt = mysqli_prepare($this->conn, $query);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $count = mysqli_num_rows($result);
     
-        // If result matched $myusername and $mypassword, table row must be 1 row
-        if($count == 1){
-            // echo "Success 1";
+        if ($count == 1) {
             return true;
-        }else{
-            // echo "Record not found";
+        } else {
+            return false;
         }
-        
-        return false;
     }
+    
 
-    public function setSessionData(string $username, string $password){
-        $query = "SELECT * FROM customer WHERE username = '$username' AND password = '$password'";
-        $result = $this->conn->query($query);
+    public function setSessionData(string $username, string $password) {
+        $query = "SELECT * FROM customer WHERE username = ? AND password = ?";
+        $stmt = mysqli_prepare($this->conn, $query);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $arrayData = array();
-		if($result){
+    
+        if ($result) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $userid = $row['customerID'];
@@ -131,16 +139,19 @@ class User{
                 $fullname = $row['custName'];
                 $email = $row['email'];
                 $gender = $row['gender'];
-                $phonenum = "0".$row['phoneNo'];
-
-                //Query for postal code
+                $phonenum = "0" . $row['phoneNo'];
+    
+                // Query for postal code
                 $addressline = $row['deliveryAddress'];
                 $postalcode = $row['PostalCode'];
-                $queryPC = "SELECT * FROM address WHERE PostalCodeID =  $postalcode";
-                $resultPC = $this->conn->query($queryPC);
-
-                if($resultPC){
-                    if($resultPC->num_rows > 0){
+                $queryPC = "SELECT * FROM address WHERE PostalCodeID = ?";
+                $stmtPC = mysqli_prepare($this->conn, $queryPC);
+                mysqli_stmt_bind_param($stmtPC, "i", $postalcode);
+                mysqli_stmt_execute($stmtPC);
+                $resultPC = mysqli_stmt_get_result($stmtPC);
+    
+                if ($resultPC) {
+                    if ($resultPC->num_rows > 0) {
                         $rowPC = $resultPC->fetch_assoc();
                         $postalcodeno = $rowPC['PostalCode'];
                         $area = $rowPC['Area'];
@@ -150,54 +161,61 @@ class User{
                     }
                 }
                 return $arrayData;
-            }else{
+            } else {
                 echo "Record not found";
             }
-        }else{
-            echo "Error in ".$query." ".$this->conn->error;
-        } 
+        } else {
+            echo "Error in " . $query . " " . mysqli_error($this->conn);
+        }
     }
+    
 
-    public function updateProfile($id, $username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state, $postalid){
-        $checkPostalQuery = "SELECT * FROM address WHERE PostalCodeID = $postalid AND PostalCode = $postcode AND State = '$state' AND Area = '$city'";
-        $resultPostal = mysqli_query($this->conn,  $checkPostalQuery) or die("Error: ".mysqli_error($this->conn));
+    public function updateProfile($id, $username, $fullname, $email, $password, $mobileNum, $gender, $addressline, $postcode, $city, $state, $postalid) {
+        $checkPostalQuery = "SELECT * FROM address WHERE PostalCodeID = ? AND PostalCode = ? AND State = ? AND Area = ?";
+        $stmtPostal = mysqli_prepare($this->conn, $checkPostalQuery);
+        mysqli_stmt_bind_param($stmtPostal, "isss", $postalid, $postcode, $state, $city);
+        mysqli_stmt_execute($stmtPostal);
+        $resultPostal = mysqli_stmt_get_result($stmtPostal);
         $countPostal = mysqli_num_rows($resultPostal);
-
+    
         $mobileNum = $this->conn->real_escape_string($mobileNum);
         $email = $this->conn->real_escape_string($email);
-
-        if($countPostal == 0){
-            //Insert new postal address in address table
+    
+        if ($countPostal == 0) {
+            // Insert new postal address in the address table
             $this->addNewAddress($postcode, $city, $state, "Malaysia");
             $last_id = $this->conn->insert_id;
-            $postalid= $last_id;
+            $postalid = $last_id;
         }
-
-        //Update user detail in user table
-        $updateUserQuery = "UPDATE customer SET username='$username', password='$fullname', phoneNo='$mobileNum', custName='$fullname', email='$email', gender='$gender', deliveryAddress='$addressline', 
-                            PostalCode=$postalid, password='$password' WHERE customerID=$id ";
-        $resultUser = mysqli_query($this->conn,  $updateUserQuery) or die("Error: ".mysqli_error($this->conn));
-       
-        if ($resultUser == true) {
+    
+        // Update user details in the user table
+        $updateUserQuery = "UPDATE customer SET username=?, password=?, phoneNo=?, custName=?, email=?, gender=?, deliveryAddress=?, PostalCode=?, password=? WHERE customerID=?";
+        $stmtUser = mysqli_prepare($this->conn, $updateUserQuery);
+        mysqli_stmt_bind_param($stmtUser, "sssssssssi", $username, $password, $mobileNum, $fullname, $email, $gender, $addressline, $postalid, $password, $id);
+        $resultUser = mysqli_stmt_execute($stmtUser);
+    
+        if ($resultUser) {
             return true;
-        }else{
-            // echo "Error in ".$resultUser." ".$this->conn->error;
-            return false;
-        }
-        
-    }
-
-     function deleteProfile($cust_id)
-    {
-        $delprofileQuery = "DELETE FROM customer WHERE customerID=$cust_id";
-        $deleteprofile = $this->conn->query($delprofileQuery);
-
-        if($deleteprofile == true){
-            return true;
-        }else{
+        } else {
+            // echo "Error in " . $resultUser . " " . $this->conn->error;
             return false;
         }
     }
+    
+
+    function deleteProfile($cust_id) {
+        $delprofileQuery = "DELETE FROM customer WHERE customerID=?";
+        $stmt = mysqli_prepare($this->conn, $delprofileQuery);
+        mysqli_stmt_bind_param($stmt, "i", $cust_id);
+        $deleteProfile = mysqli_stmt_execute($stmt);
+    
+        if ($deleteProfile) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
 }
 

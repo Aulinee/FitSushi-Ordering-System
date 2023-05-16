@@ -6,51 +6,58 @@ class Admin{
         $this->conn = $DB_con;
 	}
 
-    public function loginAuthentication(string $username, string $password){
-        $query = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
-        $result = mysqli_query($this->conn, $query) or die("Error: ".mysqli_error($this->conn));
+    public function loginAuthentication(string $username, string $password) {
+        $query = "SELECT * FROM administrator WHERE username = ? AND password = ?";
+        $stmt = mysqli_prepare($this->conn, $query);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $count = mysqli_num_rows($result);
     
-        // If result matched $myusername and $mypassword, table row must be 1 row
-        if($count == 1){
+        if ($count == 1) {
             return true;
-        }else{
+        } else {
             echo "Record not found";
+            return false;
         }
-        
-        return false;
     }
-
-    public function setSessionData(string $username, string $password){
-        $query = "SELECT * FROM administrator WHERE username = '$username' AND password = '$password'";
-        $result = $this->conn->query($query);
+    
+    public function setSessionData(string $username, string $password) {
+        $query = "SELECT * FROM administrator WHERE username = ? AND password = ?";
+        $stmt = mysqli_prepare($this->conn, $query);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
         $arrayData = array();
-		if($result){
+    
+        if ($result) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $adminid = $row['adminID'];
                 $username = $row['username'];
                 $fullname = $row['adminName'];
                 $email = $row['email'];
-                $phonenum = "0".$row['phoneNo'];
-
+                $phonenum = "0" . $row['phoneNo'];
+    
                 $arrayData = array($adminid, $username, $password, $fullname, $phonenum, $email);
-
+    
                 return $arrayData;
-
-            }else{
+            } else {
                 echo "Record not found";
             }
-        }else{
-            echo "Error in ".$query." ".$this->conn->error;
-        } 
+        } else {
+            echo "Error in " . $query . " " . $this->conn->error;
+        }
+    
+        return $arrayData;
     }
     
-    public function setSessionStore(){
+    public function setSessionStore() {
         $query = "SELECT * FROM storedetails";
         $result = $this->conn->query($query);
         $arrayData = array();
-		if($result){
+    
+        if ($result) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $storeid = $row['storeID'];
@@ -59,27 +66,27 @@ class Admin{
                 $WA = $row['whatsappDetails'];
                 $IG = $row['instagramDetails'];
                 $FB = $row['facebookDetails'];
-                $phonenum = "0".$row['contactNo'];
-
+                $phonenum = "0" . $row['contactNo'];
+    
                 $arrayData = array($storeid, $opHrs, $location, $WA, $IG, $FB, $phonenum);
-
+    
                 return $arrayData;
-
-            }else{
+            } else {
                 echo "Record not found";
             }
-        }else{
-            echo "Error in ".$query." ".$this->conn->error;
-        }         
-    }
+        } else {
+            echo "Error in " . $query . " " . $this->conn->error;
+        }
+    
+        return $arrayData;
+    }    
 
-    public function displayStoreDetail()
-    {
+    public function displayStoreDetail() {
         $query = "SELECT * FROM storedetails";
         $result = $this->conn->query($query);
         $arrayData = array();
-
-        if($result){
+    
+        if ($result) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $operatingHour = $row['operatingHours'];
@@ -88,52 +95,66 @@ class Admin{
                 $instagram = $row['instagramDetails'];
                 $facebook = $row['facebookDetails'];
                 $contactNo = $row['contactNo'];
-
+    
                 $arrayData = array($operatingHour, $location, $whatsapp, $instagram, $facebook, $contactNo);
                 return $arrayData;
-
-            }else{
+            } else {
                 echo "Record not found";
             }
-        }else{
-            echo "Error in ".$query." ".$this->conn->error;
-        } 
-
+        } else {
+            echo "Error in " . $query . " " . $this->conn->error;
+        }
+    }
+    
+    public function editProfile($edit_id, $newUsn, $newFname, $newEmail, $newPass, $newPhoneNum) {
+        $newUsn = $this->conn->real_escape_string($newUsn);
+        $newFname = $this->conn->real_escape_string($newFname);
+        $newEmail = $this->conn->real_escape_string($newEmail);
+        $newPass = $this->conn->real_escape_string($newPass);
+        $newPhoneNum = $this->conn->real_escape_string($newPhoneNum);
+    
+        $updateAdminQuery = "UPDATE administrator SET username=?, password=?, phoneNo=?, adminName=?, email=? WHERE adminID=?";
+        $stmt = mysqli_prepare($this->conn, $updateAdminQuery);
+        mysqli_stmt_bind_param($stmt, "sssssi", $newUsn, $newPass, $newPhoneNum, $newFname, $newEmail, $edit_id);
+        $resultAdmin = mysqli_stmt_execute($stmt);
+    
+        if ($resultAdmin) {
+            return true;
+        } else {
+            // echo "Error in " . $resultUser . " " . $this->conn->error;
+            return false;
+        }
     }
 
-    public function editProfile($edit_id, $newUsn, $newFname, $newEmail, $newPass, $newPhoneNum){
-
-        //Update user detail in user table
-        $updateAdminQuery = "UPDATE administrator SET username='$newUsn', password='$newPass', phoneNo='$newPhoneNum', adminName='$newFname', email='$newEmail' WHERE adminID=$edit_id ";
-        $resultAdmin = mysqli_query($this->conn,  $updateAdminQuery) or die("Error: ".mysqli_error($this->conn));
-       
-        if ($resultAdmin == true) {
+    public function editStore($hold_storeid, $new_loc, $new_OpnHrs, $new_WA, $new_IG, $new_FB) {
+        $new_loc = $this->conn->real_escape_string($new_loc);
+        $new_OpnHrs = $this->conn->real_escape_string($new_OpnHrs);
+        $new_WA = $this->conn->real_escape_string($new_WA);
+        $new_IG = $this->conn->real_escape_string($new_IG);
+        $new_FB = $this->conn->real_escape_string($new_FB);
+    
+        $updateStoreQuery = "UPDATE storedetails SET operatingHours=?, location=?, whatsappDetails=?, instagramDetails=?, facebookDetails=? WHERE storeID=?";
+        $stmt = $this->conn->prepare($updateStoreQuery);
+        $stmt->bind_param("sssssi", $new_OpnHrs, $new_loc, $new_WA, $new_IG, $new_FB, $hold_storeid);
+        $resultStore = $stmt->execute();
+    
+        if ($resultStore) {
             return true;
-        }else{
+        } else {
             // echo "Error in ".$resultUser." ".$this->conn->error;
             return false;
-        }        
+        }
     }
-
-    public function editStore($hold_storeid, $new_loc, $new_OpnHrs, $new_WA, $new_IG, $new_FB){
-
-        //Update user detail in user table
-        $updateStoreQuery = "UPDATE storedetails SET operatingHours='$new_OpnHrs', location='$new_loc', whatsappDetails='$new_WA', instagramDetails='$new_IG', facebookDetails='$new_FB' WHERE storeID=$hold_storeid ";
-        $resultStore = mysqli_query($this->conn,  $updateStoreQuery) or die("Error: ".mysqli_error($this->conn));
-       
-        if ($resultStore == true) {
-            return true;
-        }else{
-            // echo "Error in ".$resultUser." ".$this->conn->error;
-            return false;
-        }        
-    }    
-
-    public function setSessionCustomer($cust_id){
-        $query = "SELECT * FROM customer WHERE customerID = $cust_id";
-        $result = $this->conn->query($query);
+    
+    public function setSessionCustomer($cust_id) {
+        $query = "SELECT * FROM customer WHERE customerID = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $cust_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         $arrayData = array();
-		if($result){
+    
+        if ($result) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $userid = $row['customerID'];
@@ -142,16 +163,19 @@ class Admin{
                 $fullname = $row['custName'];
                 $email = $row['email'];
                 $gender = $row['gender'];
-                $phonenum = "0".$row['phoneNo'];
-
+                $phonenum = "0" . $row['phoneNo'];
+    
                 //Query for postal code
                 $addressline = $row['deliveryAddress'];
                 $postalcodeID = $row['PostalCode'];
-                $queryPC = "SELECT * FROM address WHERE PostalCodeID =  $postalcodeID";
-                $resultPC = $this->conn->query($queryPC);
-
-                if($resultPC){
-                    if($resultPC->num_rows > 0){
+                $queryPC = "SELECT * FROM address WHERE PostalCodeID = ?";
+                $stmtPC = $this->conn->prepare($queryPC);
+                $stmtPC->bind_param("i", $postalcodeID);
+                $stmtPC->execute();
+                $resultPC = $stmtPC->get_result();
+    
+                if ($resultPC) {
+                    if ($resultPC->num_rows > 0) {
                         $rowPC = $resultPC->fetch_assoc();
                         $postalCode = $rowPC['PostalCode'];
                         $area = $rowPC['Area'];
@@ -161,28 +185,29 @@ class Admin{
                     }
                 }
                 return $arrayData;
-            }else{
+            } else {
                 echo "Record not found";
             }
-        }else{
-            echo "Error in ".$query." ".$this->conn->error;
-        } 
+        } else {
+            echo "Error in " . $query . " " . $this->conn->error;
+        }
     }
 
-    public function displayTopBuyer(){
-
-        $sqlGetTop5 = "SELECT o.customerID AS custID, COUNT(o.customerID) AS Frequency, c.custName AS customerName FROM orders o, customer c WHERE o.customerID = c.customerID AND o.orderStatusID = 2 GROUP BY o.customerID ORDER BY Frequency DESC LIMIT 5";
-        $ResultGetTop5 = $this->conn->query($sqlGetTop5);
-
-        if ($ResultGetTop5){
-            if($ResultGetTop5->num_rows > 0){
-                while($row = mysqli_fetch_array($ResultGetTop5)){
-                    echo '<li class="li2">'.$row['customerName'].'</li>';
+    public function displayTopBuyer() {
+        $sqlGetTop5 = "SELECT o.customerID AS custID, COUNT(o.customerID) AS Frequency, c.custName AS customerName FROM orders o JOIN customer c ON o.customerID = c.customerID WHERE o.orderStatusID = 2 GROUP BY o.customerID ORDER BY Frequency DESC LIMIT 5";
+        $stmt = $this->conn->prepare($sqlGetTop5);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result) {
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<li class="li2">' . $row['customerName'] . '</li>';
                 }
             }
         }
-
     }
+    
 
 
 }
