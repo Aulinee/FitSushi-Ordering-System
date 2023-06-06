@@ -119,7 +119,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 $deliveryOptArray = $orderObj->getDeliveryOptionList();
 
                                 foreach($deliveryOptArray as $array) {
-                                    echo '<input name="delivery-option" value="'.$array['id'].'" type="radio">'.$array['name'].'</input>';
+                                    echo '<input name="delivery-option" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
                                 }
                             ?>
                         </div>

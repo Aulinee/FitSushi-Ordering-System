@@ -28,7 +28,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         header('location:../Customer/main-page.php');
     }
-
 }
 ?>
 <!DOCTYPE html>

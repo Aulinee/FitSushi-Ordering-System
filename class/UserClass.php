@@ -1,5 +1,5 @@
 <?php 
-// include '../database/dbConnection.php'; 
+//include '../database/dbConnection.php'; 
 
 class User{
     /* Constructor */
@@ -122,7 +122,6 @@ class User{
         }
     }
     
-
     public function setSessionData(string $username, string $password) {
         $query = "SELECT * FROM customer WHERE username = ? AND password = ?";
         $stmt = mysqli_prepare($this->conn, $query);
@@ -218,6 +217,4 @@ class User{
     
 
 }
-
-//end of line
 ?> 

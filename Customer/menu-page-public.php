@@ -1,5 +1,5 @@
 <?php 
-include '../Database/dbConnection.php';
+include '../database/dbConnection.php';
 include '../class/MenuClass.php';
 
 $menuObj = new Menu($conn);
