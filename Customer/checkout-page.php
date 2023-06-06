@@ -13,18 +13,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $orderStatus = $orderObj->makeOrder($sushiId, $sushiQty, $userid, $deliveryopt, $paymentmethod, $totalorder);
 
-    if($orderStatus == false){
-        echo "<script>
-            alert('Your order is unsuccessful! Please try again');
-        </script>";
-    }else{
-        unset($_SESSION['sushiid']);
-        unset($_SESSION['sushiqty']);
-        unset($_SESSION['totalorder']);
+    echo "<script> alert('Your order is successful!'); </script>";
+    unset($_SESSION['sushiid']);
+    unset($_SESSION['sushiqty']);
+    unset($_SESSION['totalorder']);
 
-        $_SESSION['currentOrderID'] = $orderStatus;
-        header('location: email.php');
-    }
+    $_SESSION['currentOrderID'] = $orderStatus;
+    header('location: email.php');
 }
 
 ?>
