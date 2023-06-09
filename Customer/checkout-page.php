@@ -11,8 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $deliveryopt = $_POST["delivery-option"];
     $paymentmethod = $_POST["payment-method"];
 
-    if ($paymentmethod = $_POST["payment-method"] == "3"){
-
+    if ($paymentmethod == "3"){
         $cardNum = $_POST["card-number"];
         $cardHolder = $_POST["card-holder"];
         $cardExpDate = $_POST["expiration-date"];
@@ -210,7 +209,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div>
                     <br>
                     <br>
-                    <button id="payment" type="submit" class="gotopaymentbtn margin-top-2" onclick="return validateCardDetails()">Confirm Payment</button>
+                    <button id="payment" type="submit" class="gotopaymentbtn margin-top-2">Confirm Payment</button>
                 </form>
             </div>
         </div>
@@ -265,8 +264,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 }
             });
 
-            $('#card-number, #card-holder, #expiration-date, #cvv').on('input', function () {
-                validateCardDetails();
+            $('#payment').on('click', function (e) {
+                var isFormValid = validateCardDetails();
+                if (!isFormValid) {
+                    e.preventDefault(); // Prevent form submission if form is not valid
+                    alert('Invalid card, please insert a new one.');
+                }
             });
         });
 
@@ -289,12 +292,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
             var isFormValid = isCardNumberValid && isCardHolderValid && isExpirationDateValid && isCvvValid;
 
-            if (isFormValid || selectedValue !== '3') {
+            if (selectedValue !== '3') {
+                // Hide the error message for non-credit/debit card payments
                 $('#card-validation-error').hide();
                 return true; // Form is valid
             } else {
-                $('#card-validation-error').show();
-                return false; // Form is not valid
+                if (isFormValid) {
+                    // Hide the error message for valid credit/debit card payments
+                    $('#card-validation-error').hide();
+                    return true; // Form is valid
+                } else {
+                    // Show the error message for invalid credit/debit card payments
+                    $('#card-validation-error').show();
+                    return false; // Form is not valid
+                }
             }
         }
 

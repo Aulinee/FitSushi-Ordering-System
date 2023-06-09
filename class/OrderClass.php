@@ -407,7 +407,7 @@ class Order{
         $orderid = 0; // initialize value 
         // Insert order created date 
         date_default_timezone_set("Asia/Kuala_Lumpur"); // set time region
-        $current_time = date('Y-m-d'); // Format the date as 'YYYY-MM-DD'
+        $current_time = date('Y-m-d', time());
     
         // Set order status to 4 for pending order status
         $orderstatus = 4;
