@@ -438,13 +438,13 @@ class Order{
         }
     }
 
-    public function insertCardDetail($orderid, $cardNum, $cardHolder, $cardExp, $CardCVV){
+    public function insertCardDetail($orderid, $cardNum, $cardHolder, $cardExp, $cardCVV){
         // Add into order table
         $insertQuery = "INSERT INTO cardpayment(orderID, cardNumber, cardHolder, cardExpirationDate, cardCVV) 
                         VALUES (?, ?, ?, ?, ?)";
     
         $statement = $this->conn->prepare($insertQuery);
-        $statement->bind_param("issss", $orderid, $cardNum, $cardHolder, $cardExp, $CardCVV);
+        $statement->bind_param("issss", $orderid, $cardNum, $cardHolder, $cardExp, $cardCVV);
         $result = $statement->execute();
 
         if ($result == true) {
