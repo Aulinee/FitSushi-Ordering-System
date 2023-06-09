@@ -407,7 +407,7 @@ class Order{
         $orderid = 0; // initialize value 
         // Insert order created date 
         date_default_timezone_set("Asia/Kuala_Lumpur"); // set time region
-        $current_time = date('Y-m-d', time());
+        $current_time = date('Y-m-d'); // Format the date as 'YYYY-MM-DD'
     
         // Set order status to 4 for pending order status
         $orderstatus = 4;
@@ -436,6 +436,22 @@ class Order{
         } else {
             return false;
         }
+    }
+
+    public function insertCardDetail($orderid, $cardNum, $cardHolder, $cardExp, $CardCVV){
+        // Add into order table
+        $insertQuery = "INSERT INTO cardpayment(orderID, cardNumber, cardHolder, cardExpirationDate, cardCVV) 
+                        VALUES (?, ?, ?, ?, ?)";
+    
+        $statement = $this->conn->prepare($insertQuery);
+        $statement->bind_param("issss", $orderid, $cardNum, $cardHolder, $cardExp, $CardCVV);
+        $result = $statement->execute();
+
+        if ($result == true) {
+            return true;
+        }
+    
+        return false;
     }
     
     public function clearSushibox($customerid, $sushiid) {
