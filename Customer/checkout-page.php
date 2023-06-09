@@ -20,7 +20,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $orderStatus = $orderObj->makeOrder($sushiId, $sushiQty, $userid, $deliveryopt, $paymentmethod, $totalorder);
 
-        echo "<script> alert('Your order is successful!'); </script>";
         unset($_SESSION['sushiid']);
         unset($_SESSION['sushiqty']);
         unset($_SESSION['totalorder']);
@@ -29,6 +28,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $cardOrderDetail = $orderObj->insertCardDetail($orderStatus, $cardNum, $cardHolder, $cardExpDate, $cardCVV);
 
         if($cardOrderDetail){
+            echo "<script> alert('Your order is successful!'); </script>";
             header('location: email.php');
         }
 
@@ -271,6 +271,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         });
 
         function validateCardDetails() {
+            var selectedValue = $('input[name="payment-method"]:checked').val();
             var cardNumber = $('#card-number').val();
             var cardHolder = $('#card-holder').val();
             var expirationDate = $('#expiration-date').val();
@@ -288,7 +289,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
             var isFormValid = isCardNumberValid && isCardHolderValid && isExpirationDateValid && isCvvValid;
 
-            if (isFormValid) {
+            if (isFormValid || selectedValue !== '3') {
                 $('#card-validation-error').hide();
                 return true; // Form is valid
             } else {
