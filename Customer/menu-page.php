@@ -131,14 +131,13 @@ include '../Login/sessionCustomer.php';
         }
 
         function successAdded(form) {
-            var qty = document.getElementsByTagName("input")[0];
+            var qty = document.getElementsByTagName("input")[0].value;
 
-            if(qty == 0){
-                alert('You added zero sushi quantity!');
-            }else{
+            if (qty === "" || isNaN(qty) || parseFloat(qty) === 0) {
+                alert('You added zero sushi quantity or entered an invalid quantity!');
+            } else {
                 alert('Successfully added menu to sushibox!');
             }
-            
         }
     </script>
 </body>

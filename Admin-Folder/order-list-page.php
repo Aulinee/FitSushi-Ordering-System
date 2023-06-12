@@ -183,7 +183,6 @@
         <h1>&copy; Copyright 2021 FitSushi</h1>
     </footer>
     <script>
-
          //From Order Tab
          function filterCustOrderPending() {
             var input, filter, table, tr, td, i, txtValue;
