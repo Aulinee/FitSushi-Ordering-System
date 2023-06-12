@@ -10,20 +10,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $deliveryopt = $_POST["delivery-option"];
     $paymentmethod = $_POST["payment-method"];
 
-    $buy_again_status = $orderObj->buyAgainOrder($prev_orderid, $userid, $deliveryopt,  $paymentmethod , $total_order);
+    if ($paymentmethod == "3"){
+        $cardNum = $_POST["card-number"];
+        $cardHolder = $_POST["card-holder"];
+        $cardExpDate = $_POST["expiration-date"];
+        $cardCVV = $_POST["cvv"];
 
-    if($buy_again_status == true){
+        $buy_again_status = $orderObj->buyAgainOrder($prev_orderid, $userid, $deliveryopt,  $paymentmethod , $total_order);
+
         unset($_SESSION['prev-orderid']);
         unset($_SESSION['total-order']);
+    
+        $_SESSION['currentOrderID'] = $orderStatus;
+        $cardOrderDetail = $orderObj->insertCardDetail($orderStatus, $cardNum, $cardHolder, $cardExpDate, $cardCVV);
 
-        header('location: email.php');
+        if($cardOrderDetail){
+            header('location: email.php');
+        }
+
     }else{
-        echo "<script>
-                alert('Your order is unsuccessful! Please try again!');
-            </script>";
+        $buy_again_status = $orderObj->buyAgainOrder($prev_orderid, $userid, $deliveryopt,  $paymentmethod , $total_order);
+        unset($_SESSION['prev-orderid']);
+        unset($_SESSION['total-order']);
+    
+        $_SESSION['currentOrderID'] = $orderStatus;
+        header('location: email.php');
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,7 +116,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <label for="PaymentID"><b>Total Amount (RM)</b></label>
                         </div>
                         <div class="payment-70">
-                            <input name="totalamount" value="<?php echo $total_order; ?>" type="text" readonly>
+                            <input name="totalamount" value="<?php echo $totalorder; ?>" type="text" readonly>
                         </div>
                     </div>
                     <br>
@@ -119,7 +132,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     echo '<input name="delivery-option" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
                                 }
                             ?>
-                            <!-- <input name="deliveryopt" value="delivery" type="radio" readonly>Delivery</input>-->
                         </div>
                     </div>
                     <br>
@@ -132,12 +144,51 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 $paymentmethod = $orderObj->getPaymentOptionList();
 
                                 foreach($paymentmethod as $array) {
-                                    
-
                                     echo '<input name="payment-method" value="'.$array['id'].'" type="radio" required>'.$array['name'].'</input>';
                                 }
                             ?>
-                            <!-- <input name="payment-method" value="delivery" type="radio" readonly>Delivery</input>-->
+                        </div>
+                    </div>
+                    <div id="hidden-div" style="display: none;">
+                        <br>
+                        <div class="row-payment">
+                            <div class="payment-30">
+                                <label for="PaymentID"><b>Card Number</b></label>
+                            </div>
+                            <div class="payment-70">
+                                <input type="text" id="card-number" name="card-number" placeholder="Enter card number! E.g. 4111111111111111">
+                                <span id="card-number-error" class="error" style="display: none;">Invalid card number.</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row-payment">
+                            <div class="payment-30">
+                                <label for="PaymentID"><b>Card Holder Name</b></label>
+                            </div>
+                            <div class="payment-70">
+                                <input type="text" id="card-holder" name="card-holder" placeholder="Enter card holder name! E.g. Audrey Duyan anak Gima">
+                                <span id="card-holder-error" class="error" style="display: none;">Invalid card holder name.</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row-payment">
+                            <div class="payment-30">
+                                <label for="PaymentID"><b>Expiration Date</b></label>
+                            </div>
+                            <div class="payment-70">
+                                <input type="text" id="expiration-date" name="expiration-date" placeholder="Enter expiration date! E.g. 12/24">
+                                <span id="expiration-date-error" class="error" style="display: none;">Invalid expiration date.</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row-payment">
+                            <div class="payment-30">
+                                <label for="PaymentID"><b>CVV:</b></label>
+                            </div>
+                            <div class="payment-70">
+                                <input type="text" id="cvv" name="cvv" placeholder="Enter CVV! E.g. 123">
+                                <span id="cvv-error" class="error" style="display: none;">Invalid CVV.</span>
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -175,7 +226,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 text: "Check your email for receipt!",
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href='email.php';
                 }
             });
         }
@@ -188,11 +238,113 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Log Out'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href='logout.php';
-                }
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href='logout.php';
+            }
             })
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('input[name="payment-method"]').change(function () {
+                var selectedValue = $('input[name="payment-method"]:checked').val();
+                if (selectedValue === '3') {
+                    $('#hidden-div').show();
+                } else {
+                    $('#hidden-div').hide();
+                }
+            });
+
+            $('#payment').on('click', function (e) {
+                var isFormValid = validateCardDetails();
+                if (!isFormValid) {
+                    e.preventDefault(); // Prevent form submission if form is not valid
+                    alert('Invalid card, please insert a new one.');
+                }
+            });
+        });
+
+        function validateCardDetails() {
+            var selectedValue = $('input[name="payment-method"]:checked').val();
+            var cardNumber = $('#card-number').val();
+            var cardHolder = $('#card-holder').val();
+            var expirationDate = $('#expiration-date').val();
+            var cvv = $('#cvv').val();
+
+            var isCardNumberValid = validateCardNumber(cardNumber);
+            var isCardHolderValid = validateCardHolder(cardHolder);
+            var isExpirationDateValid = validateExpirationDate(expirationDate);
+            var isCvvValid = validateCvv(cvv);
+
+            displayError('card-number', !isCardNumberValid);
+            displayError('card-holder', !isCardHolderValid);
+            displayError('expiration-date', !isExpirationDateValid);
+            displayError('cvv', !isCvvValid);
+
+            var isFormValid = isCardNumberValid && isCardHolderValid && isExpirationDateValid && isCvvValid;
+
+            if (selectedValue !== '3') {
+                // Hide the error message for non-credit/debit card payments
+                $('#card-validation-error').hide();
+                return true; // Form is valid
+            } else {
+                if (isFormValid) {
+                    // Hide the error message for valid credit/debit card payments
+                    $('#card-validation-error').hide();
+                    return true; // Form is valid
+                } else {
+                    // Show the error message for invalid credit/debit card payments
+                    $('#card-validation-error').show();
+                    return false; // Form is not valid
+                }
+            }
+        }
+
+        function displayError(inputId, showError) {
+            if (showError) {
+                $('#' + inputId + '-error').show();
+            } else {
+                $('#' + inputId + '-error').hide();
+            }
+        }
+
+        function validateCardNumber(cardNumber) {
+            var cardNumberRegex = /^4[0-9]{12}(?:[0-9]{3})?$/;
+            return cardNumberRegex.test(cardNumber);
+        }
+
+        function validateCardHolder(cardHolder) {
+            var symbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
+            return !symbolRegex.test(cardHolder.trim());
+        }
+        
+        function validateExpirationDate(expirationDate) {
+            var expirationDateRegex = /^(0[1-9]|1[0-2])\/[0-9]{2}$/;
+            if (!expirationDateRegex.test(expirationDate)) {
+                return false;
+            }
+
+            // Validate the expiration month and year
+            var currentDate = new Date();
+            var currentYear = currentDate.getFullYear() % 100; // Get the last two digits of the current year
+            var currentMonth = currentDate.getMonth() + 1; // Get the current month (1-12)
+
+            var parts = expirationDate.split('/');
+            var expMonth = parseInt(parts[0]);
+            var expYear = parseInt(parts[1]);
+
+            if (expYear < currentYear || (expYear === currentYear && expMonth < currentMonth)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateCvv(cvv) {
+            var cvvRegex = /^[0-9]{3}$/;
+            return cvvRegex.test(cvv);
         }
     </script>
 </body>

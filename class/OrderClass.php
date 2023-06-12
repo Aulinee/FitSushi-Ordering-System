@@ -1,5 +1,5 @@
 <?php 
-// include '../database/dbConnection.php'; 
+//include '../database/dbConnection.php'; 
 
 class Order{
     /* Constructor */
@@ -291,7 +291,7 @@ class Order{
                         VALUES (?, ?, ?, ?, NULL, ?, ?)";
     
         $statement = $this->conn->prepare($stringQuery);
-        $statement->bind_param("iiisi", $customerid, $orderstatus, $current_time, $deliveryid, $paymentid, $ordertotal);
+        $statement->bind_param("iisiid", $customerid, $orderstatus, $current_time, $deliveryid, $paymentid, $ordertotal);
         $result = $statement->execute();
     
         if ($result == true) {
@@ -407,17 +407,16 @@ class Order{
         $orderid = 0; // initialize value 
         // Insert order created date 
         date_default_timezone_set("Asia/Kuala_Lumpur"); // set time region
-        $current_time = date('Y-m-d', time());
     
         // Set order status to 4 for pending order status
         $orderstatus = 4;
     
         // Add into order table
         $insertQuery = "INSERT INTO orders(customerID, orderStatusID, dateCreated, deliveryID, paymentID, orderTotal) 
-                        VALUES (?, ?, ?, ?, ?, ?)";
+                        VALUES (?, ?, NOW(), ?, ?, ?)";
     
         $statement = $this->conn->prepare($insertQuery);
-        $statement->bind_param("iiisid", $customerid, $orderstatus, $current_time, $deliveryid, $paymentid, $ordertotal);
+        $statement->bind_param("iiiid", $customerid, $orderstatus, $deliveryid, $paymentid, $ordertotal);
         $result = $statement->execute();
     
         if ($result == true) {
@@ -436,7 +435,7 @@ class Order{
         } else {
             return false;
         }
-    }
+    }    
 
     public function insertCardDetail($orderid, $cardNum, $cardHolder, $cardExp, $cardCVV){
         // Add into order table
@@ -506,8 +505,6 @@ class Order{
             return false;
         }
     }
-    
-
 }
 
 ?>

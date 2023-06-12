@@ -323,7 +323,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
 
         function validateCardHolder(cardHolder) {
-            return cardHolder.trim().length > 0;
+            var symbolRegex = /[!@#$%^&*(),.?":{}|<>]/;
+            return !symbolRegex.test(cardHolder.trim());
         }
 
         function validateExpirationDate(expirationDate) {
